@@ -28,7 +28,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         // Do any additional setup after loading the view.
     }
     func theBGimage(notification:Notification) {
-         personalImage.image = notification.userInfo!["selfieBg"] as! UIImage
+         personalImage.image = notification.userInfo!["selfieBg"] as? UIImage//??
         
     }
     

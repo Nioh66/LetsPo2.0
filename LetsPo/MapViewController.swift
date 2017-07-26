@@ -14,7 +14,7 @@ import CoreData
 
 class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewDelegate {
     
-    var dataManager:CoreDataManager<BoardData>!
+//    var dataManager:CoreDataManager<BoardData>!
     var dataManagerCount = Int()
     
     let locationManager = CLLocationManager()
@@ -57,9 +57,9 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         mapView.mapType = .standard
         mapView.showsUserLocation = true
         
-        dataManager = CoreDataManager(initWithModel: "LetsPoModel", dbFileName: "boardData.sqlite", dbPathURL: nil, sortKey: "board_CreateTime", entityName: "BoardData")
+//        dataManager = CoreDataManager(initWithModel: "LetsPoModel", dbFileName: "boardData.sqlite", dbPathURL: nil, sortKey: "board_CreateTime", entityName: "BoardData")
         
-        dataManagerCount = dataManager.count()
+        dataManagerCount = boardDataManager.count()
         
         
         places = spot()
@@ -107,7 +107,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         for i in 0...8{
         
 //            if(finalItem == nil){
-                finalItem = self.dataManager.createItem()
+                finalItem = boardDataManager.createItem()
                 finalItem?.board_CreateTime = NSDate()
 //            }
 
@@ -144,7 +144,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         
         self.editeWithItem(item: nil) { (success, result) in
             if(success){
-                self.dataManager.saveContexWithCompletion(completion: { (success) in
+                boardDataManager.saveContexWithCompletion(completion: { (success) in
                     if(success){
                }
                 })
@@ -409,7 +409,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
        
         
         for i in 0..<dataManagerCount {
-            let item = dataManager.itemWithIndex(index: i)
+            let item = boardDataManager.itemWithIndex(index: i)
             
             let Creater = item.board_Creater
             let lat = item.board_Lat
