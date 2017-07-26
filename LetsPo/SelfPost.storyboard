@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VhU-2p-4he">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Self Post HomeVC-->
+        <scene sceneID="v5h-eN-YeJ">
+            <objects>
+                <viewController storyboardIdentifier="SelfPostHomeVC" id="YQN-hJ-0kU" customClass="SelfPostHomeVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="tDd-i0-Qdd"/>
+                        <viewControllerLayoutGuide type="bottom" id="y2G-Ic-Pd7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OQC-Z7-5FS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wall2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="QJK-v4-p9d">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xg-Jo-daL">
+                                <rect key="frame" x="7" y="534" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Trashcan.png"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQe-95-wAw">
+                                <rect key="frame" x="314" y="549" width="45" height="49"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="AddNote.png"/>
+                                <connections>
+                                    <segue destination="fbQ-x0-dQS" kind="show" identifier="newSelfNote" id="am6-85-Axa"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piK-OL-iaF">
+                                <rect key="frame" x="322" y="84" width="37" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="BgSettings.png"/>
+                                <connections>
+                                    <segue destination="yKd-oh-LBE" kind="show" identifier="selectBgImage" id="UvT-ZQ-abw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QJK-v4-p9d" firstAttribute="top" secondItem="OQC-Z7-5FS" secondAttribute="top" id="6Kv-Uo-FWP"/>
+                            <constraint firstItem="QJK-v4-p9d" firstAttribute="leading" secondItem="OQC-Z7-5FS" secondAttribute="leading" id="AIb-M9-Bmn"/>
+                            <constraint firstItem="y2G-Ic-Pd7" firstAttribute="top" secondItem="QJK-v4-p9d" secondAttribute="bottom" id="MJP-M4-2zK"/>
+                            <constraint firstAttribute="trailing" secondItem="QJK-v4-p9d" secondAttribute="trailing" id="qp1-el-1rR"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="7f6-xr-Rq7"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="selfBgImage" destination="QJK-v4-p9d" id="sBp-1r-SKo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Iy-uM-l2A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2700" y="529.38530734632684"/>
+        </scene>
+        <!--Self New PostVC-->
+        <scene sceneID="skm-wK-p9D">
+            <objects>
+                <viewController storyboardIdentifier="SelfNewPostVC" automaticallyAdjustsScrollViewInsets="NO" id="fbQ-x0-dQS" customClass="SelfNewPostVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="okf-np-8Ig"/>
+                        <viewControllerLayoutGuide type="bottom" id="gQ0-LY-xpc"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IUj-54-bPm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v3K-43-XUn" customClass="Note" customModule="LetsPo" customModuleProvider="target">
+                                <rect key="frame" x="37.5" y="94" width="300" height="300"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="v3K-43-XUn" secondAttribute="height" multiplier="1:1" id="jxC-LH-2y0"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="v3K-43-XUn" firstAttribute="top" secondItem="okf-np-8Ig" secondAttribute="bottom" constant="30" id="9JO-cZ-wVL"/>
+                            <constraint firstItem="v3K-43-XUn" firstAttribute="width" secondItem="IUj-54-bPm" secondAttribute="width" multiplier="0.8" id="ayc-51-Q48"/>
+                            <constraint firstItem="v3K-43-XUn" firstAttribute="centerX" secondItem="IUj-54-bPm" secondAttribute="centerX" id="ll9-JZ-VXB"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="Nb4-Mi-cOg">
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="Jwo-V4-8Ct">
+                            <connections>
+                                <segue destination="yIR-fP-5Ud" kind="show" id="eth-63-970"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="theSelfPost" destination="v3K-43-XUn" id="nIv-6y-Nwf"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="yZB-FM-HYh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2700" y="1448"/>
+        </scene>
+        <!--Self DragVC-->
+        <scene sceneID="w3y-FO-HhK">
+            <objects>
+                <viewController storyboardIdentifier="SelfDragVC" id="yIR-fP-5Ud" customClass="SelfDragVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oRz-nO-S9Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="Lnc-4j-dOh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6gG-Du-VZT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fBr-4u-7nV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fBr-4u-7nV" firstAttribute="leading" secondItem="6gG-Du-VZT" secondAttribute="leading" id="7RM-yk-3Pp"/>
+                            <constraint firstAttribute="trailing" secondItem="fBr-4u-7nV" secondAttribute="trailing" id="B5o-IN-WHV"/>
+                            <constraint firstItem="Lnc-4j-dOh" firstAttribute="top" secondItem="fBr-4u-7nV" secondAttribute="bottom" id="RdW-Ox-fVp"/>
+                            <constraint firstItem="fBr-4u-7nV" firstAttribute="top" secondItem="6gG-Du-VZT" secondAttribute="top" id="ro6-aU-NZ9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="selfBgImage" destination="fBr-4u-7nV" id="JgW-Do-E20"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="649-Eu-Ctx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3612" y="1447.8260869565217"/>
+        </scene>
+        <!--Self Post Bg SelectVC-->
+        <scene sceneID="QD1-KL-GW1">
+            <objects>
+                <viewController storyboardIdentifier="SelfPostBgSelectVC" id="yKd-oh-LBE" customClass="SelfPostBgSelectVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="a9u-cw-vCL"/>
+                        <viewControllerLayoutGuide type="bottom" id="8Nn-Ft-FP1"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Pv9-VJ-R8N">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="toK-pb-CXy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3612" y="528.48575712143929"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="fgr-Dr-fDs">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VhU-2p-4he" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="i4S-O0-BeY"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="GSM-C8-hSA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="YQN-hJ-0kU" kind="relationship" relationship="rootViewController" id="072-29-DiK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8cL-5R-udp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1760.8" y="529.38530734632684"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AddNote.png" width="512" height="512"/>
+        <image name="BgSettings.png" width="128" height="128"/>
+        <image name="Trashcan.png" width="64" height="64"/>
+        <image name="Wall2.jpg" width="3072" height="1730"/>
+    </resources>
+</document>

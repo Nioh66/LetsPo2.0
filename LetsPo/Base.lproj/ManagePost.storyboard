@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FgI-5r-fIW">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Manage View Controller-->
+        <scene sceneID="96J-D8-R9J">
+            <objects>
+                <viewController storyboardIdentifier="ManagePost" id="WS3-Gm-QRk" customClass="ManageViewController" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bS1-rV-Y1t"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZFB-6V-lB6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="war-4I-mSc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CLn-4N-iBd">
+                                <rect key="frame" x="0.0" y="118" width="375" height="549"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cD6-VL-0AE">
+                                <rect key="frame" x="0.0" y="61" width="375" height="544"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wzU-mN-qmq" customClass="ScrollPager" customModule="LetsPo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="74" width="375" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="44" id="9Za-J1-DU3"/>
+                                    <constraint firstAttribute="height" constant="44" id="HVe-xO-0N6"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="indicatorColor">
+                                        <color key="value" red="0.83589909419999997" green="1" blue="0.68364779949999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <outlet property="scrollView" destination="cD6-VL-0AE" id="UWV-Ya-Rd2"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="wzU-mN-qmq" firstAttribute="leading" secondItem="war-4I-mSc" secondAttribute="leading" id="30L-5M-2Fg"/>
+                            <constraint firstItem="CLn-4N-iBd" firstAttribute="leading" secondItem="war-4I-mSc" secondAttribute="leading" id="8No-6l-lXr"/>
+                            <constraint firstAttribute="trailing" secondItem="wzU-mN-qmq" secondAttribute="trailing" id="EIr-WX-m7Z"/>
+                            <constraint firstItem="wzU-mN-qmq" firstAttribute="top" secondItem="bS1-rV-Y1t" secondAttribute="bottom" constant="10" id="Rqd-ll-9Y2"/>
+                            <constraint firstItem="CLn-4N-iBd" firstAttribute="top" secondItem="wzU-mN-qmq" secondAttribute="bottom" id="duU-TT-4Xc"/>
+                            <constraint firstAttribute="trailing" secondItem="CLn-4N-iBd" secondAttribute="trailing" id="dxa-gv-pPa"/>
+                            <constraint firstAttribute="bottom" secondItem="CLn-4N-iBd" secondAttribute="bottom" id="pq0-MJ-gvF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="La0-Bl-A3p"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="contentView" destination="CLn-4N-iBd" id="xKr-WO-ZMc"/>
+                        <outlet property="scrollPager" destination="wzU-mN-qmq" id="ixM-6a-7MQ"/>
+                        <outlet property="scrollView" destination="cD6-VL-0AE" id="0LG-Td-1Oq"/>
+                        <segue destination="YjR-tB-jJT" kind="show" identifier="manageDetail" id="fc3-eE-rut"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ruf-Zo-uei" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2572" y="916.1919040479761"/>
+        </scene>
+        <!--Manage Detail View Controller-->
+        <scene sceneID="bjY-f3-hBR">
+            <objects>
+                <viewController storyboardIdentifier="detailViewController" id="YjR-tB-jJT" customClass="ManageDetailViewController" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Vdm-zt-Yqm"/>
+                        <viewControllerLayoutGuide type="bottom" id="5cw-au-rvf"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GmV-oQ-KsQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2DY-5B-8ie" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3335.1999999999998" y="909.89505247376314"/>
+        </scene>
+        <!--Manage-->
+        <scene sceneID="jV0-h6-N8Y">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FgI-5r-fIW" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Manage" id="CnM-sq-grx"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="N35-kZ-VBw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="WS3-Gm-QRk" kind="relationship" relationship="rootViewController" id="S75-bc-z2U"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qsj-RW-Uhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1632.8" y="916.1919040479761"/>
+        </scene>
+    </scenes>
+</document>
