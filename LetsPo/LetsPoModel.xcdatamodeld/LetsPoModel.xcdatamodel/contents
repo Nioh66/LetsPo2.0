@@ -2,50 +2,50 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="12141" systemVersion="16G29" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="BackupData" representedClassName="BackupData" syncable="YES" codeGenerationType="class"/>
     <entity name="BoardData" representedClassName="BoardData" syncable="YES" codeGenerationType="class">
-        <attribute name="backup1" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup2" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup3" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup3" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="board_Alert" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="board_BgPic" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="board_Creater" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="board_CreateTime" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
-        <attribute name="board_Id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="board_Id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="board_Lat" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="board_Lon" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="board_NoteID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="board_NoteID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="board_Privacy" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="board_Title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="board_ScreenShot" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="MemberData" representedClassName="MemberData" syncable="YES" codeGenerationType="class">
-        <attribute name="backup1" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup2" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup3" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup4" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup3" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup4" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="member_Email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="member_FriendID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="member_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="member_FriendID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="member_ID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="member_Name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="member_Password" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="member_Selfie" optional="YES" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="NoteData" representedClassName="NoteData" syncable="YES" codeGenerationType="class">
-        <attribute name="backup1" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup2" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup3" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="backup4" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="note_BgColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="backup1" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup2" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup3" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="backup4" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="note_BgColor" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="note_Content" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="note_FontColor" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="note_FontSize" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="note_ID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="note_FontColor" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="note_FontSize" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="note_ID" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="note_Image" optional="YES" attributeType="Binary" syncable="YES"/>
-        <attribute name="note_X" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="note_Y" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="note_X" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="note_Y" optional="YES" attributeType="Double" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="BoardData" positionX="-63" positionY="-18" width="128" height="240"/>
-        <element name="NoteData" positionX="-54" positionY="-9" width="128" height="225"/>
-        <element name="MemberData" positionX="-36" positionY="9" width="128" height="195"/>
         <element name="BackupData" positionX="-18" positionY="27" width="128" height="45"/>
+        <element name="BoardData" positionX="-63" positionY="-18" width="128" height="240"/>
+        <element name="MemberData" positionX="-36" positionY="9" width="128" height="195"/>
+        <element name="NoteData" positionX="-54" positionY="-9" width="128" height="225"/>
     </elements>
 </model>

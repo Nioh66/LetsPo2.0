@@ -12,13 +12,6 @@ import CoreData
 
 class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
    
-    
-    
-//    private var managedObjectContext:NSManagedObjectContext
-//    private var managedObjectModel:NSManagedObjectModel
-//    private var persistentStoreCoordinator:NSPersistentStoreCoordinator?
-//    private var fetchedResultsController:NSFetchedResultsController<NSFetchRequestResult>
-    
     var targetModelName:String
     var targetDBfilename:String
     var targetDBPathURL:URL?
@@ -154,7 +147,7 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
         
         
         saveCompletion = completion
-        print("1111")
+        print("Start to save!!!")
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
@@ -164,13 +157,12 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
-                print("save FAilllllll ")
+                print("Save failure!!!!!")
                 abort()
             }
         }else{
             completion(true)
             saveCompletion = nil
-            print("5566")
         }
         
     }//method
@@ -220,10 +212,14 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
     //掌握存檔完成時間點 使用它時存擋已完成
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         // In the simplest, most efficient, case, reload the table view.
-        if saveCompletion != nil {
-            saveCompletion!(true)
+        if let completion = saveCompletion{
+            completion(true)
             saveCompletion = nil
         }
+//        if saveCompletion != nil {
+//            saveCompletion!(true)
+//            saveCompletion = nil
+//        }
         
     }
 

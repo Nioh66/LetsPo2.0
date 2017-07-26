@@ -117,23 +117,13 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if(segue.identifier == "goBoardSet"){
         
         let newPostSegue = segue.destination as! BoardSettingVC
         newPostSegue.thePost = thePost
 
         let resizeNote = thePost.resizeNote()
         newPostSegue.resizeNote = resizeNote
-            print("----\(resizeNote)-----")
 
-        }else{
-        
-        
-        let test = segue.destination as! testViewController
-        
-  //      test.popoView = thePost
-
-        }
         
     }
     

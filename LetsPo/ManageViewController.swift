@@ -18,7 +18,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var dataManager:CoreDataManager<BoardData>!
+//    var dataManager:CoreDataManager<BoardData>!
     var dataManagerCount = Int()
     let locationManager = CLLocationManager()
     
@@ -39,8 +39,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dataManager = CoreDataManager(initWithModel: "LetsPoModel", dbFileName: "boardData.sqlite", dbPathURL: nil, sortKey: "board_CreateTime", entityName: "BoardData")
-        dataManagerCount = dataManager.count()
+//        dataManager = CoreDataManager(initWithModel: "LetsPoModel", dbFileName: "boardData.sqlite", dbPathURL: nil, sortKey: "board_CreateTime", entityName: "BoardData")
+        dataManagerCount = boardDataManager.count()
         locationManagerMethod()
         
         // register three collectionView
@@ -87,7 +87,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func arrayImageData(){
         for i in 0..<dataManagerCount {
-            let item = dataManager.itemWithIndex(index: i)
+            let item = boardDataManager.itemWithIndex(index: i)
             if let img = item.board_BgPic {
                 let imgWithData = UIImage(data: img as Data)
                 all.add(imgWithData!)
@@ -95,7 +95,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }
         if dataManagerCount >= 5 {
             for i in 0..<5 {
-                let item = dataManager.itemWithIndex(index: i)
+                let item = boardDataManager.itemWithIndex(index: i)
                 if let img = item.board_BgPic {
                     let imgWithData = UIImage(data: img as Data)
                     recent.add(imgWithData!)
@@ -103,7 +103,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             }
         }else {
             for i in 0..<dataManagerCount {
-                let item = dataManager.itemWithIndex(index: i)
+                let item = boardDataManager.itemWithIndex(index: i)
                 if let img = item.board_BgPic {
                     let imgWithData = UIImage(data: img as Data)
                     recent.add(imgWithData!)
@@ -172,9 +172,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     //Mark: - remove object form indexPath
     func deleteCell(_ cell: UICollectionViewCell) {
         if let indexPath = collectionViewOne.indexPath(for: cell) {
-            let item = dataManager.itemWithIndex(index: indexPath.row)
-            dataManager.deleteItem(item: item)
-            dataManager.saveContexWithCompletion(completion: { success in
+            let item = boardDataManager.itemWithIndex(index: indexPath.row)
+            boardDataManager.deleteItem(item: item)
+            boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
                     self.recent.removeObject(at: indexPath.row)
                     self.collectionViewOne.deleteItems(at: [indexPath])
@@ -182,9 +182,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 }
             })
         }else if let indexPath = collectionViewTwo.indexPath(for: cell) {
-            let item = dataManager.itemWithIndex(index: indexPath.row)
-            dataManager.deleteItem(item: item)
-            dataManager.saveContexWithCompletion(completion: { success in
+            let item = boardDataManager.itemWithIndex(index: indexPath.row)
+            boardDataManager.deleteItem(item: item)
+            boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
                     self.nearby.removeObject(at: indexPath.row)
                     self.collectionViewTwo.deleteItems(at: [indexPath])
@@ -192,10 +192,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 }
             })
         }else if let indexPath = collectionViewThree.indexPath(for: cell) {
-            let item = dataManager.itemWithIndex(index: indexPath.row)
-            dataManager.deleteItem(item: item)
+            let item = boardDataManager.itemWithIndex(index: indexPath.row)
+            boardDataManager.deleteItem(item: item)
             
-            dataManager.saveContexWithCompletion(completion: { success in
+            boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
                     self.all.removeObject(at: indexPath.row)
                     self.collectionViewThree.deleteItems(at: [indexPath])
@@ -279,7 +279,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         var distance = CLLocationDistance()
         count = count + 1
         for i in 0..<dataManagerCount {
-            let item = dataManager.itemWithIndex(index: i)
+            let item = boardDataManager.itemWithIndex(index: i)
             
             let Creater = item.board_Creater
             let lat = item.board_Lat
