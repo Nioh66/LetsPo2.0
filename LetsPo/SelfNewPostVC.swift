@@ -12,7 +12,6 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
     
     
     @IBOutlet weak var theSelfPost: Note!
-    var delegate:ThePostDelegate? = nil
     var myTextView = NoteText()
     var textContainer = NSTextContainer()
     var myInputView : UIView?

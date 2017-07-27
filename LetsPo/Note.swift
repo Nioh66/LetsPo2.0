@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class Note: UIView {
- //   private var  mydrawTest:Int? = nil
+    private var  mydrawTest:Int? = nil
     private let LINE_WIDTH:CGFloat = 2
 //  var myText = UITextView()
 //    private static var noteInstance:Note?
@@ -23,14 +23,51 @@ class Note: UIView {
 //        }
 //        return noteInstance!
 //    }
-
-    
-    
     var shapeLayer = CAShapeLayer()
-    
+    var uploadcolor = UIColor()
 
     var borderColor = UIColor(red: 182.0/255.0, green: 153.0/255.0, blue: 75.0/255.0, alpha: 0.38)
-    var posterColor = UIColor(red: 253.0/255.0, green: 237.0/255.0, blue: 166.0/255.0, alpha: 1.0)
+    
+    var darkBlueC = UIColor(red: 0.0/255.0,
+                            green: 67.0/255.0,
+                            blue: 88.0/255.0,
+                            alpha: 1.0)
+    var darkGreenC = UIColor(red: 31.0/255.0,
+                             green: 138.0/255.0,
+                             blue: 112.0/255.0,
+                             alpha: 1.0)
+    var lightGreenC = UIColor(red: 190.0/255.0,
+                              green: 219.0/255.0,
+                              blue: 57.0/255.0,
+                              alpha: 1.0)
+    var posterColor = UIColor(red: 253.0/255.0,
+                              green: 237.0/255.0,
+                              blue: 166.0/255.0,
+                              alpha: 1.0)
+    var orangeC = UIColor(red: 253.0/255.0,
+                          green: 116.0/255.0,
+                          blue: 0.0/255.0,
+                          alpha: 1.0)
+    var darkRedC = UIColor(red: 112.0/255.0,
+                           green: 48.0/255.0,
+                           blue: 48.0/255.0,
+                           alpha: 1.0)
+    var darkGreyC = UIColor(red: 47.0/255.0,
+                            green: 52.0/255.0,
+                            blue: 59.0/255.0,
+                            alpha: 1.0)
+    var lightGreyC = UIColor(red: 126.0/255.0,
+                             green: 130.0/255.0,
+                             blue: 122.0/255.0,
+                             alpha: 1.0)
+    var skinC = UIColor(red: 227.0/255.0,
+                        green: 205.0/255.0,
+                        blue: 164.0/255.0,
+                        alpha: 1.0)
+    var darkSkinC = UIColor(red: 199.0/255.0,
+                            green: 121.0/255.0,
+                            blue: 102.0/255.0,
+                            alpha: 1.0)
     
     
     
@@ -48,7 +85,7 @@ class Note: UIView {
     override func draw(_ rect: CGRect) {
         //Add Note
         
-   //     if(mydrawTest == nil){
+        if(mydrawTest == nil){
     
         let path = UIBezierPath()
 
@@ -75,12 +112,12 @@ class Note: UIView {
         shapeLayer.lineJoin = kCALineJoinRound
         shapeLayer.lineCap = kCALineCapRound
         shapeLayer.path = path.cgPath
-            layer.addSublayer(shapeLayer)
+        layer.addSublayer(shapeLayer)
+    
+            mydrawTest = 1}
+        else{
+            return}
     }
-//            mydrawTest = 1}
-//        else{
-//            return}
-//    }
     
     
     func giveMeFreshNewNote() {
@@ -93,28 +130,53 @@ class Note: UIView {
     func changeBgColor(button:UIButton){
         switch button.tag {
         case 101:
-            shapeLayer.fillColor = UIColor.red.cgColor
+            shapeLayer.fillColor = darkBlueC.cgColor
+            uploadcolor = darkBlueC
         case 102:
-            shapeLayer.fillColor = UIColor.green.cgColor
+            shapeLayer.fillColor = darkGreenC.cgColor
+            uploadcolor = darkGreenC
+
         case 103:
-            shapeLayer.fillColor = UIColor.blue.cgColor
+            shapeLayer.fillColor = lightGreenC.cgColor
+            uploadcolor = lightGreenC
+
         case 104:
-            shapeLayer.fillColor = UIColor.cyan.cgColor
-        case 105:
             shapeLayer.fillColor = posterColor.cgColor
+            uploadcolor = posterColor
+
+        case 105:
+            shapeLayer.fillColor = orangeC.cgColor
+            uploadcolor = orangeC
+
         case 106:
-            shapeLayer.fillColor = UIColor.brown.cgColor
+            shapeLayer.fillColor = darkRedC.cgColor
+            uploadcolor = darkRedC
+
         case 107:
-            shapeLayer.fillColor = UIColor.gray.cgColor
+            shapeLayer.fillColor = darkGreyC.cgColor
+            uploadcolor = darkGreyC
+
         case 108:
-            shapeLayer.fillColor = UIColor.lightGray.cgColor
+            shapeLayer.fillColor = lightGreyC.cgColor
+            uploadcolor = lightGreyC
+
         case 109:
-            shapeLayer.fillColor = UIColor.white.cgColor
+            shapeLayer.fillColor = skinC.cgColor
+            uploadcolor = skinC
+
         default:
-            shapeLayer.fillColor = UIColor.black.cgColor
+            shapeLayer.fillColor = darkSkinC.cgColor
+            uploadcolor = darkSkinC
+
         }
     }
-  }
+  
+
+    
+}
+
+
+
 
 //  Resize the note
     extension UIView{

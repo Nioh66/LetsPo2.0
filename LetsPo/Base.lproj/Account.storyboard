@@ -309,6 +309,9 @@
                                 <rect key="frame" x="252" y="318" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="V"/>
+                                <connections>
+                                    <action selector="searchBtnPressed:" destination="Uof-NS-3NC" eventType="touchUpInside" id="g7a-aU-K12"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v5W-U7-knI">
                                 <rect key="frame" x="112" y="104" width="150" height="150"/>
@@ -326,6 +329,7 @@
                     </view>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="friendImage" destination="v5W-U7-knI" id="SoF-GW-C1V"/>
                         <outlet property="inputID" destination="vtR-tv-uyb" id="Fqh-dD-5dA"/>
                     </connections>
                 </viewController>

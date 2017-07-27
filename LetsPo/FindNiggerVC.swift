@@ -10,9 +10,11 @@ import UIKit
 
 class FindNiggerVC: UIViewController {
 
+    @IBOutlet weak var friendImage: UIImageView!
     @IBOutlet weak var inputID: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationItem.leftItemsSupplementBackButton = true
 
         
@@ -21,6 +23,21 @@ class FindNiggerVC: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    @IBAction func searchBtnPressed(_ sender: UIButton) {
+        let theMemberID = "2"
+        
+        let searchId = inputID.text
+        if searchId == theMemberID {
+        }else{
+            //..
+        }
+
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
@@ -33,11 +50,6 @@ class FindNiggerVC: UIViewController {
                 self.inputID.resignFirstResponder()
         }
 
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
 

@@ -24,7 +24,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     var posterY:CGFloat = 150
     let posterEdge:CGFloat = 100
     let resetNote = Notification.Name("resetNote")
-    
+    var allNoteData = [String:Any]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         NoteImageView.addGestureRecognizer(panGesture)
     }
     @IBAction func finishBtn(_ sender: UIButton) {
-        
+        self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
             tabBarController?.selectedIndex = 1
         navigationController?.popToRootViewController(animated: true)
@@ -72,7 +72,58 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         
         
         NoteImageView.center = point
+        
+        
+        print(NoteImageView.frame.minX)
     }
+    
+    
+    func saveNoteData() {
+        let noteItem = noteDataManager.createItem()
+
+        let postX = NoteImageView.frame.minX
+        let postY = NoteImageView.frame.minY
+        let noteX = Double(postX)
+        let noteY = Double(postY)
+
+        guard let noteContent = allNoteData["noteContent"] as? String?,
+             let noteBgColor = allNoteData["noteBgColor"] as? NSData,
+             let noteFontColor = allNoteData["noteFontColor"] as? NSData,
+             let noteFontSize = allNoteData["noteFontSize"] as? Double
+            else {
+                print("Case failure!!!!!!!!")
+                return
+            }
+        
+        
+        
+        
+        
+        noteItem.note_Content = noteContent
+        noteItem.note_BgColor = noteBgColor
+        noteItem.note_FontColor = noteFontColor
+        noteItem.note_FontSize = noteFontSize
+        noteItem.note_X = noteX
+        noteItem.note_Y = noteY
+        
+//        for image in imageForCell{
+//            
+//            let imageData = UIImagePNGRepresentation(image) as! NSData
+//            noteItem.note_Image = imageData
+//        }
+//        
+        
+        noteDataManager.saveContexWithCompletion { (success) in
+            if(success){
+                print("Save note data success!!!!!")
+            }else{
+                print("Save note data failure!!!!!")
+            }
+        }
+    }
+    
+    
+    
   }
 
     
