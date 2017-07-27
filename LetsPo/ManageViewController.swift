@@ -28,8 +28,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var nearbyDic = [[String:Any]]()
     var count = 0
     
-    var allDic = [[String:Any]]()
-    var recentDic = [[String:Any]]()
+//    var allDic = [[String:Any]]()
+//    var recentDic = [[String:Any]]()
     
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
@@ -37,6 +37,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
 
         dataManagerCount = boardDataManager.count()
         locationManagerMethod()
@@ -269,7 +270,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         cell.delegation = self
     }
 
-    
     func handleDoubleTap(gestureRecognizer:UITapGestureRecognizer){
         hideAllDeleteBtn()
     }
