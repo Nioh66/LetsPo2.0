@@ -57,8 +57,6 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         mapView.mapType = .standard
         mapView.showsUserLocation = true
         
-//        dataManager = CoreDataManager(initWithModel: "LetsPoModel", dbFileName: "boardData.sqlite", dbPathURL: nil, sortKey: "board_CreateTime", entityName: "BoardData")
-        
         dataManagerCount = boardDataManager.count()
         
         
@@ -84,15 +82,14 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         addlocations.setImage(UIImage(named: "addNote.png"), for: .normal)
         self.view.addSubview(addlocations)
         
-//        let result = dataManager.searchField(field: "board_Privacy", forKeyword: "0") as! [BoardData]
+//        let result = boardDataManager.searchField(field: "board_Lon", forKeyword: "1") as! [BoardData]
 ////        print(result)
 //        for tmp:BoardData in result{
-//            print("name: \(String(describing: tmp.board_Creater))Lat:\(String(describing: tmp.board_Lat))Lon:\(String(describing: tmp.board_Lon))time:\(String(describing: tmp.board_CreateTime))Privacy:\(String(describing: tmp.board_Privacy))")
+//            print("UUUUUU name: \(String(describing: tmp.board_Creater))Lat:\(String(describing: tmp.board_Lat))Lon:\(String(describing: tmp.board_Lon))time:\(String(describing: tmp.board_CreateTime))Privacy:\(String(describing: tmp.board_Privacy))")
 //        }
-//        
+//
         
         
-       
     }
     
     typealias EditItemCompletion = (_ success: Bool , _ result : BoardData?) -> ()
@@ -104,31 +101,41 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         }
             var finalItem = item
         
-        for i in 0...8{
+//        for i in 0...8{
         
-//            if(finalItem == nil){
+            if(finalItem == nil){
                 finalItem = boardDataManager.createItem()
                 finalItem?.board_CreateTime = NSDate()
-//            }
-
-            let nameArr = ["Tom","Jack","Hunter","Lucy","Sandy","Lisa","Jo","Bob","Andraw"]
-            
-        finalItem?.board_Creater = nameArr[i]
-        
-        let lat = [0.33087803,0.331622,0.33045275,0.337566,0.33546547,0.33424,0.33754,0.334643,0.6544343]
-        let lon = [0.0305999,0.030337,0.02953296,0.041202,0.030544,0.03012364,0.0303322,0.0304657,0.9754]
-        
-        finalItem?.board_Lat = 37 + lat[i]
-        finalItem?.board_Lon = -122 + lon[i]
-        let image = ["myNigger.jpg","delete.png","deer.jpg","map.png","rightBtn.png","insert.png","right-arrow.png","BgSettings.png","Trashcan.png"]
-            let iii = image[i]
-        let img = UIImage(named: iii)
-        let imgData = UIImageJPEGRepresentation(img!, 1)
+            }
+        finalItem?.board_Creater = "ddfs"
+        finalItem?.board_Lat = 37.3347403
+        finalItem?.board_Lon = -122.03018079
+        let img = UIImage(named: "map.png")
+        let imgData = UIImageJPEGRepresentation(img!, 0.7)
         finalItem?.board_BgPic = imgData! as NSData
-        finalItem?.board_Privacy = true
-            
+        finalItem?.board_Privacy = false
+        finalItem?.board_Alert = true
+
+//
+//            let nameArr = ["Tom","Jack","Hunter","Lucy","Sandy","Lisa","Jo","Bob","Andraw"]
+//            
+//        finalItem?.board_Creater = nameArr[i]
+//        
+//        let lat = [0.33087803,0.331622,0.33045275,0.337566,0.33546547,0.33424,0.33754,0.334643,0.6544343]
+//        let lon = [0.0305999,0.030337,0.02953296,0.041202,0.030544,0.03012364,0.0303322,0.0304657,0.9754]
+//        
+//        finalItem?.board_Lat = 37 + lat[i]
+//        finalItem?.board_Lon = -122 + lon[i]
+//        let image = ["myNigger.jpg","delete.png","deer.jpg","map.png","rightBtn.png","insert.png","right-arrow.png","BgSettings.png","Trashcan.png"]
+//            let iii = image[i]
+//        let img = UIImage(named: iii)
+//        let imgData = UIImageJPEGRepresentation(img!, 1)
+//        finalItem?.board_BgPic = imgData! as NSData
+//        finalItem?.board_Privacy = true
+//        
+        
             completion!(true, finalItem)
-        }
+//        }
         
     }
     
@@ -298,16 +305,26 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     
     func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
         print("CREATED REGION: \(region.identifier) - \(locationManager.monitoredRegions.count)")
+        locationManager.requestState(for: region)
         
     }
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        print("Enter \(region.identifier)")
-        mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
+        if state == .inside{
+            print(state)
+            mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
+        }else {
+            print(state)
+            mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
+        }
     }
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("Exit \(region.identifier)")
-        mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
-    }
+//    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+//        print("Enter \(region.identifier)")
+//        mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
+//    }
+//    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+//        print("Exit \(region.identifier)")
+//        mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
+//    }
     func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
         //        print("monitoringDidFailForRegion \(String(describing: region)) \(error)")
         
@@ -366,7 +383,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
                         
                         // nearbyDictionary 內的定位開始 Monitoring
                         locationManager.startMonitoring(for: region)
-                        locationManager.requestState(for: region)
+//                        locationManager.requestState(for: region)
                         
                         // 超過 2300 則停止 Monitoring
                         if distance > 2300 {
@@ -420,6 +437,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
             if let img = item.board_BgPic {
                 let imgWithData = UIImage(data: img as Data)
                 locations.append(["board_Creater":Creater!,"lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert])
+                
             }
         }
 //        print("locations :\(locations)")

@@ -18,14 +18,13 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
-//    var dataManager:CoreDataManager<BoardData>!
     var dataManagerCount = Int()
     let locationManager = CLLocationManager()
     
     var deleteBtnFlag:Bool!
-    var recent:NSMutableArray = []
-    var nearby:NSMutableArray = []
-    var all:NSMutableArray = []
+    var recent = [UIImage]()
+    var nearby = [UIImage]()
+    var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
     
@@ -38,8 +37,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        dataManager = CoreDataManager(initWithModel: "LetsPoModel", dbFileName: "boardData.sqlite", dbPathURL: nil, sortKey: "board_CreateTime", entityName: "BoardData")
+
         dataManagerCount = boardDataManager.count()
         locationManagerMethod()
         
@@ -83,6 +81,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         print("cell count \(dataManagerCount)")
         
+    
     }
     
     func arrayImageData(){
@@ -90,15 +89,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             let item = boardDataManager.itemWithIndex(index: i)
             if let img = item.board_BgPic {
                 let imgWithData = UIImage(data: img as Data)
-                all.add(imgWithData!)
+                all.append(imgWithData!)
             }
         }
-        if dataManagerCount >= 5 {
-            for i in 0..<5 {
+        if dataManagerCount >= 7 {
+            for i in 0..<7 {
                 let item = boardDataManager.itemWithIndex(index: i)
                 if let img = item.board_BgPic {
                     let imgWithData = UIImage(data: img as Data)
-                    recent.add(imgWithData!)
+                    recent.append(imgWithData!)
                 }
             }
         }else {
@@ -106,7 +105,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 let item = boardDataManager.itemWithIndex(index: i)
                 if let img = item.board_BgPic {
                     let imgWithData = UIImage(data: img as Data)
-                    recent.add(imgWithData!)
+                    recent.append(imgWithData!)
                 }
             }
         }
@@ -114,18 +113,19 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         for value in nearbyDic {
             let imageName = value["BgPic"] as! UIImage
             if count == 1 {
-                nearby.add(imageName)
+                nearby.append(imageName)
             }else {
                 count = 0
-                nearby.removeAllObjects()
-                nearby.add(imageName)
+                nearby.removeAll()
+                nearby.append(imageName)
                 count = 1
             }
         }
         reloadAllData()
 
-//        print("recent : \(recent.count)")
-        print("all : \(all.count)")
+        print("recent count: \(recent.count)")
+        print("nearby count : \(nearby.count)")
+        print("all count: \(all.count)")
     }
     
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
@@ -137,9 +137,14 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         if collectionView == self.collectionViewOne {
             count = recent.count
+
         }
         else if collectionView == self.collectionViewTwo {
-            count = nearby.count
+            if nearby.count == 0 {
+                count = 1
+            }else {
+                count = nearby.count
+            }
         }else if collectionView == self.collectionViewThree {
             count = all.count
         }
@@ -152,59 +157,92 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         if collectionView == self.collectionViewOne {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             let imageString = recent[indexPath.item]
-            cell.backdroundImage.image = imageString as? UIImage
-          
+            cell.backdroundImage.image = imageString
         }else if collectionView == self.collectionViewTwo {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-            let imageString = nearby[indexPath.item]
-            cell.backdroundImage.image = imageString as? UIImage
+            if nearby.count != 0 {
+                let imageString = nearby[indexPath.item]
+                cell.backdroundImage.image = imageString
+            }else {
+                
+                cell.backdroundImage.image = UIImage(named: "deer.jpg")
+            }
             
         }else if collectionView == self.collectionViewThree {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             let imageString = all[indexPath.item]
-            cell.backdroundImage.image = imageString as? UIImage
-           
+            cell.backdroundImage.image = imageString
+
         }
         setCellBtn(cell: cell)
         return cell
     }
     
+    
     //Mark: - remove object form indexPath
     func deleteCell(_ cell: UICollectionViewCell) {
+        
         if let indexPath = collectionViewOne.indexPath(for: cell) {
             let item = boardDataManager.itemWithIndex(index: indexPath.row)
+            for i in 0..<nearbyDic.count {
+                let path = nearbyDic[i]["index"] as! NSInteger
+                if path == indexPath.row {
+                    print("i = \(i) indexPath.row = \(indexPath.row)")
+                    nearby.remove(at: i)
+                }
+            }
+            self.all.remove(at: indexPath.row)
+            self.recent.remove(at: indexPath.row)
+            self.collectionViewOne.deleteItems(at: [indexPath])
             boardDataManager.deleteItem(item: item)
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
-                    self.recent.removeObject(at: indexPath.row)
-                    self.collectionViewOne.deleteItems(at: [indexPath])
                     self.reloadAllData()
                 }
             })
         }else if let indexPath = collectionViewTwo.indexPath(for: cell) {
-            let item = boardDataManager.itemWithIndex(index: indexPath.row)
+            let indexWithRow = nearbyDic[indexPath.row]["index"] as! NSInteger
+            
+            print("indexWithRow: \(indexWithRow)")
+            
+                let item = boardDataManager.itemWithIndex(index: indexWithRow)
             boardDataManager.deleteItem(item: item)
+            if indexWithRow <= recent.count - 1 {
+                print("indexWithRow \(indexWithRow) <= recent.count")
+                self.recent.remove(at: indexWithRow)
+                self.all.remove(at: indexWithRow)
+            }else {
+                print("indexWithRow \(indexWithRow) >= recent.count")
+                self.all.remove(at: indexWithRow)
+            }
+            self.nearby.remove(at: indexPath.row)
+            self.collectionViewTwo.deleteItems(at: [indexPath])
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
-                    self.nearby.removeObject(at: indexPath.row)
-                    self.collectionViewTwo.deleteItems(at: [indexPath])
                     self.reloadAllData()
                 }
             })
         }else if let indexPath = collectionViewThree.indexPath(for: cell) {
             let item = boardDataManager.itemWithIndex(index: indexPath.row)
             boardDataManager.deleteItem(item: item)
-            
+            self.all.remove(at: indexPath.row)
+            for i in 0..<nearby.count {
+                let path = nearbyDic[i]["index"] as! NSInteger
+                if path == indexPath.row {
+                    print("i = \(i) indexPath.row = \(indexPath.row)")
+                    self.nearby.remove(at: i)
+                }
+            }
+            if recent.count > 0 && indexPath.row < recent.count{
+                self.all.remove(at: indexPath.row)
+            }
+            self.collectionViewThree.deleteItems(at: [indexPath])
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
-                    self.all.removeObject(at: indexPath.row)
-                    self.collectionViewThree.deleteItems(at: [indexPath])
                     self.reloadAllData()
                 }
-                
             })
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -238,7 +276,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func addDoubleTapGesture(){
         let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(gestureRecognizer:)))
-        doubleTap.numberOfTapsRequired = 1
+        doubleTap.numberOfTapsRequired = 2
         view.addGestureRecognizer(doubleTap)
     }
     
@@ -293,17 +331,18 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             distance = pins.distance(from: userLocation) * 1.09361
             if distance <  2500 {
                 if count == 1 {
-                    nearbyDic.append(["name":Creater!,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData])
+                    nearbyDic.append(["name":Creater!,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
                 }else {
                     count = 0
                     nearbyDic.removeAll()
-                    nearbyDic.append(["name":Creater!,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData])
+                    nearbyDic.append(["name":Creater!,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
                     count = 1
                 }
             }
         }
         nearbyDic.sort { ($0["distance"] as! Double) < ($1["distance"] as! Double) }
 //        print("near dictionary \(nearbyDic)")
+        print("nearbyDic count \(nearbyDic.count)")
     }
     
     override func didReceiveMemoryWarning() {
@@ -313,6 +352,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        locationManager.stopUpdatingLocation()
     }
     
     // set frame for scroll view
