@@ -9,20 +9,21 @@
 import Foundation
 import UIKit
 
-protocol ThePostDelegate{
-    func sendthePost(post:Note!)
-}
 
-
-class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate{
+class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegateFlowLayout ,UICollectionViewDataSource{
 
     
-    var delegate:ThePostDelegate? = nil
+    @IBOutlet weak var noteCollectionView: UICollectionView!
     
+    @IBOutlet weak var showCellImage: UIImageView!
     @IBOutlet weak var thePost: Note!
+    var fontSizeData:Double = 14.0
+    
     var myTextView = NoteText()
-    //  var myScrollView = NoteScrollview()
     var textContainer = NSTextContainer()
+
+    var imageForCell = [UIImage]()
+    let cellSpace:CGFloat = 1
     
     var myInputView : UIView?
     var keyboardHeight:CGFloat? = nil
@@ -30,6 +31,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     var imageFactory = MyPhoto()
     let resetNote = Notification.Name("resetNote")
 
+    var allNoteData = [String:Any]()
+    
     deinit {
         NotificationCenter.default.removeObserver(self,
                                                   name: .UIKeyboardWillShow,
@@ -39,16 +42,28 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
                                                   object: nil)
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //   myTextView.contentInset.top = -64
+        
+        
+        let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
+                                                                FileManager.SearchPathDomainMask.userDomainMask, true)
+        //let documnetPath = documentPaths[0] as! String
+        print(documentPaths)
+        
+        
+        showCellImage.layer.cornerRadius = 10.0
+        showCellImage.layer.masksToBounds = true
         
         myTextView.frame = CGRect(x: 0, y: 0, width: thePost.frame.size.width, height: thePost.frame.size.height*0.8)
         thePost.clipsToBounds = true
        
         DispatchQueue.main.async {
         self.thePost.addSubview(self.myTextView)
+            let collectBgcolor = UIColor(cgColor: self.thePost.shapeLayer.fillColor!)
+            self.noteCollectionView.backgroundColor = collectBgcolor
+
+        self.thePost.addSubview(self.noteCollectionView)
         }
         
         //        myTextView.setNeedsDisplay()
@@ -109,11 +124,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     }
 
     
-    func getMyPopo() {
-        self.delegate?.sendthePost(post: thePost)
-    }
-    
-    
+  
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
@@ -123,7 +134,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
 
         let resizeNote = thePost.resizeNote()
         newPostSegue.resizeNote = resizeNote
-
+        
+        self.saveNoteData()
+        newPostSegue.allNoteData = allNoteData
         
     }
     
@@ -292,7 +305,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     func changeFSSlider(slider:UISlider) {
         let sliderValue = CGFloat(slider.value)
         myTextView.font = UIFont.boldSystemFont(ofSize: sliderValue)
-        
+        fontSizeData = Double(sliderValue)
     }
     
     
@@ -395,6 +408,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     func changeBgBtn(button:UIButton) {
         thePost.changeBgColor(button: button)
+        let collectBgcolor = UIColor(cgColor: thePost.shapeLayer.fillColor!)
+        noteCollectionView.backgroundColor = collectBgcolor
+
     }
     
     
@@ -417,7 +433,17 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         }
     }
     
-    // MARK: Take photo
+    // MARK: HideKeyboard
+    func hideKeyboard(tapG:UITapGestureRecognizer){
+        // self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5) {
+            self.myTextView.resignFirstResponder()
+        }
+        
+    }
+    
+    
+    // MARK: Photo method
     
     func takePictureBtn() {
         let checkDeviceAccesse = UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -435,25 +461,6 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
             print("Your camera are unvailable")
         }
     }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    
-    // MARK: hideKeyboard
-    func hideKeyboard(tapG:UITapGestureRecognizer){
-        // self.view.endEditing(true)
-        UIView.animate(withDuration: 0.5) {
-            self.myTextView.resignFirstResponder()
-        }
-        
-    }
-    
-    
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
@@ -483,13 +490,94 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         
-        myTextView.addImageInText(image: imageX, NoteView: thePost)
+        imageForCell.append(imageX)
+        noteCollectionView.reloadData()
+    //    myTextView.addImageInText(image: imageX, NoteView: thePost)
         
         self.dismiss(animated: true, completion: nil)
         
     }
     
     
+    // MARK: Collectionview delegate method
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageForCell.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! NoteImageCell
+        
+        
+        cell.noteImage.image = imageForCell[indexPath.row]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        showCellImage.image = imageForCell[indexPath.row]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let length = collectionView.frame.size.height
+        let cellSize = CGSize(width: length, height: length)
+        
+        return cellSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpace
+    }
+    
+    
+
+    func saveNoteData() {
+        
+        allNoteData.removeAll()
+        
+        let noteContent = myTextView.text
+
+        guard let fontColor = myTextView.textColor
+        else {
+            return
+        }
+        let textColorData = NSKeyedArchiver.archivedData(withRootObject: fontColor ) as NSData
+        let noteFontColor = textColorData
+        let noteFontSize = fontSizeData
+
+//        for image in imageForCell{
+//            
+//            let imageData = UIImagePNGRepresentation(image) as! NSData
+//            noteItem.note_Image = imageData
+//        }
+        
+        let noteBgColor = self.transformColorToData(targetColor: thePost.uploadcolor)
+
+        allNoteData = ["noteContent":noteContent ?? "",
+                       "noteBgColor":noteBgColor,
+                       "noteFontColor":noteFontColor ,
+                       "noteFontSize":noteFontSize,]
+          }
+    
+    
+    
+    func transformColorToData(targetColor:UIColor) -> NSData {
+        
+        let color = targetColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        let components:[CGFloat] = [red, green, blue, alpha]
+        
+        let colorData = NSData(bytes: components,
+                               length: MemoryLayout.size(ofValue: components)*components.count)
+        
+        return colorData
+    }
+
     
     //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     //        guard let loca = touches.first?.location(in: self.view)
@@ -508,6 +596,16 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
      }
      */
     
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+
 }
 
     

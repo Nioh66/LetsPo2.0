@@ -19,6 +19,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     var resizeNote:UIImage!
     let resetNote = Notification.Name("resetNote")
 
+    var allNoteData = [String:Any]()    
     deinit {
         NotificationCenter.default.removeObserver(self,
                                                   name: sendBgImageNN,
@@ -61,7 +62,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         dragVC.topBgImages = topBg.image
         dragVC.resizeNote = resizeNote
         dragVC.thePost = thePost
-
+        dragVC.allNoteData = allNoteData
        navigationController?.pushViewController(dragVC, animated: true)
         
         
