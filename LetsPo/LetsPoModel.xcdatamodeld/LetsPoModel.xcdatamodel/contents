@@ -46,10 +46,10 @@
         <attribute name="selfNote_Y" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SelfBoardData" positionX="-18" positionY="27" width="128" height="75"/>
         <element name="BoardData" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="MemberData" positionX="-36" positionY="9" width="128" height="135"/>
         <element name="NoteData" positionX="-54" positionY="-9" width="128" height="165"/>
+        <element name="SelfBoardData" positionX="-18" positionY="27" width="128" height="75"/>
         <element name="SelfNoteData" positionX="-36" positionY="99" width="128" height="180"/>
     </elements>
 </model>

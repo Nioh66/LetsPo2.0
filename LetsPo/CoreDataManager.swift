@@ -222,8 +222,50 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
 //        }
         
     }
+}
 
 
+
+// Transform UIImage to NSData and store in Json
+extension CoreDataManager{
+    
+    func transformImageTOJson(images:[UIImage]) -> String?{
+        
+        var imageJSONData = [String:Any]()
+        var jsonContent:String = ""
+        
+        for (index,image) in images.enumerated(){
+            let hashFileName = String(format: "image_%d.jpg", image.hash)
+            guard let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first  else{
+                print("Transform failure!!!!!!")
+                return nil
+            }
+            let finalPath = documentURL.appendingPathComponent(hashFileName)
+            if !FileManager.default.fileExists(atPath: finalPath.path){
+                guard let imageData = UIImageJPEGRepresentation(image, 1.0) as NSData? else{
+                    print("Image transform failure!!!!!!")
+                    return nil
+                }
+                imageData.write(to: finalPath, atomically: true)
+                
+                imageJSONData.updateValue(imageData, forKey: "\(index)")
+                
+                jsonContent += "image\(index):\(hashFileName),"
+                
+            }else{
+                print("File already exist!")
+            }
+        }
+        
+        jsonContent = jsonContent.substring(to: jsonContent.index(before: jsonContent.endIndex))
+        let jsonBegin = "{"
+        let jsonEnd = "}"
+        let finalJson = jsonBegin+jsonContent+jsonEnd
+        
+        return finalJson
+    }
+    
+    
 }
 
 

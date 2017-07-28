@@ -100,11 +100,16 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         guard let noteContent = allNoteData["noteContent"] as? String?,
              let noteBgColor = allNoteData["noteBgColor"] as? NSData,
              let noteFontColor = allNoteData["noteFontColor"] as? NSData,
-             let noteFontSize = allNoteData["noteFontSize"] as? Double
+             let noteFontSize = allNoteData["noteFontSize"] as? Double,
+             let noteImage = allNoteData["noteImage"] as? [UIImage]
             else {
                 print("Case failure!!!!!!!!")
                 return
-            }
+        }
+        let imageJson = noteDataManager.transformImageTOJson(images: noteImage)
+
+        print("---------\(imageJson)")
+        
         
         noteItem.note_Content = noteContent
         noteItem.note_BgColor = noteBgColor
@@ -112,7 +117,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         noteItem.note_FontSize = noteFontSize
         noteItem.note_X = noteX
         noteItem.note_Y = noteY
-        
+        noteItem.note_Image = imageJson
 //        for image in imageForCell{
 //            
 //            let imageData = UIImagePNGRepresentation(image) as! NSData
@@ -141,7 +146,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             boardItem.board_Id = lastBoardItem.board_Id + 1
         }
         
-        
+    //  boardItem.board_Creater = nil
    //     boardItem.board_Lat =
    //     boardItem.board_Lon =
         guard let screenshotimage = self.view.boardScreenShot(),
@@ -155,8 +160,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             else{
                 return
         }
-
-     //   let boardScreenShot = NSKeyedArchiver.archivedData(withRootObject: screenshotimage ) as NSData
         
         boardItem.board_Alert = boardAlert
         boardItem.board_Privacy = boardPrivacy
@@ -170,12 +173,17 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                 print("BoardData save failure!!!")
             }
         }
-        //  boardItem.board_Creater = nil
-
-
-        
     }
-    
+    func transformDateTimeZone() -> String {
+        let dateFormate = DateFormatter()
+        dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = NSDate()
+        let stringOfDate = dateFormate.string(from: date as Date)
+        
+        print("stringOfDate \(stringOfDate)")
+        return stringOfDate
+    }
+ 
   }
 
     

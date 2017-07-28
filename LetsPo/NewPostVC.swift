@@ -537,6 +537,10 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         let noteContent = myTextView.text
 
+
+        
+        
+        
         guard let fontColor = myTextView.textColor
         else {
             return
@@ -544,7 +548,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let textColorData = NSKeyedArchiver.archivedData(withRootObject: fontColor ) as NSData
         let noteFontColor = textColorData
         let noteFontSize = fontSizeData
-
+        let noteImage = imageForCell
 //        for image in imageForCell{
 //            
 //            let imageData = UIImagePNGRepresentation(image) as! NSData
@@ -556,7 +560,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         allNoteData = ["noteContent":noteContent ?? "",
                        "noteBgColor":noteBgColor,
                        "noteFontColor":noteFontColor ,
-                       "noteFontSize":noteFontSize,]
+                       "noteFontSize":noteFontSize,
+                        "noteImage":noteImage]
           }
     
     
