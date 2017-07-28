@@ -27,6 +27,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
+    var secondTime = false
     
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
@@ -34,10 +35,12 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-
-        dataManagerCount = boardDataManager.count()
+    
         locationManagerMethod()
+        
+        let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,FileManager.SearchPathDomainMask.userDomainMask, true)
+        //let documnetPath = documentPaths[0] as! String
+        print(documentPaths)
         
         // register three collectionView
         collectionViewOne = UICollectionView(frame: self.view.frame, collectionViewLayout: FlowLayout())
@@ -63,7 +66,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         // incase core location too slow
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
-           self.arrayImageData()
+            self.arrayImageData()
+            self.secondTime = true
         }
 
         
@@ -79,21 +83,34 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         print("cell count \(dataManagerCount)")
         
+        let dateFormate = DateFormatter()
+        dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let date = NSDate()
+        let stringOfDate = dateFormate.string(from: date as Date)
+        
+        print("stringOfDate \(stringOfDate)")
     
     }
     
     func arrayImageData(){
+        if secondTime == true{
+            all.removeAll()
+            recent.removeAll()
+        }
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
-            if let img = item.board_BgPic {
+            let date = item.board_CreateTime
+            if let img = item.board_ScreenShot {
                 let imgWithData = UIImage(data: img as Data)
                 all.append(imgWithData!)
             }
+            
+            print("\(i) = \(String(describing: date))")
         }
-        if dataManagerCount >= 7 {
-            for i in 0..<7 {
+        if dataManagerCount >= 5 {
+            for i in 0..<5 {
                 let item = boardDataManager.itemWithIndex(index: i)
-                if let img = item.board_BgPic {
+                if let img = item.board_ScreenShot {
                     let imgWithData = UIImage(data: img as Data)
                     recent.append(imgWithData!)
                 }
@@ -101,7 +118,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }else {
             for i in 0..<dataManagerCount {
                 let item = boardDataManager.itemWithIndex(index: i)
-                if let img = item.board_BgPic {
+                if let img = item.board_ScreenShot {
                     let imgWithData = UIImage(data: img as Data)
                     recent.append(imgWithData!)
                 }
@@ -232,7 +249,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 }
             }
             if recent.count > 0 && indexPath.row < recent.count{
-                self.all.remove(at: indexPath.row)
+                self.recent.remove(at: indexPath.row)
             }
             self.collectionViewThree.deleteItems(at: [indexPath])
             boardDataManager.saveContexWithCompletion(completion: { success in
@@ -321,7 +338,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             let lat = item.board_Lat
             let lon = item.board_Lon
             var imgWithData = UIImage()
-            if let img = item.board_BgPic {
+            if let img = item.board_ScreenShot {
                 imgWithData = UIImage(data: img as Data)!
             }
             
@@ -350,7 +367,13 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        locationManager.stopUpdatingLocation()
+        
+        if secondTime == true{
+            self.locationManager.startUpdatingLocation()
+            dataManagerCount = boardDataManager.count()
+            arrayImageData()
+            reloadAllData()
+        }
     }
     
     // set frame for scroll view
