@@ -132,7 +132,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let newPostSegue = segue.destination as! BoardSettingVC
         newPostSegue.thePost = thePost
 
-        let resizeNote = thePost.resizeNote()
+        let resizeNote = thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
         newPostSegue.resizeNote = resizeNote
         
         self.saveNoteData()
