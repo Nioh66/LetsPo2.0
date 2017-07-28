@@ -28,9 +28,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var nearbyDic = [[String:Any]]()
     var count = 0
     
-//    var allDic = [[String:Any]]()
-//    var recentDic = [[String:Any]]()
-    
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
     var collectionViewThree:UICollectionView!
@@ -248,6 +245,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("\(indexPath.section),\(indexPath.item)")
+       
         //        準備下一頁
         performSegue(withIdentifier:"manageDetail", sender: self)
         hideAllDeleteBtn()
