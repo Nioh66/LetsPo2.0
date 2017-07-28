@@ -88,7 +88,7 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
         
             let newPostSegue = segue.destination as! SelfDragVC
             newPostSegue.bgImage = bgImage
-            newPostSegue.resizeNote = theSelfPost.resizeNote()
+            newPostSegue.resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
             
         
     }

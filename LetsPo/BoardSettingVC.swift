@@ -19,6 +19,11 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     var resizeNote:UIImage!
     let resetNote = Notification.Name("resetNote")
 
+    var boardAlert:Bool = false
+    var boardPrivacy:Bool = false
+//    var boardLat:Double = 0.0
+//    var boardLon:Double = 0.0
+    
     var allNoteData = [String:Any]()    
     deinit {
         NotificationCenter.default.removeObserver(self,
@@ -45,7 +50,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
                                                object: nil)
         
     }
-   
+   // Notification method
 
     func theChooseOne(notification:Notification) {
       
@@ -54,7 +59,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         topBg.image = topBgImage
     }
 
-   
+   // Go to next page
     func goToNextPage() {
         
         let dragVC = storyboard?.instantiateViewController(withIdentifier:"DragBoardVC") as! DragBoardVC
@@ -63,11 +68,33 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         dragVC.resizeNote = resizeNote
         dragVC.thePost = thePost
         dragVC.allNoteData = allNoteData
+        
+        
+        dragVC.boardAlert = boardAlert
+        dragVC.boardPrivacy = boardPrivacy
+//        dragVC.boardLat = boardLat
+//        dragVC.boardLon = boardLon
        navigationController?.pushViewController(dragVC, animated: true)
         
-        
-        
-//        self.performSegue(withIdentifier: "goBackSetting", sender: self)
-//        present(dragVC, animated: false, completion: nil)
     }
+    
+    //IBAction swtich
+    
+    @IBAction func privacyValueSwitchToChange(_ sender: UISwitch) {
+        
+        if sender.isOn {
+             boardPrivacy = true
+        }else{
+            boardPrivacy = false
+        }
+        
+    }
+    @IBAction func alertValueSwitchToChange(_ sender: UISwitch) {
+        if sender.isOn {
+            boardAlert = true
+        }else{
+            boardAlert = false
+        }
+    }
+    
 }

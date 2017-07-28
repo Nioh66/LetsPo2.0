@@ -24,8 +24,19 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     var posterY:CGFloat = 150
     let posterEdge:CGFloat = 100
     let resetNote = Notification.Name("resetNote")
+    //Note data
     var allNoteData = [String:Any]()
+    //Board data
+    var boardScreenShot = UIImage()
+                                        // var boardID = Int()
+    var boardAlert = Bool()
+    var boardPrivacy = Bool()
+    var boardLat = Double()
+    var boardLon = Double()
 
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +65,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     }
     @IBAction func finishBtn(_ sender: UIButton) {
         self.saveNoteData()
+        self.saveBoardData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
             tabBarController?.selectedIndex = 1
         navigationController?.popToRootViewController(animated: true)
@@ -73,10 +85,9 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         
         NoteImageView.center = point
         
-        
-        print(NoteImageView.frame.minX)
     }
     
+    // Save Data
     
     func saveNoteData() {
         let noteItem = noteDataManager.createItem()
@@ -94,10 +105,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                 print("Case failure!!!!!!!!")
                 return
             }
-        
-        
-        
-        
         
         noteItem.note_Content = noteContent
         noteItem.note_BgColor = noteBgColor
@@ -122,7 +129,47 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         }
     }
     
-    
+    func saveBoardData() {
+        let boardItem = boardDataManager.createItem()
+        //BoardID set
+        let itemCount = boardDataManager.count()
+     
+        let lastBoardItem = boardDataManager.itemWithIndex(index: itemCount - 1)
+        if itemCount == 0{
+            boardItem.board_Id = 1
+        }else{
+            boardItem.board_Id = lastBoardItem.board_Id + 1
+        }
+        
+        
+   //     boardItem.board_Lat =
+   //     boardItem.board_Lon =
+        guard let screenshotimage = self.view.boardScreenShot(),
+            let bgPic = topImage.image
+        else {
+            return
+        }
+
+        let boardBgPic = NSKeyedArchiver.archivedData(withRootObject: bgPic ) as NSData
+        let boardScreenShot = NSKeyedArchiver.archivedData(withRootObject: screenshotimage ) as NSData
+        
+        boardItem.board_Alert = boardAlert
+        boardItem.board_Privacy = boardPrivacy
+        boardItem.board_ScreenShot = boardScreenShot
+        boardItem.board_BgPic = boardBgPic
+        boardItem.board_CreateTime = Date.init(timeIntervalSinceNow: 1) as NSDate
+        boardDataManager.saveContexWithCompletion { (success) in
+            if success {
+                print("BoardData save succeed!!!")
+            }else{
+                print("BoardData save failure!!!")
+            }
+        }
+        //  boardItem.board_Creater = nil
+
+
+        
+    }
     
   }
 

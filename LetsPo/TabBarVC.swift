@@ -20,10 +20,20 @@ var memberDataManager = CoreDataManager<MemberData>.init(initWithModel: "LetsPoM
                                            entityName: "NoteData")
 
 var boardDataManager = CoreDataManager<BoardData>.init(initWithModel: "LetsPoModel",
-                                           dbFileName: "LetsPoDB.sqlite",
-                                           dbPathURL: nil,
-                                           sortKey: "board_CreateTime",
-                                           entityName: "BoardData")
+                                                       dbFileName: "LetsPoDB.sqlite",
+                                                       dbPathURL: nil,
+                                                       sortKey: "board_CreateTime",
+                                                       entityName: "BoardData")
+var selfBoardDataManager = CoreDataManager<SelfBoardData>.init(initWithModel: "LetsPoModel",
+                                                       dbFileName: "LetsPoDB.sqlite",
+                                                       dbPathURL: nil,
+                                                       sortKey: "selfBoard_ID",
+                                                       entityName: "SelfBoardData")
+var selfNoteDataManager = CoreDataManager<SelfNoteData>.init(initWithModel: "LetsPoModel",
+                                                       dbFileName: "LetsPoDB.sqlite",
+                                                       dbPathURL: nil,
+                                                       sortKey: "selfNote_ID",
+                                                       entityName: "SelfNoteData")
 
 
 
