@@ -150,8 +150,13 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             return
         }
 
-        let boardBgPic = NSKeyedArchiver.archivedData(withRootObject: bgPic ) as NSData
-        let boardScreenShot = NSKeyedArchiver.archivedData(withRootObject: screenshotimage ) as NSData
+        guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
+            let boardScreenShot = UIImageJPEGRepresentation(screenshotimage, 1.0) as NSData?
+            else{
+                return
+        }
+
+     //   let boardScreenShot = NSKeyedArchiver.archivedData(withRootObject: screenshotimage ) as NSData
         
         boardItem.board_Alert = boardAlert
         boardItem.board_Privacy = boardPrivacy
