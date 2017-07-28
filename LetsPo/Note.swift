@@ -198,7 +198,4 @@ class Note: UIView {
             UIGraphicsEndImageContext()
             return returnImage
         }
-
-    
 }
-
