@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300954131F2B8E74008EA764 /* PostsOnBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */; };
+		300954171F2B92DB008EA764 /* GetBoardNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300954161F2B92DB008EA764 /* GetBoardNotes.swift */; };
 		3018026E1F249FC600838425 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3018026D1F249FC600838425 /* CoreDataManager.swift */; };
 		301802701F24A0A300838425 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3018026F1F24A0A300838425 /* CoreData.framework */; };
 		301802731F24A26500838425 /* LetsPoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 301802711F24A26500838425 /* LetsPoModel.xcdatamodeld */; };
@@ -24,6 +26,8 @@
 		304CB6831F25970A00AEF632 /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB6821F25970A00AEF632 /* right-arrow.png */; };
 		304CB6851F2597F600AEF632 /* insert.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB6841F2597F600AEF632 /* insert.png */; };
 		304CB6871F25F9B100AEF632 /* SelfDragVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6861F25F9B100AEF632 /* SelfDragVC.swift */; };
+		305C31841F2E594A0039E35A /* GetNoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305C31831F2E594A0039E35A /* GetNoteDetail.swift */; };
+		305C31861F2E606F0039E35A /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305C31851F2E606F0039E35A /* PostDetailVC.swift */; };
 		30628BC31F28E39A001FED7F /* NoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30628BC21F28E39A001FED7F /* NoteImageCell.swift */; };
 		309EAFA91F26670D00FC3F34 /* NotiSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFA81F26670D00FC3F34 /* NotiSettingVC.swift */; };
 		309EAFAD1F26785900FC3F34 /* MyNiggerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFAC1F26785900FC3F34 /* MyNiggerVC.swift */; };
@@ -73,6 +77,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsOnBoardVC.swift; sourceTree = "<group>"; };
+		300954161F2B92DB008EA764 /* GetBoardNotes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBoardNotes.swift; sourceTree = "<group>"; };
 		3018026D1F249FC600838425 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3018026F1F24A0A300838425 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		301802721F24A26500838425 /* LetsPoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LetsPoModel.xcdatamodel; sourceTree = "<group>"; };
@@ -92,6 +98,8 @@
 		304CB6821F25970A00AEF632 /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
 		304CB6841F2597F600AEF632 /* insert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insert.png; sourceTree = "<group>"; };
 		304CB6861F25F9B100AEF632 /* SelfDragVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfDragVC.swift; sourceTree = "<group>"; };
+		305C31831F2E594A0039E35A /* GetNoteDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNoteDetail.swift; sourceTree = "<group>"; };
+		305C31851F2E606F0039E35A /* PostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
 		30628BC21F28E39A001FED7F /* NoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteImageCell.swift; sourceTree = "<group>"; };
 		309EAFA81F26670D00FC3F34 /* NotiSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotiSettingVC.swift; sourceTree = "<group>"; };
 		309EAFAC1F26785900FC3F34 /* MyNiggerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNiggerVC.swift; sourceTree = "<group>"; };
@@ -224,6 +232,8 @@
 				30D092B31F1E466300CB3F88 /* BoardSettingVC.swift */,
 				30D092B51F1E490600CB3F88 /* DragBoardVC.swift */,
 				30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */,
+				300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */,
+				305C31851F2E606F0039E35A /* PostDetailVC.swift */,
 				9BABCA671F24C4000055B07A /* accountManage */,
 			);
 			name = PL;
@@ -249,6 +259,8 @@
 				30D092891F1E35BB00CB3F88 /* NoteScrollview.swift */,
 				30D0928A1F1E35BB00CB3F88 /* MyButton.swift */,
 				30D0928B1F1E35BB00CB3F88 /* MyPhoto.swift */,
+				300954161F2B92DB008EA764 /* GetBoardNotes.swift */,
+				305C31831F2E594A0039E35A /* GetNoteDetail.swift */,
 			);
 			name = PL;
 			sourceTree = "<group>";
@@ -466,8 +478,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				300954131F2B8E74008EA764 /* PostsOnBoardVC.swift in Sources */,
 				309EAFAF1F267B9E00FC3F34 /* FindNiggerVC.swift in Sources */,
 				304CB6871F25F9B100AEF632 /* SelfDragVC.swift in Sources */,
+				305C31841F2E594A0039E35A /* GetNoteDetail.swift in Sources */,
 				9BA62C5F1F1E65A0008CDEC0 /* MapViewController.swift in Sources */,
 				30D092941F1E369500CB3F88 /* NewPostVC.swift in Sources */,
 				30D092901F1E35BB00CB3F88 /* MyPhoto.swift in Sources */,
@@ -494,11 +508,13 @@
 				9BA62C6F1F1F6F11008CDEC0 /* ManageCollectionViewCell.swift in Sources */,
 				9BA62C611F1E66C8008CDEC0 /* MapDetailViewController.swift in Sources */,
 				30D092B41F1E466300CB3F88 /* BoardSettingVC.swift in Sources */,
+				305C31861F2E606F0039E35A /* PostDetailVC.swift in Sources */,
 				30D0928E1F1E35BB00CB3F88 /* NoteScrollview.swift in Sources */,
 				304CB6771F258F8F00AEF632 /* SelfNewPostVC.swift in Sources */,
 				3018026E1F249FC600838425 /* CoreDataManager.swift in Sources */,
 				309EAFAD1F26785900FC3F34 /* MyNiggerVC.swift in Sources */,
 				30D092B61F1E490600CB3F88 /* DragBoardVC.swift in Sources */,
+				300954171F2B92DB008EA764 /* GetBoardNotes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

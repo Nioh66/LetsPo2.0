@@ -26,15 +26,15 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     let resetNote = Notification.Name("resetNote")
     //Note data
     var allNoteData = [String:Any]()
+    var boardID = Int16()
+
     //Board data
     var boardScreenShot = UIImage()
-                                        // var boardID = Int()
     var boardAlert = Bool()
     var boardPrivacy = Bool()
     var boardLat = Double()
     var boardLon = Double()
 
-    
     
     
     override func viewDidLoad() {
@@ -64,8 +64,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         NoteImageView.addGestureRecognizer(panGesture)
     }
     @IBAction func finishBtn(_ sender: UIButton) {
-        self.saveNoteData()
         self.saveBoardData()
+        self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
             tabBarController?.selectedIndex = 1
         navigationController?.popToRootViewController(animated: true)
@@ -87,6 +87,18 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         
     }
     
+    
+    
+    
+    @IBAction func printIMage(_ sender: Any) {
+        self.saveNoteData()
+
+    }
+    
+    
+    
+    
+    
     // Save Data
     
     func saveNoteData() {
@@ -101,29 +113,56 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
              let noteBgColor = allNoteData["noteBgColor"] as? NSData,
              let noteFontColor = allNoteData["noteFontColor"] as? NSData,
              let noteFontSize = allNoteData["noteFontSize"] as? Double,
-             let noteImage = allNoteData["noteImage"] as? [UIImage]
+             let noteImage = allNoteData["noteImage"] as? [UIImage],
+            let noteSelfie = UIImageJPEGRepresentation(resizeNote, 1.0) as NSData?
             else {
                 print("Case failure!!!!!!!!")
                 return
         }
-        let imageJson = noteDataManager.transformImageTOJson(images: noteImage)
+        guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
+            print("imageJson transform failure!!!!")
+            return
+        }
 
-        print("---------\(imageJson)")
+        print("---------\(imageJson)-------------")
+        
+        
+        guard let album = noteDataManager.transformDataToImage(imageJSONData: imageJson) else{
+            print("Get image failure!")
+            return
+        }
+        
+        
+        for (index,image) in album.enumerated(){
+            
+            let x = (self.view.frame.size.width)*CGFloat(index)/CGFloat(album.count)
+            let y = (self.view.frame.size.height)*CGFloat(index)/CGFloat(album.count)
+            let w = self.view.frame.size.width/CGFloat(album.count)
+            let h = self.view.frame.size.height/CGFloat(album.count)
+            
+            let imgView = UIImageView(image: image)
+            imgView.frame = CGRect(x: x, y: y, width: w, height: h)
+            self.view.addSubview(imgView)
+            
+        }
+        
+        
+        
+        
+        
+        
         
         
         noteItem.note_Content = noteContent
         noteItem.note_BgColor = noteBgColor
         noteItem.note_FontColor = noteFontColor
         noteItem.note_FontSize = noteFontSize
+        noteItem.note_ID = 1
         noteItem.note_X = noteX
         noteItem.note_Y = noteY
         noteItem.note_Image = imageJson
-//        for image in imageForCell{
-//            
-//            let imageData = UIImagePNGRepresentation(image) as! NSData
-//            noteItem.note_Image = imageData
-//        }
-//        
+        noteItem.note_Selfie = noteSelfie
+        noteItem.note_BoardID = boardID
         
         noteDataManager.saveContexWithCompletion { (success) in
             if(success){
@@ -138,25 +177,27 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         let boardItem = boardDataManager.createItem()
         //BoardID set
         let itemCount = boardDataManager.count()
-     
-        let lastBoardItem = boardDataManager.itemWithIndex(index: itemCount - 1)
+
         if itemCount == 0{
             boardItem.board_Id = 1
+            boardID = 1
         }else{
+            let lastBoardItem = boardDataManager.itemWithIndex(index: itemCount - 1)
             boardItem.board_Id = lastBoardItem.board_Id + 1
+            boardID = boardItem.board_Id
         }
         
     //  boardItem.board_Creater = nil
    //     boardItem.board_Lat =
    //     boardItem.board_Lon =
-        guard let screenshotimage = self.view.boardScreenShot(),
+        guard let screenShotImage = self.view.boardScreenShot(),
             let bgPic = topImage.image
         else {
             return
         }
 
         guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
-            let boardScreenShot = UIImageJPEGRepresentation(screenshotimage, 1.0) as NSData?
+            let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 1.0) as NSData?
             else{
                 return
         }
@@ -165,7 +206,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         boardItem.board_Privacy = boardPrivacy
         boardItem.board_ScreenShot = boardScreenShot
         boardItem.board_BgPic = boardBgPic
-        boardItem.board_CreateTime = Date.init(timeIntervalSinceNow: 1) as NSDate
+        boardItem.board_CreateTime = NSDate()
         boardDataManager.saveContexWithCompletion { (success) in
             if success {
                 print("BoardData save succeed!!!")

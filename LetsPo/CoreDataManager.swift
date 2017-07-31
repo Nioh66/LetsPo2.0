@@ -229,10 +229,10 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
 // Transform UIImage to NSData and store in Json
 extension CoreDataManager{
     
-    func transformImageTOJson(images:[UIImage]) -> String?{
+    func transformImageTOJson(images:[UIImage]) -> NSData?{
         
-        var imageJSONData = [String:Any]()
-        var jsonContent:String = ""
+        var imageWithPath = [String:Any]()
+//        var jsonContent:String = ""
         
         for (index,image) in images.enumerated(){
             let hashFileName = String(format: "image_%d.jpg", image.hash)
@@ -248,24 +248,103 @@ extension CoreDataManager{
                 }
                 imageData.write(to: finalPath, atomically: true)
                 
-                imageJSONData.updateValue(imageData, forKey: "\(index)")
-                
-                jsonContent += "image\(index):\(hashFileName),"
+                imageWithPath.updateValue("\(finalPath)", forKey: "Image\(index)")
+
+ //               jsonContent += "image\(index):\(hashFileName),"
                 
             }else{
                 print("File already exist!")
             }
         }
+        print("asdmkasdkmlasmdalm\(imageWithPath)")
         
-        jsonContent = jsonContent.substring(to: jsonContent.index(before: jsonContent.endIndex))
-        let jsonBegin = "{"
-        let jsonEnd = "}"
-        let finalJson = jsonBegin+jsonContent+jsonEnd
+        guard let imageJSONData = try? JSONSerialization.data(withJSONObject: imageWithPath, options: .prettyPrinted) as NSData else{
+            print("Json transform failure!!!")
+            return nil
+        }
+//        Fake JSON
+//        jsonContent = jsonContent.substring(to: jsonContent.index(before: jsonContent.endIndex))
+//        let jsonBegin = "{"
+//        let jsonEnd = "}"
+//        let finalJson = jsonContent
         
-        return finalJson
+        return imageJSONData
+    }
+
+
+    
+    func transformDataToImage(imageJSONData: NSData) -> [UIImage]? {
+        
+        var album = [UIImage]()
+        //Transform data to JSON dictionary
+        guard let json = try? JSONSerialization.jsonObject(with: imageJSONData as Data),
+            let myAlbum = json as? [String: Any] else{
+                print("imageJSONData transform to result failure!!!!!")
+                return nil
+        }
+        print("--\(json)--")
+        print(myAlbum)
+        //Get URL
+        for index in 0 ..< myAlbum.count {
+            guard let stringPath = myAlbum["Image\(index)"] as? String,
+                let finalPath = URL(string: stringPath)?.path else {
+                    print("------String transform to URL failure------")
+                    return nil
+            }
+            print("-------\(stringPath)------")
+            
+            print("===========\(finalPath)=========")
+            
+            //..
+            guard let img = UIImage(contentsOfFile: finalPath)
+                else{
+                    print("===========Data turn image failure=========")
+                    
+                    return nil
+            }
+            
+            album.append(img)
+        }
+        return album
+    }
+
+
+    func reverseColorDataToColor(data: NSData) -> UIColor {
+        
+        // Transform NSData to UIColor
+        var components = [CGFloat](repeating:0, count: 4)
+        let length = MemoryLayout.size(ofValue: components)
+        
+        data.getBytes(&components, length: length * components.count)
+        let color = UIColor(red: components[0],
+                            green: components[1],
+                            blue: components[2],
+                            alpha: components[3])
+        
+        return color
+    }
+
+    
+    
+    func transformColorToData(targetColor:UIColor) -> NSData {
+        
+        let color = targetColor
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+        
+        let components:[CGFloat] = [red, green, blue, alpha]
+        
+        let colorData = NSData(bytes: components,
+                               length: MemoryLayout.size(ofValue: components)*components.count)
+        
+        return colorData
     }
     
-    
+
+
 }
 
 

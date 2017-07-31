@@ -273,6 +273,22 @@
                                     <action selector="backBtn:" destination="zWl-V2-hYI" eventType="touchUpInside" id="MMg-R8-cLC"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nzN-52-NKQ">
+                                <rect key="frame" x="136" y="110" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="測試image抓取"/>
+                                <connections>
+                                    <action selector="printIMage:" destination="zWl-V2-hYI" eventType="touchUpInside" id="rbA-MW-Nnq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dgJ-lq-LAM">
+                                <rect key="frame" x="141" y="274" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="測試顯示note"/>
+                                <connections>
+                                    <segue destination="WgU-XX-2gE" kind="show" id="cq4-Z1-pMF"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -290,6 +306,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WeR-B5-HIQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3528.8000000000002" y="1423.5382308845578"/>
+        </scene>
+        <!--Posts On BoardVC-->
+        <scene sceneID="sI0-TN-qqR">
+            <objects>
+                <viewController id="WgU-XX-2gE" customClass="PostsOnBoardVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GPI-U6-TdQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="0P2-Z1-j60"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1Gx-Mx-uXw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eRf-v3-QQU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="boardBgImage" destination="eRf-v3-QQU" id="Xra-yO-Nfs"/>
+                        <segue destination="pqv-O5-oCq" kind="popoverPresentation" identifier="postDetail" id="2G3-oJ-yWK">
+                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                        </segue>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="s3u-TR-L3G" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3840.8000000000002" y="2429.2353823088456"/>
+        </scene>
+        <!--Post DetailVC-->
+        <scene sceneID="WAT-hV-3Mu">
+            <objects>
+                <viewController storyboardIdentifier="PostDetailVC" id="pqv-O5-oCq" customClass="PostDetailVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eEm-Pu-5oO"/>
+                        <viewControllerLayoutGuide type="bottom" id="j6T-3r-1cM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hXd-V2-NnQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EA-db-w87" customClass="Note" customModule="LetsPo" customModuleProvider="target">
+                                <rect key="frame" x="37" y="50" width="300" height="300"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="1EA-db-w87" secondAttribute="height" id="63p-tr-KIK"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1EA-db-w87" firstAttribute="width" secondItem="hXd-V2-NnQ" secondAttribute="width" multiplier="0.8" id="4g7-4p-lE5"/>
+                            <constraint firstItem="1EA-db-w87" firstAttribute="top" secondItem="eEm-Pu-5oO" secondAttribute="bottom" constant="30" id="ecX-f6-IpV"/>
+                            <constraint firstItem="1EA-db-w87" firstAttribute="centerX" secondItem="hXd-V2-NnQ" secondAttribute="centerX" id="l7o-TS-hOJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="noteView" destination="1EA-db-w87" id="sgZ-1p-nrm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jvp-Mv-d7B" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4480" y="1427"/>
         </scene>
         <!--Board Bg Image SetVC-->
         <scene sceneID="oJa-oa-i9V">

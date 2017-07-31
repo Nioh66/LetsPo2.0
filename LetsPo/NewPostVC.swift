@@ -529,7 +529,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         return cellSpace
     }
     
-    
+    // MARK: Save note data
 
     func saveNoteData() {
         
@@ -555,7 +555,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
 //            noteItem.note_Image = imageData
 //        }
         
-        let noteBgColor = self.transformColorToData(targetColor: thePost.uploadcolor)
+        let noteBgColor = noteDataManager.transformColorToData(targetColor: thePost.uploadcolor)
 
         allNoteData = ["noteContent":noteContent ?? "",
                        "noteBgColor":noteBgColor,
@@ -566,24 +566,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     
     
-    func transformColorToData(targetColor:UIColor) -> NSData {
-        
-        let color = targetColor
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-        color.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
-        
-        let components:[CGFloat] = [red, green, blue, alpha]
-        
-        let colorData = NSData(bytes: components,
-                               length: MemoryLayout.size(ofValue: components)*components.count)
-        
-        return colorData
-    }
-
-    
+      
     //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
     //        guard let loca = touches.first?.location(in: self.view)
     //            else { return  }
