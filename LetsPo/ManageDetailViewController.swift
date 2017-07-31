@@ -11,6 +11,8 @@ import UIKit
 class ManageDetailViewController: UIViewController {
     
     var dataManagerCount = Int()
+    var selectIndex = NSInteger()
+    
         
     @IBOutlet weak var backGroundImage: UIImageView!
 
@@ -18,6 +20,16 @@ class ManageDetailViewController: UIViewController {
         super.viewDidLoad()
         
         dataManagerCount = boardDataManager.count()
+        
+        print("selectIndex \(selectIndex)")
+        let item = boardDataManager.itemWithIndex(index: selectIndex)
+        var imgWithData = UIImage()
+        if let img = item.board_BgPic {
+            imgWithData = UIImage(data: img as Data)!
+        }
+        backGroundImage.image = imgWithData
+//        let board_id = item.board_Id
+
         
         
     }
@@ -29,6 +41,7 @@ class ManageDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.white
+        dataManagerCount = boardDataManager.count()
         
     }
 

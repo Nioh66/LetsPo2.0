@@ -436,7 +436,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
             let alert = item.board_Alert
             if let img = item.board_BgPic {
                 let imgWithData = UIImage(data: img as Data)
-                locations.append(["board_Creater":Creater!,"lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert])
+                locations.append(["board_Creater":Creater ?? "","lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert])
                 
             }
         }
@@ -466,6 +466,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        dataManagerCount = boardDataManager.count()
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
