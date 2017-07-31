@@ -120,10 +120,15 @@ class Note: UIView {
     }
     
     
+    func giveMeBlueNote() {
+        shapeLayer.fillColor = UIColor.blue.cgColor
+    }
+    
     func giveMeFreshNewNote() {
         shapeLayer.fillColor = posterColor.cgColor
 
     }
+    
     
     
     // MARK: Change background color

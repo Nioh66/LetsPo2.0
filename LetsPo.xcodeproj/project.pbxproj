@@ -35,6 +35,7 @@
 		309EAFB11F26E9A000FC3F34 /* MyNiggerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFB01F26E9A000FC3F34 /* MyNiggerCell.swift */; };
 		309EAFB31F2721A300FC3F34 /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFB21F2721A300FC3F34 /* TabBarVC.swift */; };
 		30AB320B1F206454001B1D0E /* BoardBgImageSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */; };
+		30CAD4141F2F93EE0042B059 /* SelfBoardSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAD4131F2F93EE0042B059 /* SelfBoardSetting.swift */; };
 		30D0928C1F1E35BB00CB3F88 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092871F1E35BB00CB3F88 /* Note.swift */; };
 		30D0928D1F1E35BB00CB3F88 /* NoteText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092881F1E35BB00CB3F88 /* NoteText.swift */; };
 		30D0928E1F1E35BB00CB3F88 /* NoteScrollview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092891F1E35BB00CB3F88 /* NoteScrollview.swift */; };
@@ -107,6 +108,7 @@
 		309EAFB01F26E9A000FC3F34 /* MyNiggerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNiggerCell.swift; sourceTree = "<group>"; };
 		309EAFB21F2721A300FC3F34 /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBgImageSetVC.swift; sourceTree = "<group>"; };
+		30CAD4131F2F93EE0042B059 /* SelfBoardSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfBoardSetting.swift; sourceTree = "<group>"; };
 		30D092871F1E35BB00CB3F88 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		30D092881F1E35BB00CB3F88 /* NoteText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteText.swift; sourceTree = "<group>"; };
 		30D092891F1E35BB00CB3F88 /* NoteScrollview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteScrollview.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				30D0928B1F1E35BB00CB3F88 /* MyPhoto.swift */,
 				300954161F2B92DB008EA764 /* GetBoardNotes.swift */,
 				305C31831F2E594A0039E35A /* GetNoteDetail.swift */,
+				30CAD4131F2F93EE0042B059 /* SelfBoardSetting.swift */,
 			);
 			name = PL;
 			sourceTree = "<group>";
@@ -503,6 +506,7 @@
 				9BA62C741F1F7299008CDEC0 /* ManageViewController.swift in Sources */,
 				9BA62C6C1F1F6A3D008CDEC0 /* FlowLayout.swift in Sources */,
 				9BA62C791F1F8065008CDEC0 /* ManageDetailViewController.swift in Sources */,
+				30CAD4141F2F93EE0042B059 /* SelfBoardSetting.swift in Sources */,
 				301802731F24A26500838425 /* LetsPoModel.xcdatamodeld in Sources */,
 				9BA62C761F1F7454008CDEC0 /* ScrollPager.swift in Sources */,
 				9BA62C6F1F1F6F11008CDEC0 /* ManageCollectionViewCell.swift in Sources */,

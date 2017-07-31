@@ -23,6 +23,19 @@ class SelfDragVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         selfBgImage.image = bgImage
         
         theDragNote.frame = CGRect(x: posterX, y: posterY, width: posterEdge, height: posterEdge)

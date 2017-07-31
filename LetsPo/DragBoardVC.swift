@@ -133,6 +133,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         }
         
         
+        
+        
         for (index,image) in album.enumerated(){
             
             let x = (self.view.frame.size.width)*CGFloat(index)/CGFloat(album.count)

@@ -60,8 +60,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
        
         DispatchQueue.main.async {
         self.thePost.addSubview(self.myTextView)
-            let collectBgcolor = UIColor(cgColor: self.thePost.shapeLayer.fillColor!)
-            self.noteCollectionView.backgroundColor = collectBgcolor
+        let collectBgcolor = UIColor(cgColor: self.thePost.shapeLayer.fillColor!)
+        self.noteCollectionView.backgroundColor = collectBgcolor
 
         self.thePost.addSubview(self.noteCollectionView)
         }
@@ -549,11 +549,6 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let noteFontColor = textColorData
         let noteFontSize = fontSizeData
         let noteImage = imageForCell
-//        for image in imageForCell{
-//            
-//            let imageData = UIImagePNGRepresentation(image) as! NSData
-//            noteItem.note_Image = imageData
-//        }
         
         let noteBgColor = noteDataManager.transformColorToData(targetColor: thePost.uploadcolor)
 

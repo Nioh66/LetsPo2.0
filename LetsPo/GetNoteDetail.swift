@@ -12,10 +12,10 @@ import UIKit
 class GetNoteDetail {
     
     
-    func getNoteSetting(boardID: Int,noteID: Int) -> Note? {
+    func getNoteSetting(boardID: Int,noteID: Int,note:Note) -> Note? {
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
-        let note = Note()
+      
         
         guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
             print("Result case to [NoteData] failure!!!!")
@@ -28,8 +28,11 @@ class GetNoteDetail {
                     print("getNoteSetting------------NoteAttributes case failure!!!!!")
                     return nil
                 }
+                
                 let noteColor = noteDataManager.reverseColorDataToColor(data: noteBgColorData)
-                note.shapeLayer.fillColor = noteColor.cgColor
+                print("noteColor------\(noteColor.cgColor)")
+                note.posterColor = noteColor
+                note.backgroundColor = UIColor.clear
             }else{
                 print("There's no NoteBg")
             }
@@ -39,11 +42,11 @@ class GetNoteDetail {
     }
     
     
-    func getNoteText(boardID: Int,noteID: Int) -> NoteText? {
+    func getNoteText(boardID: Int,noteID: Int,noteText:NoteText) -> NoteText? {
         
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
-        let noteText = NoteText()
+//        let noteText = NoteText()
         
         guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
             print("Result case to [NoteData] failure!!!!")
