@@ -64,6 +64,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         collectionViewThree.backgroundColor = UIColor.clear
         self.view.addSubview(collectionViewThree)
         
+        dataManagerCount = boardDataManager.count()
+        
+        // 第一次進入還沒新增時的底圖
+        if dataManagerCount == 0 {
+            nearby.append(UIImage(named: "deer.jpg")!)
+            recent.append(UIImage(named: "myNigger.jpg")!)
+            all.append(UIImage(named: "Sky.jpg")!)
+        }
+        
         // incase core location too slow
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
             self.arrayImageData()
@@ -81,18 +90,14 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             ("ALL", collectionViewThree),
             ])
         
-        print("cell count \(dataManagerCount)")
+        print("dataManagerCount \(dataManagerCount)")
         
-        let dateFormate = DateFormatter()
-        dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let date = NSDate()
-        let stringOfDate = dateFormate.string(from: date as Date)
-        
-        print("stringOfDate \(stringOfDate)")
+       
     
     }
     
     func arrayImageData(){
+        // 第二次以後回來這頁時 刷新array裡的內容
         if secondTime == true{
             all.removeAll()
             recent.removeAll()
@@ -107,6 +112,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             
             print("\(i) = \(String(describing: date))")
         }
+        // 只取前五個 作為最近的內容
         if dataManagerCount >= 5 {
             for i in 0..<5 {
                 let item = boardDataManager.itemWithIndex(index: i)
@@ -168,7 +174,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = ManageCollectionViewCell()
-        //
+    
         if collectionView == self.collectionViewOne {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             let imageString = recent[indexPath.item]
@@ -179,10 +185,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 let imageString = nearby[indexPath.item]
                 cell.backdroundImage.image = imageString
             }else {
-                
-                cell.backdroundImage.image = UIImage(named: "deer.jpg")
+                cell.backdroundImage.image = UIImage(named:"deer.jpg")
             }
-            
         }else if collectionView == self.collectionViewThree {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             let imageString = all[indexPath.item]
@@ -216,13 +220,14 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 }
             })
         }else if let indexPath = collectionViewTwo.indexPath(for: cell) {
+            // 因為是另外抓出來的陣列 所以取得原來在core data裡的位置來做刪除
             let indexWithRow = nearbyDic[indexPath.row]["index"] as! NSInteger
             
             print("indexWithRow: \(indexWithRow)")
             
                 let item = boardDataManager.itemWithIndex(index: indexWithRow)
             boardDataManager.deleteItem(item: item)
-            if indexWithRow <= recent.count - 1 {
+            if indexWithRow < recent.count {
                 print("indexWithRow \(indexWithRow) <= recent.count")
                 self.recent.remove(at: indexWithRow)
                 self.all.remove(at: indexWithRow)
@@ -262,12 +267,23 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("\(indexPath.section),\(indexPath.item)")
-       
-        //        準備下一頁
-        performSegue(withIdentifier:"manageDetail", sender: self)
-        hideAllDeleteBtn()
         
+        if collectionView == collectionViewTwo && nearbyDic.count > 0 {
+            let indexWithRow = nearbyDic[indexPath.item]["index"] as! NSInteger
+            performSegue(withIdentifier:"manageDetail", sender: indexWithRow)
+        }else {
+            performSegue(withIdentifier:"manageDetail", sender: indexPath.item)
+        }
+        hideAllDeleteBtn()
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "manageDetail" {
+            let vc = segue.destination as! ManageDetailViewController
+            vc.selectIndex = sender as! NSInteger
+
+        }
+    }
+
     
     // set gesture method
     func setFlagAndGsr(){
@@ -367,10 +383,12 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        
+        // 從其他頁面跳過來的時候可以更新內容
         if secondTime == true{
             self.locationManager.startUpdatingLocation()
             dataManagerCount = boardDataManager.count()
+            // 每次回來都回到recent ? 暫定
+            scrollPager.setSelectedIndex(index: 0, animated: false)
             arrayImageData()
             reloadAllData()
         }
