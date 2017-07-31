@@ -114,7 +114,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
              let noteFontColor = allNoteData["noteFontColor"] as? NSData,
              let noteFontSize = allNoteData["noteFontSize"] as? Double,
              let noteImage = allNoteData["noteImage"] as? [UIImage],
-            let noteSelfie = UIImageJPEGRepresentation(resizeNote, 1.0) as NSData?
+            let noteSelfie = UIImagePNGRepresentation(resizeNote) as NSData?
             else {
                 print("Case failure!!!!!!!!")
                 return

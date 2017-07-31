@@ -12,8 +12,9 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
     
     let getBoardPosts = GetBoardNotes()
     var postIDs = [Int16]()
-    var detilPostID:Int16 = 0
+    var detailPostID:Int16 = 0
     
+    @IBOutlet weak var detailNoteAppearPoint: UIView!
     @IBOutlet weak var boardBgImage: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,14 +27,18 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
             else{
                 return
         }
+        
+        boardBgImage.isUserInteractionEnabled = true
+        
         boardBgImage.image = bgImage
         postIDs = allPostsID
         for (index,imageview) in allPosts.enumerated(){
-            
+            print(index)
             imageview.isUserInteractionEnabled = true
-            imageview.backgroundColor = UIColor.blue
+            imageview.backgroundColor = UIColor.clear
             
-            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail))
+            let detailBtn = TapToShowDetail.init(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+            detailBtn.postImageView = imageview
             detailBtn.postID = allPostsID[index]
             boardBgImage.addSubview(imageview)
             
@@ -41,32 +46,31 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
         }
 
         
-        //    self.view.setNeedsDisplay()
+        
+                //    self.view.setNeedsDisplay()
         // Do any additional setup after loading the view.
     }
 
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
         
-         detilPostID = gestureRecognizer.postID
+         detailPostID = gestureRecognizer.postID
         
+        print("GoToDetail did press")
         
+        let detailPostVC =  storyboard?.instantiateViewController(withIdentifier: "PostDetailVC") as! PostDetailVC
+        detailPostVC.modalPresentationStyle = .popover
+        let popDetailPostVC = detailPostVC.popoverPresentationController
+        popDetailPostVC?.delegate = self
+        popDetailPostVC?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
         
-        performSegue(withIdentifier: "postDetail", sender: nil)
-
+        popDetailPostVC?.sourceView = detailNoteAppearPoint
+        popDetailPostVC?.sourceRect = detailNoteAppearPoint.bounds
+        present(detailPostVC, animated: true, completion: nil)
     }
     
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "postDetail"{
-           let vc = segue.destination
-            let detailController = vc.popoverPresentationController
-            if detailController != nil {
-                detailController?.delegate = self
-            }else{
-                
-            }
-        }
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
     override func didReceiveMemoryWarning() {
@@ -90,4 +94,5 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
 
 class TapToShowDetail: UITapGestureRecognizer {
     var postID : Int16 = 0
+    var postImageView:UIImageView? = nil
 }

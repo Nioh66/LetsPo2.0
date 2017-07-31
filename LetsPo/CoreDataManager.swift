@@ -183,7 +183,7 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: targetSortKey, ascending: true)//ascending決定排序方向A->Z
+        let sortDescriptor = NSSortDescriptor(key: targetSortKey, ascending: false)//ascending決定排序方向A->Z
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         

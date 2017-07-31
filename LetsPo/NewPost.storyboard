@@ -323,14 +323,17 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e5E-BL-0Wh">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="boardBgImage" destination="eRf-v3-QQU" id="Xra-yO-Nfs"/>
-                        <segue destination="pqv-O5-oCq" kind="popoverPresentation" identifier="postDetail" id="2G3-oJ-yWK">
-                            <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
-                        </segue>
+                        <outlet property="detailNoteAppearPoint" destination="e5E-BL-0Wh" id="6DQ-QG-Seg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s3u-TR-L3G" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -349,23 +352,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1EA-db-w87" customClass="Note" customModule="LetsPo" customModuleProvider="target">
-                                <rect key="frame" x="37" y="50" width="300" height="300"/>
-                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="1EA-db-w87" secondAttribute="height" id="63p-tr-KIK"/>
-                                </constraints>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ooq-vt-iAU">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="1EA-db-w87" firstAttribute="width" secondItem="hXd-V2-NnQ" secondAttribute="width" multiplier="0.8" id="4g7-4p-lE5"/>
-                            <constraint firstItem="1EA-db-w87" firstAttribute="top" secondItem="eEm-Pu-5oO" secondAttribute="bottom" constant="30" id="ecX-f6-IpV"/>
-                            <constraint firstItem="1EA-db-w87" firstAttribute="centerX" secondItem="hXd-V2-NnQ" secondAttribute="centerX" id="l7o-TS-hOJ"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
-                        <outlet property="noteView" destination="1EA-db-w87" id="sgZ-1p-nrm"/>
+                        <outlet property="test01" destination="Ooq-vt-iAU" id="tjC-zQ-3qX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jvp-Mv-d7B" userLabel="First Responder" sceneMemberID="firstResponder"/>

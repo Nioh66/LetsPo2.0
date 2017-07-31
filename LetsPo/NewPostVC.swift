@@ -488,7 +488,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
                 return
         }
         
-        UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
+       // UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         
         imageForCell.append(imageX)
         noteCollectionView.reloadData()

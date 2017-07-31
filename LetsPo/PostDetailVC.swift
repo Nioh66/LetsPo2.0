@@ -10,9 +10,12 @@ import UIKit
 
 class PostDetailVC: UIViewController {
 
-    @IBOutlet weak var noteView: Note!
+    @IBOutlet weak var test01: UIView!
     let getPost = GetNoteDetail()
     var detilPostID:Int16 = 0
+    let postT = NoteText()
+
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,10 +26,15 @@ class PostDetailVC: UIViewController {
         }
         let postText = getPost.getNoteText(boardID: 1, noteID: 1)
         let postImage = getPost.getNoteImage(boardID: 1, noteID: 1)
-        noteView = postBg
         
-        noteView.addSubview(postText!)
-        
+        print(postText?.text)
+        test01.addSubview(postT)
+
+    //    noteView.addSubview(postText!)
+                DispatchQueue.main.async {
+
+
+        }
         
         //        DispatchQueue.main.async {
         //            guard let postBg = self.getPost.getNoteSetting(boardID: 27, noteID: 1) else{
@@ -44,7 +52,6 @@ class PostDetailVC: UIViewController {
         
         
         
-        self.noteView.setNeedsDisplay()
 
         // Do any additional setup after loading the view.
     }
