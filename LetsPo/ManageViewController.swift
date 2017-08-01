@@ -267,19 +267,17 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("\(indexPath.section),\(indexPath.item)")
+        let item = boardDataManager.itemWithIndex(index: indexPath.item)
+        let board_Id = item.board_Id
+        print("did selected board_Id =  \(board_Id)")
+        performSegue(withIdentifier:"manageDetail", sender: board_Id)
         
-        if collectionView == collectionViewTwo && nearbyDic.count > 0 {
-            let indexWithRow = nearbyDic[indexPath.item]["index"] as! NSInteger
-            performSegue(withIdentifier:"manageDetail", sender: indexWithRow)
-        }else {
-            performSegue(withIdentifier:"manageDetail", sender: indexPath.item)
-        }
         hideAllDeleteBtn()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "manageDetail" {
             let vc = segue.destination as! ManageDetailViewController
-            vc.selectIndex = sender as! NSInteger
+            vc.selectIndexID = sender as! Int16
 
         }
     }
