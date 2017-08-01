@@ -11,7 +11,7 @@ import UIKit
 class ManageDetailViewController: UIViewController {
     
     var dataManagerCount = Int()
-    var selectIndex = NSInteger()
+    var selectIndexID = Int16()
     
         
     @IBOutlet weak var backGroundImage: UIImageView!
@@ -21,15 +21,18 @@ class ManageDetailViewController: UIViewController {
         
         dataManagerCount = boardDataManager.count()
         
-        print("selectIndex \(selectIndex)")
-        let item = boardDataManager.itemWithIndex(index: selectIndex)
-        var imgWithData = UIImage()
-        if let img = item.board_BgPic {
-            imgWithData = UIImage(data: img as Data)!
+        print("selectIndex \(selectIndexID)")
+        for i in 0..<dataManagerCount {
+            let item = boardDataManager.itemWithIndex(index: i)
+            let board_id = item.board_Id
+            if selectIndexID == board_id {
+                var imgWithData = UIImage()
+                if let img = item.board_BgPic {
+                    imgWithData = UIImage(data: img as Data)!
+                }
+                backGroundImage.image = imgWithData
+            }
         }
-        backGroundImage.image = imgWithData
-//        let board_id = item.board_Id
-
         
         
     }
