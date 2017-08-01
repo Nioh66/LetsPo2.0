@@ -196,7 +196,7 @@ class Note: UIView {
     }
         func boardScreenShot() -> UIImage? {
             UIGraphicsBeginImageContext(CGSize(width: self.frame.size.width, height: self.frame.size.height))
-            self.drawHierarchy(in: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height) , afterScreenUpdates: false)
+            self.drawHierarchy(in: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height) , afterScreenUpdates: true)
             
             let returnImage = UIGraphicsGetImageFromCurrentImageContext()
             

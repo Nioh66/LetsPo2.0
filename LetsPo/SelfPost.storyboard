@@ -11,6 +11,24 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Self Post DetailVC-->
+        <scene sceneID="1Uz-Lh-l9Y">
+            <objects>
+                <viewController storyboardIdentifier="SelfPostDetailVC" id="Wwy-QO-rKL" customClass="SelfPostDetailVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="sn0-BL-jhL"/>
+                        <viewControllerLayoutGuide type="bottom" id="kf0-e2-eCB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="R2z-96-aJL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gHa-vy-eNJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2666" y="-287"/>
+        </scene>
         <!--Self Post HomeVC-->
         <scene sceneID="v5h-eN-YeJ">
             <objects>
@@ -24,7 +42,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wall2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="QJK-v4-p9d">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xg-Jo-daL">
                                 <rect key="frame" x="7" y="534" width="64" height="64"/>
@@ -47,18 +65,27 @@
                                     <segue destination="yKd-oh-LBE" kind="show" identifier="selectBgImage" id="UvT-ZQ-abw"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXV-5Z-DSZ">
+                                <rect key="frame" x="67" y="395" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="QJK-v4-p9d" firstAttribute="top" secondItem="OQC-Z7-5FS" secondAttribute="top" id="6Kv-Uo-FWP"/>
                             <constraint firstItem="QJK-v4-p9d" firstAttribute="leading" secondItem="OQC-Z7-5FS" secondAttribute="leading" id="AIb-M9-Bmn"/>
-                            <constraint firstItem="y2G-Ic-Pd7" firstAttribute="top" secondItem="QJK-v4-p9d" secondAttribute="bottom" id="MJP-M4-2zK"/>
+                            <constraint firstAttribute="bottom" secondItem="QJK-v4-p9d" secondAttribute="bottom" id="knY-Q4-qvH"/>
                             <constraint firstAttribute="trailing" secondItem="QJK-v4-p9d" secondAttribute="trailing" id="qp1-el-1rR"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7f6-xr-Rq7"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="addNewPostBtn" destination="YQe-95-wAw" id="s02-yL-u5o"/>
+                        <outlet property="bgSettingBtn" destination="piK-OL-iaF" id="XWL-FE-0dR"/>
+                        <outlet property="deletePostBtn" destination="6xg-Jo-daL" id="J2j-A9-yZw"/>
+                        <outlet property="detailPostAppearV" destination="YXV-5Z-DSZ" id="Kr9-Vo-ANB"/>
                         <outlet property="selfBgImage" destination="QJK-v4-p9d" id="sBp-1r-SKo"/>
                     </connections>
                 </viewController>
@@ -139,7 +166,11 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="Nb4-Mi-cOg">
-                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="Jwo-V4-8Ct"/>
+                        <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="Jwo-V4-8Ct">
+                            <connections>
+                                <segue destination="yIR-fP-5Ud" kind="show" id="OFu-hZ-fG5"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -156,7 +187,6 @@
         <!--Self DragVC-->
         <scene sceneID="w3y-FO-HhK">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="649-Eu-Ctx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="SelfDragVC" id="yIR-fP-5Ud" customClass="SelfDragVC" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oRz-nO-S9Y"/>
@@ -167,21 +197,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fBr-4u-7nV">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fBr-4u-7nV" firstAttribute="leading" secondItem="6gG-Du-VZT" secondAttribute="leading" id="7RM-yk-3Pp"/>
                             <constraint firstAttribute="trailing" secondItem="fBr-4u-7nV" secondAttribute="trailing" id="B5o-IN-WHV"/>
-                            <constraint firstItem="Lnc-4j-dOh" firstAttribute="top" secondItem="fBr-4u-7nV" secondAttribute="bottom" id="RdW-Ox-fVp"/>
                             <constraint firstItem="fBr-4u-7nV" firstAttribute="top" secondItem="6gG-Du-VZT" secondAttribute="top" id="ro6-aU-NZ9"/>
+                            <constraint firstAttribute="bottom" secondItem="fBr-4u-7nV" secondAttribute="bottom" id="xt4-26-wSY"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="selfBgImage" destination="fBr-4u-7nV" id="JgW-Do-E20"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="649-Eu-Ctx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3612" y="1447.8260869565217"/>
         </scene>

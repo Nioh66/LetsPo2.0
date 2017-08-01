@@ -109,28 +109,29 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         
         theSelfPost.giveMeFreshNewNote()
         myTextView.giveMeFreshNewNoteText()
-        
-        
-        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
-        self.present(noteVC!, animated: false, completion: nil)
-        self.dismiss(animated: false, completion: nil)
-        
+        self.selfNoteCollectionV.backgroundColor = UIColor(red: 253.0/255.0,green: 237.0/255.0,blue: 166.0/255.0,alpha: 1.0)
+
+//        let noteVC = storyboard?.instantiateViewController(withIdentifier: "SelfNewPostVC")
+//        self.present(noteVC!, animated: false, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
+//
     }
     
     
-    
+    // MARK: Perpare segue
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         
-        let newPostSegue = segue.destination as! SelfPostHomeVC
+        let dragSegue = segue.destination as! SelfDragVC
  //       newPostSegue.thePost = theSelfPost
         
         let resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
-        newPostSegue.resizeNote = resizeNote
+        dragSegue.resizeNote = resizeNote
         
         self.saveNoteData()
-        newPostSegue.allNoteData = allNoteData
+        dragSegue.allNoteData = allNoteData
+        dragSegue.bgImage = bgImage
         
     }
     
@@ -544,36 +545,16 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         let noteFontSize = fontSizeData
         let noteImage = imageForCell
         
-        let noteBgColor = noteDataManager.transformColorToData(targetColor: theSelfPost.uploadcolor)
+        let noteBgColor = selfNoteDataManager.transformColorToData(targetColor: theSelfPost.uploadcolor)
         
-        allNoteData = ["noteContent":noteContent ?? "",
-                       "noteBgColor":noteBgColor,
-                       "noteFontColor":noteFontColor ,
-                       "noteFontSize":noteFontSize,
-                       "noteImage":noteImage]
+        allNoteData = ["selfNoteContent":noteContent ?? "",
+                       "selfNoteBgColor":noteBgColor,
+                       "selfNoteFontColor":noteFontColor ,
+                       "selfNoteFontSize":noteFontSize,
+                       "selfNoteImage":noteImage]
     }
     
-    
-    
-    
-    //    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-    //        guard let loca = touches.first?.location(in: self.view)
-    //            else { return  }
-    //
-    //    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-    
+        
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

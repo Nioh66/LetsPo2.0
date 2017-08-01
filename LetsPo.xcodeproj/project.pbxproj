@@ -37,6 +37,7 @@
 		30AB320B1F206454001B1D0E /* BoardBgImageSetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */; };
 		30CAD4141F2F93EE0042B059 /* SelfBoardSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAD4131F2F93EE0042B059 /* SelfBoardSetting.swift */; };
 		30CAD4161F2FBAA00042B059 /* SelfNoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAD4151F2FBAA00042B059 /* SelfNoteImageCell.swift */; };
+		30CAD4181F3074EC0042B059 /* SelfPostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */; };
 		30D0928C1F1E35BB00CB3F88 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092871F1E35BB00CB3F88 /* Note.swift */; };
 		30D0928D1F1E35BB00CB3F88 /* NoteText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092881F1E35BB00CB3F88 /* NoteText.swift */; };
 		30D0928E1F1E35BB00CB3F88 /* NoteScrollview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092891F1E35BB00CB3F88 /* NoteScrollview.swift */; };
@@ -111,6 +112,7 @@
 		30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardBgImageSetVC.swift; sourceTree = "<group>"; };
 		30CAD4131F2F93EE0042B059 /* SelfBoardSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfBoardSetting.swift; sourceTree = "<group>"; };
 		30CAD4151F2FBAA00042B059 /* SelfNoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfNoteImageCell.swift; sourceTree = "<group>"; };
+		30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfPostDetailVC.swift; sourceTree = "<group>"; };
 		30D092871F1E35BB00CB3F88 /* Note.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		30D092881F1E35BB00CB3F88 /* NoteText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteText.swift; sourceTree = "<group>"; };
 		30D092891F1E35BB00CB3F88 /* NoteScrollview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteScrollview.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				309EAFB21F2721A300FC3F34 /* TabBarVC.swift */,
 				304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */,
 				304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */,
+				30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */,
 				304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */,
 				304CB6861F25F9B100AEF632 /* SelfDragVC.swift */,
 				30CAD4151F2FBAA00042B059 /* SelfNoteImageCell.swift */,
@@ -489,6 +492,7 @@
 				304CB6871F25F9B100AEF632 /* SelfDragVC.swift in Sources */,
 				305C31841F2E594A0039E35A /* GetNoteDetail.swift in Sources */,
 				9BA62C5F1F1E65A0008CDEC0 /* MapViewController.swift in Sources */,
+				30CAD4181F3074EC0042B059 /* SelfPostDetailVC.swift in Sources */,
 				30D092941F1E369500CB3F88 /* NewPostVC.swift in Sources */,
 				30D092901F1E35BB00CB3F88 /* MyPhoto.swift in Sources */,
 				30D0928D1F1E35BB00CB3F88 /* NoteText.swift in Sources */,

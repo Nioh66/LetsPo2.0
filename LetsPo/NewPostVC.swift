@@ -115,12 +115,13 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         thePost.giveMeFreshNewNote()
         myTextView.giveMeFreshNewNoteText()
-  
+        self.noteCollectionView.backgroundColor = UIColor(red: 253.0/255.0,green: 237.0/255.0,blue: 166.0/255.0,alpha: 1.0)
+
         
-        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
-        self.present(noteVC!, animated: false, completion: nil)
-        self.dismiss(animated: false, completion: nil)
-    
+//        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
+//        self.present(noteVC!, animated: false, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
+//    
     }
 
     
