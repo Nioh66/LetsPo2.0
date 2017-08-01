@@ -8,43 +8,60 @@
 
 import UIKit
 
-class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImagePickerControllerDelegate{
+class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegateFlowLayout ,UICollectionViewDataSource{
     
     
+    
+    @IBOutlet weak var selfNoteCollectionV: UICollectionView!
     @IBOutlet weak var theSelfPost: Note!
+    @IBOutlet weak var showCellImage: UIImageView!
+   
+    var fontSizeData:Double = 14.0
+    
     var myTextView = NoteText()
     var textContainer = NSTextContainer()
+    
+    var imageForCell = [UIImage]()
+    let cellSpace:CGFloat = 1
+    
     var myInputView : UIView?
     var keyboardHeight:CGFloat? = nil
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
-    
-    var bgImage:UIImage!
-    
+    let resetNote = Notification.Name("resetNote")
+    var bgImage = UIImage()
+    var allNoteData = [String:Any]()
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
-    }
-    
-    
+        NotificationCenter.default.removeObserver(self,
+                                                  name: .UIKeyboardWillShow,
+                                                  object: nil)
+        }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //   myTextView.contentInset.top = -64
-        self.navigationController?.isNavigationBarHidden = false
-
+        
+        
+        let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
+                                                                FileManager.SearchPathDomainMask.userDomainMask, true)
+        //let documnetPath = documentPaths[0] as! String
+        print(documentPaths)
+        
+        
+        showCellImage.layer.cornerRadius = 10.0
+        showCellImage.layer.masksToBounds = true
         
         myTextView.frame = CGRect(x: 0, y: 0, width: theSelfPost.frame.size.width, height: theSelfPost.frame.size.height*0.8)
         theSelfPost.clipsToBounds = true
         
         DispatchQueue.main.async {
             self.theSelfPost.addSubview(self.myTextView)
+            let collectBgcolor = UIColor(cgColor: self.theSelfPost.shapeLayer.fillColor!)
+            self.selfNoteCollectionV.backgroundColor = collectBgcolor
+            
+            self.theSelfPost.addSubview(self.selfNoteCollectionV)
         }
-        
-        //        myTextView.setNeedsDisplay()
-        //        myScrollView.addSubview(myTextView)
-        
-        
+    
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
         tap.cancelsTouchesInView = false
         tap.numberOfTapsRequired = 1
@@ -78,18 +95,42 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
         
         myTextView.inputAccessoryView = functionBar
         self.setKeyboardObserver()
+        NotificationCenter.default.addObserver(self, selector: #selector(reset),
+                                               name: resetNote,
+                                               object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    func reset(notification:Notification) {
+        
+        
+        theSelfPost.giveMeFreshNewNote()
+        myTextView.giveMeFreshNewNoteText()
+        
+        
+        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
+        self.present(noteVC!, animated: false, completion: nil)
+        self.dismiss(animated: false, completion: nil)
         
     }
+    
     
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         
-            let newPostSegue = segue.destination as! SelfDragVC
-            newPostSegue.bgImage = bgImage
-            newPostSegue.resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
-            
+        let newPostSegue = segue.destination as! SelfPostHomeVC
+ //       newPostSegue.thePost = theSelfPost
+        
+        let resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
+        newPostSegue.resizeNote = resizeNote
+        
+        self.saveNoteData()
+        newPostSegue.allNoteData = allNoteData
         
     }
     
@@ -258,7 +299,7 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
     func changeFSSlider(slider:UISlider) {
         let sliderValue = CGFloat(slider.value)
         myTextView.font = UIFont.boldSystemFont(ofSize: sliderValue)
-        
+        fontSizeData = Double(sliderValue)
     }
     
     
@@ -361,6 +402,9 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
     
     func changeBgBtn(button:UIButton) {
         theSelfPost.changeBgColor(button: button)
+        let collectBgcolor = UIColor(cgColor: theSelfPost.shapeLayer.fillColor!)
+        selfNoteCollectionV.backgroundColor = collectBgcolor
+        
     }
     
     
@@ -383,7 +427,17 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
         }
     }
     
-    // MARK: Take photo
+    // MARK: HideKeyboard
+    func hideKeyboard(tapG:UITapGestureRecognizer){
+        // self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5) {
+            self.myTextView.resignFirstResponder()
+        }
+        
+    }
+    
+    
+    // MARK: Photo method
     
     func takePictureBtn() {
         let checkDeviceAccesse = UIImagePickerController.isSourceTypeAvailable(.camera)
@@ -401,25 +455,6 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
             print("Your camera are unvailable")
         }
     }
-    
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    // MARK: hideKeyboard
-    func hideKeyboard(tapG:UITapGestureRecognizer){
-        // self.view.endEditing(true)
-        UIView.animate(withDuration: 1) {
-            self.myTextView.resignFirstResponder()
-        }
-        
-    }
-    
-    
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
@@ -447,13 +482,77 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
                 return
         }
         
-        UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
+        // UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         
-        myTextView.addImageInText(image: imageX, NoteView: theSelfPost)
+        imageForCell.append(imageX)
+        selfNoteCollectionV.reloadData()
+        //    myTextView.addImageInText(image: imageX, NoteView: thePost)
         
         self.dismiss(animated: true, completion: nil)
         
     }
+    
+    
+    // MARK: Collectionview delegate method
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageForCell.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SelfNoteImageCell
+        
+        
+        cell.selfNoteImageV.image = imageForCell[indexPath.row]
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        showCellImage.image = imageForCell[indexPath.row]
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let length = collectionView.frame.size.height
+        let cellSize = CGSize(width: length, height: length)
+        
+        return cellSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return cellSpace
+    }
+    
+    // MARK: Save note data
+    
+    func saveNoteData() {
+        
+        allNoteData.removeAll()
+        
+        let noteContent = myTextView.text
+        
+        
+        
+        
+        
+        guard let fontColor = myTextView.textColor
+            else {
+                return
+        }
+        let textColorData = NSKeyedArchiver.archivedData(withRootObject: fontColor ) as NSData
+        let noteFontColor = textColorData
+        let noteFontSize = fontSizeData
+        let noteImage = imageForCell
+        
+        let noteBgColor = noteDataManager.transformColorToData(targetColor: theSelfPost.uploadcolor)
+        
+        allNoteData = ["noteContent":noteContent ?? "",
+                       "noteBgColor":noteBgColor,
+                       "noteFontColor":noteFontColor ,
+                       "noteFontSize":noteFontSize,
+                       "noteImage":noteImage]
+    }
+    
     
     
     
@@ -474,4 +573,16 @@ class SelfNewPostVC: UIViewController , UINavigationControllerDelegate, UIImageP
      }
      */
     
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    
+    
+    
 }
+
+

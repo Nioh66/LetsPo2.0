@@ -252,7 +252,6 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
                 return
         }
         
-        UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":imageX])
         self.dismiss(animated: true, completion: nil)
         

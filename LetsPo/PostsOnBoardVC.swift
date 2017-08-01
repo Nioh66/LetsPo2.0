@@ -14,6 +14,8 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
     var postIDs = [Int16]()
     var detailPostID:Int16 = 0
     
+    let test001 = Note()
+    
     @IBOutlet weak var detailNoteAppearPoint: UIView!
     @IBOutlet weak var boardBgImage: UIImageView!
     override func viewDidLoad() {
@@ -37,7 +39,7 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
             imageview.isUserInteractionEnabled = true
             imageview.backgroundColor = UIColor.clear
             
-            let detailBtn = TapToShowDetail.init(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
             detailBtn.postImageView = imageview
             detailBtn.postID = allPostsID[index]
             boardBgImage.addSubview(imageview)
@@ -50,7 +52,10 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
                 //    self.view.setNeedsDisplay()
         // Do any additional setup after loading the view.
     }
+    func imageViewAddGesture(targetView:UIImageView , index:Int) {
 
+    
+    }
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
         

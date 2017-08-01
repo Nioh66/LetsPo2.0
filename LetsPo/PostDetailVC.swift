@@ -10,51 +10,48 @@ import UIKit
 
 class PostDetailVC: UIViewController {
 
-    @IBOutlet weak var test01: UIView!
     let getPost = GetNoteDetail()
     var detilPostID:Int16 = 0
-    let postT = NoteText()
+    var post = Note()
+    var postT = NoteText()
 
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        guard let postBg = getPost.getNoteSetting(boardID: 1, noteID: 1) else{
+        post.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
+        postT.frame = CGRect(x: 0, y: 0, width: post.frame.size.width, height: post.frame.size.height)
+        
+        
+        guard let postBg = getPost.getNoteSetting(boardID: 1, noteID: 1,note:post) else{
             print("getNoteSetting fail")
             return
         }
-        let postText = getPost.getNoteText(boardID: 1, noteID: 1)
+
+        
+        
+        let postText = getPost.getNoteText(boardID: 1, noteID: 1, noteText: postT)
         let postImage = getPost.getNoteImage(boardID: 1, noteID: 1)
         
-        print(postText?.text)
-        test01.addSubview(postT)
-
-    //    noteView.addSubview(postText!)
-                DispatchQueue.main.async {
-
-
-        }
-        
-        //        DispatchQueue.main.async {
-        //            guard let postBg = self.getPost.getNoteSetting(boardID: 27, noteID: 1) else{
-        //                print("getNoteSetting fail")
-        //                return
-        //            }
-        //            let postText = self.getPost.getNoteText(boardID: 27, noteID: 1)
-        //            let postImage = self.getPost.getNoteImage(boardID: 27, noteID: 1)
-        //            self.noteView = postBg
-        //
-        //            self.noteView.addSubview(postText!)
-        //            self.noteView.setNeedsDisplay()
-        //        }
-        //
+        postT = postText!
+        post.posterColor = postBg.posterColor
         
         
-        
+        view.addSubview(post)
 
+        
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        DispatchQueue.main.async {
+              self.post.addSubview(self.postT)
+        
+        }
+    }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

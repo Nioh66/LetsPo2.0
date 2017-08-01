@@ -203,14 +203,6 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         }
     }
     
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!
@@ -237,11 +229,26 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
                 return
         }
         
-        UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["selfBg":imageX])
         self.dismiss(animated: true, completion: nil)
         
     }
     
-    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    // MARK: update self board data
+    func updateBoardData(bgImage:UIImage) {
+        
+        let boardData = selfBoardDataManager.itemWithIndex(index: 0)
+        boardData.selfBoard_Pic = UIImageJPEGRepresentation(bgImage, 1.0) as NSData?
+        selfBoardDataManager.saveContexWithCompletion { (success) in
+            if success {
+                print("BoardData save succeed!!!")
+            }else{
+                print("BoardData save failure!!!")
+            }
+        }
+    }
 }
