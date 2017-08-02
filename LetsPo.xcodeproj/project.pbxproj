@@ -63,6 +63,12 @@
 		30D092C61F1E950800CB3F88 /* Sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C21F1E950800CB3F88 /* Sky.jpg */; };
 		30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */; };
 		30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C91F1E956200CB3F88 /* myNigger.jpg */; };
+		9B89D47B1F31C8FA001943C1 /* NewPublicPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */; };
+		9B89D47D1F31C913001943C1 /* DragPublicPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */; };
+		9B89D47F1F31C92C001943C1 /* PublicPostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */; };
+		9B89D4811F31CA33001943C1 /* PublicDetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D4801F31CA33001943C1 /* PublicDetailImageCell.swift */; };
+		9B89D4831F31CA62001943C1 /* PublicPostImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D4821F31CA62001943C1 /* PublicPostImageCell.swift */; };
+		9B89D4851F31CF0B001943C1 /* PublicBoardSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D4841F31CF0B001943C1 /* PublicBoardSettingVC.swift */; };
 		9BA62C5D1F1E6506008CDEC0 /* SpotAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C5C1F1E6506008CDEC0 /* SpotAnnotation.swift */; };
 		9BA62C5F1F1E65A0008CDEC0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C5E1F1E65A0008CDEC0 /* MapViewController.swift */; };
 		9BA62C611F1E66C8008CDEC0 /* MapDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C601F1E66C8008CDEC0 /* MapDetailViewController.swift */; };
@@ -140,6 +146,12 @@
 		30D092C21F1E950800CB3F88 /* Sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sky.jpg; sourceTree = "<group>"; };
 		30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteboard-303145_960_720.png"; sourceTree = "<group>"; };
 		30D092C91F1E956200CB3F88 /* myNigger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = myNigger.jpg; sourceTree = "<group>"; };
+		9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPublicPostVC.swift; sourceTree = "<group>"; };
+		9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragPublicPostVC.swift; sourceTree = "<group>"; };
+		9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicPostDetailVC.swift; sourceTree = "<group>"; };
+		9B89D4801F31CA33001943C1 /* PublicDetailImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicDetailImageCell.swift; sourceTree = "<group>"; };
+		9B89D4821F31CA62001943C1 /* PublicPostImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicPostImageCell.swift; sourceTree = "<group>"; };
+		9B89D4841F31CF0B001943C1 /* PublicBoardSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicBoardSettingVC.swift; sourceTree = "<group>"; };
 		9BA62C5C1F1E6506008CDEC0 /* SpotAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAnnotation.swift; sourceTree = "<group>"; };
 		9BA62C5E1F1E65A0008CDEC0 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9BA62C601F1E66C8008CDEC0 /* MapDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailViewController.swift; sourceTree = "<group>"; };
@@ -259,6 +271,12 @@
 				9BA62C771F1F7F3E008CDEC0 /* Map */,
 				9BA62C731F1F7299008CDEC0 /* ManageViewController.swift */,
 				9BA62C781F1F8065008CDEC0 /* ManageDetailViewController.swift */,
+				9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */,
+				9B89D4821F31CA62001943C1 /* PublicPostImageCell.swift */,
+				9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */,
+				9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */,
+				9B89D4801F31CA33001943C1 /* PublicDetailImageCell.swift */,
+				9B89D4841F31CF0B001943C1 /* PublicBoardSettingVC.swift */,
 			);
 			name = ZY;
 			sourceTree = "<group>";
@@ -493,6 +511,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B89D4831F31CA62001943C1 /* PublicPostImageCell.swift in Sources */,
 				300954131F2B8E74008EA764 /* PostsOnBoardVC.swift in Sources */,
 				309EAFAF1F267B9E00FC3F34 /* FindNiggerVC.swift in Sources */,
 				30CAD41C1F30FD870042B059 /* SelfPostDetailImageCell.swift in Sources */,
@@ -509,16 +528,21 @@
 				304CB6751F258F6D00AEF632 /* SelfPostBgSelectVC.swift in Sources */,
 				309EAFA91F26670D00FC3F34 /* NotiSettingVC.swift in Sources */,
 				9BA62C5D1F1E6506008CDEC0 /* SpotAnnotation.swift in Sources */,
+				9B89D47F1F31C92C001943C1 /* PublicPostDetailVC.swift in Sources */,
 				30AB320B1F206454001B1D0E /* BoardBgImageSetVC.swift in Sources */,
+				9B89D4851F31CF0B001943C1 /* PublicBoardSettingVC.swift in Sources */,
+				9B89D47D1F31C913001943C1 /* DragPublicPostVC.swift in Sources */,
 				9BABCA6B1F24C6DA0055B07A /* InfoEditVC.swift in Sources */,
 				9BABCA691F24C4860055B07A /* PersonalDetailVC.swift in Sources */,
 				309EAFB11F26E9A000FC3F34 /* MyNiggerCell.swift in Sources */,
 				30D0928F1F1E35BB00CB3F88 /* MyButton.swift in Sources */,
+				9B89D4811F31CA33001943C1 /* PublicDetailImageCell.swift in Sources */,
 				30D0928C1F1E35BB00CB3F88 /* Note.swift in Sources */,
 				304CB6791F258FAF00AEF632 /* SelfPostHomeVC.swift in Sources */,
 				309EAFB31F2721A300FC3F34 /* TabBarVC.swift in Sources */,
 				30628BC31F28E39A001FED7F /* NoteImageCell.swift in Sources */,
 				9BA62C741F1F7299008CDEC0 /* ManageViewController.swift in Sources */,
+				9B89D47B1F31C8FA001943C1 /* NewPublicPostVC.swift in Sources */,
 				9BA62C6C1F1F6A3D008CDEC0 /* FlowLayout.swift in Sources */,
 				9BA62C791F1F8065008CDEC0 /* ManageDetailViewController.swift in Sources */,
 				30CAD41A1F30CB000042B059 /* SelfNoteDetail.swift in Sources */,
