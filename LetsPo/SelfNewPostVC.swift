@@ -36,6 +36,8 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         NotificationCenter.default.removeObserver(self,
                                                   name: .UIKeyboardWillShow,
                                                   object: nil)
+        NotificationCenter.default.removeObserver(self, name: resetNote, object: nil)
+
         }
     
     override func viewDidLoad() {
@@ -53,15 +55,7 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         
         myTextView.frame = CGRect(x: 0, y: 0, width: theSelfPost.frame.size.width, height: theSelfPost.frame.size.height*0.8)
         theSelfPost.clipsToBounds = true
-        
-        DispatchQueue.main.async {
-            self.theSelfPost.addSubview(self.myTextView)
-            let collectBgcolor = UIColor(cgColor: self.theSelfPost.shapeLayer.fillColor!)
-            self.selfNoteCollectionV.backgroundColor = collectBgcolor
-            
-            self.theSelfPost.addSubview(self.selfNoteCollectionV)
-        }
-    
+
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
         tap.cancelsTouchesInView = false
         tap.numberOfTapsRequired = 1
@@ -102,6 +96,16 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        
+        DispatchQueue.main.async {
+            let collectBgcolor = UIColor(cgColor: self.theSelfPost.shapeLayer.fillColor!)
+            self.selfNoteCollectionV.backgroundColor = collectBgcolor
+            
+            self.theSelfPost.addSubview(self.myTextView)
+            self.theSelfPost.addSubview(self.selfNoteCollectionV)
+
+            
+        }
     }
     
     func reset(notification:Notification) {
@@ -285,6 +289,7 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         
         let fontSlider = UISlider()
         fontSlider.frame = CGRect(x: 15, y: ((fontSizeInputview.frame.height)/2)-30, width: fontSizeInputview.frame.size.width - 30, height: 30)
+        fontSlider.value = Float(fontSizeData)
         fontSlider.maximumValue = 120
         fontSlider.minimumValue = 1
         fontSlider.tintColor = UIColor.black

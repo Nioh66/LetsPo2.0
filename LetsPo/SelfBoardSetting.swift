@@ -67,4 +67,25 @@ class SelfBoardSetting {
         
         return allSelfNotesSelfie
     }
+    
+    func getSelfNotesID() -> [Int16]? {
+        let searchField = "selfNote_BoardID"
+        let keyword = "1"
+        var allSelfNotesID = [Int16]()
+        
+        guard let result = selfNoteDataManager.searchField(field: searchField, forKeyword: keyword) as? [SelfNoteData] else{
+            print("Result case to [SelfNoteData] failure!!!!")
+            return nil
+        }
+        for noteAttribute:SelfNoteData in result{
+            
+            let noteID = noteAttribute.selfNote_ID
+            allSelfNotesID.append(noteID)
+        }
+        
+        return allSelfNotesID
+    }
+    
+    
+    
 }

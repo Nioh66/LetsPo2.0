@@ -47,9 +47,13 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
 
         
         
+        if let selfBoardBg = getAllPosts.getSelfboardBg() {
+            selfBgImage.image = selfBoardBg
+        }
         
-        
-        
+        guard let allSelfPostsID = getAllPosts.getSelfNotesID() else{
+            return
+        }
         if let notes = getAllPosts.getSelfboardNotes() {
             
             for (index,imageV) in notes.enumerated(){
@@ -58,12 +62,13 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
                 
                 let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
                 detailBtn.postImageView = imageV
+                detailBtn.postID = allSelfPostsID[index]
 
                 selfBgImage.addSubview(imageV)
                 imageV.addGestureRecognizer(detailBtn)
-
             }
-        }
+            }
+        
         
         
     }
@@ -75,10 +80,10 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
         
         let detailSelfPostVC =  storyboard?.instantiateViewController(withIdentifier: "SelfPostDetailVC") as! SelfPostDetailVC
         detailSelfPostVC.modalPresentationStyle = .popover
+        detailSelfPostVC.selfPostID = detailSelfPostID
         let popDetailPostVC = detailSelfPostVC.popoverPresentationController
         popDetailPostVC?.delegate = self
         popDetailPostVC?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-        
         popDetailPostVC?.sourceView = detailPostAppearV
         popDetailPostVC?.sourceRect = detailPostAppearV.bounds
         present(detailSelfPostVC, animated: true, completion: nil)

@@ -118,7 +118,7 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         
         print("get the default bg pic!")
         
-        
+        self.updateBoardData(bgImage: bgImage!)
         navigationController?.popViewController(animated: true)
         
         
@@ -131,6 +131,9 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         bgImage = UIImage(named: "myNigger.jpg")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["selfBg":bgImage!])
         print("get the default bg pic!")
+        
+        self.updateBoardData(bgImage: bgImage!)
+
         navigationController?.popViewController(animated: true)
         
     }
@@ -140,6 +143,8 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["selfBg":bgImage!])
         print("get the default bg pic!")
         
+        self.updateBoardData(bgImage: bgImage!)
+
         navigationController?.popViewController(animated: true)
         
     }
@@ -148,18 +153,24 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         bgImage = UIImage(named: "Sky.jpg")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["selfBg":bgImage!])
         print("get the default bg pic!")
+        
+        self.updateBoardData(bgImage: bgImage!)
+
         navigationController?.popViewController(animated: true)
     }
     
     func getPhotosBg(){
         self.addPictureBtn()
         print("get the bg pic from photos!")
+        
+
         navigationController?.popViewController(animated: true)
     }
     func takeBgPhoto(){
         self.takePictureBtn()
         print("Take the photo for bg!")
         
+
         navigationController?.popViewController(animated: true)
         
     }
@@ -213,7 +224,10 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
             let saveAlert = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
             saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
             present(saveAlert, animated: true)
+            self.updateBoardData(bgImage: image)
+
         }
+
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -230,6 +244,9 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         }
         
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["selfBg":imageX])
+        
+        self.updateBoardData(bgImage: imageX)
+
         self.dismiss(animated: true, completion: nil)
         
     }
@@ -241,8 +258,17 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
     // MARK: update self board data
     func updateBoardData(bgImage:UIImage) {
         
+        if selfBoardDataManager.count() == 0 {
+            let selfBoardItem = selfBoardDataManager.createItem()
+            selfBoardItem.selfBoard_ID = 1
+            selfBoardItem.selfBoard_Pic = UIImageJPEGRepresentation(bgImage, 1.0) as NSData?
+        }else{
         let boardData = selfBoardDataManager.itemWithIndex(index: 0)
         boardData.selfBoard_Pic = UIImageJPEGRepresentation(bgImage, 1.0) as NSData?
+        
+        }
+        
+        
         selfBoardDataManager.saveContexWithCompletion { (success) in
             if success {
                 print("BoardData save succeed!!!")
