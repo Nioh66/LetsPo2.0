@@ -320,7 +320,7 @@ extension CoreDataManager{
                             green: components[1],
                             blue: components[2],
                             alpha: components[3])
-        
+        print("reverse-----\(color)")
         return color
     }
 
@@ -339,7 +339,6 @@ extension CoreDataManager{
         
         let colorData = NSData(bytes: components,
                                length: MemoryLayout.size(ofValue: components)*components.count)
-        
         return colorData
     }
     
