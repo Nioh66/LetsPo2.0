@@ -211,7 +211,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         boardItem.board_BgPic = boardBgPic
         boardItem.board_CreateTime = NSDate()
         boardDataManager.saveContexWithCompletion { (success) in
-            if success {
+            if (success) {
                 print("BoardData save succeed!!!")
             }else{
                 print("BoardData save failure!!!")

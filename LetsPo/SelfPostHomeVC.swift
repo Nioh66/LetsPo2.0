@@ -121,13 +121,13 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
     }
     
     
-    func panTheNote(sender:UIPanGestureRecognizer) {
-        
-        let point = sender.location(in: selfBgImage)
-        
-        
-        theDragNote?.center = point
-    }
+//    func panTheNote(sender:UIPanGestureRecognizer) {
+//        
+//        let point = sender.location(in: selfBgImage)
+//        
+//        
+//        theDragNote?.center = point
+//    }
 
     
     

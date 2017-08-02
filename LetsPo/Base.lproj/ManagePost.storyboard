@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FgI-5r-fIW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FgI-5r-fIW">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -106,11 +106,17 @@
                                 <rect key="frame" x="94" y="563" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="plus-2"/>
+                                <connections>
+                                    <segue destination="Ye5-9A-T9P" kind="show" identifier="newPublicNote" id="Ydr-be-ulD"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcl-Yi-H9f">
                                 <rect key="frame" x="321" y="72" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="settings"/>
+                                <connections>
+                                    <action selector="boardSettingBtnPressed:" destination="YjR-tB-jJT" eventType="touchUpInside" id="Q3S-Ul-H13"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -124,7 +130,10 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="addPostBtn" destination="zWo-Bo-wsM" id="wyg-5k-68z"/>
                         <outlet property="backGroundImage" destination="Ue2-p8-4xs" id="9jo-48-LAD"/>
+                        <outlet property="boardSettingBtn" destination="vcl-Yi-H9f" id="262-8f-GZb"/>
+                        <outlet property="deletePostBtn" destination="FFi-UB-gVL" id="4f7-11-tes"/>
                         <outlet property="detailNoteAppearPoint" destination="MsW-QA-iWN" id="Bbs-V3-nj8"/>
                     </connections>
                 </viewController>
@@ -175,6 +184,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="boardAlertValue" destination="Grn-pp-b0i" id="Dyr-X5-oL7"/>
+                        <outlet property="boardPrivacyValue" destination="lPy-kD-y2K" id="PxX-hD-8pd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dib-K5-p01" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -276,8 +289,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="displayNoteImage" destination="0S7-KW-2IR" id="PtJ-br-Kss"/>
-                        <outlet property="displayNoteV" destination="FER-ha-EmD" id="y1W-HS-dy6"/>
+                        <outlet property="displayNoteImage" destination="FER-ha-EmD" id="eAx-15-1K6"/>
+                        <outlet property="displayNoteV" destination="0S7-KW-2IR" id="jGx-sd-cv0"/>
                         <outlet property="publicDetailCollectionV" destination="3rT-2X-OOc" id="is8-xu-3Cd"/>
                     </connections>
                 </viewController>

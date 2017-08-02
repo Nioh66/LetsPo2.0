@@ -270,7 +270,7 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         
         
         selfBoardDataManager.saveContexWithCompletion { (success) in
-            if success {
+            if (success) {
                 print("BoardData save succeed!!!")
             }else{
                 print("BoardData save failure!!!")

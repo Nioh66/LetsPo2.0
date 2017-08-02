@@ -12,7 +12,7 @@ import UIKit
 class GetNoteDetail {
     
     
-    func getNoteSetting(boardID: Int,noteID: Int,note:Note) -> Note? {
+    func getNoteSetting(boardID: Int16,noteID: Int16,note:Note) -> Note? {
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
       
@@ -22,7 +22,7 @@ class GetNoteDetail {
             return nil
         }
         for noteAttribute:NoteData in result{
-            if noteAttribute.note_ID == Int16(noteID) {
+            if noteAttribute.note_ID == noteID {
                 
                 guard let noteBgColorData = noteAttribute.note_BgColor else{
                     print("getNoteSetting------------NoteAttributes case failure!!!!!")
@@ -42,7 +42,7 @@ class GetNoteDetail {
     }
     
     
-    func getNoteText(boardID: Int,noteID: Int,noteText:NoteText) -> NoteText? {
+    func getNoteText(boardID: Int16,noteID: Int16,noteText:NoteText) -> NoteText? {
         
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
@@ -54,7 +54,7 @@ class GetNoteDetail {
         }
         
         for noteAttribute:NoteData in result{
-            if noteAttribute.note_ID == Int16(noteID) {
+            if noteAttribute.note_ID == noteID {
                 
                 guard let noteFontColorData = noteAttribute.note_FontColor as Data?,
                     let noteFontColor = NSKeyedUnarchiver.unarchiveObject(with: noteFontColorData) as? UIColor
@@ -78,7 +78,7 @@ class GetNoteDetail {
         return noteText
     }
     
-    func getNoteImage(boardID: Int,noteID: Int) -> [UIImage]? {
+    func getNoteImage(boardID: Int16,noteID: Int16) -> [UIImage]? {
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
         var noteImages = [UIImage]()
@@ -89,7 +89,7 @@ class GetNoteDetail {
         }
         
         for noteAttribute:NoteData in result{
-            if noteAttribute.note_ID == Int16(noteID) {
+            if noteAttribute.note_ID == noteID {
                 guard let noteImageData = noteAttribute.note_Image
                     else{
                         print("getNoteImage----------------NoteAttributes case failure!!!!!")

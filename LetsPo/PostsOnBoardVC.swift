@@ -98,5 +98,6 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
 
 class TapToShowDetail: UITapGestureRecognizer {
     var postID : Int16 = 0
+    var boardID : Int16 = 0
     var postImageView:UIImageView? = nil
 }

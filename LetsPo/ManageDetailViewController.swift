@@ -8,15 +8,24 @@
 
 import UIKit
 
-class ManageDetailViewController: UIViewController {
+class ManageDetailViewController: UIViewController ,UIPopoverPresentationControllerDelegate{
+    
+    let boardSettingNN = Notification.Name("boardSetting")
+    let newNoteComingNN = Notification.Name("newPublicNoteComing")
+
+    deinit {
+        NotificationCenter.default.removeObserver(self,name: boardSettingNN,object: nil)
+        NotificationCenter.default.removeObserver(self,name: newNoteComingNN,object: nil)
+    }
     
     var dataManagerCount = Int()
     var selectIndexID = Int16()
-    var postIDs = [Int16]()
     let getBoardPosts = GetBoardNotes()
-    var detailPostID:Int16 = 0
 
     
+    @IBOutlet weak var boardSettingBtn: UIButton!
+    @IBOutlet weak var addPostBtn: UIButton!
+    @IBOutlet weak var deletePostBtn: UIButton!
         
     @IBOutlet weak var detailNoteAppearPoint: UIView!
     @IBOutlet weak var backGroundImage: UIImageView!
@@ -24,24 +33,17 @@ class ManageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        self.addingObserver()
+
         dataManagerCount = boardDataManager.count()
         
         print("selectIndex \(selectIndexID)")
-//        for i in 0..<dataManagerCount {
-//            let item = boardDataManager.itemWithIndex(index: i)
-//            let board_id = item.board_Id
-//            if selectIndexID == board_id {
-//                var imgWithData = UIImage()
-//                if let img = item.board_BgPic {
-//                    imgWithData = UIImage(data: img as Data)!
-//                }
-//                backGroundImage.image = imgWithData
-//            }
-//        }
-        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: Int(selectIndexID)),
-            let allPosts = getBoardPosts.presentNotes(boardID: Int(selectIndexID), selfies: postsScreenShot),
-            let bgImage = getBoardPosts.getBgImage(boardID: Int(selectIndexID)),
-            let allPostsID = getBoardPosts.getNotesID(boardID: Int(selectIndexID))
+        
+        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
+            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
+            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
+            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
             else{
                 return
         }
@@ -49,7 +51,6 @@ class ManageDetailViewController: UIViewController {
         backGroundImage.image = bgImage
         backGroundImage.isUserInteractionEnabled = true
         
-        postIDs = allPostsID
         for (index,imageview) in allPosts.enumerated(){
             print(index)
             imageview.isUserInteractionEnabled = true
@@ -58,6 +59,7 @@ class ManageDetailViewController: UIViewController {
             let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
             detailBtn.postImageView = imageview
             detailBtn.postID = allPostsID[index]
+            detailBtn.boardID = selectIndexID
             backGroundImage.addSubview(imageview)
             
             imageview.addGestureRecognizer(detailBtn)
@@ -66,22 +68,42 @@ class ManageDetailViewController: UIViewController {
     }
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
-        
-        detailPostID = gestureRecognizer.postID
-        
+
+        let detailPostID = gestureRecognizer.postID
+        let detailboardID = gestureRecognizer.boardID
         print("GoToDetail did press")
         
-//          let detailPostVC =  storyboard?.instantiateViewController(withIdentifier: "PostDetailVC") as! PostDetailVC
-//          detailPostVC.modalPresentationStyle = .popover
-//          let popDetailPostVC = detailPostVC.popoverPresentationController
-//          popDetailPostVC?.delegate = self
-//          popDetailPostVC?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
-//        
-//          popDetailPostVC?.sourceView = detailNoteAppearPoint
-//          popDetailPostVC?.sourceRect = detailNoteAppearPoint.bounds
-//          present(detailPostVC, animated: true, completion: nil)
+        let publicPostDetailVC =  storyboard?.instantiateViewController(withIdentifier: "PublicPostDetailVC") as! PublicPostDetailVC
+        publicPostDetailVC.modalPresentationStyle = .popover
+        publicPostDetailVC.publicPostID = detailPostID
+        publicPostDetailVC.boardID = detailboardID
+        let popDetailPostVC = publicPostDetailVC.popoverPresentationController
+        popDetailPostVC?.delegate = self
+        popDetailPostVC?.permittedArrowDirections = UIPopoverArrowDirection(rawValue: 0)
+        popDetailPostVC?.sourceView = detailNoteAppearPoint
+        popDetailPostVC?.sourceRect = detailNoteAppearPoint.bounds
+        present(publicPostDetailVC, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func boardSettingBtnPressed(_ sender: UIButton) {
+       // PublicBoardSettingVC
+        
+        print("boardSettingBtnPressed action")
+        
+        let publicBoardSettinglVC =  storyboard?.instantiateViewController(withIdentifier: "PublicBoardSettingVC") as! PublicBoardSettingVC
+        publicBoardSettinglVC.modalPresentationStyle = .popover
+        publicBoardSettinglVC.boardID = selectIndexID
+        let popDetailPostVC = publicBoardSettinglVC.popoverPresentationController
+        popDetailPostVC?.delegate = self
+        popDetailPostVC?.permittedArrowDirections = .up
+        popDetailPostVC?.sourceView = boardSettingBtn
+        popDetailPostVC?.sourceRect = boardSettingBtn.bounds
+        present(publicBoardSettinglVC, animated: true, completion: nil)
+
         
     }
+    
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
@@ -97,15 +119,56 @@ class ManageDetailViewController: UIViewController {
         dataManagerCount = boardDataManager.count()
         
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    // MARK: Adding NotificationCenter observer
+    func addingObserver() {
+  //      NotificationCenter.default.addObserver(self, selector: #selector(boardReset),name: boardSettingNN,object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(newNoteComing), name: newNoteComingNN, object: nil)
+        
     }
-    */
+    func newNoteComing(notification:Notification) {
+        
+        let refreshVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! ManageDetailViewController
+        
+        // how to refresh
+        self.dismiss(animated: false, completion: nil)
+        
+        refreshVC.selectIndexID = selectIndexID
+        self.present(refreshVC, animated: false, completion: nil)
+        
+        
+    }
+//    func boardReset(notification:Notification) {
+//        
+//        let  BgImage:UIImage = notification.userInfo!["selfBg"] as! UIImage
+//        
+//        selfBgImage.image = BgImage
+//    }
+//
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "newPublicNote"){
+            let bgImageWithNotes = self.getBGimageWithPosts()
+            let newPostSegue = segue.destination as! NewPublicPostVC
+            newPostSegue.bgImage = bgImageWithNotes
+        }else{
+            
+        }
+    }
+    
+    
+    
+    func getBGimageWithPosts() -> UIImage {
+        boardSettingBtn.alpha = 0.0
+        addPostBtn.alpha = 0.0
+        deletePostBtn.alpha = 0.0
+        //       self.tabBarController?.tabBar.isHidden = true
+        let BGimageWithPosts = self.view.boardScreenShot()
+        
+        boardSettingBtn.alpha = 1
+        addPostBtn.alpha = 1
+        deletePostBtn.alpha = 1
+        
+        return BGimageWithPosts!
+    }
 
-}
+   }

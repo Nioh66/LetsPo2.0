@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 class GetBoardNotes {
     
-    func getNotesSelfie(boardID: Int) -> [UIImage]? {
+    func getNotesSelfie(boardID: Int16) -> [UIImage]? {
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
         var allNotes = [UIImage]()
@@ -37,7 +37,7 @@ class GetBoardNotes {
         return allNotes
     }
     
-    func presentNotes(boardID: Int, selfies: [UIImage]) -> [UIImageView]? {
+    func presentNotes(boardID: Int16, selfies: [UIImage]) -> [UIImageView]? {
      
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
@@ -63,7 +63,7 @@ class GetBoardNotes {
         return allNotesSelfie
     }
     
-    func getBgImage(boardID: Int) -> UIImage? {
+    func getBgImage(boardID: Int16) -> UIImage? {
         let searchField = "board_Id"
         let keyword = "\(boardID)"
         var boardBgImage = UIImage()
@@ -82,7 +82,7 @@ class GetBoardNotes {
         }
         return boardBgImage
     }
-    func getNotesID(boardID: Int) -> [Int16]? {
+    func getNotesID(boardID: Int16) -> [Int16]? {
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
         var allNotesID = [Int16]()
