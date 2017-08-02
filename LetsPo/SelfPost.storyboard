@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VhU-2p-4he">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VhU-2p-4he">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -111,23 +111,18 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Wall2.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="QJK-v4-p9d">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xg-Jo-daL">
-                                <rect key="frame" x="7" y="534" width="64" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Trashcan.png"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YQe-95-wAw">
-                                <rect key="frame" x="314" y="549" width="45" height="49"/>
+                                <rect key="frame" x="46" y="580" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="AddNote.png"/>
+                                <state key="normal" image="plus-2"/>
                                 <connections>
                                     <segue destination="fbQ-x0-dQS" kind="show" identifier="newSelfNote" id="am6-85-Axa"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piK-OL-iaF">
-                                <rect key="frame" x="322" y="84" width="37" height="34"/>
+                                <rect key="frame" x="336" y="72" width="30" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="BgSettings.png"/>
+                                <state key="normal" image="settings"/>
                                 <connections>
                                     <segue destination="yKd-oh-LBE" kind="show" identifier="selectBgImage" id="UvT-ZQ-abw"/>
                                 </connections>
@@ -137,6 +132,11 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6xg-Jo-daL">
+                                <rect key="frame" x="8" y="580" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="garbage"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -146,6 +146,9 @@
                             <constraint firstAttribute="trailing" secondItem="QJK-v4-p9d" secondAttribute="trailing" id="qp1-el-1rR"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="notebook" id="Pfd-0q-52H">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="7f6-xr-Rq7"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -326,9 +329,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddNote.png" width="512" height="512"/>
-        <image name="BgSettings.png" width="128" height="128"/>
-        <image name="Trashcan.png" width="64" height="64"/>
         <image name="Wall2.jpg" width="3072" height="1730"/>
+        <image name="garbage" width="48" height="58"/>
+        <image name="notebook" width="30" height="30"/>
+        <image name="plus-2" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
     </resources>
 </document>

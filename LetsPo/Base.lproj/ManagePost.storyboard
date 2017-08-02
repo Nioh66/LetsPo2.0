@@ -56,6 +56,9 @@
                             <constraint firstAttribute="bottom" secondItem="CLn-4N-iBd" secondAttribute="bottom" id="pq0-MJ-gvF"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="albums" id="uNS-oR-jbr">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="La0-Bl-A3p"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -132,4 +135,7 @@
             <point key="canvasLocation" x="1632.8" y="916.1919040479761"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="albums" width="30" height="30"/>
+    </resources>
 </document>

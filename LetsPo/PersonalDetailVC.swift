@@ -139,7 +139,51 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
 
     
 }
-
+extension UIColor {
+    static let ownColor = UIColor(red: 76.0/255.0, green: 200.0/255.0, blue: 181.0/255.0, alpha: 0.9)
+    
+    static let darkBlueC = UIColor(red: 0.0/255.0,
+                                   green: 67.0/255.0,
+                                   blue: 88.0/255.0,
+                                   alpha: 1.0)
+    static let darkGreenC = UIColor(red: 31.0/255.0,
+                                    green: 138.0/255.0,
+                                    blue: 112.0/255.0,
+                                    alpha: 1.0)
+    static let lightGreenC = UIColor(red: 190.0/255.0,
+                                     green: 219.0/255.0,
+                                     blue: 57.0/255.0,
+                                     alpha: 1.0)
+    static let posterColor = UIColor(red: 253.0/255.0,
+                                     green: 237.0/255.0,
+                                     blue: 166.0/255.0,
+                                     alpha: 1.0)
+    static let orangeC = UIColor(red: 253.0/255.0,
+                                 green: 116.0/255.0,
+                                 blue: 0.0/255.0,
+                                 alpha: 1.0)
+    static let darkRedC = UIColor(red: 112.0/255.0,
+                                  green: 48.0/255.0,
+                                  blue: 48.0/255.0,
+                                  alpha: 1.0)
+    static let darkGreyC = UIColor(red: 47.0/255.0,
+                                   green: 52.0/255.0,
+                                   blue: 59.0/255.0,
+                                   alpha: 1.0)
+    static let lightGreyC = UIColor(red: 126.0/255.0,
+                                    green: 130.0/255.0,
+                                    blue: 122.0/255.0,
+                                    alpha: 1.0)
+    static let skinC = UIColor(red: 227.0/255.0,
+                               green: 205.0/255.0,
+                               blue: 164.0/255.0,
+                               alpha: 1.0)
+    static let darkSkinC = UIColor(red: 199.0/255.0,
+                                   green: 121.0/255.0,
+                                   blue: 102.0/255.0,
+                                   alpha: 1.0)
+    
+}
 
 
 

@@ -75,8 +75,8 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         defaultBg02.image = UIImage(named: "myNigger.jpg")
         defaultBg03.image = UIImage(named: "whiteboard-303145_960_720")
         defaultBg04.image = UIImage(named: "Sky.jpg")
-        photosBg.image = UIImage(named: "Photos")
-        takeAPhoto.image = UIImage(named: "takePhoto")
+        photosBg.image = UIImage(named: "Album")
+        takeAPhoto.image = UIImage(named: "Camera")
         
         
         

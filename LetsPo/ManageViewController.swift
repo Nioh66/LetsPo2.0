@@ -68,9 +68,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         print("dataManagerCount1111 \(dataManagerCount)")
         // 第一次進入還沒新增時的底圖
         if dataManagerCount == 0 {
-            nearby.append(UIImage(named: "deer.jpg")!)
-            recent.append(UIImage(named: "myNigger.jpg")!)
-            all.append(UIImage(named: "Sky.jpg")!)
+            nearby.append(UIImage(named: "nearby_1")!)
+            recent.append(UIImage(named: "first")!)
+            all.append(UIImage(named: "first")!)
         }
         
         

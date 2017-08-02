@@ -257,9 +257,9 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         pin?.canShowCallout = true
         pin?.isEnabled = true
         if myAnnotation.privacy == true {
-            tttt = UIImage(named: "map.png")!
+            tttt = UIImage(named: "pin_1")!
         }else {
-            tttt = UIImage(named: "delete.png")!
+            tttt = UIImage(named: "pin_2")!
         }
         pin?.image = tttt
         

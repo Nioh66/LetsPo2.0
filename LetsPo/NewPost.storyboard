@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vlh-Qj-ywM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vlh-Qj-ywM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -91,6 +91,9 @@
                             <constraint firstItem="PIP-dx-1zv" firstAttribute="top" secondItem="rBC-er-8LH" secondAttribute="bottom" constant="30" id="zm1-oA-zBI"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="" image="plus" id="VJT-cN-3yV">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="MDo-qZ-X95">
                         <barButtonItem key="rightBarButtonItem" title="Save" id="KvP-VW-D9f">
                             <connections>
@@ -185,7 +188,7 @@
                                             <constraint firstAttribute="height" constant="30" id="7NY-h8-7KV"/>
                                             <constraint firstAttribute="width" constant="40" id="IbV-i5-J7u"/>
                                         </constraints>
-                                        <state key="normal" title="&gt;" image="insert.png"/>
+                                        <state key="normal" image="right-arrow-2"/>
                                         <connections>
                                             <segue destination="kkj-us-Qpl" kind="show" id="b5H-ge-6de"/>
                                         </connections>
@@ -213,7 +216,7 @@
                                     <constraint firstItem="o8Y-xU-NK1" firstAttribute="leading" secondItem="Oih-ln-eRa" secondAttribute="leading" constant="40" id="wiU-gp-MSM"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ok.png" translatesAutoresizingMaskIntoConstraints="NO" id="trC-1M-Hao">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="success" translatesAutoresizingMaskIntoConstraints="NO" id="trC-1M-Hao">
                                 <rect key="frame" x="150" y="532" width="75" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="trC-1M-Hao" secondAttribute="height" multiplier="1:1" id="EYO-Uk-1bI"/>
@@ -379,7 +382,8 @@
     </scenes>
     <resources>
         <image name="Sky.jpg" width="960" height="635"/>
-        <image name="insert.png" width="256" height="256"/>
-        <image name="ok.png" width="512" height="512"/>
+        <image name="plus" width="30" height="30"/>
+        <image name="right-arrow-2" width="21" height="30"/>
+        <image name="success" width="50" height="50"/>
     </resources>
 </document>

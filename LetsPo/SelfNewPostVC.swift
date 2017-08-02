@@ -64,15 +64,24 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         
         let functionBar = UIToolbar(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 30))
         functionBar.barStyle = .default
+        functionBar.barTintColor = UIColor.white
+        functionBar.tintColor = UIColor.darkGray
         
         var itemsArray = [UIBarButtonItem]()
         
-        let keyboardBtn = UIBarButtonItem.init(barButtonSystemItem: .bookmarks, target: self, action: #selector(changeToKeyboard))
-        let changeFCBtn = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(changeFontColor))
-        let changeFsBtn = UIBarButtonItem.init(barButtonSystemItem: .search, target: self, action: #selector(changeFontSize))
-        let changeBgCBtn = UIBarButtonItem.init(barButtonSystemItem: .compose, target: self, action: #selector(changeBackgroundColor))
-        let addFromPhotosBtn = UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(addPictureBtn))
-        let takePicBtn = UIBarButtonItem.init(barButtonSystemItem: .camera, target: self, action: #selector(takePictureBtn))
+        let keyboardBtn = UIBarButtonItem(image: UIImage(named: "hide-keyboard"), style: .plain, target: self, action: #selector(changeToKeyboard))
+        let changeFCBtn = UIBarButtonItem(image: UIImage(named: "paint-brush-2"), style: .plain, target: self, action: #selector(changeFontColor))
+        let changeBgCBtn = UIBarButtonItem(image: UIImage(named: "paint-brush-3"), style: .plain, target: self, action: #selector(changeBackgroundColor))
+        let changeFsBtn = UIBarButtonItem(image: UIImage(named: "fontSize"), style: .plain, target: self, action: #selector(changeFontSize))
+        let addFromPhotosBtn = UIBarButtonItem(image: UIImage(named: "picture-2"), style: .plain, target: self, action: #selector(addPictureBtn))
+        let takePicBtn = UIBarButtonItem(image: UIImage(named: "shutter"), style: .plain, target: self, action: #selector(takePictureBtn))
+//        
+//        let keyboardBtn = UIBarButtonItem.init(barButtonSystemItem: .bookmarks, target: self, action: #selector(changeToKeyboard))
+//        let changeFCBtn = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(changeFontColor))
+//        let changeFsBtn = UIBarButtonItem.init(barButtonSystemItem: .search, target: self, action: #selector(changeFontSize))
+//        let changeBgCBtn = UIBarButtonItem.init(barButtonSystemItem: .compose, target: self, action: #selector(changeBackgroundColor))
+//        let addFromPhotosBtn = UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(addPictureBtn))
+//        let takePicBtn = UIBarButtonItem.init(barButtonSystemItem: .camera, target: self, action: #selector(takePictureBtn))
         
         itemsArray.append(keyboardBtn)
         itemsArray.append(changeFCBtn)
@@ -184,7 +193,7 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
                 return
         }
         
-        ftColorInputView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 250)
+        ftColorInputView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 258)
         ftColorInputView.backgroundColor = UIColor.darkGray
         myTextView.inputView = ftColorInputView
         
@@ -194,63 +203,63 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         
         let red =
             MyButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Red",
+                     title: "",
                      tag: 111,
-                     bgColor: UIColor.red)
+                     bgColor: UIColor.red,imageStr:"colors_2")
         red.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let green =
             MyButton(frame: CGRect(x: buttonWidth, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Green",
+                     title: "",
                      tag: 112,
-                     bgColor: UIColor.green)
+                     bgColor: UIColor.green,imageStr:"colors_2")
         green.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let blue =
             MyButton(frame: CGRect(x: buttonWidth*2, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "blue",
+                     title: "",
                      tag: 113,
-                     bgColor: UIColor.blue)
+                     bgColor: UIColor.blue,imageStr:"colors_2")
         blue.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let cyan =
             MyButton(frame: CGRect(x: buttonWidth*3, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Cyan",
+                     title: "",
                      tag: 114,
-                     bgColor: UIColor.cyan)
+                     bgColor: UIColor.cyan,imageStr:"colors_2")
         cyan.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let yellow =
             MyButton(frame: CGRect(x: buttonWidth*4, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Yellow",
+                     title: "",
                      tag: 115,
-                     bgColor: UIColor.yellow)
+                     bgColor: UIColor.yellow,imageStr:"colors_2")
         yellow.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let brown =
             MyButton(frame: CGRect(x: 0, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "Brown",
+                     title: "",
                      tag: 116,
-                     bgColor: UIColor.brown)
+                     bgColor: UIColor.brown,imageStr:"colors_2")
         brown.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let gray =
             MyButton(frame: CGRect(x: buttonWidth, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "Gray",
+                     title: "",
                      tag: 117,
-                     bgColor: UIColor.gray)
+                     bgColor: UIColor.gray,imageStr:"colors_2")
         gray.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let LightGray =
             MyButton(frame: CGRect(x: buttonWidth*2, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "LGray",
+                     title: "",
                      tag: 118,
-                     bgColor: UIColor.lightGray)
+                     bgColor: UIColor.lightGray,imageStr:"colors_2")
         LightGray.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let white =
             MyButton(frame: CGRect(x: buttonWidth*3, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "White",
+                     title: "",
                      tag: 119,
-                     bgColor: UIColor.white)
+                     bgColor: UIColor.white,imageStr:"colors_2")
         white.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let black =
             MyButton(frame: CGRect(x: buttonWidth*4, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "Black",
+                     title: "",
                      tag: 120,
-                     bgColor: UIColor.black)
+                     bgColor: UIColor.black,imageStr:"colors_2")
         black.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         
         ftColorInputView.addSubview(red)
@@ -283,17 +292,17 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
                 return
         }
         
-        fontSizeInputview.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 250)
-        fontSizeInputview.backgroundColor = UIColor.lightGray
+        fontSizeInputview.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 258)
+        fontSizeInputview.backgroundColor = UIColor.white
         myTextView.inputView = fontSizeInputview
         
         let fontSlider = UISlider()
         fontSlider.frame = CGRect(x: 15, y: ((fontSizeInputview.frame.height)/2)-30, width: fontSizeInputview.frame.size.width - 30, height: 30)
         fontSlider.value = Float(fontSizeData)
         fontSlider.maximumValue = 120
-        fontSlider.minimumValue = 1
-        fontSlider.tintColor = UIColor.black
-        fontSlider.thumbTintColor = UIColor.white
+        fontSlider.minimumValue = 14
+        fontSlider.tintColor = UIColor.darkGray
+        fontSlider.thumbTintColor = UIColor.ownColor
         fontSlider.addTarget(self, action: #selector(changeFSSlider(slider:)), for: .valueChanged)
         fontSizeInputview.addSubview(fontSlider)
         fontSizeInputview.becomeFirstResponder()
@@ -313,7 +322,7 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
     // MARK: Change post background color
     
     func changeBackgroundColor() {
-        let posterColor = UIColor(red: 253.0/255.0, green: 237.0/255.0, blue: 166.0/255.0, alpha: 1.0)
+//        let posterColor = UIColor(red: 253.0/255.0, green: 237.0/255.0, blue: 166.0/255.0, alpha: 1.0)
         
         myInputView = nil
         
@@ -322,7 +331,7 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
             else {
                 return
         }
-        BgColorInputView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 250)
+        BgColorInputView.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 258)
         BgColorInputView.backgroundColor = UIColor.darkGray
         myTextView.inputView = BgColorInputView
         
@@ -332,63 +341,63 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         
         let red =
             MyButton(frame: CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Red",
+                     title: "",
                      tag: 101,
-                     bgColor: UIColor.red)
+                     bgColor: UIColor.darkBlueC,imageStr:"colors_3")
         red.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let green =
             MyButton(frame: CGRect(x: buttonWidth, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Green",
+                     title: "",
                      tag: 102,
-                     bgColor: UIColor.green)
+                     bgColor: UIColor.darkGreenC,imageStr:"colors_3")
         green.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let blue =
             MyButton(frame: CGRect(x: buttonWidth*2, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "blue",
+                     title: "",
                      tag: 103,
-                     bgColor: UIColor.blue)
+                     bgColor: UIColor.lightGreenC,imageStr:"colors_3")
         blue.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let cyan =
             MyButton(frame: CGRect(x: buttonWidth*3, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Cyan",
+                     title: "",
                      tag: 104,
-                     bgColor: UIColor.cyan)
+                     bgColor: UIColor.posterColor,imageStr:"colors_3")
         cyan.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let original =
             MyButton(frame: CGRect(x: buttonWidth*4, y: 0, width: buttonWidth, height: buttonHeight),
-                     title: "Original",
+                     title: "",
                      tag: 105,
-                     bgColor: posterColor)
+                     bgColor: UIColor.orangeC,imageStr:"colors_3")
         original.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let brown =
             MyButton(frame: CGRect(x: 0, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "Brown",
+                     title: "",
                      tag: 106,
-                     bgColor: UIColor.brown)
+                     bgColor: UIColor.darkRedC,imageStr:"colors_3")
         brown.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let gray =
             MyButton(frame: CGRect(x: buttonWidth, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "Gray",
+                     title: "",
                      tag: 107,
-                     bgColor: UIColor.gray)
+                     bgColor: UIColor.darkGreyC,imageStr:"colors_3")
         gray.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let LightGray =
             MyButton(frame: CGRect(x: buttonWidth*2, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "LGray",
+                     title: "",
                      tag: 108,
-                     bgColor: UIColor.lightGray)
+                     bgColor: UIColor.lightGreyC,imageStr:"colors_3")
         LightGray.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let white =
             MyButton(frame: CGRect(x: buttonWidth*3, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "White",
+                     title: "",
                      tag: 109,
-                     bgColor: UIColor.white)
+                     bgColor: UIColor.skinC,imageStr:"colors_3")
         white.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         let black =
             MyButton(frame: CGRect(x: buttonWidth*4, y: buttonHeight, width: buttonWidth, height: buttonHeight),
-                     title: "Black",
+                     title: "",
                      tag: 110,
-                     bgColor: UIColor.black)
+                     bgColor: UIColor.darkSkinC,imageStr:"colors_3")
         black.addTarget(self, action:#selector(changeBgBtn(button:)), for: .touchUpInside)
         
         BgColorInputView.addSubview(red)

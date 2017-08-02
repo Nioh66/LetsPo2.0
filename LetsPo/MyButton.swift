@@ -11,13 +11,14 @@ import UIKit
 
 class MyButton: UIButton {
 
-    init(frame:CGRect,title:String,tag:Int,bgColor:UIColor) {
+    init(frame:CGRect,title:String,tag:Int,bgColor:UIColor,imageStr:String) {
         super.init(frame:frame)
         
         self.frame = frame
         self.tag = tag
         self.backgroundColor = bgColor
         self.setTitle(title, for: .normal)
+        self.setImage(UIImage(named: imageStr), for: .normal)
     }
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
