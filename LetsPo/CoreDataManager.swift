@@ -248,7 +248,7 @@ extension CoreDataManager{
                 }
                 imageData.write(to: finalPath, atomically: true)
                 
-                imageWithPath.updateValue("\(finalPath)", forKey: "Image\(index)")
+                imageWithPath.updateValue("\(hashFileName)", forKey: "Image\(index)")
 
  //               jsonContent += "image\(index):\(hashFileName),"
                 
@@ -286,24 +286,24 @@ extension CoreDataManager{
         print(myAlbum)
         //Get URL
         for index in 0 ..< myAlbum.count {
-            guard let stringPath = myAlbum["Image\(index)"] as? String,
-                let finalPath = URL(string: stringPath)?.path else {
+            guard let stringPath = myAlbum["Image\(index)"] as? String
+                 else {
                     print("------String transform to URL failure------")
                     return nil
             }
             print("-------\(stringPath)------")
             
-            print("===========\(finalPath)=========")
-            
-            //..
-            guard let img = UIImage(contentsOfFile: finalPath)
-                else{
-                    print("===========Data turn image failure=========")
-                    
-                    return nil
+            let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+            let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+            let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+            if let dirPath = paths.first{
+                let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent(stringPath)
+                let image    = UIImage(contentsOfFile: imageURL.path)
+                album.append(image!)
+                // Do whatever you want with the image
             }
-            
-            album.append(img)
+            //..
+           
         }
         return album
     }
@@ -349,3 +349,25 @@ extension CoreDataManager{
 
 
 
+//for index in 0 ..< myAlbum.count {
+//    guard let stringPath = myAlbum["Image\(index)"] as? String,
+//        let finalPath = URL(string: stringPath)?.path else {
+//            print("------String transform to URL failure------")
+//            return nil
+//    }
+//    print("-------\(stringPath)------")
+//    
+//    print("===========\(finalPath)=========")
+//    
+//    //..
+//    guard let img = UIImage(contentsOfFile: finalPath)
+//        else{
+//            print("===========Data turn image failure=========")
+//            
+//            return nil
+//    }
+//    
+//    album.append(img)
+//}
+//return album
+//}

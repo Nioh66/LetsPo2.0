@@ -14,7 +14,6 @@ class PostsOnBoardVC: UIViewController ,UIPopoverPresentationControllerDelegate{
     var postIDs = [Int16]()
     var detailPostID:Int16 = 0
     
-    let test001 = Note()
     
     @IBOutlet weak var detailNoteAppearPoint: UIView!
     @IBOutlet weak var boardBgImage: UIImageView!

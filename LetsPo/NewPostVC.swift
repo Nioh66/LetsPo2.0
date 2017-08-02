@@ -68,6 +68,10 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         //        myTextView.setNeedsDisplay()
         //        myScrollView.addSubview(myTextView)
+        if imageForCell.count == 1{
+            showCellImage.image = imageForCell[0]
+        }
+        
         
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
@@ -115,12 +119,13 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         thePost.giveMeFreshNewNote()
         myTextView.giveMeFreshNewNoteText()
-  
+        self.noteCollectionView.backgroundColor = UIColor(red: 253.0/255.0,green: 237.0/255.0,blue: 166.0/255.0,alpha: 1.0)
+
         
-        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
-        self.present(noteVC!, animated: false, completion: nil)
-        self.dismiss(animated: false, completion: nil)
-    
+//        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
+//        self.present(noteVC!, animated: false, completion: nil)
+//        self.dismiss(animated: false, completion: nil)
+//    
     }
 
     
@@ -290,8 +295,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         let fontSlider = UISlider()
         fontSlider.frame = CGRect(x: 15, y: ((fontSizeInputview.frame.height)/2)-30, width: fontSizeInputview.frame.size.width - 30, height: 30)
+        fontSlider.value = Float(fontSizeData)
         fontSlider.maximumValue = 120
-        fontSlider.minimumValue = 1
+        fontSlider.minimumValue = 14
         fontSlider.tintColor = UIColor.black
         fontSlider.thumbTintColor = UIColor.white
         fontSlider.addTarget(self, action: #selector(changeFSSlider(slider:)), for: .valueChanged)

@@ -64,6 +64,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         NoteImageView.addGestureRecognizer(panGesture)
     }
     @IBAction func finishBtn(_ sender: UIButton) {
+        
         self.saveBoardData()
         self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
@@ -184,7 +185,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             boardItem.board_Id = 1
             boardID = 1
         }else{
-            let lastBoardItem = boardDataManager.itemWithIndex(index: itemCount - 1)
+            let lastBoardItem = boardDataManager.itemWithIndex(index: 0)
             boardItem.board_Id = lastBoardItem.board_Id + 1
             boardID = boardItem.board_Id
         }
