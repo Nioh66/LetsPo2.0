@@ -81,12 +81,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MsW-QA-iWN">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="e2i-ug-VYv"/>
+                                    <constraint firstAttribute="width" constant="240" id="qhU-yD-3ZC"/>
+                                </constraints>
+                            </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ue2-p8-4xs">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="MsW-QA-iWN" firstAttribute="centerX" secondItem="GmV-oQ-KsQ" secondAttribute="centerX" id="5aJ-N6-HMJ"/>
+                            <constraint firstItem="MsW-QA-iWN" firstAttribute="centerY" secondItem="GmV-oQ-KsQ" secondAttribute="centerY" id="Ax1-Xf-MBr"/>
                             <constraint firstItem="Ue2-p8-4xs" firstAttribute="leading" secondItem="GmV-oQ-KsQ" secondAttribute="leading" id="B47-Zm-Oe9"/>
                             <constraint firstItem="Ue2-p8-4xs" firstAttribute="top" secondItem="GmV-oQ-KsQ" secondAttribute="top" id="R5b-WF-eMN"/>
                             <constraint firstAttribute="trailing" secondItem="Ue2-p8-4xs" secondAttribute="trailing" id="byh-oO-Cdl"/>
@@ -95,6 +105,7 @@
                     </view>
                     <connections>
                         <outlet property="backGroundImage" destination="Ue2-p8-4xs" id="9jo-48-LAD"/>
+                        <outlet property="detailNoteAppearPoint" destination="MsW-QA-iWN" id="Bbs-V3-nj8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2DY-5B-8ie" userLabel="First Responder" sceneMemberID="firstResponder"/>

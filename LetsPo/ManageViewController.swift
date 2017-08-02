@@ -65,13 +65,14 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         self.view.addSubview(collectionViewThree)
         
         dataManagerCount = boardDataManager.count()
-        
+        print("dataManagerCount1111 \(dataManagerCount)")
         // 第一次進入還沒新增時的底圖
         if dataManagerCount == 0 {
             nearby.append(UIImage(named: "deer.jpg")!)
             recent.append(UIImage(named: "myNigger.jpg")!)
             all.append(UIImage(named: "Sky.jpg")!)
         }
+        
         
         // incase core location too slow
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
@@ -90,7 +91,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             ("ALL", collectionViewThree),
             ])
         
-        print("dataManagerCount \(dataManagerCount)")
+        print("dataManagerCount2222 \(dataManagerCount)")
         
        
     
@@ -158,7 +159,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         if collectionView == self.collectionViewOne {
             count = recent.count
-
         }
         else if collectionView == self.collectionViewTwo {
             if nearby.count == 0 {
@@ -177,21 +177,25 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
         if collectionView == self.collectionViewOne {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-            let imageString = recent[indexPath.item]
-            cell.backdroundImage.image = imageString
+            
+                let imageString = recent[indexPath.item]
+                cell.backdroundImage.image = imageString
+           
         }else if collectionView == self.collectionViewTwo {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             if nearby.count != 0 {
                 let imageString = nearby[indexPath.item]
                 cell.backdroundImage.image = imageString
             }else {
+                // 第一次進入還沒新增時的底圖
                 cell.backdroundImage.image = UIImage(named:"deer.jpg")
             }
         }else if collectionView == self.collectionViewThree {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-            let imageString = all[indexPath.item]
-            cell.backdroundImage.image = imageString
-
+            
+                let imageString = all[indexPath.item]
+                cell.backdroundImage.image = imageString
+           
         }
         setCellBtn(cell: cell)
         return cell
@@ -381,10 +385,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        dataManagerCount = boardDataManager.count()
         // 從其他頁面跳過來的時候可以更新內容
         if secondTime == true{
             self.locationManager.startUpdatingLocation()
-            dataManagerCount = boardDataManager.count()
+            
             // 每次回來都回到recent ? 暫定
             scrollPager.setSelectedIndex(index: 0, animated: false)
             arrayImageData()
