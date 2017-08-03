@@ -8,9 +8,9 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
-
-class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegateFlowLayout ,UICollectionViewDataSource{
+class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegateFlowLayout ,UICollectionViewDataSource ,CLLocationManagerDelegate{
 
     
     @IBOutlet weak var noteCollectionView: UICollectionView!
@@ -30,6 +30,10 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
     let resetNote = Notification.Name("resetNote")
+    
+    let locationManager = CLLocationManager()
+    var boardLat = Double()
+    var boardLon = Double()
 
     var allNoteData = [String:Any]()
     
@@ -45,6 +49,12 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager.requestAlwaysAuthorization()
+
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = .automotiveNavigation
+        locationManager.startUpdatingLocation()
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
                                                                 FileManager.SearchPathDomainMask.userDomainMask, true)
@@ -119,10 +129,13 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         NotificationCenter.default.addObserver(self, selector: #selector(reset),
                                                name: resetNote,
                                                object: nil)
-        
-
     }
- 
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+        
+    }
+    
     func reset(notification:Notification) {
        
         
@@ -151,7 +164,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         self.saveNoteData()
         newPostSegue.allNoteData = allNoteData
-        
+        newPostSegue.boardLat = boardLat
+        newPostSegue.boardLon = boardLon
     }
     
     
@@ -543,6 +557,18 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return cellSpace
     }
+    // MARK : Location method
+   
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("1111")
+        if let boardPosition = locations.last{
+        boardLat = boardPosition.coordinate.latitude
+        boardLon = boardPosition.coordinate.longitude
+        print("Lat:\(boardLat)Lon:\(boardLon)")
+    }
+    }
+    
+    
     
     // MARK: Save note data
 
@@ -551,20 +577,18 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         allNoteData.removeAll()
         
         let noteContent = myTextView.text
-
-
-        
-        
         
         guard let fontColor = myTextView.textColor
         else {
             return
         }
+        locationManager.stopUpdatingLocation()
+
         let textColorData = NSKeyedArchiver.archivedData(withRootObject: fontColor ) as NSData
         let noteFontColor = textColorData
         let noteFontSize = fontSizeData
         let noteImage = imageForCell
-        
+       
         let noteBgColor = noteDataManager.transformColorToData(targetColor: thePost.uploadcolor)
 
         allNoteData = ["noteContent":noteContent ?? "",

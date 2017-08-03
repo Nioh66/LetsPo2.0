@@ -63,6 +63,13 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         panGesture.minimumNumberOfTouches = 1
         NoteImageView.addGestureRecognizer(panGesture)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
+        
+    }
+    
     @IBAction func finishBtn(_ sender: UIButton) {
         
         self.saveBoardData()
@@ -191,8 +198,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         }
         
     //  boardItem.board_Creater = nil
-   //     boardItem.board_Lat =
-   //     boardItem.board_Lon =
+
         guard let screenShotImage = self.view.boardScreenShot(),
             let bgPic = topImage.image
         else {
@@ -205,6 +211,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                 return
         }
         
+        boardItem.board_Lat = boardLat
+        boardItem.board_Lon = boardLon
         boardItem.board_Alert = boardAlert
         boardItem.board_Privacy = boardPrivacy
         boardItem.board_ScreenShot = boardScreenShot

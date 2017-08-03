@@ -19,12 +19,8 @@
 		304CB6751F258F6D00AEF632 /* SelfPostBgSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */; };
 		304CB6771F258F8F00AEF632 /* SelfNewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */; };
 		304CB6791F258FAF00AEF632 /* SelfPostHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */; };
-		304CB67E1F25916A00AEF632 /* BgSettings.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB67A1F25916A00AEF632 /* BgSettings.png */; };
-		304CB67F1F25916A00AEF632 /* Trashcan.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB67B1F25916A00AEF632 /* Trashcan.png */; };
-		304CB6801F25916A00AEF632 /* AddNote.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB67C1F25916A00AEF632 /* AddNote.png */; };
 		304CB6811F25916A00AEF632 /* Wall2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 304CB67D1F25916A00AEF632 /* Wall2.jpg */; };
 		304CB6831F25970A00AEF632 /* right-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB6821F25970A00AEF632 /* right-arrow.png */; };
-		304CB6851F2597F600AEF632 /* insert.png in Resources */ = {isa = PBXBuildFile; fileRef = 304CB6841F2597F600AEF632 /* insert.png */; };
 		304CB6871F25F9B100AEF632 /* SelfDragVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6861F25F9B100AEF632 /* SelfDragVC.swift */; };
 		305C31841F2E594A0039E35A /* GetNoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305C31831F2E594A0039E35A /* GetNoteDetail.swift */; };
 		305C31861F2E606F0039E35A /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305C31851F2E606F0039E35A /* PostDetailVC.swift */; };
@@ -52,13 +48,10 @@
 		30D092A91F1E41D600CB3F88 /* Discover.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30D092A71F1E41D600CB3F88 /* Discover.storyboard */; };
 		30D092AE1F1E45A200CB3F88 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D092AD1F1E45A200CB3F88 /* MapKit.framework */; };
 		30D092B01F1E45A900CB3F88 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D092AF1F1E45A900CB3F88 /* CoreLocation.framework */; };
-		30D092B21F1E461700CB3F88 /* ok.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092B11F1E461700CB3F88 /* ok.png */; };
 		30D092B41F1E466300CB3F88 /* BoardSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092B31F1E466300CB3F88 /* BoardSettingVC.swift */; };
 		30D092B61F1E490600CB3F88 /* DragBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30D092B51F1E490600CB3F88 /* DragBoardVC.swift */; };
 		30D092B91F1E49E800CB3F88 /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 30D092B71F1E49E800CB3F88 /* Account.storyboard */; };
 		30D092BB1F1E8BD900CB3F88 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30D092BA1F1E8BD900CB3F88 /* Photos.framework */; };
-		30D092BE1F1E90EA00CB3F88 /* takePhoto.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092BC1F1E90EA00CB3F88 /* takePhoto.png */; };
-		30D092BF1F1E90EA00CB3F88 /* Photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092BD1F1E90EA00CB3F88 /* Photos.png */; };
 		30D092C51F1E950800CB3F88 /* ooxx.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C11F1E950800CB3F88 /* ooxx.png */; };
 		30D092C61F1E950800CB3F88 /* Sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C21F1E950800CB3F88 /* Sky.jpg */; };
 		30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */; };
@@ -102,12 +95,8 @@
 		304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfPostBgSelectVC.swift; sourceTree = "<group>"; };
 		304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfNewPostVC.swift; sourceTree = "<group>"; };
 		304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfPostHomeVC.swift; sourceTree = "<group>"; };
-		304CB67A1F25916A00AEF632 /* BgSettings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BgSettings.png; sourceTree = "<group>"; };
-		304CB67B1F25916A00AEF632 /* Trashcan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Trashcan.png; sourceTree = "<group>"; };
-		304CB67C1F25916A00AEF632 /* AddNote.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AddNote.png; sourceTree = "<group>"; };
 		304CB67D1F25916A00AEF632 /* Wall2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Wall2.jpg; sourceTree = "<group>"; };
 		304CB6821F25970A00AEF632 /* right-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right-arrow.png"; sourceTree = "<group>"; };
-		304CB6841F2597F600AEF632 /* insert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = insert.png; sourceTree = "<group>"; };
 		304CB6861F25F9B100AEF632 /* SelfDragVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfDragVC.swift; sourceTree = "<group>"; };
 		305C31831F2E594A0039E35A /* GetNoteDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNoteDetail.swift; sourceTree = "<group>"; };
 		305C31851F2E606F0039E35A /* PostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
@@ -135,13 +124,10 @@
 		30D092A81F1E41D600CB3F88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Discover.storyboard; sourceTree = "<group>"; };
 		30D092AD1F1E45A200CB3F88 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		30D092AF1F1E45A900CB3F88 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		30D092B11F1E461700CB3F88 /* ok.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ok.png; sourceTree = "<group>"; };
 		30D092B31F1E466300CB3F88 /* BoardSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardSettingVC.swift; sourceTree = "<group>"; };
 		30D092B51F1E490600CB3F88 /* DragBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragBoardVC.swift; sourceTree = "<group>"; };
 		30D092B81F1E49E800CB3F88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Account.storyboard; sourceTree = "<group>"; };
 		30D092BA1F1E8BD900CB3F88 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
-		30D092BC1F1E90EA00CB3F88 /* takePhoto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = takePhoto.png; sourceTree = "<group>"; };
-		30D092BD1F1E90EA00CB3F88 /* Photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Photos.png; sourceTree = "<group>"; };
 		30D092C11F1E950800CB3F88 /* ooxx.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ooxx.png; sourceTree = "<group>"; };
 		30D092C21F1E950800CB3F88 /* Sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sky.jpg; sourceTree = "<group>"; };
 		30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteboard-303145_960_720.png"; sourceTree = "<group>"; };
@@ -250,8 +236,8 @@
 				30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */,
 				30CAD41B1F30FD870042B059 /* SelfPostDetailImageCell.swift */,
 				304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */,
-				304CB6861F25F9B100AEF632 /* SelfDragVC.swift */,
 				30CAD4151F2FBAA00042B059 /* SelfNoteImageCell.swift */,
+				304CB6861F25F9B100AEF632 /* SelfDragVC.swift */,
 				30628BC21F28E39A001FED7F /* NoteImageCell.swift */,
 				30D092931F1E369500CB3F88 /* NewPostVC.swift */,
 				30D092B31F1E466300CB3F88 /* BoardSettingVC.swift */,
@@ -364,19 +350,12 @@
 		30D092C81F1E952000CB3F88 /* PLImage */ = {
 			isa = PBXGroup;
 			children = (
-				304CB6841F2597F600AEF632 /* insert.png */,
 				304CB6821F25970A00AEF632 /* right-arrow.png */,
-				304CB67A1F25916A00AEF632 /* BgSettings.png */,
-				304CB67B1F25916A00AEF632 /* Trashcan.png */,
-				304CB67C1F25916A00AEF632 /* AddNote.png */,
 				304CB67D1F25916A00AEF632 /* Wall2.jpg */,
 				30D092C91F1E956200CB3F88 /* myNigger.jpg */,
 				30D092C11F1E950800CB3F88 /* ooxx.png */,
 				30D092C21F1E950800CB3F88 /* Sky.jpg */,
 				30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */,
-				30D092BC1F1E90EA00CB3F88 /* takePhoto.png */,
-				30D092BD1F1E90EA00CB3F88 /* Photos.png */,
-				30D092B11F1E461700CB3F88 /* ok.png */,
 			);
 			name = PLImage;
 			sourceTree = "<group>";
@@ -447,7 +426,7 @@
 				TargetAttributes = {
 					303B08EC1F1CC61600D7F6B1 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = G5G94ZY4FA;
+						DevelopmentTeam = SA2EKSMQ96;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -476,16 +455,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				30D092C61F1E950800CB3F88 /* Sky.jpg in Resources */,
-				304CB6801F25916A00AEF632 /* AddNote.png in Resources */,
 				9BA62C6A1F1E6E04008CDEC0 /* map.png in Resources */,
 				303B08FB1F1CC61600D7F6B1 /* LaunchScreen.storyboard in Resources */,
-				304CB67E1F25916A00AEF632 /* BgSettings.png in Resources */,
 				9BA62C661F1E6752008CDEC0 /* deer.jpg in Resources */,
 				30D092A61F1E41A300CB3F88 /* NewPost.storyboard in Resources */,
 				9BA62C721F1F716F008CDEC0 /* delete.png in Resources */,
-				304CB67F1F25916A00AEF632 /* Trashcan.png in Resources */,
 				30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */,
-				30D092BF1F1E90EA00CB3F88 /* Photos.png in Resources */,
 				30D092A41F1E40AE00CB3F88 /* ManagePost.storyboard in Resources */,
 				303B08F81F1CC61600D7F6B1 /* Assets.xcassets in Resources */,
 				9BA62C681F1E6752008CDEC0 /* rightBtn.png in Resources */,
@@ -493,12 +468,9 @@
 				304CB6831F25970A00AEF632 /* right-arrow.png in Resources */,
 				30D092C51F1E950800CB3F88 /* ooxx.png in Resources */,
 				30D092A11F1E3FDF00CB3F88 /* SelfPost.storyboard in Resources */,
-				304CB6851F2597F600AEF632 /* insert.png in Resources */,
-				30D092B21F1E461700CB3F88 /* ok.png in Resources */,
 				304CB6811F25916A00AEF632 /* Wall2.jpg in Resources */,
 				30D092A91F1E41D600CB3F88 /* Discover.storyboard in Resources */,
 				9BA62C701F1F6F11008CDEC0 /* ManageCollectionViewCell.xib in Resources */,
-				30D092BE1F1E90EA00CB3F88 /* takePhoto.png in Resources */,
 				30D092B91F1E49E800CB3F88 /* Account.storyboard in Resources */,
 				303B08F61F1CC61600D7F6B1 /* Main.storyboard in Resources */,
 			);
@@ -707,7 +679,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = G5G94ZY4FA;
+				DEVELOPMENT_TEAM = SA2EKSMQ96;
 				INFOPLIST_FILE = LetsPo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nioh66.LetsPo;
@@ -720,7 +692,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = G5G94ZY4FA;
+				DEVELOPMENT_TEAM = SA2EKSMQ96;
 				INFOPLIST_FILE = LetsPo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nioh66.LetsPo;

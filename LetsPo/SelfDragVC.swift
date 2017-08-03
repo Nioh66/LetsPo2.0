@@ -47,12 +47,18 @@ class SelfDragVC: UIViewController {
     func saveAndPop() {
         self.saveNoteData()
         NotificationCenter.default.post(name: newNoteComingNN, object: nil)
+        
+        self.tabBarController?.tabBar.isHidden = false
+
         navigationController?.popToRootViewController(animated: false)
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tabBarController?.tabBar.isHidden = true
+        super.viewWillAppear(animated)
 
+        self.tabBarController?.tabBar.isHidden = true
+       
     }
     
 

@@ -89,7 +89,10 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
         navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {
             let collectBgcolor = UIColor(cgColor: self.theSelfPost.shapeLayer.fillColor!)
@@ -506,6 +509,8 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return cellSpace
     }
+    
+    
     
     // MARK: Save note data
     

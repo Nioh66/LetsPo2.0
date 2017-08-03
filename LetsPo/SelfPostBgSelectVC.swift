@@ -109,7 +109,10 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         //
         //
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
+    }
     
     func getDefault01Bg(){
         bgImage = UIImage(named: "Wall2.jpg")

@@ -60,6 +60,7 @@ class DragPublicPostVC: UIViewController {
     }
         
         override func viewWillAppear(_ animated: Bool) {
+            navigationController?.isNavigationBarHidden = false
             tabBarController?.tabBar.isHidden = true
             
         }

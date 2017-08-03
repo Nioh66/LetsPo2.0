@@ -60,7 +60,8 @@ class SelfPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,UI
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        
+        super.viewWillAppear(animated)
+
         DispatchQueue.main.async {
             self.selfPostT.isEditable = false
             self.displayNoteV.addSubview(self.selfPostT)
@@ -105,8 +106,8 @@ class SelfPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,UI
         return cellSize
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return cellSpace
-    }
-
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+//        return cellSpace
+//    }
+//    
     }

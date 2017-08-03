@@ -298,15 +298,20 @@
                                     <constraint firstItem="3rT-2X-OOc" firstAttribute="width" secondItem="0S7-KW-2IR" secondAttribute="width" multiplier="0.7" id="rJ7-O2-4gc"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FER-ha-EmD">
-                                <rect key="frame" x="67" y="457" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FER-ha-EmD">
+                                <rect key="frame" x="37" y="380" width="300" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="FER-ha-EmD" secondAttribute="height" multiplier="16:9" id="lOU-Z2-d0R"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="FER-ha-EmD" firstAttribute="width" secondItem="mNJ-nf-Qgk" secondAttribute="width" multiplier="0.8" id="AP9-Gu-Klb"/>
                             <constraint firstItem="0S7-KW-2IR" firstAttribute="width" secondItem="mNJ-nf-Qgk" secondAttribute="width" multiplier="0.8" id="VMR-Sd-8Kh"/>
                             <constraint firstItem="0S7-KW-2IR" firstAttribute="centerX" secondItem="mNJ-nf-Qgk" secondAttribute="centerX" id="X8X-dB-A3X"/>
+                            <constraint firstItem="FER-ha-EmD" firstAttribute="centerX" secondItem="mNJ-nf-Qgk" secondAttribute="centerX" id="XN9-LP-JoN"/>
+                            <constraint firstItem="FER-ha-EmD" firstAttribute="top" secondItem="0S7-KW-2IR" secondAttribute="bottom" constant="30" id="u9Q-GM-d6N"/>
                             <constraint firstItem="0S7-KW-2IR" firstAttribute="top" secondItem="ONH-sh-sSM" secondAttribute="bottom" constant="30" id="zMl-AR-8bJ"/>
                         </constraints>
                     </view>
@@ -383,13 +388,18 @@
                                     <constraint firstAttribute="width" secondItem="Y5C-v7-iVt" secondAttribute="height" multiplier="1:1" id="lZW-Uh-TfM"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gmt-42-ded">
-                                <rect key="frame" x="67" y="461" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gmt-42-ded">
+                                <rect key="frame" x="37" y="424" width="300" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="gmt-42-ded" secondAttribute="height" multiplier="16:9" id="oCm-pI-oK7"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gmt-42-ded" firstAttribute="centerX" secondItem="wfj-hj-ffN" secondAttribute="centerX" id="3gu-Ri-zsT"/>
+                            <constraint firstItem="gmt-42-ded" firstAttribute="width" secondItem="wfj-hj-ffN" secondAttribute="width" multiplier="0.8" id="bHL-lC-3b7"/>
+                            <constraint firstItem="gmt-42-ded" firstAttribute="top" secondItem="Y5C-v7-iVt" secondAttribute="bottom" constant="30" id="cOA-3B-5Xy"/>
                             <constraint firstItem="Y5C-v7-iVt" firstAttribute="width" secondItem="wfj-hj-ffN" secondAttribute="width" multiplier="0.8" id="eKQ-Ea-9mf"/>
                             <constraint firstItem="Y5C-v7-iVt" firstAttribute="centerX" secondItem="wfj-hj-ffN" secondAttribute="centerX" id="kZi-85-rXi"/>
                             <constraint firstItem="Y5C-v7-iVt" firstAttribute="top" secondItem="adu-Jr-d7U" secondAttribute="bottom" constant="30" id="vwn-bv-si9"/>

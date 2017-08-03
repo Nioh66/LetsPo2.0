@@ -90,6 +90,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {
             let collectBgcolor = UIColor(cgColor: self.publicPost.shapeLayer.fillColor!)

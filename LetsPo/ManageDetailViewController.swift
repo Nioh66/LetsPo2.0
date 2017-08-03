@@ -115,7 +115,10 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = false
+        
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         dataManagerCount = boardDataManager.count()
         

@@ -120,11 +120,13 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         self.view.addSubview(defaultBg04)
         self.view.addSubview(photosBg)
         self.view.addSubview(takeAPhoto)
-        
-        
-        
-        
            }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
+        
+    }
     
     func getDefault01Bg(){
         bgImage = UIImage(named: "Wall2.jpg")

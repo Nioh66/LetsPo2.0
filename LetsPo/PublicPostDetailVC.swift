@@ -40,7 +40,7 @@ class PublicPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,
 
 
             
-           // displayNoteV = postBg
+            displayNoteV = postBg
             publicPostT = postText
             if let postImage = getNoteDetail.getNoteImage(boardID: boardID, noteID: publicPostID){
                 imageForCell = postImage

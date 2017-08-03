@@ -161,11 +161,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             count = recent.count
         }
         else if collectionView == self.collectionViewTwo {
-            if nearby.count == 0 {
-                count = 1
-            }else {
+//            if nearby.count == 0 {
+//                count = 1
+//            }else {
                 count = nearby.count
-            }
+//            }
         }else if collectionView == self.collectionViewThree {
             count = all.count
         }
@@ -183,13 +183,13 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
            
         }else if collectionView == self.collectionViewTwo {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-            if nearby.count != 0 {
+//            if nearby.count != 0 {
                 let imageString = nearby[indexPath.item]
                 cell.backdroundImage.image = imageString
-            }else {
-                // 第一次進入還沒新增時的底圖
-                cell.backdroundImage.image = UIImage(named:"deer.jpg")
-            }
+//            }else {
+//                // 第一次進入還沒新增時的底圖
+//                cell.backdroundImage.image = UIImage(named:"deer.jpg")
+//            }
         }else if collectionView == self.collectionViewThree {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             
@@ -364,11 +364,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             distance = pins.distance(from: userLocation) * 1.09361
             if distance <  2500 {
                 if count == 1 {
-                    nearbyDic.append(["name":Creater!,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
+                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
                 }else {
                     count = 0
                     nearbyDic.removeAll()
-                    nearbyDic.append(["name":Creater!,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
+                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
                     count = 1
                 }
             }
@@ -384,7 +384,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+        navigationController?.isNavigationBarHidden = true
+        tabBarController?.tabBar.isHidden = false
+        
         dataManagerCount = boardDataManager.count()
         // 從其他頁面跳過來的時候可以更新內容
         if secondTime == true{

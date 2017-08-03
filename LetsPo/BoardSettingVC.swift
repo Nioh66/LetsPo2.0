@@ -21,8 +21,8 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
 
     var boardAlert:Bool = false
     var boardPrivacy:Bool = false
-//    var boardLat:Double = 0.0
-//    var boardLon:Double = 0.0
+    var boardLat:Double = 0.0
+    var boardLon:Double = 0.0
     
     var allNoteData = [String:Any]()    
     deinit {
@@ -50,6 +50,12 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
                                                object: nil)
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
+    }
+    
    // Notification method
 
     func theChooseOne(notification:Notification) {
@@ -68,13 +74,12 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         dragVC.resizeNote = resizeNote
         dragVC.thePost = thePost
         dragVC.allNoteData = allNoteData
-        
-        
+        dragVC.boardLat = boardLat
+        dragVC.boardLon = boardLon
         dragVC.boardAlert = boardAlert
         dragVC.boardPrivacy = boardPrivacy
-//        dragVC.boardLat = boardLat
-//        dragVC.boardLon = boardLon
-       navigationController?.pushViewController(dragVC, animated: true)
+
+        navigationController?.pushViewController(dragVC, animated: true)
         
     }
     
