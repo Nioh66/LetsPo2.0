@@ -24,7 +24,8 @@ class SelfPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        displayNoteImage.layer.masksToBounds = true
+        displayNoteImage.layer.cornerRadius = 10.0
         
       //  selfPost.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
         selfPostT.frame = CGRect(x: 0, y: 0, width: displayNoteV.frame.size.width*0.8, height: displayNoteV.frame.size.height*0.7)

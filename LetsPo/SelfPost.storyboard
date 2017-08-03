@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VhU-2p-4he">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VhU-2p-4he">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -29,7 +29,7 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HPB-39-dkB">
                                         <rect key="frame" x="1" y="239" width="210" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="zUa-er-VcS">
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="zUa-er-VcS">
                                             <size key="itemSize" width="50" height="50"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -74,9 +74,11 @@
                                     <constraint firstItem="HPB-39-dkB" firstAttribute="width" secondItem="hdM-Aw-gnd" secondAttribute="width" multiplier="0.7" id="fRn-sG-DZB"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TO4-id-fj1">
-                                <rect key="frame" x="67" y="457" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TO4-id-fj1">
+                                <rect key="frame" x="37" y="380" width="300" height="169"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="TO4-id-fj1" secondAttribute="height" multiplier="16:9" id="xAO-P5-oDd"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -84,6 +86,9 @@
                             <constraint firstItem="hdM-Aw-gnd" firstAttribute="top" secondItem="sn0-BL-jhL" secondAttribute="bottom" constant="30" id="25d-YW-boX"/>
                             <constraint firstItem="hdM-Aw-gnd" firstAttribute="width" secondItem="R2z-96-aJL" secondAttribute="width" multiplier="0.8" id="EmL-k8-m9v"/>
                             <constraint firstItem="hdM-Aw-gnd" firstAttribute="centerX" secondItem="R2z-96-aJL" secondAttribute="centerX" id="ZEK-re-6r2"/>
+                            <constraint firstItem="TO4-id-fj1" firstAttribute="centerX" secondItem="R2z-96-aJL" secondAttribute="centerX" id="czh-OR-FcJ"/>
+                            <constraint firstItem="TO4-id-fj1" firstAttribute="top" secondItem="hdM-Aw-gnd" secondAttribute="bottom" constant="30" id="fEn-ta-CZs"/>
+                            <constraint firstItem="TO4-id-fj1" firstAttribute="width" secondItem="R2z-96-aJL" secondAttribute="width" multiplier="0.8" id="zWl-7M-kVP"/>
                         </constraints>
                     </view>
                     <connections>
@@ -181,7 +186,7 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eYk-7d-gcg">
                                         <rect key="frame" x="1" y="239" width="210" height="60"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="TOJ-3F-a21">
+                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="TOJ-3F-a21">
                                             <size key="itemSize" width="50" height="50"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>

@@ -94,6 +94,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         let publicBoardSettinglVC =  storyboard?.instantiateViewController(withIdentifier: "PublicBoardSettingVC") as! PublicBoardSettingVC
         publicBoardSettinglVC.modalPresentationStyle = .popover
         publicBoardSettinglVC.boardID = selectIndexID
+        publicBoardSettinglVC.preferredContentSize = CGSize(width: 125, height: 100)
         let popDetailPostVC = publicBoardSettinglVC.popoverPresentationController
         popDetailPostVC?.delegate = self
         popDetailPostVC?.permittedArrowDirections = .up

@@ -11,11 +11,9 @@ import UIKit
 class PublicPostImageCell: UICollectionViewCell {
     
     @IBOutlet weak var postImage: UIImageView!
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         postImage.layer.cornerRadius = 10.0
         postImage.layer.masksToBounds = true
     }
-
 }

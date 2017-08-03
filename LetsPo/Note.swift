@@ -24,7 +24,11 @@ class Note: UIView {
 //        return noteInstance!
 //    }
     var shapeLayer = CAShapeLayer()
-    var uploadcolor = UIColor()
+    var uploadcolor:UIColor = UIColor(red: 253.0/255.0,
+                                        green: 237.0/255.0,
+                                        blue: 166.0/255.0,
+                                        alpha: 1.0)
+
 
     var borderColor = UIColor(red: 182.0/255.0, green: 153.0/255.0, blue: 75.0/255.0, alpha: 0.38)
     
