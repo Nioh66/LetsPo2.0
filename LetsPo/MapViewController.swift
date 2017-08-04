@@ -28,7 +28,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     var titleName:String = ""
     var count: Int = 0
     
-    var tttt = UIImage()
+    var privacy_pins = UIImage()
     
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
@@ -75,13 +75,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         self.view.addSubview(locationButton)
         
         
-        // tmp add location button (press once only)
-//        let addlocations = UIButton(type: .custom)
-//        addlocations.frame = CGRect(x: 10, y: 10, width: 50, height: 50)
-//        addlocations.addTarget(self, action: #selector(addLocation), for: .touchUpInside)
-//        addlocations.setImage(UIImage(named: "addNote.png"), for: .normal)
-//        self.view.addSubview(addlocations)
-//        
+ //
 //        let result = boardDataManager.searchField(field: "board_Lon", forKeyword: "1") as! [BoardData]
 ////        print(result)
 //        for tmp:BoardData in result{
@@ -92,53 +86,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         
     }
     
-//    typealias EditItemCompletion = (_ success: Bool , _ result : BoardData?) -> ()
-//    
-//    func editeWithItem(item: BoardData?,withCompletion completion:EditItemCompletion?){
-//            
-//        if(completion == nil){
-//                return
-//        }
-//            var finalItem = item
-//        
-//        for i in 0...8{
-//        
-////            if(finalItem == nil){
-//                finalItem = boardDataManager.createItem()
-//                finalItem?.board_CreateTime = NSDate()
-////            }
-////        finalItem?.board_Creater = "ddfs"
-////        finalItem?.board_Lat = 37.3347403
-////        finalItem?.board_Lon = -122.03018079
-////        let img = UIImage(named: "map.png")
-////        let imgData = UIImageJPEGRepresentation(img!, 0.7)
-////        finalItem?.board_BgPic = imgData! as NSData
-////        finalItem?.board_Privacy = false
-////        finalItem?.board_Alert = true
-////
-////
-//            let nameArr = ["Tom","Jack","Hunter","Lucy","Sandy","Lisa","Jo","Bob","Andraw"]
-//            
-//        finalItem?.board_Creater = nameArr[i]
-//        
-//        let lat = [0.33087803,0.331622,0.33045275,0.337566,0.33546547,0.33424,0.33754,0.334643,0.6544343]
-//        let lon = [0.0305999,0.030337,0.02953296,0.041202,0.030544,0.03012364,0.0303322,0.0304657,0.9754]
-//        
-//        finalItem?.board_Lat = 37 + lat[i]
-//        finalItem?.board_Lon = -122 + lon[i]
-//        let image = ["myNigger.jpg","delete.png","deer.jpg","map.png","rightBtn.png","insert.png","right-arrow.png","BgSettings.png","Trashcan.png"]
-//            let iii = image[i]
-//            let img = UIImage(named: iii)
-//            let imgData = UIImageJPEGRepresentation(img!, 1)
-//        finalItem?.board_BgPic = imgData! as NSData
-//        finalItem?.board_Privacy = true
-////
-//        
-//            completion!(true, finalItem)
-//        }
-//    
-//    }
-//    
+
     func zoomToUserLocation(){
         var mapRegion = MKCoordinateRegion()
         mapRegion.center = self.mapView.userLocation.coordinate
@@ -147,17 +95,6 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         
         mapView.setRegion(mapRegion, animated: true)
     }
-//    func addLocation(){
-//        
-//        self.editeWithItem(item: nil) { (success, result) in
-//            if(success){
-//                boardDataManager.saveContexWithCompletion(completion: { (success) in
-//                    if(success){
-//               }
-//                })
-//            }
-//        }
-//     }
     
     // mark - pins method
     func filterAnnotations(paramPlaces:[SpotAnnotation]){
@@ -227,6 +164,8 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         let rightBtn = UIButton(type: .detailDisclosure)
 //        rightBtn.setImage(UIImage(named: "rightBtn.png"), for: .normal)
         pin?.rightCalloutAccessoryView = rightBtn
+        let left = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
+        pin?.leftCalloutAccessoryView = left
         
         
         let myAnnotation = annotation as! SpotAnnotation
@@ -249,7 +188,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
                                                   toItem: nil,
                                                   attribute: .notAnAttribute,
                                                   multiplier: 1,
-                                                  constant: 100)
+                                                  constant: 120)
         detailImage.addConstraint(widthConstraint)
         detailImage.addConstraint(heightConstraint)
         detailImage.contentMode = .scaleAspectFill
@@ -257,11 +196,11 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         pin?.canShowCallout = true
         pin?.isEnabled = true
         if myAnnotation.privacy == true {
-            tttt = UIImage(named: "pin_1")!
+            privacy_pins = UIImage(named: "pin_1")!
         }else {
-            tttt = UIImage(named: "pin_2")!
+            privacy_pins = UIImage(named: "pin_2")!
         }
-        pin?.image = tttt
+        pin?.image = privacy_pins
         
         
         
@@ -277,7 +216,11 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         if placeCount == 1 {
             titleName = myAnnotation.currentTitle
             if (control as? UIButton)?.buttonType == .detailDisclosure {
-                performSegue(withIdentifier:"getDetail", sender: self)
+                let id = myAnnotation.board_Id
+                let vc:ManageDetailViewController = ManageDetailViewController()
+                vc.selectIndexID = id
+                print("passes Id is \(id)")
+                self.present(vc, animated: true, completion: nil)
             }
             print("Press one callout view")
         }else {
@@ -351,7 +294,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         
         count = count + 1
         for value in dic {
-            let strName = value["board_Creater"] as! String
+            let board_ID = value["board_Id"] as! Int16
             
             //let time = value["lastUpdateDateTime"] as! String
             
@@ -369,17 +312,17 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
             // 距離小於 2500 則存回 near
             if distance <  2500 && alert == true {
                 if count == 1 {
-                    nearbyDictionary.append(["name":strName,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
+                    nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
                 }else {
                     count = 0
                     nearbyDictionary.removeAll()
-                    nearbyDictionary.append(["name":strName,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
+                    nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
                     count = 1
                 }
                 if nearbyDictionary.count < 20 {
                     if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
                         let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: strName)
+                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "")
                         
                         // nearbyDictionary 內的定位開始 Monitoring
                         locationManager.startMonitoring(for: region)
@@ -388,7 +331,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
                         // 超過 2300 則停止 Monitoring
                         if distance > 2300 {
                             locationManager.stopMonitoring(for: region)
-                            print("stop \(strName)")
+//                            print("stop \(nil)")
                         }
                     }
                 }
@@ -404,16 +347,19 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         
         let dic = getLocations()
         for value in dic {
-            let strName = value["board_Creater"] as! String
+            let createTime = value["board_CreateTime"] as! Date
             
             // let time = value["lastUpdateDateTime"] as! String
-            
+            let board_Id = value["board_Id"] as! Int16
             let lat = value["lat"] as! Double
             let lon = value["lon"] as! Double
             let img = value["BgPic"] as! UIImage
             let privacy = value["privacy"] as! Bool
+            let dateFormate = DateFormatter()
+            dateFormate.dateFormat = "MM-dd-yyyy HH:mm"
+            let stringOfDate = dateFormate.string(from: createTime as Date)
             
-            let annotation = SpotAnnotation( atitle: strName, lat: lat, lon: lon, imageName: img,privacyBool: privacy)
+            let annotation = SpotAnnotation( atitle: stringOfDate, lat: lat, lon: lon, imageName: img,privacyBool: privacy,Id:board_Id)
             
             result.append(annotation)
         }
@@ -428,15 +374,16 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
             
-            let Creater = item.board_Creater
+//            let Creater = item.board_Creater
+            let board_ID = item.board_Id
             let lat = item.board_Lat
             let lon = item.board_Lon
             let time = item.board_CreateTime
             let privacy = item.board_Privacy
             let alert = item.board_Alert
-            if let img = item.board_BgPic {
+            if let img = item.board_ScreenShot {
                 let imgWithData = UIImage(data: img as Data)
-                locations.append(["board_Creater":Creater ?? "","lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert])
+                locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert])
                 
             }
         }
@@ -466,13 +413,10 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     }
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        places = spot()
         dataManagerCount = boardDataManager.count()
         
+        
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "getDetail" {
-            let vc = segue.destination as! MapDetailViewController
-            vc.navigationItem.title = titleName
-        }
-    }
+   
 }

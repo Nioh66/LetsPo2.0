@@ -27,6 +27,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
+    var count1 = 0
     var secondTime = false
     
     var collectionViewTwo:UICollectionView!
@@ -102,6 +103,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         if secondTime == true{
             all.removeAll()
             recent.removeAll()
+            nearby.removeAll()
         }
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
@@ -134,13 +136,13 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         for value in nearbyDic {
             let imageName = value["BgPic"] as! UIImage
-            if count == 1 {
+            if count1 == 1 {
                 nearby.append(imageName)
             }else {
-                count = 0
+                count1 = 0
                 nearby.removeAll()
                 nearby.append(imageName)
-                count = 1
+                count1 = 1
             }
         }
         reloadAllData()
@@ -161,11 +163,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             count = recent.count
         }
         else if collectionView == self.collectionViewTwo {
-//            if nearby.count == 0 {
-//                count = 1
-//            }else {
-                count = nearby.count
-//            }
+            count = nearby.count
         }else if collectionView == self.collectionViewThree {
             count = all.count
         }
@@ -174,7 +172,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = ManageCollectionViewCell()
-    
+       
         if collectionView == self.collectionViewOne {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             
@@ -183,13 +181,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
            
         }else if collectionView == self.collectionViewTwo {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-//            if nearby.count != 0 {
+
                 let imageString = nearby[indexPath.item]
                 cell.backdroundImage.image = imageString
-//            }else {
-//                // 第一次進入還沒新增時的底圖
-//                cell.backdroundImage.image = UIImage(named:"deer.jpg")
-//            }
+
         }else if collectionView == self.collectionViewThree {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             
@@ -212,11 +207,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 if path == indexPath.row {
                     print("i = \(i) indexPath.row = \(indexPath.row)")
                     nearby.remove(at: i)
+                    print("nearby die")
                 }
             }
             self.all.remove(at: indexPath.row)
+            print("all die")
             self.recent.remove(at: indexPath.row)
+            print("recent die")
             self.collectionViewOne.deleteItems(at: [indexPath])
+            print("collectionViewOne die")
             boardDataManager.deleteItem(item: item)
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
@@ -234,16 +233,21 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             if indexWithRow < recent.count {
                 print("indexWithRow \(indexWithRow) <= recent.count")
                 self.recent.remove(at: indexWithRow)
+                print("recent die")
                 self.all.remove(at: indexWithRow)
+                print("all die")
             }else {
                 print("indexWithRow \(indexWithRow) >= recent.count")
                 self.all.remove(at: indexWithRow)
             }
             self.nearby.remove(at: indexPath.row)
+            print("nearby die")
             self.collectionViewTwo.deleteItems(at: [indexPath])
+            print("collectionViewTwo die")
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
                     self.reloadAllData()
+                    print("reloadAllData")
                 }
             })
         }else if let indexPath = collectionViewThree.indexPath(for: cell) {
@@ -271,6 +275,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("\(indexPath.section),\(indexPath.item)")
+        
         let item = boardDataManager.itemWithIndex(index: indexPath.item)
         let board_Id = item.board_Id
         print("did selected board_Id =  \(board_Id)")
@@ -342,14 +347,19 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         monitorRegion(userLocation: locations.last!)
+        print("didUpdateLocations")
         locationManager.stopUpdatingLocation()
     }
     
     func monitorRegion(userLocation:CLLocation){
         let userLocation = userLocation
         var distance = CLLocationDistance()
+        if dataManagerCount == 0 {
+            nearbyDic.removeAll()
+        }
         count = count + 1
         for i in 0..<dataManagerCount {
+            print("monitorRegion\(dataManagerCount)")
             let item = boardDataManager.itemWithIndex(index: i)
             
             let Creater = item.board_Creater
@@ -376,6 +386,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         nearbyDic.sort { ($0["distance"] as! Double) < ($1["distance"] as! Double) }
 //        print("near dictionary \(nearbyDic)")
         print("nearbyDic count \(nearbyDic.count)")
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -393,9 +404,13 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             self.locationManager.startUpdatingLocation()
             
             // 每次回來都回到recent ? 暫定
-            scrollPager.setSelectedIndex(index: 0, animated: false)
-            arrayImageData()
-            reloadAllData()
+//            scrollPager.setSelectedIndex(index: 0, animated: false)
+            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
+                self.arrayImageData()
+                self.reloadAllData()
+            }
+//            arrayImageData()
+//            reloadAllData()
         }
     }
     
@@ -403,5 +418,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     override func viewDidLayoutSubviews() {
         scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentView.bounds.size.width, height: view.bounds.size.height)
         
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+//        locationManager.stopUpdatingLocation()
     }
 }

@@ -16,10 +16,12 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     deinit {
         NotificationCenter.default.removeObserver(self,name: boardSettingNN,object: nil)
         NotificationCenter.default.removeObserver(self,name: newNoteComingNN,object: nil)
+        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue: "notificationCenter"),object: nil)
     }
     
     var dataManagerCount = Int()
     var selectIndexID = Int16()
+    var selectIDformMap = Int16()
     let getBoardPosts = GetBoardNotes()
 
     
@@ -35,10 +37,18 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         
         
         self.addingObserver()
+        
 
         dataManagerCount = boardDataManager.count()
         
-        print("selectIndex \(selectIndexID)")
+        print("select Index ID \(selectIndexID)")
+//        print("select ID from map \(selectIDformMap)")
+        
+        if selectIndexID == 0 {
+            print("nil")
+            return
+        }
+//        selectIndexID = 1
         
         guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
             let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
@@ -47,6 +57,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             else{
                 return
         }
+        
         
         backGroundImage.image = bgImage
         backGroundImage.isUserInteractionEnabled = true
@@ -127,8 +138,19 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     func addingObserver() {
   //      NotificationCenter.default.addObserver(self, selector: #selector(boardReset),name: boardSettingNN,object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newNoteComing), name: newNoteComingNN, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(theChooseOne),
+                                               name: NSNotification.Name(rawValue: "notificationCenter"),
+                                               object: nil)
+
         
     }
+    func theChooseOne(notification:Notification) {
+        if let board_Id = notification.userInfo?["id"] as? Int16 {
+            selectIndexID = board_Id
+            print("notification")
+        }
+    }
+    
     func newNoteComing(notification:Notification) {
         
         let refreshVC = storyboard?.instantiateViewController(withIdentifier: "detailViewController") as! ManageDetailViewController

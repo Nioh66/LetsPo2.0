@@ -16,23 +16,29 @@ class SpotAnnotation: NSObject, MKAnnotation {
     var places = [SpotAnnotation]()
     var image = UIImage()
     var privacy = Bool()
+    var board_Id = Int16()
     
     override init() {
         super.init()
     }
     
     
-    init(atitle:String, lat:CLLocationDegrees, lon:CLLocationDegrees, imageName:UIImage, privacyBool:Bool) {
+    init(atitle:String, lat:CLLocationDegrees, lon:CLLocationDegrees, imageName:UIImage, privacyBool:Bool,Id:Int16) {
         
         coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         currentTitle = atitle
         image = imageName
         privacy = privacyBool
+        board_Id = Id
         
     }
     public var title: String? {
         if places.count == 1 {
-            return currentTitle
+            if currentTitle.characters.count > 10 {
+                return currentTitle.substring(with: currentTitle.startIndex..<currentTitle.index(currentTitle.startIndex, offsetBy: 10)) + "..."
+            }else {
+                return currentTitle
+            }
         }else {
             return "\(places.count) 張留言板 "
         }
