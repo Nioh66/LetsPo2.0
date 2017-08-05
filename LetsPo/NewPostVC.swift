@@ -138,7 +138,10 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         navigationController?.navigationBar.topItem?.title = "定位便貼"
         
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        locationManager.stopUpdatingLocation()
+
+    }
     func reset(notification:Notification) {
        
         
@@ -155,15 +158,21 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
 
     
   
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        
         
         let newPostSegue = segue.destination as! BoardSettingVC
         newPostSegue.thePost = thePost
-
-        let resizeNote = thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
-        newPostSegue.resizeNote = resizeNote
+        
+        
+        myTextView.isEditable = false
+        
+        myTextView.setContentOffset(CGPoint.zero, animated: false)
+        
+        let resizeNote = thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
+            newPostSegue.resizeNote = resizeNote
+            
+        
         
         self.saveNoteData()
         newPostSegue.allNoteData = allNoteData
@@ -585,7 +594,6 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         else {
             return
         }
-        locationManager.stopUpdatingLocation()
 
         let textColorData = NSKeyedArchiver.archivedData(withRootObject: fontColor ) as NSData
         let noteFontColor = textColorData

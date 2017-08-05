@@ -239,6 +239,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             let bgImageWithNotes = self.getBGimageWithPosts()
             let newPostSegue = segue.destination as! NewPublicPostVC
             newPostSegue.bgImage = bgImageWithNotes
+            newPostSegue.boardID = selectIndexID
         }else{
             
         }

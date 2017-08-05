@@ -31,6 +31,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     let resetNote = Notification.Name("resetPublicNote")
     var bgImage = UIImage()
     var allNoteData = [String:Any]()
+    var boardID = Int16()
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)}
@@ -108,12 +109,19 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         
         let dragSegue = segue.destination as! DragPublicPostVC
         
-        let resizeNote = publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
+        myTextView.isEditable = false
+        
+        myTextView.setContentOffset(CGPoint.zero, animated: false)
+        
+        
+        
+        let resizeNote = publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
         dragSegue.resizeNote = resizeNote
         
         self.saveNoteData()
         dragSegue.allNoteData = allNoteData
         dragSegue.bgImage = bgImage
+        dragSegue.boardID = boardID
         
     }
     

@@ -61,7 +61,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     func theChooseOne(notification:Notification) {
       
         topBgImage = notification.userInfo!["myBg"] as! UIImage
-        
+        print("get bg")
         topBg.image = topBgImage
     }
 

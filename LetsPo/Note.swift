@@ -189,15 +189,24 @@ class Note: UIView {
 
 //  Resize the note
     extension UIView{
-        func resizeNote(targetWidth width:Int ,targetHeight height:Int ,x:Int ,y:Int) -> UIImage? {
-        UIGraphicsBeginImageContext(CGSize(width: width, height: height))
-        self.drawHierarchy(in: CGRect(x: x, y: y, width: width, height: height) , afterScreenUpdates: false)
-        
-        let returnImage = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        return returnImage
+        func resizeNote(targetWidth width:Int ,targetHeight height:Int ,x:Int ,y:Int,textView:NoteText) -> UIImage? {
+            var resizeImage = UIImage()
+            
+                    UIGraphicsBeginImageContext(CGSize(width: width, height: height))
+                    self.drawHierarchy(in: CGRect(x: x, y: y, width: width, height: height) , afterScreenUpdates: false)
+                    
+                    let returnImage = UIGraphicsGetImageFromCurrentImageContext()
+                    
+                    UIGraphicsEndImageContext()
+                    resizeImage = returnImage!
+            
+               return resizeImage
     }
+        
+        
+        
+        
+        
         func boardScreenShot() -> UIImage? {
             UIGraphicsBeginImageContextWithOptions(CGSize(width: self.frame.size.width, height: self.frame.size.height), false, 0)
             self.drawHierarchy(in: CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height) , afterScreenUpdates: true)

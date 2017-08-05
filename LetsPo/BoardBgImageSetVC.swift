@@ -37,8 +37,8 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         let tapDefault03 = UITapGestureRecognizer(target: self, action: #selector(getDefault03Bg))
         let tapDefault04 = UITapGestureRecognizer(target: self, action: #selector(getDefault04Bg))
 
-        let tapGetPhotos = UITapGestureRecognizer(target: self, action: #selector(getPhotosBg))
-        let tapTakePhoto = UITapGestureRecognizer(target: self, action: #selector(takeBgPhoto))
+        let tapGetPhotos = UITapGestureRecognizer(target: self, action: #selector(addPictureBtn))
+        let tapTakePhoto = UITapGestureRecognizer(target: self, action: #selector(takePictureBtn))
         
         let defaultBg01 = UIImageView(frame: CGRect(x: width_Padding,
                                                     y: hight_Padding,
@@ -168,21 +168,6 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         navigationController?.popViewController(animated: true)
     }
 
-    func getPhotosBg(){
-        self.addPictureBtn()
-        print("get the bg pic from photos!")
-        navigationController?.popViewController(animated: true)
-    }
-    func takeBgPhoto(){
-        self.takePictureBtn()
-        print("Take the photo for bg!")
-        
-        navigationController?.popViewController(animated: true)
-        
-    }
-    
-    
-    
     // MARK: Add photo from photos
     
     func addPictureBtn() {
@@ -193,8 +178,8 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
             importImage.sourceType = .photoLibrary
             importImage.delegate = self
             importImage.allowsEditing = true
-            
             present(importImage, animated: true, completion: nil)
+
         }
         else{
             print("Your photoLibrary are unvailable")
@@ -233,30 +218,31 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
             // we got back an error!
             let saveAlert = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
             saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
+            print("xxx")
             present(saveAlert, animated: true)
         } else {
             let saveAlert = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
             saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
+            print("xx")
             present(saveAlert, animated: true)
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        print("XXXX")
+
         
-        
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-            else{
-                return
-        }
-        //resize image
-        guard let imageX = imageFactory.resizeFromImage(input: image)
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
+            let imageX = imageFactory.resizeFromImage(input: image) //resize image
             else {
+                print("resize photos image failure")
                 return
         }
-        
+        print("X")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":imageX])
         self.dismiss(animated: true, completion: nil)
-        
+        navigationController?.popViewController(animated: true)
+
     }
     
     
