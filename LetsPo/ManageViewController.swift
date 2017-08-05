@@ -68,11 +68,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         dataManagerCount = boardDataManager.count()
         print("dataManagerCount1111 \(dataManagerCount)")
         // 第一次進入還沒新增時的底圖
-        if dataManagerCount == 0 {
-            nearby.append(UIImage(named: "nearby_1")!)
-            recent.append(UIImage(named: "first")!)
-            all.append(UIImage(named: "first")!)
-        }
+//        if dataManagerCount == 0 {
+//            nearby.append(UIImage(named: "nearby_1")!)
+//            recent.append(UIImage(named: "first")!)
+//            all.append(UIImage(named: "first")!)
+//        }
         
         
         // incase core location too slow
@@ -207,9 +207,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 if path == indexPath.row {
                     print("i = \(i) indexPath.row = \(indexPath.row)")
                     nearby.remove(at: i)
-                    print("nearby die")
                 }
             }
+            let board_id = item.board_Id
+            print("board_id \(board_id)")
             self.all.remove(at: indexPath.row)
             print("all die")
             self.recent.remove(at: indexPath.row)
@@ -219,6 +220,24 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             boardDataManager.deleteItem(item: item)
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
+                    let searchField = "note_BoardID"
+                    let keyword = "\(board_id)"
+                    
+                    guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
+                        print("Result case to [NoteData] failure!!!!")
+                        return
+                    }
+                    for noteAttribute:NoteData in result{
+                        let noteID = noteAttribute.note_ID
+                        let boardID = noteAttribute.note_BoardID
+                        print("noteID \(noteID),boardID \(boardID)")
+                        noteDataManager.deleteItem(item: noteAttribute)
+                        noteDataManager.saveContexWithCompletion(completion: { (success) in
+                            print("delete success")
+                        })
+                        
+                    }
+
                     self.reloadAllData()
                 }
             })
@@ -228,8 +247,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             
             print("indexWithRow: \(indexWithRow)")
             
-                let item = boardDataManager.itemWithIndex(index: indexWithRow)
+            let item = boardDataManager.itemWithIndex(index: indexWithRow)
             boardDataManager.deleteItem(item: item)
+            let board_id = item.board_Id
+            print("board_id \(board_id)")
             if indexWithRow < recent.count {
                 print("indexWithRow \(indexWithRow) <= recent.count")
                 self.recent.remove(at: indexWithRow)
@@ -246,6 +267,22 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             print("collectionViewTwo die")
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
+                    let searchField = "note_BoardID"
+                    let keyword = "\(board_id)"
+                    
+                    guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
+                        print("Result case to [NoteData] failure!!!!")
+                        return
+                    }
+                    for noteAttribute:NoteData in result{
+                        let noteID = noteAttribute.note_ID
+                        let boardID = noteAttribute.note_BoardID
+                        print("noteID \(noteID),boardID \(boardID)")
+                        noteDataManager.deleteItem(item: noteAttribute)
+                        noteDataManager.saveContexWithCompletion(completion: { (success) in
+                            print("delete success")
+                        })
+                    }
                     self.reloadAllData()
                     print("reloadAllData")
                 }
@@ -261,12 +298,30 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                     self.nearby.remove(at: i)
                 }
             }
+            let board_id = item.board_Id
+            print("board_id \(board_id)")
             if recent.count > 0 && indexPath.row < recent.count{
                 self.recent.remove(at: indexPath.row)
             }
             self.collectionViewThree.deleteItems(at: [indexPath])
             boardDataManager.saveContexWithCompletion(completion: { success in
                 if(success){
+                    let searchField = "note_BoardID"
+                    let keyword = "\(board_id)"
+                    
+                    guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
+                        print("Result case to [NoteData] failure!!!!")
+                        return
+                    }
+                    for noteAttribute:NoteData in result{
+                        let noteID = noteAttribute.note_ID
+                        let boardID = noteAttribute.note_BoardID
+                        print("noteID \(noteID),boardID \(boardID)")
+                        noteDataManager.deleteItem(item: noteAttribute)
+                        noteDataManager.saveContexWithCompletion(completion: { (success) in
+                            print("delete success")
+                        })
+                    }
                     self.reloadAllData()
                 }
             })
