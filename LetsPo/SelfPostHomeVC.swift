@@ -50,29 +50,6 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
         secondTime = false
         fromNewNote = false
         
-//        if let selfBoardBg = getAllPosts.getSelfboardBg() {
-//            selfBgImage.image = selfBoardBg
-//        }
-//        
-//        guard let allSelfPostsID = getAllPosts.getSelfNotesID() else{
-//            return
-//        }
-//        if let notes = getAllPosts.getSelfboardNotes() {
-//            
-//            for (index,imageV) in notes.enumerated(){
-//                imageV.isUserInteractionEnabled = true
-//                imageV.backgroundColor = UIColor.clear
-//                
-//                let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
-//                detailBtn.postImageView = imageV
-//                detailBtn.postID = allSelfPostsID[index]
-//
-//                selfBgImage.addSubview(imageV)
-//                imageV.addGestureRecognizer(detailBtn)
-//            }
-//            }
-        
-        
         
     }
     func goToDetail(gestureRecognizer:TapToShowDetail){

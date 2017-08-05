@@ -184,48 +184,81 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     }
     
     func saveBoardData() {
-        let boardItem = boardDataManager.createItem()
         //BoardID set
         let itemCount = boardDataManager.count()
 
         if itemCount == 0{
+            let boardItem = boardDataManager.createItem()
+
             boardItem.board_Id = 1
             boardID = 1
+            
+            guard let screenShotImage = self.view.boardScreenShot(),
+                let bgPic = topImage.image
+                else {
+                    return
+            }
+            
+            guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
+                let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 1.0) as NSData?
+                else{
+                    return
+            }
+            
+            boardItem.board_Lat = boardLat
+            boardItem.board_Lon = boardLon
+            boardItem.board_Alert = boardAlert
+            boardItem.board_Privacy = boardPrivacy
+            boardItem.board_ScreenShot = boardScreenShot
+            boardItem.board_BgPic = boardBgPic
+            boardItem.board_CreateTime = NSDate()
+            boardDataManager.saveContexWithCompletion { (success) in
+                if (success) {
+                    print("BoardData save succeed!!!")
+                }else{
+                    print("BoardData save failure!!!")
+                }
+            }
+
         }else{
             let lastBoardItem = boardDataManager.itemWithIndex(index: 0)
+            let boardItem = boardDataManager.createItem()
+
             boardItem.board_Id = lastBoardItem.board_Id + 1
             boardID = boardItem.board_Id
+            
+            guard let screenShotImage = self.view.boardScreenShot(),
+                let bgPic = topImage.image
+                else {
+                    return
+            }
+            
+            guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
+                let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 1.0) as NSData?
+                else{
+                    return
+            }
+            
+            boardItem.board_Lat = boardLat
+            boardItem.board_Lon = boardLon
+            boardItem.board_Alert = boardAlert
+            boardItem.board_Privacy = boardPrivacy
+            boardItem.board_ScreenShot = boardScreenShot
+            boardItem.board_BgPic = boardBgPic
+            boardItem.board_CreateTime = NSDate()
+            boardDataManager.saveContexWithCompletion { (success) in
+                if (success) {
+                    print("BoardData save succeed!!!")
+                }else{
+                    print("BoardData save failure!!!")
+                }
+            }
+
         }
         
     //  boardItem.board_Creater = nil
 
-        guard let screenShotImage = self.view.boardScreenShot(),
-            let bgPic = topImage.image
-        else {
-            return
-        }
-
-        guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
-            let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 1.0) as NSData?
-            else{
-                return
-        }
-        
-        boardItem.board_Lat = boardLat
-        boardItem.board_Lon = boardLon
-        boardItem.board_Alert = boardAlert
-        boardItem.board_Privacy = boardPrivacy
-        boardItem.board_ScreenShot = boardScreenShot
-        boardItem.board_BgPic = boardBgPic
-        boardItem.board_CreateTime = NSDate()
-        boardDataManager.saveContexWithCompletion { (success) in
-            if (success) {
-                print("BoardData save succeed!!!")
-            }else{
-                print("BoardData save failure!!!")
-            }
-        }
-    }
+          }
     func transformDateTimeZone() -> String {
         let dateFormate = DateFormatter()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"

@@ -133,6 +133,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        navigationController?.isNavigationBarHidden = true
+        myTextView.isEditable = true
+
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = false
         navigationController?.navigationBar.topItem?.title = "定位便貼"
@@ -165,13 +167,20 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         newPostSegue.thePost = thePost
         
         
-        myTextView.isEditable = false
         
-        myTextView.setContentOffset(CGPoint.zero, animated: false)
+        //這個uiview are who?
+        UIView.animate(withDuration: 0.1) {
+           self.myTextView.isEditable = false
+            
+           self.myTextView.setContentOffset(CGPoint.zero, animated: false)
+        }
         
-        let resizeNote = thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+            let resizeNote = self.thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
             newPostSegue.resizeNote = resizeNote
             
+        }
+        
         
         
         self.saveNoteData()

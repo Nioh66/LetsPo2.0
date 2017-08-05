@@ -97,7 +97,8 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         DispatchQueue.main.async {
             let collectBgcolor = UIColor(cgColor: self.theSelfPost.shapeLayer.fillColor!)
             self.selfNoteCollectionV.backgroundColor = collectBgcolor
-            
+            self.myTextView.isEditable = true
+
             self.theSelfPost.addSubview(self.myTextView)
             self.theSelfPost.addSubview(self.selfNoteCollectionV)
 
@@ -113,8 +114,17 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         let dragSegue = segue.destination as! SelfDragVC
  //       newPostSegue.thePost = theSelfPost
         
-        let resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
-        dragSegue.resizeNote = resizeNote
+        UIView.animate(withDuration: 0.1) {
+            self.myTextView.isEditable = false
+            
+            self.myTextView.setContentOffset(CGPoint.zero, animated: false)
+        }
+        
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+            let resizeNote = self.theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
+            dragSegue.resizeNote = resizeNote
+        }
+
         
         self.saveNoteData()
         dragSegue.allNoteData = allNoteData

@@ -94,17 +94,23 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         print("dataManagerCount2222 \(dataManagerCount)")
         
-       
-    
+          }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        boardDataManager.saveCompletion = nil
+        boardDataManager.saveContexWithCompletion { (_) in
+            //..
+        }
+
     }
     
     func arrayImageData(){
         // 第二次以後回來這頁時 刷新array裡的內容
-        if secondTime == true{
+   //     if secondTime == true{
             all.removeAll()
             recent.removeAll()
             nearby.removeAll()
-        }
+   //     }
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
             let date = item.board_CreateTime
@@ -145,8 +151,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 count1 = 1
             }
         }
-        reloadAllData()
-
+               reloadAllData()
+        
         print("recent count: \(recent.count)")
         print("nearby count : \(nearby.count)")
         print("all count: \(all.count)")
@@ -455,7 +461,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         dataManagerCount = boardDataManager.count()
         // 從其他頁面跳過來的時候可以更新內容
-        if secondTime == true{
+     //   if secondTime == true{
             self.locationManager.startUpdatingLocation()
             
             // 每次回來都回到recent ? 暫定
@@ -466,7 +472,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             }
 //            arrayImageData()
 //            reloadAllData()
-        }
+     // }
     }
     
     // set frame for scroll view

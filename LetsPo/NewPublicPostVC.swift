@@ -90,13 +90,15 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     }
     
     override func viewWillAppear(_ animated: Bool) {
+
         navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {
             let collectBgcolor = UIColor(cgColor: self.publicPost.shapeLayer.fillColor!)
             self.publicCollectionV.backgroundColor = collectBgcolor
-            
+            self.myTextView.isEditable = true
+
             self.publicPost.addSubview(self.myTextView)
             self.publicPost.addSubview(self.publicCollectionV)
         }
@@ -109,14 +111,17 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         
         let dragSegue = segue.destination as! DragPublicPostVC
         
-        myTextView.isEditable = false
         
-        myTextView.setContentOffset(CGPoint.zero, animated: false)
+        UIView.animate(withDuration: 0.1) {
+            self.myTextView.isEditable = false
+            
+            self.myTextView.setContentOffset(CGPoint.zero, animated: false)
+        }
         
-        
-        
-        let resizeNote = publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
-        dragSegue.resizeNote = resizeNote
+        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+            let resizeNote = self.publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
+            dragSegue.resizeNote = resizeNote
+        }
         
         self.saveNoteData()
         dragSegue.allNoteData = allNoteData

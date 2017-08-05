@@ -94,7 +94,7 @@ class DragPublicPostVC: UIViewController {
         for data:BoardData in oldBoardData{
             if data.board_Id == boardID{
                 data.board_CreateTime = NSDate()
-                data.board_BgPic = newBoardBg
+                data.board_ScreenShot = newBoardBg
                 boardDataManager.saveContexWithCompletion { (success) in
                     if (success) {
                         print("BoardData save succeed!!!")
