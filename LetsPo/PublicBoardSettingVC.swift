@@ -80,7 +80,7 @@ class PublicBoardSettingVC: UIViewController {
         let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(boardID)") as! [BoardData]
         
         
-        for data in oldBoardData{
+        for data:BoardData in oldBoardData{
             if data.board_Id == boardID{
                 data.board_Alert = boardAlert
                 data.board_Privacy = boardPrivacy

@@ -29,8 +29,8 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         let tapDefault03 = UITapGestureRecognizer(target: self, action: #selector(getDefault03Bg))
         let tapDefault04 = UITapGestureRecognizer(target: self, action: #selector(getDefault04Bg))
         
-        let tapGetPhotos = UITapGestureRecognizer(target: self, action: #selector(getPhotosBg))
-        let tapTakePhoto = UITapGestureRecognizer(target: self, action: #selector(takeBgPhoto))
+        let tapGetPhotos = UITapGestureRecognizer(target: self, action: #selector(addPictureBtn))
+        let tapTakePhoto = UITapGestureRecognizer(target: self, action: #selector(takePictureBtn))
         
         let defaultBg01 = UIImageView(frame: CGRect(x: width_Padding,
                                                     y: hight_Padding,
@@ -162,24 +162,6 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         navigationController?.popViewController(animated: true)
     }
     
-    func getPhotosBg(){
-        self.addPictureBtn()
-        print("get the bg pic from photos!")
-        
-
-        navigationController?.popViewController(animated: true)
-    }
-    func takeBgPhoto(){
-        self.takePictureBtn()
-        print("Take the photo for bg!")
-        
-
-        navigationController?.popViewController(animated: true)
-        
-    }
-    
-    
-    
     // MARK: Add photo from photos
     
     func addPictureBtn() {
@@ -251,7 +233,8 @@ class SelfPostBgSelectVC: UIViewController ,UIImagePickerControllerDelegate,UINa
         self.updateBoardData(bgImage: imageX)
 
         self.dismiss(animated: true, completion: nil)
-        
+        navigationController?.popViewController(animated: true)
+
     }
     
     override func didReceiveMemoryWarning() {

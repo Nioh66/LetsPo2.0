@@ -113,7 +113,7 @@ class SelfNewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePick
         let dragSegue = segue.destination as! SelfDragVC
  //       newPostSegue.thePost = theSelfPost
         
-        let resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0)
+        let resizeNote = theSelfPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
         dragSegue.resizeNote = resizeNote
         
         self.saveNoteData()

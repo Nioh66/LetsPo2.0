@@ -19,6 +19,8 @@ class DragPublicPostVC: UIViewController {
         var resizeNote:UIImage!
         var theDragNote = UIImageView()
         var allNoteData = [String:Any]()
+        var boardID = Int16()
+        var noteCount:Int16 = 0
         let newNoteComingNN = Notification.Name("newPublicNoteComing")
     
         override func viewDidLoad() {
@@ -45,6 +47,7 @@ class DragPublicPostVC: UIViewController {
         
         func saveAndPop() {
             self.saveNoteData()
+            self.uploadBoardBg()
             NotificationCenter.default.post(name: newNoteComingNN, object: nil)
             
             
@@ -77,24 +80,52 @@ class DragPublicPostVC: UIViewController {
             
             theDragNote.center = point
         }
+    
+    
+    func uploadBoardBg() {
+       guard let newBoardPic = self.view.boardScreenShot(),
+        let newBoardBg = UIImageJPEGRepresentation(newBoardPic, 1.0) as NSData? else{
+            return
+        }
         
+        
+        let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(boardID)") as! [BoardData]
+        
+        for data:BoardData in oldBoardData{
+            if data.board_Id == boardID{
+                data.board_CreateTime = NSDate()
+                data.board_BgPic = newBoardBg
+                boardDataManager.saveContexWithCompletion { (success) in
+                    if (success) {
+                        print("BoardData save succeed!!!")
+                    }else{
+                        print("BoardData save failure!!!")
+                    }
+                }
+            }
+        }
+    
+
+    
+    }
+    
         
         func saveNoteData() {
-            let item = noteDataManager.createItem()
             
             
-            let itemCount = noteDataManager.count()
-            print("itemCount------\(itemCount)")
-            if itemCount == 0{
-                item.note_ID = 1
-            }else{
-                let lastSelfNoteItem = noteDataManager.itemWithIndex(index: 0)
-                item.note_ID = lastSelfNoteItem.note_ID + 1
-                print(lastSelfNoteItem.note_ID)
-                
+            
+            guard let allBoardsID = noteDataManager.searchField(field: "note_BoardID", forKeyword: "\(boardID)") as? [NoteData] else{
+                return
             }
             
-            print(item.note_ID)
+            for boardsID:NoteData in allBoardsID{
+                if boardsID.note_BoardID == boardID {
+                    noteCount += 1
+                }
+            }
+            
+            let item = noteDataManager.createItem()
+            
             guard let noteContent = allNoteData["publicNoteContent"] as? String?,
                 let noteBgColor = allNoteData["publicNoteBgColor"] as? NSData,
                 let noteFontColor = allNoteData["publicNoteFontColor"] as? NSData,
@@ -112,7 +143,8 @@ class DragPublicPostVC: UIViewController {
             
             print("---------\(imageJson)-------------")
             
-            item.note_BoardID = 1
+            item.note_BoardID = boardID
+            item.note_ID = noteCount + 1
             item.note_BgColor = noteBgColor
             item.note_Content = noteContent
             item.note_FontColor = noteFontColor
@@ -122,7 +154,7 @@ class DragPublicPostVC: UIViewController {
             item.note_Selfie = noteSelfie
             item.note_Image = imageJson
             
-            
+            print("noteID:-------\(item.note_ID)")
             
             noteDataManager.saveContexWithCompletion { (success) in
                 if(success){
