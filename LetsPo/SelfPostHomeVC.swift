@@ -38,6 +38,8 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
     let posterEdge:CGFloat = 100
     let getAllPosts = SelfBoardSetting()
     var detailSelfPostID:Int16 = 0
+    var secondTime:Bool!
+    var fromNewNote:Bool!
 
       override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,29 +47,30 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
         self.navigationController?.isNavigationBarHidden = true
         selfBgImage.isUserInteractionEnabled = true
 
+        secondTime = false
+        fromNewNote = false
         
-        
-        if let selfBoardBg = getAllPosts.getSelfboardBg() {
-            selfBgImage.image = selfBoardBg
-        }
-        
-        guard let allSelfPostsID = getAllPosts.getSelfNotesID() else{
-            return
-        }
-        if let notes = getAllPosts.getSelfboardNotes() {
-            
-            for (index,imageV) in notes.enumerated(){
-                imageV.isUserInteractionEnabled = true
-                imageV.backgroundColor = UIColor.clear
-                
-                let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
-                detailBtn.postImageView = imageV
-                detailBtn.postID = allSelfPostsID[index]
-
-                selfBgImage.addSubview(imageV)
-                imageV.addGestureRecognizer(detailBtn)
-            }
-            }
+//        if let selfBoardBg = getAllPosts.getSelfboardBg() {
+//            selfBgImage.image = selfBoardBg
+//        }
+//        
+//        guard let allSelfPostsID = getAllPosts.getSelfNotesID() else{
+//            return
+//        }
+//        if let notes = getAllPosts.getSelfboardNotes() {
+//            
+//            for (index,imageV) in notes.enumerated(){
+//                imageV.isUserInteractionEnabled = true
+//                imageV.backgroundColor = UIColor.clear
+//                
+//                let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+//                detailBtn.postImageView = imageV
+//                detailBtn.postID = allSelfPostsID[index]
+//
+//                selfBgImage.addSubview(imageV)
+//                imageV.addGestureRecognizer(detailBtn)
+//            }
+//            }
         
         
         
@@ -95,10 +98,61 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        navigationController?.isNavigationBarHidden = true
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.topItem?.title = "臨時便貼"
         tabBarController?.tabBar.isHidden = false
-  //      navigationController?.setNavigationBarHidden(false, animated: true)
+        
+        guard let allSelfPostsID = getAllPosts.getSelfNotesID() else{
+            return
+        }
+        
+        print("secondTime = \(secondTime)")
+        
+        if let notes = getAllPosts.getSelfboardNotes() {
+            
+            for (index,imageV) in notes.enumerated(){
+                
+                imageV.isUserInteractionEnabled = true
+                imageV.backgroundColor = UIColor.clear
+                
+                let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+                
+                
+                detailBtn.postImageView = imageV
+                detailBtn.postID = allSelfPostsID[index]
+                imageV.addGestureRecognizer(detailBtn)
+                
+                
+                print("fromNewNote \(fromNewNote)")
+                
+                // 如果是普通的第二次進入這頁 先拔掉所有的 imageV
+                if secondTime == true && fromNewNote == false {
+                    print("DispatchQueue secondTime = \(secondTime)indexID \(allSelfPostsID[index])")
+                    DispatchQueue.main.async() {
+                        // 不知道為什麼要在 DispatchQueue 拔，但網路上都這樣寫
+                        imageV.removeFromSuperview()
+                        
+                    }
+                }
+                // 如果是透過新增跳轉到這一頁 則不拔掉最後一個新增的 view
+                // 為什麼透過新增的 view 不能拔掉呢？ 我不知道.... (還沒addSubView所以不能拔？)
+                if secondTime == true && fromNewNote == true && index < notes.count - 1 {
+                    DispatchQueue.main.async() {
+                        imageV.removeFromSuperview()
+                    }
+                    print("secondTime\(secondTime) fromNewNote\(fromNewNote) index\(index)")
+                }
+                print("index ... =  \(allSelfPostsID[index])")
+                selfBgImage.addSubview(imageV)
+                print("add add add")
+                
+            }
+            // fromNewNote 設成 false 等一下跳來跳去 又是一條好漢 繼續全部拔掉再貼上
+            fromNewNote = false
+            secondTime = true
+            print("addSubview secondTime = \(secondTime)fromNewNote \(fromNewNote)")
+        }
+  
 
     }
     
@@ -121,6 +175,8 @@ class SelfPostHomeVC: UIViewController ,UIPopoverPresentationControllerDelegate{
         self.dismiss(animated: false, completion: nil)
         self.present(refreshVC!, animated: false, completion: nil)
 
+        fromNewNote = true
+        print("fromNewNote \(fromNewNote)")
 
     }
     

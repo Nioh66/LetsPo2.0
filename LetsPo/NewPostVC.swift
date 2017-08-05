@@ -131,8 +131,11 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
                                                object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
+        super.viewWillAppear(animated)
+//        navigationController?.isNavigationBarHidden = true
+        navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = false
+        navigationController?.navigationBar.topItem?.title = "定位便貼"
         
     }
     

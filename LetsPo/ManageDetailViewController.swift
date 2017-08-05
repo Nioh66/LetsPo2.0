@@ -23,6 +23,9 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     var selectIndexID = Int16()
     var selectIDformMap = Int16()
     let getBoardPosts = GetBoardNotes()
+    var secondTime:Bool!
+    var fromNewNote:Bool!
+
 
     
     @IBOutlet weak var boardSettingBtn: UIButton!
@@ -35,46 +38,49 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        secondTime = false
+        fromNewNote = false
         
         self.addingObserver()
         
-
+        
+        
         dataManagerCount = boardDataManager.count()
         
         print("select Index ID \(selectIndexID)")
 //        print("select ID from map \(selectIDformMap)")
         
-        if selectIndexID == 0 {
-            print("nil")
-            return
-        }
+//        if selectIndexID == 0 {
+//            print("nil")
+//            return
+//        }
 //        selectIndexID = 1
         
-        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
-            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
-            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
-            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
-            else{
-                return
-        }
-        
-        
-        backGroundImage.image = bgImage
-        backGroundImage.isUserInteractionEnabled = true
-        
-        for (index,imageview) in allPosts.enumerated(){
-            print(index)
-            imageview.isUserInteractionEnabled = true
-            imageview.backgroundColor = UIColor.clear
-            
-            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
-            detailBtn.postImageView = imageview
-            detailBtn.postID = allPostsID[index]
-            detailBtn.boardID = selectIndexID
-            backGroundImage.addSubview(imageview)
-            
-            imageview.addGestureRecognizer(detailBtn)
-        }
+//        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
+//            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
+//            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
+//            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
+//            else{
+//                return
+//        }
+//        print(backGroundImage)
+//        
+//        backGroundImage.image = bgImage
+//        backGroundImage.isUserInteractionEnabled = true
+//        
+//        for (index,imageview) in allPosts.enumerated(){
+//            print(index)
+//            imageview.isUserInteractionEnabled = true
+//            imageview.backgroundColor = UIColor.clear
+//            
+//            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+//            detailBtn.postImageView = imageview
+//            detailBtn.postID = allPostsID[index]
+//            detailBtn.boardID = selectIndexID
+//            backGroundImage.addSubview(imageview)
+//            
+//            imageview.addGestureRecognizer(detailBtn)
+//        }
         
     }
     
@@ -126,12 +132,67 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        
-        navigationController?.isNavigationBarHidden = false
+        navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = false
-        
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         dataManagerCount = boardDataManager.count()
+        if selectIndexID == 0 {
+            print("nil")
+            return
+        }
+        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
+            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
+            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
+            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
+            else{
+                return
+        }
+        print(backGroundImage)
+        
+        backGroundImage.image = bgImage
+        backGroundImage.isUserInteractionEnabled = true
+        
+        for (index,imageview) in allPosts.enumerated(){
+            print(index)
+            imageview.isUserInteractionEnabled = true
+            imageview.backgroundColor = UIColor.clear
+            
+            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+            detailBtn.postImageView = imageview
+            detailBtn.postID = allPostsID[index]
+            detailBtn.boardID = selectIndexID
+            
+            
+            imageview.addGestureRecognizer(detailBtn)
+            
+            print("fromNewNote \(fromNewNote)")
+            
+            // 如果是普通的第二次進入這頁 先拔掉所有的 imageV
+            if secondTime == true && fromNewNote == false {
+                print("DispatchQueue secondTime = \(secondTime)indexID \(allPostsID[index])")
+                DispatchQueue.main.async() {
+                    // 不知道為什麼要在 DispatchQueue 拔，但網路上都這樣寫
+                    imageview.removeFromSuperview()
+                    
+                }
+            }
+            // 如果是透過新增跳轉到這一頁 則不拔掉最後一個新增的 view
+            // 為什麼透過新增的 view 不能拔掉呢？ 我不知道.... (還沒addSubView所以不能拔？)
+            if secondTime == true && fromNewNote == true && index < allPosts.count - 1 {
+                DispatchQueue.main.async() {
+                    imageview.removeFromSuperview()
+                }
+                print("secondTime\(secondTime) fromNewNote\(fromNewNote) index\(index)")
+            }
+            print("index ... =  \(allPostsID[index])")
+            backGroundImage.addSubview(imageview)
+            print("add add add")
+
+        }
+        // fromNewNote 設成 false 等一下跳來跳去 又是一條好漢 繼續全部拔掉再貼上
+        fromNewNote = false
+        secondTime = true
+        print("addSubview secondTime = \(secondTime)fromNewNote \(fromNewNote)")
         
     }
     // MARK: Adding NotificationCenter observer
@@ -161,6 +222,8 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         refreshVC.selectIndexID = selectIndexID
         self.present(refreshVC, animated: false, completion: nil)
         
+        fromNewNote = true
+        print("fromNewNote \(fromNewNote)")
         
     }
 //    func boardReset(notification:Notification) {

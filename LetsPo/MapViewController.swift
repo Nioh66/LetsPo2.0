@@ -412,7 +412,8 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = true
+//        self.navigationController?.isNavigationBarHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
         places = spot()
         dataManagerCount = boardDataManager.count()
         
