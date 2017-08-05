@@ -50,13 +50,14 @@ class SelfDragVC: UIViewController {
         
         self.tabBarController?.tabBar.isHidden = false
 
-        navigationController?.popToRootViewController(animated: false)
+        self.dismiss(animated: false) {
+            self.navigationController?.popToRootViewController(animated: false)
+        }
 
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         self.tabBarController?.tabBar.isHidden = true
        
     }

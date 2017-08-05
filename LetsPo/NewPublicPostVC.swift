@@ -89,7 +89,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
+        navigationController?.setNavigationBarHidden(false, animated: false)
         tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {

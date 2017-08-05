@@ -53,14 +53,17 @@ class DragPublicPostVC: UIViewController {
             {
                 if controller.isKind(of: ManageDetailViewController.self) == true{
                     
-                    _ = self.navigationController?.popToViewController(controller, animated: true)
+                    self.dismiss(animated: false) {
+                        self.navigationController?.popToViewController(controller, animated: true)
+                    }
+                    
                     break
                 }
             }
     }
         
         override func viewWillAppear(_ animated: Bool) {
-            navigationController?.isNavigationBarHidden = false
+            navigationController?.setNavigationBarHidden(false, animated: false)
             tabBarController?.tabBar.isHidden = true
             
         }
