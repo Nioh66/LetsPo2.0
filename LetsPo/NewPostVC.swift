@@ -169,8 +169,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         myTextView.setContentOffset(CGPoint.zero, animated: false)
         
-        
-        let resizeNote = self.thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
+        let resizeNote = thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: myTextView)
             newPostSegue.resizeNote = resizeNote
             
         
