@@ -25,6 +25,9 @@
 		305C31841F2E594A0039E35A /* GetNoteDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305C31831F2E594A0039E35A /* GetNoteDetail.swift */; };
 		305C31861F2E606F0039E35A /* PostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 305C31851F2E606F0039E35A /* PostDetailVC.swift */; };
 		30628BC31F28E39A001FED7F /* NoteImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30628BC21F28E39A001FED7F /* NoteImageCell.swift */; };
+		3086F3221F378907008C71D2 /* AllPostsImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3086F3201F378907008C71D2 /* AllPostsImageCell.swift */; };
+		3086F3231F378907008C71D2 /* AllPostsImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3086F3211F378907008C71D2 /* AllPostsImageCell.xib */; };
+		3086F3251F378A0C008C71D2 /* PostsLinearFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3086F3241F378A0C008C71D2 /* PostsLinearFlowLayout.swift */; };
 		309EAFA91F26670D00FC3F34 /* NotiSettingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFA81F26670D00FC3F34 /* NotiSettingVC.swift */; };
 		309EAFAD1F26785900FC3F34 /* MyNiggerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFAC1F26785900FC3F34 /* MyNiggerVC.swift */; };
 		309EAFAF1F267B9E00FC3F34 /* FindNiggerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 309EAFAE1F267B9E00FC3F34 /* FindNiggerVC.swift */; };
@@ -101,6 +104,9 @@
 		305C31831F2E594A0039E35A /* GetNoteDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetNoteDetail.swift; sourceTree = "<group>"; };
 		305C31851F2E606F0039E35A /* PostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailVC.swift; sourceTree = "<group>"; };
 		30628BC21F28E39A001FED7F /* NoteImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoteImageCell.swift; sourceTree = "<group>"; };
+		3086F3201F378907008C71D2 /* AllPostsImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllPostsImageCell.swift; sourceTree = "<group>"; };
+		3086F3211F378907008C71D2 /* AllPostsImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AllPostsImageCell.xib; sourceTree = "<group>"; };
+		3086F3241F378A0C008C71D2 /* PostsLinearFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsLinearFlowLayout.swift; sourceTree = "<group>"; };
 		309EAFA81F26670D00FC3F34 /* NotiSettingVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotiSettingVC.swift; sourceTree = "<group>"; };
 		309EAFAC1F26785900FC3F34 /* MyNiggerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyNiggerVC.swift; sourceTree = "<group>"; };
 		309EAFAE1F267B9E00FC3F34 /* FindNiggerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FindNiggerVC.swift; sourceTree = "<group>"; };
@@ -246,6 +252,9 @@
 				300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */,
 				305C31851F2E606F0039E35A /* PostDetailVC.swift */,
 				9BABCA671F24C4000055B07A /* accountManage */,
+				3086F3201F378907008C71D2 /* AllPostsImageCell.swift */,
+				3086F3211F378907008C71D2 /* AllPostsImageCell.xib */,
+				3086F3241F378A0C008C71D2 /* PostsLinearFlowLayout.swift */,
 			);
 			name = PL;
 			sourceTree = "<group>";
@@ -473,6 +482,7 @@
 				9BA62C701F1F6F11008CDEC0 /* ManageCollectionViewCell.xib in Resources */,
 				30D092B91F1E49E800CB3F88 /* Account.storyboard in Resources */,
 				303B08F61F1CC61600D7F6B1 /* Main.storyboard in Resources */,
+				3086F3231F378907008C71D2 /* AllPostsImageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +506,7 @@
 				30D0928D1F1E35BB00CB3F88 /* NoteText.swift in Sources */,
 				9BABCA661F24C16F0055B07A /* AccountVC.swift in Sources */,
 				30CAD4161F2FBAA00042B059 /* SelfNoteImageCell.swift in Sources */,
+				3086F3221F378907008C71D2 /* AllPostsImageCell.swift in Sources */,
 				303B08F11F1CC61600D7F6B1 /* AppDelegate.swift in Sources */,
 				304CB6751F258F6D00AEF632 /* SelfPostBgSelectVC.swift in Sources */,
 				309EAFA91F26670D00FC3F34 /* NotiSettingVC.swift in Sources */,
@@ -508,6 +519,7 @@
 				9BABCA691F24C4860055B07A /* PersonalDetailVC.swift in Sources */,
 				309EAFB11F26E9A000FC3F34 /* MyNiggerCell.swift in Sources */,
 				30D0928F1F1E35BB00CB3F88 /* MyButton.swift in Sources */,
+				3086F3251F378A0C008C71D2 /* PostsLinearFlowLayout.swift in Sources */,
 				9B89D4811F31CA33001943C1 /* PublicDetailImageCell.swift in Sources */,
 				30D0928C1F1E35BB00CB3F88 /* Note.swift in Sources */,
 				304CB6791F258FAF00AEF632 /* SelfPostHomeVC.swift in Sources */,

@@ -8,13 +8,26 @@
 
 import UIKit
 
-class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDelegateFlowLayout, UICollectionViewDataSource{
+class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate,UICollectionViewDelegate, UICollectionViewDataSource{
+    private var collectionViewLayout : PostsLinearFlowLayout!
+    //    private var dataSource: Array<Int>!
+    private var pageWidth : CGFloat{
+        return  self.collectionViewLayout.itemSize.width + self.collectionViewLayout.minimumLineSpacing
+    }
     
-    @IBOutlet weak var publicCollectionV: UICollectionView!
+    private var contentOffset: CGFloat {
+        return self.collectionView.contentOffset.x + self.collectionView.contentInset.left
+    }
+    var animationsCount = 0
+    
+
+   
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var pageControl: UIPageControl!
+    
     @IBOutlet weak var publicPost: Note!
-    @IBOutlet weak var showCellImage: UIImageView!
-    
-    
     
     var fontSizeData:Double = 14.0
     
@@ -39,15 +52,15 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //self.configureDataSource()
+        self.configureCollectionView()
+        self.configurePageControl()
+
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
                                                                 FileManager.SearchPathDomainMask.userDomainMask, true)
         //let documnetPath = documentPaths[0] as! String
         print(documentPaths)
-        
-        
-        showCellImage.layer.cornerRadius = 10.0
-        showCellImage.layer.masksToBounds = true
         
         myTextView.frame = CGRect(x: 0, y: 0, width: publicPost.frame.size.width, height: publicPost.frame.size.height*0.8)
         publicPost.clipsToBounds = true
@@ -95,12 +108,10 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {
-            let collectBgcolor = UIColor(cgColor: self.publicPost.shapeLayer.fillColor!)
-            self.publicCollectionV.backgroundColor = collectBgcolor
+            
             self.myTextView.isEditable = true
 
             self.publicPost.addSubview(self.myTextView)
-            self.publicPost.addSubview(self.publicCollectionV)
         }
     }
     
@@ -397,10 +408,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     func changeBgBtn(button:UIButton) {
         publicPost.changeBgColor(button: button)
-        let collectBgcolor = UIColor(cgColor: publicPost.shapeLayer.fillColor!)
-        publicCollectionV.backgroundColor = collectBgcolor
-        
-    }
+            }
     
     
     
@@ -480,7 +488,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         // UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         
         imageForCell.append(imageX)
-        publicCollectionV.reloadData()
+        collectionView.reloadData()
         
         self.dismiss(animated: true, completion: nil)
         
@@ -489,33 +497,78 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     // MARK: Collectionview delegate method
     
+    
+    func configureCollectionView() {
+        self.collectionView.register(UINib.init(nibName: "AllPostsImageCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.collectionViewLayout = PostsLinearFlowLayout.configureLayout(collectionView: self.collectionView, itemSize: CGSize.init(width: 180, height: 180), minimumLineSpacing: 0)
+    }
+    
+    //    func configureDataSource ()  {
+    //        self.dataSource = [Int]()
+    //        for i in 0..<imageForCell.count{
+    //            self.dataSource.append(i)
+    //        }
+    //    }
+    
+    func configurePageControl() {
+        self.pageControl.numberOfPages = imageForCell.count
+    }
+    
+    private func scrollToPage(page: Int, animated: Bool) {
+        self.collectionView.isUserInteractionEnabled = false
+        self.animationsCount += 1
+        let pageOffset = CGFloat(page) * self.pageWidth - self.collectionView.contentInset.left
+        self.collectionView.setContentOffset(CGPoint(x: pageOffset, y: 0), animated: true)
+        self.pageControl.currentPage = page
+        //        self.configureButtons()
+    }
+    // MARK: collectionView datasource method
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageForCell.count
+        return self.imageForCell.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! PublicPostImageCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllPostsImageCell
+        cell.postImageV.layer.cornerRadius = 10.0
+        cell.postImageV.layer.masksToBounds = true
+        cell.postImageV.image = imageForCell[indexPath.row]
         
-        
-        cell.postImage.image = imageForCell[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking {
+            return
+        }
         
-        showCellImage.image = imageForCell[indexPath.row]
+        let selectedPage = indexPath.row;
+        
+        if selectedPage == self.pageControl.currentPage {
+            //可加popview
+            NSLog("Did select center item")
+        }
+        else {
+            
+            //          self.scrollToPage(page: selectedPage, animated: true)
+        }
+        
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let length = collectionView.frame.size.height
-        let cellSize = CGSize(width: length, height: length)
-        
-        return cellSize
+    // MARK: collectionView delegate method
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if ((self.animationsCount - 1) == 0) {
+            self.collectionView.isUserInteractionEnabled = true
+        }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return cellSpace
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.pageControl.currentPage = Int(self.contentOffset / self.pageWidth)
+        //       self.configurebtn
+        
     }
+    
+    
     
     // MARK: Save note data
     

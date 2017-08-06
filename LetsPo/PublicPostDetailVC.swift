@@ -8,13 +8,24 @@
 
 import UIKit
 
-class PublicPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,UICollectionViewDataSource{
+class PublicPostDetailVC: UIViewController ,UICollectionViewDelegate ,UICollectionViewDataSource{
+    private var collectionViewLayout : PostsLinearFlowLayout!
+    //    private var dataSource: Array<Int>!
+    private var pageWidth : CGFloat{
+        return  self.collectionViewLayout.itemSize.width + self.collectionViewLayout.minimumLineSpacing
+    }
+    
+    private var contentOffset: CGFloat {
+        return self.collectionView.contentOffset.x + self.collectionView.contentInset.left
+    }
+    var animationsCount = 0
+    
 
-    @IBOutlet weak var publicDetailCollectionV: UICollectionView!
 
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var displayNoteV: Note!
-    @IBOutlet weak var displayNoteImage: UIImageView!
-
 
      let getNoteDetail = GetNoteDetail()
         var publicPostID = Int16()
@@ -27,6 +38,11 @@ class PublicPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,
         override func viewDidLoad() {
             super.viewDidLoad()
             
+            
+            //self.configureDataSource()
+            self.configureCollectionView()
+            self.configurePageControl()
+
             
             //  selfPost.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
             publicPostT.frame = CGRect(x: 0, y: 0, width: displayNoteV.frame.size.width*0.8, height: displayNoteV.frame.size.height*0.7)
@@ -53,10 +69,6 @@ class PublicPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,
             DispatchQueue.main.async {
                 self.publicPostT.isEditable = false
                 self.displayNoteV.addSubview(self.publicPostT)
-                let collectBgcolor = UIColor(cgColor: self.displayNoteV.posterColor.cgColor)
-                self.publicDetailCollectionV.backgroundColor = collectBgcolor
-                self.displayNoteV.addSubview(self.publicDetailCollectionV)
-                
             }
         }
         
@@ -67,33 +79,78 @@ class PublicPostDetailVC: UIViewController ,UICollectionViewDelegateFlowLayout ,
         }
         
         // MARK: Collectionview delegate method
+    
+    
+    func configureCollectionView() {
+        self.collectionView.register(UINib.init(nibName: "AllPostsImageCell", bundle: nil), forCellWithReuseIdentifier: "Cell")
+        self.collectionViewLayout = PostsLinearFlowLayout.configureLayout(collectionView: self.collectionView, itemSize: CGSize.init(width: 180, height: 180), minimumLineSpacing: 0)
+    }
+    
+    //    func configureDataSource ()  {
+    //        self.dataSource = [Int]()
+    //        for i in 0..<imageForCell.count{
+    //            self.dataSource.append(i)
+    //        }
+    //    }
+    
+    func configurePageControl() {
+        self.pageControl.numberOfPages = imageForCell.count
+    }
+    
+    private func scrollToPage(page: Int, animated: Bool) {
+        self.collectionView.isUserInteractionEnabled = false
+        self.animationsCount += 1
+        let pageOffset = CGFloat(page) * self.pageWidth - self.collectionView.contentInset.left
+        self.collectionView.setContentOffset(CGPoint(x: pageOffset, y: 0), animated: true)
+        self.pageControl.currentPage = page
+        //        self.configureButtons()
+    }
+    // MARK: collectionView datasource method
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.imageForCell.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! AllPostsImageCell
+        cell.postImageV.layer.cornerRadius = 10.0
+        cell.postImageV.layer.masksToBounds = true
+        cell.postImageV.image = imageForCell[indexPath.row]
         
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return imageForCell.count
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView.isDragging || collectionView.isDecelerating || collectionView.isTracking {
+            return
         }
         
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! PublicDetailImageCell
+        let selectedPage = indexPath.row;
+        
+        if selectedPage == self.pageControl.currentPage {
+            //可加popview
+            NSLog("Did select center item")
+        }
+        else {
             
-            
-            cell.detailImage.image = imageForCell[indexPath.row]
-            return cell
+            //          self.scrollToPage(page: selectedPage, animated: true)
         }
         
-        func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            
-            displayNoteImage.image = imageForCell[indexPath.row]
+    }
+    
+    // MARK: collectionView delegate method
+    
+    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+        if ((self.animationsCount - 1) == 0) {
+            self.collectionView.isUserInteractionEnabled = true
         }
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.pageControl.currentPage = Int(self.contentOffset / self.pageWidth)
+        //       self.configurebtn
         
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let length = collectionView.frame.size.height
-            let cellSize = CGSize(width: length, height: length)
-            
-            return cellSize
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return cellSpace
-        }
-        
+    }
+    
+    
+    
 }
