@@ -49,12 +49,6 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        locationManager.requestAlwaysAuthorization()
-
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .automotiveNavigation
-        locationManager.startUpdatingLocation()
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
                                                                 FileManager.SearchPathDomainMask.userDomainMask, true)
@@ -104,13 +98,6 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let addFromPhotosBtn = UIBarButtonItem(image: UIImage(named: "picture-2"), style: .plain, target: self, action: #selector(addPictureBtn))
         let takePicBtn = UIBarButtonItem(image: UIImage(named: "shutter"), style: .plain, target: self, action: #selector(takePictureBtn))
         
-//        let keyboardBtn = UIBarButtonItem.init(barButtonSystemItem: .bookmarks, target: self, action: #selector(changeToKeyboard))
-//        let changeFCBtn = UIBarButtonItem.init(barButtonSystemItem: .edit, target: self, action: #selector(changeFontColor))
-//        let changeFsBtn = UIBarButtonItem.init(barButtonSystemItem: .search, target: self, action: #selector(changeFontSize))
-//        let changeBgCBtn = UIBarButtonItem.init(barButtonSystemItem: .compose, target: self, action: #selector(changeBackgroundColor))
-//        let addFromPhotosBtn = UIBarButtonItem.init(barButtonSystemItem: .save, target: self, action: #selector(addPictureBtn))
-//        let takePicBtn = UIBarButtonItem.init(barButtonSystemItem: .camera, target: self, action: #selector(takePictureBtn))
-        
         itemsArray.append(keyboardBtn)
         itemsArray.append(changeFCBtn)
         itemsArray.append(changeFsBtn)
@@ -132,7 +119,15 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.isNavigationBarHidden = true
+
+        locationManager.requestAlwaysAuthorization()
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.activityType = .automotiveNavigation
+        locationManager.startUpdatingLocation()
+        
+        
         myTextView.isEditable = true
 
         navigationController?.setNavigationBarHidden(false, animated: false)
@@ -140,10 +135,11 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         navigationController?.navigationBar.topItem?.title = "定位便貼"
         
     }
-    override func viewDidAppear(_ animated: Bool) {
+    
+    override func viewWillDisappear(_ animated: Bool) {
         locationManager.stopUpdatingLocation()
-
     }
+    
     func reset(notification:Notification) {
        
         
@@ -152,10 +148,6 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         self.noteCollectionView.backgroundColor = UIColor(red: 253.0/255.0,green: 237.0/255.0,blue: 166.0/255.0,alpha: 1.0)
 
         
-//        let noteVC = storyboard?.instantiateViewController(withIdentifier: "NewPost")
-//        self.present(noteVC!, animated: false, completion: nil)
-//        self.dismiss(animated: false, completion: nil)
-//    
     }
 
     

@@ -217,10 +217,10 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
             titleName = myAnnotation.currentTitle
             if (control as? UIButton)?.buttonType == .detailDisclosure {
                 let id = myAnnotation.board_Id
-                let vc:ManageDetailViewController = ManageDetailViewController()
+                let storyboard = UIStoryboard(name: "ManagePost", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "detailViewController") as! ManageDetailViewController
                 vc.selectIndexID = id
-                print("passes Id is \(id)")
-                self.present(vc, animated: true, completion: nil)
+                navigationController?.pushViewController(vc, animated: false)
             }
             print("Press one callout view")
         }else {

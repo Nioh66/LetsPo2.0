@@ -95,15 +95,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         print("dataManagerCount2222 \(dataManagerCount)")
         
           }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        boardDataManager.saveCompletion = nil
-        boardDataManager.saveContexWithCompletion { (_) in
-            //..
-        }
-
-    }
-    
+  
     func arrayImageData(){
         // 第二次以後回來這頁時 刷新array裡的內容
    //     if secondTime == true{
