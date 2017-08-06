@@ -23,7 +23,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     var deleteBtnFlag:Bool!
     var recent = [UIImage]()
-    var nearby = [UIImage]()
     var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
@@ -66,7 +65,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         self.view.addSubview(collectionViewThree)
         
         dataManagerCount = boardDataManager.count()
-        print("dataManagerCount1111 \(dataManagerCount)")
+
         // 第一次進入還沒新增時的底圖
 //        if dataManagerCount == 0 {
 //            nearby.append(UIImage(named: "nearby_1")!)
@@ -76,10 +75,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         
         // incase core location too slow
-        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
-            self.arrayImageData()
-            self.secondTime = true
-        }
+//        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
+//            self.arrayImageData()
+//            self.secondTime = true
+//        }
 
         
         setFlagAndGsr()
@@ -92,26 +91,23 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             ("ALL", collectionViewThree),
             ])
         
-        print("dataManagerCount2222 \(dataManagerCount)")
         
-          }
+        
+    }
   
     func arrayImageData(){
-        // 第二次以後回來這頁時 刷新array裡的內容
-   //     if secondTime == true{
-            all.removeAll()
-            recent.removeAll()
-            nearby.removeAll()
-   //     }
+        all.removeAll()
+        recent.removeAll()
+        
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
-            let date = item.board_CreateTime
+            let id = item.board_Id
             if let img = item.board_ScreenShot {
                 let imgWithData = UIImage(data: img as Data)
                 all.append(imgWithData!)
             }
             
-            print("\(i) = \(String(describing: date))")
+            print("\(i) = \(id)")
         }
         // 只取前五個 作為最近的內容
         if dataManagerCount >= 5 {
@@ -131,22 +127,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 }
             }
         }
-        
-        for value in nearbyDic {
-            let imageName = value["BgPic"] as! UIImage
-            if count1 == 1 {
-                nearby.append(imageName)
-            }else {
-                count1 = 0
-                nearby.removeAll()
-                nearby.append(imageName)
-                count1 = 1
-            }
-        }
-               reloadAllData()
+        reloadAllData()
         
         print("recent count: \(recent.count)")
-        print("nearby count : \(nearby.count)")
+        print("nearbyDic count : \(nearbyDic.count)")
         print("all count: \(all.count)")
     }
     
@@ -161,7 +145,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             count = recent.count
         }
         else if collectionView == self.collectionViewTwo {
-            count = nearby.count
+            count = nearbyDic.count
         }else if collectionView == self.collectionViewThree {
             count = all.count
         }
@@ -170,178 +154,116 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
   
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell = ManageCollectionViewCell()
-       
+        
         if collectionView == self.collectionViewOne {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             
-                let imageString = recent[indexPath.item]
-                cell.backdroundImage.image = imageString
-           
+            let imageString = recent[indexPath.item]
+            cell.backdroundImage.image = imageString
+            
         }else if collectionView == self.collectionViewTwo {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-
-                let imageString = nearby[indexPath.item]
-                cell.backdroundImage.image = imageString
-
+            let imageString = nearbyDic[indexPath.item]
+            let imageName = imageString["BgPic"] as! UIImage
+            cell.backdroundImage.image = imageName
+            
         }else if collectionView == self.collectionViewThree {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             
-                let imageString = all[indexPath.item]
-                cell.backdroundImage.image = imageString
-           
+            let imageString = all[indexPath.item]
+            cell.backdroundImage.image = imageString
+            
         }
         setCellBtn(cell: cell)
-        return cell
-    }
+        return cell    }
     
     
     //Mark: - remove object form indexPath
     func deleteCell(_ cell: UICollectionViewCell) {
-        
         if let indexPath = collectionViewOne.indexPath(for: cell) {
+            recent.remove(at: indexPath.item)
+            collectionViewOne.deleteItems(at: [indexPath])
+            // 用按下的indexPath 來取得board_id 並一併刪除note
             let item = boardDataManager.itemWithIndex(index: indexPath.row)
-            for i in 0..<nearbyDic.count {
-                let path = nearbyDic[i]["index"] as! NSInteger
-                if path == indexPath.row {
-                    print("i = \(i) indexPath.row = \(indexPath.row)")
-                    nearby.remove(at: i)
-                }
-            }
-            let board_id = item.board_Id
-            print("board_id \(board_id)")
-            self.all.remove(at: indexPath.row)
-            print("all die")
-            self.recent.remove(at: indexPath.row)
-            print("recent die")
-            self.collectionViewOne.deleteItems(at: [indexPath])
-            print("collectionViewOne die")
-            boardDataManager.deleteItem(item: item)
-            boardDataManager.saveContexWithCompletion(completion: { success in
-                if(success){
-                    let searchField = "note_BoardID"
-                    let keyword = "\(board_id)"
-                    
-                    guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
-                        print("Result case to [NoteData] failure!!!!")
-                        return
-                    }
-                    for noteAttribute:NoteData in result{
-                        let noteID = noteAttribute.note_ID
-                        let boardID = noteAttribute.note_BoardID
-                        print("noteID \(noteID),boardID \(boardID)")
-                        noteDataManager.deleteItem(item: noteAttribute)
-                        noteDataManager.saveContexWithCompletion(completion: { (success) in
-                            print("delete success")
-                        })
-                        
-                    }
-
-                    self.reloadAllData()
-                }
-            })
+            let keyword = "\(item.board_Id)"
+            coreDataDeleteAndSaveMethod(board_id: keyword)
+            
         }else if let indexPath = collectionViewTwo.indexPath(for: cell) {
-            // 因為是另外抓出來的陣列 所以取得原來在core data裡的位置來做刪除
-            let indexWithRow = nearbyDic[indexPath.row]["index"] as! NSInteger
+            print("nearbyDic \(nearbyDic)")
+            print("nearbyDic  indexPath.item  \(indexPath.item)")
+            // 因為 nearbyDic 有經過排序 所以在排序前就先記錄原本的 indexPath 再透過原本存的 indexPath 來刪除
+            let board_id = nearbyDic[indexPath.item]["board_id"] as! Int16
+            nearbyDic.remove(at: indexPath.item)
+            print("nearbyDic \(nearbyDic)")
+            collectionViewTwo.deleteItems(at: [indexPath])
+            print("board_id: \(board_id)")
+            let keyword = "\(board_id)"
+            coreDataDeleteAndSaveMethod(board_id: keyword)
             
-            print("indexWithRow: \(indexWithRow)")
-            
-            let item = boardDataManager.itemWithIndex(index: indexWithRow)
-            boardDataManager.deleteItem(item: item)
-            let board_id = item.board_Id
-            print("board_id \(board_id)")
-            if indexWithRow < recent.count {
-                print("indexWithRow \(indexWithRow) <= recent.count")
-                self.recent.remove(at: indexWithRow)
-                print("recent die")
-                self.all.remove(at: indexWithRow)
-                print("all die")
-            }else {
-                print("indexWithRow \(indexWithRow) >= recent.count")
-                self.all.remove(at: indexWithRow)
-            }
-            self.nearby.remove(at: indexPath.row)
-            print("nearby die")
-            self.collectionViewTwo.deleteItems(at: [indexPath])
-            print("collectionViewTwo die")
-            boardDataManager.saveContexWithCompletion(completion: { success in
-                if(success){
-                    let searchField = "note_BoardID"
-                    let keyword = "\(board_id)"
-                    
-                    guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
-                        print("Result case to [NoteData] failure!!!!")
-                        return
-                    }
-                    for noteAttribute:NoteData in result{
-                        let noteID = noteAttribute.note_ID
-                        let boardID = noteAttribute.note_BoardID
-                        print("noteID \(noteID),boardID \(boardID)")
-                        noteDataManager.deleteItem(item: noteAttribute)
-                        noteDataManager.saveContexWithCompletion(completion: { (success) in
-                            print("delete success")
-                        })
-                    }
-                    self.reloadAllData()
-                    print("reloadAllData")
-                }
-            })
         }else if let indexPath = collectionViewThree.indexPath(for: cell) {
+            all.remove(at: indexPath.item)
+            collectionViewThree.deleteItems(at: [indexPath])
+            // 用按下的indexPath 來取得board_id 並一併刪除note
             let item = boardDataManager.itemWithIndex(index: indexPath.row)
-            boardDataManager.deleteItem(item: item)
-            self.all.remove(at: indexPath.row)
-            for i in 0..<nearby.count {
-                let path = nearbyDic[i]["index"] as! NSInteger
-                if path == indexPath.row {
-                    print("i = \(i) indexPath.row = \(indexPath.row)")
-                    self.nearby.remove(at: i)
+            let keyword = "\(item.board_Id)"
+            coreDataDeleteAndSaveMethod(board_id: keyword)
+        }
+    }
+    func coreDataDeleteAndSaveMethod(board_id:String){
+        let searchField = "board_Id"
+        let keyword = "\(board_id)"
+        guard let result = boardDataManager.searchField(field: searchField, forKeyword: keyword) as? [BoardData] else{
+            print("Result case to [NoteData] failure!!!!")
+            return
+        }
+        for boardData:BoardData in result {
+            let boardID = boardData.board_Id
+            print("boardID \(boardID)")
+            boardDataManager.deleteItem(item: boardData)
+            boardDataManager.saveContexWithCompletion(completion: { (success) in
+                let searchField = "note_BoardID"
+                guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
+                    print("Result case to [NoteData] failure!!!!")
+                    return
                 }
-            }
-            let board_id = item.board_Id
-            print("board_id \(board_id)")
-            if recent.count > 0 && indexPath.row < recent.count{
-                self.recent.remove(at: indexPath.row)
-            }
-            self.collectionViewThree.deleteItems(at: [indexPath])
-            boardDataManager.saveContexWithCompletion(completion: { success in
-                if(success){
-                    let searchField = "note_BoardID"
-                    let keyword = "\(board_id)"
-                    
-                    guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
-                        print("Result case to [NoteData] failure!!!!")
-                        return
-                    }
-                    for noteAttribute:NoteData in result{
-                        let noteID = noteAttribute.note_ID
-                        let boardID = noteAttribute.note_BoardID
-                        print("noteID \(noteID),boardID \(boardID)")
-                        noteDataManager.deleteItem(item: noteAttribute)
-                        noteDataManager.saveContexWithCompletion(completion: { (success) in
-                            print("delete success")
-                        })
-                    }
-                    self.reloadAllData()
+                for noteAttribute:NoteData in result{
+                    let noteID = noteAttribute.note_ID
+                    let boardID = noteAttribute.note_BoardID
+                    print("noteID \(noteID),boardID \(boardID)")
+                    noteDataManager.deleteItem(item: noteAttribute)
+                    noteDataManager.saveContexWithCompletion(completion: { (success) in
+                        print("delete note success")
+                    })
                 }
+                self.dataManagerCount = boardDataManager.count()
+                self.locationManager.startUpdatingLocation()
+                self.arrayImageData()
+                self.reloadAllData()
+                print("delete success")
             })
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("\(indexPath.section),\(indexPath.item)")
-        
-        let item = boardDataManager.itemWithIndex(index: indexPath.item)
-        let board_Id = item.board_Id
-        print("did selected board_Id =  \(board_Id)")
-        performSegue(withIdentifier:"manageDetail", sender: board_Id)
-        
+        if collectionView == self.collectionViewTwo {
+            let board_Id = nearbyDic[indexPath.item]["board_id"] as! Int16
+            print("form nearDic board_Id =  \(board_Id)")
+            performSegue(withIdentifier:"manageDetail", sender: board_Id)
+        }else {
+            let item = boardDataManager.itemWithIndex(index: indexPath.item)
+            let board_Id = item.board_Id
+            print("did selected board_Id =  \(board_Id)")
+            performSegue(withIdentifier:"manageDetail", sender: board_Id)
+        }
         hideAllDeleteBtn()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "manageDetail" {
             let vc = segue.destination as! ManageDetailViewController
             vc.selectIndexID = sender as! Int16
-
         }
+
     }
 
     
@@ -412,13 +334,13 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }
         count = count + 1
         for i in 0..<dataManagerCount {
-            print("monitorRegion\(dataManagerCount)")
             let item = boardDataManager.itemWithIndex(index: i)
             
             let Creater = item.board_Creater
             let lat = item.board_Lat
             let lon = item.board_Lon
             var imgWithData = UIImage()
+            let board_id = item.board_Id
             if let img = item.board_ScreenShot {
                 imgWithData = UIImage(data: img as Data)!
             }
@@ -427,19 +349,16 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             distance = pins.distance(from: userLocation) * 1.09361
             if distance <  2500 {
                 if count == 1 {
-                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
+                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
                 }else {
                     count = 0
                     nearbyDic.removeAll()
-                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i])
+                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
                     count = 1
                 }
             }
         }
         nearbyDic.sort { ($0["distance"] as! Double) < ($1["distance"] as! Double) }
-//        print("near dictionary \(nearbyDic)")
-        print("nearbyDic count \(nearbyDic.count)")
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -453,18 +372,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         dataManagerCount = boardDataManager.count()
         // 從其他頁面跳過來的時候可以更新內容
-     //   if secondTime == true{
-            self.locationManager.startUpdatingLocation()
-            
-            // 每次回來都回到recent ? 暫定
-//            scrollPager.setSelectedIndex(index: 0, animated: false)
-            Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
-                self.arrayImageData()
-                self.reloadAllData()
-            }
-//            arrayImageData()
-//            reloadAllData()
-     // }
+        self.locationManager.startUpdatingLocation()
+        
+        // 每次回來都回到recent ? 暫定
+        // scrollPager.setSelectedIndex(index: 0, animated: false)
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
+            self.arrayImageData()
+            self.reloadAllData()
+        }
+
     }
     
     // set frame for scroll view
@@ -472,7 +388,5 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentView.bounds.size.width, height: view.bounds.size.height)
         
     }
-    override func viewDidDisappear(_ animated: Bool) {
-//        locationManager.stopUpdatingLocation()
-    }
+
 }

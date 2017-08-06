@@ -373,7 +373,6 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
-            
 //            let Creater = item.board_Creater
             let board_ID = item.board_Id
             let lat = item.board_Lat
@@ -414,10 +413,8 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     override func viewWillAppear(_ animated: Bool) {
 //        self.navigationController?.isNavigationBarHidden = true
         navigationController?.setNavigationBarHidden(true, animated: false)
-        places = spot()
         dataManagerCount = boardDataManager.count()
-        
-        
+        places = spot()
     }
    
 }
