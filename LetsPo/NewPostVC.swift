@@ -629,7 +629,16 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         boardLon = boardPosition.coordinate.longitude
         print("Lat:\(boardLat)Lon:\(boardLon)")
     }
+    func locationManager(userDidExitRegion region: CLRegion) {
+        print("Exit \(region.identifier)")
+        
+    }
     
+    func locationManager(userDidEnterRegion region: CLRegion) {
+        print("Enter \(region.identifier)")
+        
+    }
+
     
     
     // MARK: Save note data

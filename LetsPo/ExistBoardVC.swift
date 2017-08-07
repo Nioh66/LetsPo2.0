@@ -214,6 +214,15 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         locationManager.stopUpdate()
         
     }
+    func locationManager(userDidExitRegion region: CLRegion) {
+        print("Exit \(region.identifier)")
+        
+    }
+    
+    func locationManager(userDidEnterRegion region: CLRegion) {
+        print("Enter \(region.identifier)")
+        
+    }
     
     func monitorRegion(userLocation:CLLocation){
         let userLocation = userLocation
@@ -235,8 +244,9 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
                 imgWithData = UIImage(data: img as Data)!
             }
             
-            let pins = CLLocation.init(latitude: lat, longitude: lon)
-            distance = pins.distance(from: userLocation) * 1.09361
+//            let pins = CLLocation.init(latitude: lat, longitude: lon)
+//            distance = pins.distance(from: userLocation) * 1.09361
+            distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
                     nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
