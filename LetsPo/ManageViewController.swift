@@ -12,14 +12,14 @@ import CoreLocation
 
 let identifier = "identifier"
 
-class ManageViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource, ActionDelegation, ScrollPagerDelegate,CLLocationManagerDelegate {
+class ManageViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource, ActionDelegation, ScrollPagerDelegate,LocationManagerDelegate {
     
     @IBOutlet weak var scrollPager: ScrollPager!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
     var dataManagerCount = Int()
-    let locationManager = CLLocationManager()
+    let locationManager = LocationManager()
     
     var deleteBtnFlag:Bool!
     var recent = [UIImage]()
@@ -36,7 +36,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        locationManagerMethod()
+        locationManager.delegate = self
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,FileManager.SearchPathDomainMask.userDomainMask, true)
         //let documnetPath = documentPaths[0] as! String
@@ -236,7 +236,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                     })
                 }
                 self.dataManagerCount = boardDataManager.count()
-                self.locationManager.startUpdatingLocation()
+                self.locationManager.startUpdate()
                 self.arrayImageData()
                 self.reloadAllData()
                 print("delete success")
@@ -312,18 +312,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     }
     
     // MARK: location manager methods
-    func locationManagerMethod(){
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
-        locationManager.activityType = .automotiveNavigation
-        self.locationManager.startUpdatingLocation()
+    func locationManager(updatedUserLocation coordinate: CLLocation) {
+        print("----M----")
+        monitorRegion(userLocation: coordinate)
+        locationManager.stopUpdate()
         
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        monitorRegion(userLocation: locations.last!)
-        print("didUpdateLocations")
-        locationManager.stopUpdatingLocation()
     }
     
     func monitorRegion(userLocation:CLLocation){
@@ -372,7 +365,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         dataManagerCount = boardDataManager.count()
         // 從其他頁面跳過來的時候可以更新內容
-        self.locationManager.startUpdatingLocation()
+        locationManager.startUpdate()
         
         // 每次回來都回到recent ? 暫定
         // scrollPager.setSelectedIndex(index: 0, animated: false)

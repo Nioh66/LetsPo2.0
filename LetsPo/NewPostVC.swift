@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CoreLocation
 
-class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegate ,UICollectionViewDataSource ,CLLocationManagerDelegate{
+class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegate ,UICollectionViewDataSource ,LocationManagerDelegate{
     private var collectionViewLayout : PostsLinearFlowLayout!
 //    private var dataSource: Array<Int>!
     private var pageWidth : CGFloat{
@@ -41,7 +41,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     var imageFactory = MyPhoto()
     let resetNote = Notification.Name("resetNote")
     
-    let locationManager = CLLocationManager()
+    let locationManager = LocationManager()
     var boardLat = Double()
     var boardLon = Double()
 
@@ -63,6 +63,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         self.configureCollectionView()
         self.configurePageControl()
 
+        locationManager.delegate = self
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
                                                                 FileManager.SearchPathDomainMask.userDomainMask, true)
@@ -124,13 +125,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        locationManager.requestAlwaysAuthorization()
-        
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .automotiveNavigation
-        locationManager.startUpdatingLocation()
-        
+        locationManager.startUpdate()
         
         myTextView.isEditable = true
 
@@ -141,7 +136,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        locationManager.stopUpdatingLocation()
+        locationManager.stopUpdate()
     }
     
     func reset(notification:Notification) {
@@ -624,13 +619,12 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
        // MARK : Location method
    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(updatedUserLocation coordinate: CLLocation) {
         print("1111")
-        if let boardPosition = locations.last{
+        let boardPosition = coordinate
         boardLat = boardPosition.coordinate.latitude
         boardLon = boardPosition.coordinate.longitude
         print("Lat:\(boardLat)Lon:\(boardLon)")
-    }
     }
     
     

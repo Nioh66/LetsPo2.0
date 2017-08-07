@@ -12,12 +12,12 @@ import CoreLocation
 import UserNotifications
 import CoreData
 
-class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewDelegate {
+class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDelegate {
     
 //    var dataManager:CoreDataManager<BoardData>!
     var dataManagerCount = Int()
     
-    let locationManager = CLLocationManager()
+    let locationManager = LocationManager()
     var location = CLLocation()
     var places:[SpotAnnotation]!
     var zoomLevel = CLLocationDegrees()
@@ -33,23 +33,13 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 可以選擇永遠定位或者使用時定位
-        locationManager.requestAlwaysAuthorization()
-//        if CLLocationManager.authorizationStatus() == .authorizedAlways{
-//            locationManager.requestAlwaysAuthorization()
-//        }
-//        else {
-//            locationManager.requestWhenInUseAuthorization()
-//        }
         locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.activityType = .automotiveNavigation
         
-        self.locationManager.startUpdatingLocation()
+        locationManager.startUpdate()
         Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (timer) in
             // 防止秒數內再度觸發方法
             self.doUnlock()
-            self.locationManager.startUpdatingLocation()
+            self.locationManager.startUpdate()
         }
         
         mapView.delegate = self
@@ -73,17 +63,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
         locationButton.imageView?.contentMode = .center
         locationButton.setImage(btnImage, for: .normal)
         self.view.addSubview(locationButton)
-        
-        
- //
-//        let result = boardDataManager.searchField(field: "board_Lon", forKeyword: "1") as! [BoardData]
-////        print(result)
-//        for tmp:BoardData in result{
-//            print("UUUUUU name: \(String(describing: tmp.board_Creater))Lat:\(String(describing: tmp.board_Lat))Lon:\(String(describing: tmp.board_Lon))time:\(String(describing: tmp.board_CreateTime))Privacy:\(String(describing: tmp.board_Privacy))")
-//        }
-//
-        
-        
+
     }
     
 
@@ -153,9 +133,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
                 
         let PinIdentifier = "PinIdentifier"
         var pin = mapView.dequeueReusableAnnotationView(withIdentifier: PinIdentifier)
-//            as? MKPinAnnotationView
         if (pin == nil){
-//            pin = MKPinAnnotationView.init(annotation: annotation, reuseIdentifier: PinIdentifier)
              pin = MKAnnotationView.init(annotation: annotation, reuseIdentifier: PinIdentifier)
         }else {
             
@@ -236,43 +214,26 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     }
     
     // mark - Region monitoring method
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+    func locationManager(updatedUserLocation coordinate: CLLocation) {
         if reUpdate.try() == false {
             shouldReUpdate = true
             return
         }
-        monitorRegion(userLocation: locations.last!)
-        locationManager.stopUpdatingLocation()
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
-        print("CREATED REGION: \(region.identifier) - \(locationManager.monitoredRegions.count)")
-        locationManager.requestState(for: region)
+        print("==========")
+        monitorRegion(userLocation: coordinate)
+        locationManager.stopUpdate()
         
     }
-    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
-        if state == .inside{
-            print(state)
-            mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
-        }else {
-            print(state)
-            mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
-        }
-    }
-//    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-//        print("Enter \(region.identifier)")
-//        mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
-//    }
-//    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-//        print("Exit \(region.identifier)")
-//        mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
-//    }
-    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
-        //        print("monitoringDidFailForRegion \(String(describing: region)) \(error)")
-        
+    func locationManager(userDidExitRegion region: CLRegion) {
+        print("Exit \(region.identifier)")
+        mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
     }
     
+    func locationManager(userDidEnterRegion region: CLRegion) {
+        print("Enter \(region.identifier)")
+        mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
+    }
+
     func mutableNotificationContent(title:String, body:String, indentifier:String){
         let content = UNMutableNotificationContent()
         content.title = title
@@ -325,13 +286,12 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
                         region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "")
                         
                         // nearbyDictionary 內的定位開始 Monitoring
-                        locationManager.startMonitoring(for: region)
-//                        locationManager.requestState(for: region)
+                        locationManager.startRegionMonitoring(region: region)
                         
                         // 超過 2300 則停止 Monitoring
                         if distance > 2300 {
-                            locationManager.stopMonitoring(for: region)
-//                            print("stop \(nil)")
+                            locationManager.stopRegionMonitoring(region: region)
+
                         }
                     }
                 }
@@ -413,6 +373,7 @@ class MapViewController:  UIViewController ,CLLocationManagerDelegate,MKMapViewD
     override func viewWillAppear(_ animated: Bool) {
 //        self.navigationController?.isNavigationBarHidden = true
         navigationController?.setNavigationBarHidden(true, animated: false)
+        locationManager.startUpdate()
         dataManagerCount = boardDataManager.count()
         places = spot()
     }

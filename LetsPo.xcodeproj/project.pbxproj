@@ -59,6 +59,7 @@
 		30D092C61F1E950800CB3F88 /* Sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C21F1E950800CB3F88 /* Sky.jpg */; };
 		30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */; };
 		30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C91F1E956200CB3F88 /* myNigger.jpg */; };
+		9B273DA31F3802EA00E726A4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B273DA21F3802EA00E726A4 /* LocationManager.swift */; };
 		9B89D47B1F31C8FA001943C1 /* NewPublicPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */; };
 		9B89D47D1F31C913001943C1 /* DragPublicPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */; };
 		9B89D47F1F31C92C001943C1 /* PublicPostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */; };
@@ -138,6 +139,7 @@
 		30D092C21F1E950800CB3F88 /* Sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sky.jpg; sourceTree = "<group>"; };
 		30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteboard-303145_960_720.png"; sourceTree = "<group>"; };
 		30D092C91F1E956200CB3F88 /* myNigger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = myNigger.jpg; sourceTree = "<group>"; };
+		9B273DA21F3802EA00E726A4 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPublicPostVC.swift; sourceTree = "<group>"; };
 		9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragPublicPostVC.swift; sourceTree = "<group>"; };
 		9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicPostDetailVC.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				9BA62C6B1F1F6A3D008CDEC0 /* FlowLayout.swift */,
 				9BA62C5C1F1E6506008CDEC0 /* SpotAnnotation.swift */,
 				9BA62C6D1F1F6F11008CDEC0 /* ManageCollectionViewCell.swift */,
+				9B273DA21F3802EA00E726A4 /* LocationManager.swift */,
 			);
 			name = ZY;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				9BA62C741F1F7299008CDEC0 /* ManageViewController.swift in Sources */,
 				9B89D47B1F31C8FA001943C1 /* NewPublicPostVC.swift in Sources */,
 				9BA62C6C1F1F6A3D008CDEC0 /* FlowLayout.swift in Sources */,
+				9B273DA31F3802EA00E726A4 /* LocationManager.swift in Sources */,
 				9BA62C791F1F8065008CDEC0 /* ManageDetailViewController.swift in Sources */,
 				30CAD41A1F30CB000042B059 /* SelfNoteDetail.swift in Sources */,
 				30CAD4141F2F93EE0042B059 /* SelfBoardSetting.swift in Sources */,
