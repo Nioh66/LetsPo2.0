@@ -202,6 +202,9 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             }
             print("Press one callout view")
         }else {
+            NotificationCenter.default.post(name:Notification.Name(rawValue: "comeFromMap"), object: nil, userInfo: nil)
+            tabBarController?.selectedIndex = 1
+            navigationController?.popToRootViewController(animated: true)
             print("Press many callout view")
         }
     }
