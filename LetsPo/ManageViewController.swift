@@ -18,29 +18,32 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     
+    @IBOutlet weak var allBtn: UIButton!
     var dataManagerCount = Int()
     let locationManager = LocationManager()
     
     var deleteBtnFlag:Bool!
     var recent = [UIImage]()
-    var all = [UIImage]()
+//    var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
     var count1 = 0
     var secondTime = false
+    var formMap = false
     
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
-    var collectionViewThree:UICollectionView!
+//    var collectionViewThree:UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
         locationManager.delegate = self
         
-        let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,FileManager.SearchPathDomainMask.userDomainMask, true)
-        //let documnetPath = documentPaths[0] as! String
-        print(documentPaths)
+        NotificationCenter.default.addObserver(self, selector: #selector(comeFromMap),
+                                               name: NSNotification.Name(rawValue: "comeFromMap"),
+                                               object: nil)
+
         
         // register three collectionView
         collectionViewOne = UICollectionView(frame: self.view.frame, collectionViewLayout: FlowLayout())
@@ -57,12 +60,17 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         collectionViewTwo.backgroundColor = UIColor.clear
         self.view.addSubview(collectionViewTwo)
         
-        collectionViewThree = UICollectionView(frame: self.view.frame, collectionViewLayout: FlowLayout())
-        collectionViewThree.register(UINib.init(nibName: "ManageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
-        collectionViewThree.delegate = self
-        collectionViewThree.dataSource = self
-        collectionViewThree.backgroundColor = UIColor.clear
-        self.view.addSubview(collectionViewThree)
+        allBtn.setTitleColor(UIColor.darkGray, for: .highlighted)
+        allBtn.setTitleColor(UIColor.lightGray, for: .normal)
+        allBtn.adjustsImageWhenHighlighted = false
+        
+        
+//        collectionViewThree = UICollectionView(frame: self.view.frame, collectionViewLayout: FlowLayout())
+//        collectionViewThree.register(UINib.init(nibName: "ManageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
+//        collectionViewThree.delegate = self
+//        collectionViewThree.dataSource = self
+//        collectionViewThree.backgroundColor = UIColor.clear
+//        self.view.addSubview(collectionViewThree)
         
         dataManagerCount = boardDataManager.count()
 
@@ -87,8 +95,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         scrollPager.delegate = self
         scrollPager.addSegmentsWithTitlesAndViews(segments: [
             ("RECENT", collectionViewOne),
-            ("NEARBY", collectionViewTwo),
-            ("ALL", collectionViewThree),
+            ("NEARBY", collectionViewTwo)
             ])
         
         
@@ -96,19 +103,19 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     }
   
     func arrayImageData(){
-        all.removeAll()
+//        all.removeAll()
         recent.removeAll()
         
-        for i in 0..<dataManagerCount {
-            let item = boardDataManager.itemWithIndex(index: i)
-            let id = item.board_Id
-            if let img = item.board_ScreenShot {
-                let imgWithData = UIImage(data: img as Data)
-                all.append(imgWithData!)
-            }
-            
-            print("\(i) = \(id)")
-        }
+//        for i in 0..<dataManagerCount {
+//            let item = boardDataManager.itemWithIndex(index: i)
+//            let id = item.board_Id
+//            if let img = item.board_ScreenShot {
+//                let imgWithData = UIImage(data: img as Data)
+//                all.append(imgWithData!)
+//            }
+//            
+//            print("\(i) = \(id)")
+//        }
         // 只取前五個 作為最近的內容
         if dataManagerCount >= 5 {
             for i in 0..<5 {
@@ -131,7 +138,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         print("recent count: \(recent.count)")
         print("nearbyDic count : \(nearbyDic.count)")
-        print("all count: \(all.count)")
+//        print("all count: \(all.count)")
     }
     
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
@@ -146,9 +153,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }
         else if collectionView == self.collectionViewTwo {
             count = nearbyDic.count
-        }else if collectionView == self.collectionViewThree {
-            count = all.count
         }
+//        else if collectionView == self.collectionViewThree {
+//            count = all.count
+//        }
         return count
     }
   
@@ -167,15 +175,17 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             let imageName = imageString["BgPic"] as! UIImage
             cell.backdroundImage.image = imageName
             
-        }else if collectionView == self.collectionViewThree {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-            
-            let imageString = all[indexPath.item]
-            cell.backdroundImage.image = imageString
-            
         }
+//        else if collectionView == self.collectionViewThree {
+//            cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
+//            
+//            let imageString = all[indexPath.item]
+//            cell.backdroundImage.image = imageString
+//            
+//        }
         setCellBtn(cell: cell)
-        return cell    }
+        return cell
+    }
     
     
     //Mark: - remove object form indexPath
@@ -200,14 +210,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             let keyword = "\(board_id)"
             coreDataDeleteAndSaveMethod(board_id: keyword)
             
-        }else if let indexPath = collectionViewThree.indexPath(for: cell) {
-            all.remove(at: indexPath.item)
-            collectionViewThree.deleteItems(at: [indexPath])
-            // 用按下的indexPath 來取得board_id 並一併刪除note
-            let item = boardDataManager.itemWithIndex(index: indexPath.row)
-            let keyword = "\(item.board_Id)"
-            coreDataDeleteAndSaveMethod(board_id: keyword)
         }
+//        else if let indexPath = collectionViewThree.indexPath(for: cell) {
+//            all.remove(at: indexPath.item)
+//            collectionViewThree.deleteItems(at: [indexPath])
+//            // 用按下的indexPath 來取得board_id 並一併刪除note
+//            let item = boardDataManager.itemWithIndex(index: indexPath.row)
+//            let keyword = "\(item.board_Id)"
+//            coreDataDeleteAndSaveMethod(board_id: keyword)
+//        }
     }
     func coreDataDeleteAndSaveMethod(board_id:String){
         let searchField = "board_Id"
@@ -296,7 +307,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             let vc = segue.destination as! ManageDetailViewController
             vc.selectIndexID = sender as! Int16
         }
-
+    }
+    
+    func comeFromMap(notification:Notification){
+        formMap = true
     }
 
     
@@ -341,7 +355,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     func reloadAllData(){
         collectionViewOne.reloadData()
         collectionViewTwo.reloadData()
-        collectionViewThree.reloadData()
+//        collectionViewThree.reloadData()
     }
     
     // MARK: location manager methods
@@ -379,9 +393,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             if let img = item.board_ScreenShot {
                 imgWithData = UIImage(data: img as Data)!
             }
-            
-//            let pins = CLLocation.init(latitude: lat, longitude: lon)
-//            distance = pins.distance(from: userLocation) * 1.09361
+
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
@@ -411,12 +423,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         locationManager.startUpdate()
         
         // 每次回來都回到recent ? 暫定
-        // scrollPager.setSelectedIndex(index: 0, animated: false)
+        scrollPager.setSelectedIndex(index: 0, animated: false)
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
             self.arrayImageData()
             self.reloadAllData()
         }
-
+        
+        if formMap == true {
+            scrollPager.setSelectedIndex(index: 1, animated: false)
+        }
     }
     
     // set frame for scroll view

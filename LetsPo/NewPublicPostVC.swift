@@ -114,6 +114,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             self.publicPost.addSubview(self.myTextView)
         }
     }
+//    typealias Completion = (_ success: Bool ) -> ()
     
     // MARK: Perpare segue
     
@@ -125,14 +126,20 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         
         UIView.animate(withDuration: 0.1) {
             self.myTextView.isEditable = false
+
+            let newPosition = self.myTextView.beginningOfDocument
+            self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
+
             
-            self.myTextView.setContentOffset(CGPoint.zero, animated: false)
         }
-        
+       
+        print("---2---")
         Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
             let resizeNote = self.publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
-            dragSegue.resizeNote = resizeNote
+        dragSegue.resizeNote = resizeNote
+       
         }
+        print("----3--")
         
         self.saveNoteData()
         dragSegue.allNoteData = allNoteData

@@ -1,40 +1,47 @@
 //
-//  ManageCollectionViewCell.swift
+//  ManageAllCell.swift
 //  LetsPo
 //
-//  Created by 溫芷榆 on 2017/7/19.
+//  Created by 溫芷榆 on 2017/8/7.
 //  Copyright © 2017年 Walker. All rights reserved.
 //
 
 import UIKit
-@objc protocol ActionDelegation:class {
+
+@objc protocol Delegation:class {
     
     func deleteCell(_ cell: UICollectionViewCell)
     func hideAllDeleteBtn()
     func showAllDeleteBtn()
 }
 
-
-class ManageCollectionViewCell: UICollectionViewCell {
-
+class ManageAllCell: UICollectionViewCell {
+    
+    var backdroundImage = UIImageView()
     var deleteBtn:UIButton!
     
-    @IBOutlet weak var backdroundImage: UIImageView!
+    weak var delegation : Delegation!
     
-    weak var delegation : ActionDelegation!
-    
-    override func awakeFromNib(){
-        super.awakeFromNib()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        let w = Double(
+            UIScreen.main.bounds.size.width)
         
         layer.cornerRadius = 4.0
-        layer.borderWidth = 1
-        layer.borderColor = UIColor.lightGray.cgColor
-        self.clipsToBounds = true
-        backdroundImage.contentMode = .scaleAspectFill
+        // 建立一個 UIImageView
+        backdroundImage = UIImageView(frame: CGRect(x: 0, y: 0,width: w/3 - 10.0, height: w/3 - 10.0))
+        backdroundImage.contentMode = .scaleToFill
+        
+        self.addSubview(backdroundImage)
         
         setCall()
         
     }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func setCall(){
         addDeleteButton()
         addLongPressGesture()
@@ -57,18 +64,18 @@ class ManageCollectionViewCell: UICollectionViewCell {
     }
     
     func longClick(longPress:UILongPressGestureRecognizer){
-        
+        print("showAllDeleteBtn")
         delegation.showAllDeleteBtn()
     }
-    
     
     func addDeleteButton(){
         deleteBtn = UIButton(type: .custom)
         deleteBtn.frame = CGRect(x: 3, y: 3, width: 20, height: 20)
-        deleteBtn.setImage(UIImage(named:"garbage"), for: .normal)
+        deleteBtn.setImage(UIImage(named: "garbage"), for: .normal)
         deleteBtn.isHidden = true
         deleteBtn.addTarget(self, action: #selector(fadeAndDelete), for: .touchUpInside)
-        contentView.addSubview(deleteBtn)
-    }
 
+        self.addSubview(deleteBtn)
+    }
+    
 }
