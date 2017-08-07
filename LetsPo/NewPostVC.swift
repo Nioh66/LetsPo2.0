@@ -500,6 +500,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         }
     }
     
+    
+    
+    
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
             // we got back an error!

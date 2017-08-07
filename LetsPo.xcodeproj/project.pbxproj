@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		300842461F387DC200061192 /* ExistBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300842451F387DC200061192 /* ExistBoardVC.swift */; };
+		300842481F387F4000061192 /* ExistBoardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300842471F387F4000061192 /* ExistBoardCell.swift */; };
+		3008424D1F38A76F00061192 /* DragExistBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3008424C1F38A76F00061192 /* DragExistBoardVC.swift */; };
 		300954131F2B8E74008EA764 /* PostsOnBoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */; };
 		300954171F2B92DB008EA764 /* GetBoardNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 300954161F2B92DB008EA764 /* GetBoardNotes.swift */; };
 		3018026E1F249FC600838425 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3018026D1F249FC600838425 /* CoreDataManager.swift */; };
@@ -85,6 +88,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		300842451F387DC200061192 /* ExistBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistBoardVC.swift; sourceTree = "<group>"; };
+		300842471F387F4000061192 /* ExistBoardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistBoardCell.swift; sourceTree = "<group>"; };
+		3008424C1F38A76F00061192 /* DragExistBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragExistBoardVC.swift; sourceTree = "<group>"; };
 		300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostsOnBoardVC.swift; sourceTree = "<group>"; };
 		300954161F2B92DB008EA764 /* GetBoardNotes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetBoardNotes.swift; sourceTree = "<group>"; };
 		3018026D1F249FC600838425 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -179,6 +185,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		300842421F3862F500061192 /* SelfBoard */ = {
+			isa = PBXGroup;
+			children = (
+				304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */,
+				304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */,
+				30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */,
+				30CAD41B1F30FD870042B059 /* SelfPostDetailImageCell.swift */,
+				304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */,
+				30CAD4151F2FBAA00042B059 /* SelfNoteImageCell.swift */,
+				304CB6861F25F9B100AEF632 /* SelfDragVC.swift */,
+			);
+			name = SelfBoard;
+			sourceTree = "<group>";
+		};
+		3008424B1F38A6ED00061192 /* Deprecate */ = {
+			isa = PBXGroup;
+			children = (
+				300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */,
+				305C31851F2E606F0039E35A /* PostDetailVC.swift */,
+			);
+			name = Deprecate;
+			sourceTree = "<group>";
+		};
 		303B08E41F1CC61600D7F6B1 = {
 			isa = PBXGroup;
 			children = (
@@ -238,21 +267,17 @@
 		30D0927F1F1E349B00CB3F88 /* PL */ = {
 			isa = PBXGroup;
 			children = (
+				3008424B1F38A6ED00061192 /* Deprecate */,
+				300842421F3862F500061192 /* SelfBoard */,
 				309EAFB21F2721A300FC3F34 /* TabBarVC.swift */,
-				304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */,
-				304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */,
-				30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */,
-				30CAD41B1F30FD870042B059 /* SelfPostDetailImageCell.swift */,
-				304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */,
-				30CAD4151F2FBAA00042B059 /* SelfNoteImageCell.swift */,
-				304CB6861F25F9B100AEF632 /* SelfDragVC.swift */,
 				30628BC21F28E39A001FED7F /* NoteImageCell.swift */,
 				30D092931F1E369500CB3F88 /* NewPostVC.swift */,
 				30D092B31F1E466300CB3F88 /* BoardSettingVC.swift */,
 				30D092B51F1E490600CB3F88 /* DragBoardVC.swift */,
 				30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */,
-				300954121F2B8E74008EA764 /* PostsOnBoardVC.swift */,
-				305C31851F2E606F0039E35A /* PostDetailVC.swift */,
+				300842451F387DC200061192 /* ExistBoardVC.swift */,
+				300842471F387F4000061192 /* ExistBoardCell.swift */,
+				3008424C1F38A76F00061192 /* DragExistBoardVC.swift */,
 				9BABCA671F24C4000055B07A /* accountManage */,
 				3086F3201F378907008C71D2 /* AllPostsImageCell.swift */,
 				3086F3211F378907008C71D2 /* AllPostsImageCell.xib */,
@@ -499,6 +524,7 @@
 				9B89D4831F31CA62001943C1 /* PublicPostImageCell.swift in Sources */,
 				300954131F2B8E74008EA764 /* PostsOnBoardVC.swift in Sources */,
 				309EAFAF1F267B9E00FC3F34 /* FindNiggerVC.swift in Sources */,
+				3008424D1F38A76F00061192 /* DragExistBoardVC.swift in Sources */,
 				30CAD41C1F30FD870042B059 /* SelfPostDetailImageCell.swift in Sources */,
 				304CB6871F25F9B100AEF632 /* SelfDragVC.swift in Sources */,
 				305C31841F2E594A0039E35A /* GetNoteDetail.swift in Sources */,
@@ -514,8 +540,10 @@
 				304CB6751F258F6D00AEF632 /* SelfPostBgSelectVC.swift in Sources */,
 				309EAFA91F26670D00FC3F34 /* NotiSettingVC.swift in Sources */,
 				9BA62C5D1F1E6506008CDEC0 /* SpotAnnotation.swift in Sources */,
+				300842481F387F4000061192 /* ExistBoardCell.swift in Sources */,
 				9B89D47F1F31C92C001943C1 /* PublicPostDetailVC.swift in Sources */,
 				30AB320B1F206454001B1D0E /* BoardBgImageSetVC.swift in Sources */,
+				300842461F387DC200061192 /* ExistBoardVC.swift in Sources */,
 				9B89D4851F31CF0B001943C1 /* PublicBoardSettingVC.swift in Sources */,
 				9B89D47D1F31C913001943C1 /* DragPublicPostVC.swift in Sources */,
 				9BABCA6B1F24C6DA0055B07A /* InfoEditVC.swift in Sources */,
