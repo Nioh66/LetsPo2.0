@@ -22,13 +22,15 @@ class DragExistBoardVC: UIViewController {
     var allNoteData = [String:Any]()
     var boardID = Int16()
     var noteCount:Int16 = 0
+    let resetNote = Notification.Name("resetNote")
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         publicBgImage.image = bgImage
-        
+        publicBgImage.isUserInteractionEnabled = true
+        print(resizeNote)
         theDragNote.frame = CGRect(x: posterX, y: posterY, width: posterEdge, height: posterEdge)
         theDragNote.image = resizeNote
         theDragNote.isUserInteractionEnabled = true
@@ -41,7 +43,7 @@ class DragExistBoardVC: UIViewController {
         panGesture.minimumNumberOfTouches = 1
         
         theDragNote.addGestureRecognizer(panGesture)
-      //  navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
 
         // Do any additional setup after loading the view.
     }
@@ -54,27 +56,29 @@ class DragExistBoardVC: UIViewController {
         theDragNote.center = point
     }
     
-   /*
+   
     func saveAndPop() {
         self.saveNoteData()
         self.uploadBoardBg()
-        NotificationCenter.default.post(name: newNoteComingNN, object: nil)
+        NotificationCenter.default.post(name: resetNote, object: nil)
         
-        
+        tabBarController?.selectedIndex = 1
+        navigationController?.popToRootViewController(animated: true)
+
         //    self.navigationController?.popToRootViewController(animated: true)
-        for controller in (self.navigationController?.viewControllers)!
-        {
-            if controller.isKind(of: ManageDetailViewController.self) == true{
-                
-                self.dismiss(animated: false) {
-                    self.navigationController?.popToViewController(controller, animated: true)
-                }
-                
-                break
-            }
-        }
+//        for controller in (self.navigationController?.viewControllers)!
+//        {
+//            if controller.isKind(of: ManageDetailViewController.self) == true{
+//                
+//                self.dismiss(animated: false) {
+//                    self.navigationController?.popToViewController(controller, animated: true)
+//                }
+//                
+//                break
+//            }
+//        }
     }
-*/
+
     
     func uploadBoardBg() {
         guard let newBoardPic = self.view.boardScreenShot(),
