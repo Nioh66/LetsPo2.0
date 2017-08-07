@@ -9,10 +9,13 @@
 import Foundation
 import UIKit
 class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
+    @IBOutlet weak var goExistBoard: UIButton!
+    @IBOutlet weak var setBgImageBtn: UIButton!
+    @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var topBg: UIImageView!
     @IBOutlet weak var boardSetting: UIView!
-    @IBOutlet weak var boardCheckBtn: UIImageView!
 
+    @IBOutlet weak var boardCheckBtn: UIImageView!
     let sendBgImageNN = Notification.Name("sendBgImage")
     var topBgImage:UIImage!
     var thePost:Note!
@@ -23,6 +26,9 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     var boardPrivacy:Bool = false
     var boardLat:Double = 0.0
     var boardLon:Double = 0.0
+    let boardCreatetime = NSDate()
+    var boardTitle = ""
+    
     
     var allNoteData = [String:Any]()    
     deinit {
@@ -33,7 +39,10 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        titleTextfield.placeholder = "\(boardCreatetime)"
+        setBgImageBtn.layer.cornerRadius = 10.0
+        setBgImageBtn.layer.masksToBounds = true
+        
         boardSetting.layer.cornerRadius = 10.0
         boardCheckBtn.layer.cornerRadius = 10.0
         topBg.layer.cornerRadius = 10.0
@@ -69,6 +78,11 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     func goToNextPage() {
         
         let dragVC = storyboard?.instantiateViewController(withIdentifier:"DragBoardVC") as! DragBoardVC
+        if titleTextfield.text == "" {
+            dragVC.boardTitle = titleTextfield.placeholder!
+        }else{
+            dragVC.boardTitle = boardTitle
+        }
         
         dragVC.topBgImages = topBg.image
         dragVC.resizeNote = resizeNote
@@ -78,9 +92,25 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         dragVC.boardLon = boardLon
         dragVC.boardAlert = boardAlert
         dragVC.boardPrivacy = boardPrivacy
-
+        dragVC.boardCreatetime = boardCreatetime
         navigationController?.pushViewController(dragVC, animated: true)
         
+    }
+    
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "goExistBoard" {
+            let existBoardSegue = segue.destination as! ExistBoardVC
+            existBoardSegue.resizeNote = resizeNote
+            existBoardSegue.allNoteData = allNoteData
+            existBoardSegue.Lat = boardLat
+            existBoardSegue.Lon = boardLon
+
+        }else if segue.identifier == "goDragBoard"{
+
+        }else{
+            
+        }
     }
     
     //IBAction swtich

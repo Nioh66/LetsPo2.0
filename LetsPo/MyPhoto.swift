@@ -23,21 +23,21 @@ class MyPhoto:NSObject,UIImagePickerControllerDelegate,UINavigationControllerDel
     
     // MARK: Add photo from photos
     
-//    func addPictureBtn(viewcontroller:UIViewController ) {
-//        let checkDeviceAccesse = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
-//        if (checkDeviceAccesse){
-//            
-//            let importImage = UIImagePickerController()
-//            importImage.sourceType = .photoLibrary
-//            importImage.delegate = viewcontroller as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
-//            importImage.allowsEditing = true
-//            
-//           viewcontroller.present(importImage, animated: true, completion: nil)
-//        }
-//        else{
-//            print("Your photoLibrary are unvailable")
-//        }
-//    }
+    func addPictureBtn(viewcontroller:UIViewController ) {
+        let checkDeviceAccesse = UIImagePickerController.isSourceTypeAvailable(.photoLibrary)
+        if (checkDeviceAccesse){
+            
+            let importImage = UIImagePickerController()
+            importImage.sourceType = .photoLibrary
+            importImage.delegate = self
+            importImage.allowsEditing = true
+            
+           viewcontroller.present(importImage, animated: true, completion: nil)
+        }
+        else{
+            print("Your photoLibrary are unvailable")
+        }
+    }
     
     
     func checkCameraStatus(CameraStae:UIView) {
@@ -67,8 +67,7 @@ class MyPhoto:NSObject,UIImagePickerControllerDelegate,UINavigationControllerDel
  //           self.present(saveAlert, animated: true)
         }
     }
-
-    
+       
     
     func resizeFromImage(input:UIImage) -> UIImage? {
         let maxLength:CGFloat = 1024.0

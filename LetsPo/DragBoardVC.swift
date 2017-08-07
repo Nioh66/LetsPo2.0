@@ -34,8 +34,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     var boardPrivacy = Bool()
     var boardLat = Double()
     var boardLon = Double()
-
-    
+    var boardCreatetime = NSDate()
+    var boardTitle = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,13 +156,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             
         }
         
-        
-        
-        
-        
-        
-        
-        
         noteItem.note_Content = noteContent
         noteItem.note_BgColor = noteBgColor
         noteItem.note_FontColor = noteFontColor
@@ -211,7 +204,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             boardItem.board_Privacy = boardPrivacy
             boardItem.board_ScreenShot = boardScreenShot
             boardItem.board_BgPic = boardBgPic
-            boardItem.board_CreateTime = NSDate()
+            boardItem.board_CreateTime = boardCreatetime
+            boardItem.board_Title = boardTitle
             boardDataManager.saveContexWithCompletion { (success) in
                 if (success) {
                     print("BoardData save succeed!!!")
@@ -270,9 +264,3 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     }
  
   }
-
-    
-
-
-
-
