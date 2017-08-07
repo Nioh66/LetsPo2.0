@@ -36,7 +36,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationManager.delegate = self
         
         locationManager.startUpdate()
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { (timer) in
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
             // 防止秒數內再度觸發方法
             self.doUnlock()
             self.locationManager.startUpdate()
@@ -267,8 +267,9 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             
             let alert = value["alert"] as! Bool
             
-            let pins = CLLocation.init(latitude: lat, longitude: lon)
-            distance = pins.distance(from: userLocation) * 1.09361
+//            let pins = CLLocation.init(latitude: lat, longitude: lon)
+//            distance = pins.distance(from: userLocation) * 1.09361
+            distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             
             // 距離小於 2500 則存回 near
             if distance <  2500 && alert == true {
@@ -281,19 +282,20 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                     count = 1
                 }
                 if nearbyDictionary.count < 20 {
-                    if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
-                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "")
-                        
-                        // nearbyDictionary 內的定位開始 Monitoring
-                        locationManager.startRegionMonitoring(region: region)
-                        
-                        // 超過 2300 則停止 Monitoring
-                        if distance > 2300 {
-                            locationManager.stopRegionMonitoring(region: region)
-
-                        }
-                    }
+//                    if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
+//                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+//                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "\(board_ID)")
+//                        
+//                        // nearbyDictionary 內的定位開始 Monitoring
+//                        locationManager.startRegionMonitoring(region: region)
+//                        
+//                        // 超過 2300 則停止 Monitoring
+//                        if distance > 2300 {
+//                            locationManager.stopRegionMonitoring(region: region)
+//
+//                        }
+//                    }
+                    locationManager.isMonitoringAvailable(lat: lat, lon: lon, regi: region, distance: distance,identifier:"\(board_ID)")
                 }
             }
         }

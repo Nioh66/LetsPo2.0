@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreLocation
+import UserNotifications
+
 @objc protocol LocationManagerDelegate
 {
     func locationManager(updatedUserLocation coordinate: CLLocation)
@@ -40,6 +42,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     public func stopRegionMonitoring(region: CLCircularRegion){
         locationManager.stopMonitoring(for: region)
+        print("stop = \(region)")
     }
     
     
@@ -62,14 +65,38 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion){
-        delegate?.locationManager!(userDidEnterRegion: region)
+    public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion){
+        guard ((delegate?.locationManager!(userDidEnterRegion: region)) != nil) else {return}
+
     }
     
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion){
-        delegate?.locationManager!(userDidExitRegion: region)
+    public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion){
+        guard ((delegate?.locationManager!(userDidExitRegion: region)) != nil) else {return}
+     }
+    
+    public func isMonitoringAvailable(lat:CLLocationDegrees,lon:CLLocationDegrees,regi: CLCircularRegion,distance:CLLocationDistance,identifier:String){
+        if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            var region = regi
+            region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: identifier)
+            // nearbyDictionary 內的定位開始 Monitoring
+            
+            startRegionMonitoring(region: region)
+            
+            // 超過 2300 則停止 Monitoring
+            if distance > 2300 {
+                
+                stopRegionMonitoring(region: region)
+                
+            }
+        }
     }
     
+    public func distance(lat:CLLocationDegrees,lon:CLLocationDegrees,userLocation:CLLocation) -> CLLocationDistance {
+        let pins = CLLocation.init(latitude: lat, longitude: lon)
+        let distance = pins.distance(from: userLocation) * 1.09361
+        return distance
+    }
     
     
 }

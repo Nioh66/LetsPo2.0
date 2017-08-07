@@ -229,11 +229,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 for noteAttribute:NoteData in result{
                     let noteID = noteAttribute.note_ID
                     let boardID = noteAttribute.note_BoardID
+                    guard let image = noteAttribute.note_Image else {
+                        return
+                    }
                     print("noteID \(noteID),boardID \(boardID)")
                     noteDataManager.deleteItem(item: noteAttribute)
                     noteDataManager.saveContexWithCompletion(completion: { (success) in
-                        print("delete note success")
+                        print("delete note with all image success")
                     })
+                    self.removeImageformDocument(items: image)
                 }
                 self.dataManagerCount = boardDataManager.count()
                 self.locationManager.startUpdate()
@@ -241,6 +245,35 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 self.reloadAllData()
                 print("delete success")
             })
+        }
+    }
+    
+    func removeImageformDocument(items:NSData) {
+        let fileManager = FileManager.default
+        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+        guard let dirPath = paths.first else {
+            return
+        }
+        guard let json = try? JSONSerialization.jsonObject(with: items as Data),
+            let myAlbum = json as? [String: Any] else{
+                print("imageJSONData transform to result failure!!!!!")
+                return
+        }
+        for index in 0 ..< myAlbum.count {
+            guard let stringPath = myAlbum["Image\(index)"] as? String
+                else {
+                    print("------String transform to URL failure------")
+                    return
+            }
+            let filePath = "\(dirPath)/\(stringPath)"
+            do {
+                try fileManager.removeItem(atPath: filePath)
+                print("delete image OK")
+            } catch let error as NSError {
+                print(error.debugDescription)
+            }
         }
     }
     
@@ -318,6 +351,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         locationManager.stopUpdate()
         
     }
+    func locationManager(userDidExitRegion region: CLRegion) {
+        print("Exit \(region.identifier)")
+       
+    }
+    
+    func locationManager(userDidEnterRegion region: CLRegion) {
+        print("Enter \(region.identifier)")
+       
+    }
     
     func monitorRegion(userLocation:CLLocation){
         let userLocation = userLocation
@@ -338,8 +380,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 imgWithData = UIImage(data: img as Data)!
             }
             
-            let pins = CLLocation.init(latitude: lat, longitude: lon)
-            distance = pins.distance(from: userLocation) * 1.09361
+//            let pins = CLLocation.init(latitude: lat, longitude: lon)
+//            distance = pins.distance(from: userLocation) * 1.09361
+            distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
                     nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
