@@ -16,7 +16,7 @@ class DragPublicPostVC: UIViewController {
         var posterY:CGFloat = 150
         let posterEdge:CGFloat = 100
         var bgImage = UIImage()
-        var resizeNote:UIImage!
+        var resizeNote:UIImage? = nil
         var theDragNote = UIImageView()
         var allNoteData = [String:Any]()
         var boardID = Int16()
@@ -25,9 +25,10 @@ class DragPublicPostVC: UIViewController {
     
         override func viewDidLoad() {
             super.viewDidLoad()
+        //    theDragNote.backgroundColor = UIColor.blue
             
+            theDragNote.backgroundColor = UIColor.clear
             
-            publicBgImage.image = bgImage
             
             theDragNote.frame = CGRect(x: posterX, y: posterY, width: posterEdge, height: posterEdge)
             theDragNote.image = resizeNote
@@ -35,16 +36,23 @@ class DragPublicPostVC: UIViewController {
             
             publicBgImage.addSubview(theDragNote)
             
+            
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panTheNote))
             
             panGesture.maximumNumberOfTouches = 1
             panGesture.minimumNumberOfTouches = 1
             
             theDragNote.addGestureRecognizer(panGesture)
+            
+            publicBgImage.image = bgImage
+            publicBgImage.isUserInteractionEnabled = true
+            
+            
             navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
             // Do any additional setup after loading the view.
         }
-        
+    
+    
         func saveAndPop() {
             self.saveNoteData()
             self.uploadBoardBg()

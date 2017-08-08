@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FgI-5r-fIW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="FgI-5r-fIW">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -384,9 +384,7 @@
                     <navigationItem key="navigationItem" id="2SG-HM-P6X">
                         <barButtonItem key="rightBarButtonItem" title="Save" style="done" id="Rpt-hU-hQr">
                             <connections>
-                                <segue destination="lj7-ai-bVu" kind="show" id="JGP-TQ-bDm">
-                                    <nil key="action"/>
-                                </segue>
+                                <action selector="goDragGo:" destination="Ye5-9A-T9P" id="JoH-PR-KgB"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

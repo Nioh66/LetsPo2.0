@@ -61,22 +61,16 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     }
     // MARK: Get board data
     func getAllBoard() {
-        guard let result = boardDataManager.searchField(field: boardSearchfield, forKeyword: boardSearchKeyword) as? [BoardData] else{
-            print("xxx")
-            return
-        }
-        print(result)
-        print("xx.xx")
-        for allBoard:BoardData in result{
-            print("xxx.xxx")
+        let allBoardCount = boardDataManager.count()
+        
+        for i in 0..<allBoardCount{
+        let result = boardDataManager.itemWithIndex(index: i)
 
-            guard let boardSSD = allBoard.board_ScreenShot as Data?,
+            guard let boardSSD = result.board_ScreenShot as Data?,
                 let boardSS = UIImage(data: boardSSD) else{
-                    print("xx")
                     return
             }
-            print("x")
-            allBoardID.append(allBoard.board_Id)
+            allBoardID.append(result.board_Id)
             allBoardScreenShot.append(boardSS)
         }
     }

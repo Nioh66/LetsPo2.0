@@ -155,7 +155,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         
         let newPostSegue = segue.destination as! BoardSettingVC
-        newPostSegue.thePost = thePost
+     //   newPostSegue.thePost = thePost
         
         
         
@@ -601,6 +601,10 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
     }
     
+    @IBAction func pageControlValueChanged(_ sender: Any) {
+        self.scrollToPage(page: self.pageControl.currentPage, animated: true)
+
+    }
     // MARK: collectionView delegate method
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {

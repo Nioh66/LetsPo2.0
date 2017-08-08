@@ -65,7 +65,7 @@ class DragExistBoardVC: UIViewController {
         tabBarController?.selectedIndex = 1
         navigationController?.popToRootViewController(animated: true)
 
-        //    self.navigationController?.popToRootViewController(animated: true)
+//            self.navigationController?.popToRootViewController(animated: true)
 //        for controller in (self.navigationController?.viewControllers)!
 //        {
 //            if controller.isKind(of: ManageDetailViewController.self) == true{
@@ -124,11 +124,11 @@ class DragExistBoardVC: UIViewController {
         
         let item = noteDataManager.createItem()
         
-        guard let noteContent = allNoteData["publicNoteContent"] as? String?,
-            let noteBgColor = allNoteData["publicNoteBgColor"] as? NSData,
-            let noteFontColor = allNoteData["publicNoteFontColor"] as? NSData,
-            let noteFontSize = allNoteData["publicNoteFontSize"] as? Double,
-            let noteImage = allNoteData["publicNoteImage"] as? [UIImage],
+        guard let noteContent = allNoteData["noteContent"] as? String?,
+            let noteBgColor = allNoteData["noteBgColor"] as? NSData,
+            let noteFontColor = allNoteData["noteFontColor"] as? NSData,
+            let noteFontSize = allNoteData["noteFontSize"] as? Double,
+            let noteImage = allNoteData["noteImage"] as? [UIImage],
             let noteSelfie = UIImagePNGRepresentation(resizeNote!) as NSData?
             else {
                 print("Case failure!!!!!!!!")
