@@ -40,10 +40,11 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
    //     self.navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
         topImage.image = topBgImages
-        
+        topImage.isUserInteractionEnabled = true
        
         NoteImageView.frame = CGRect(x: posterX,
                               y: posterY,
@@ -69,22 +70,17 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         tabBarController?.tabBar.isHidden = true
         
     }
+    // MARK: Btn method
     
-    @IBAction func finishBtn(_ sender: UIButton) {
-        
+    func saveAndPop() {
         self.saveBoardData()
         self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
-            tabBarController?.selectedIndex = 1
+        tabBarController?.selectedIndex = 1
         navigationController?.popToRootViewController(animated: true)
-
     }
-    @IBAction func backBtn(_ sender: UIButton) {
-        self.navigationController?.navigationBar.isHidden = false
-
-        navigationController?.popViewController(animated: true)
-
-    }
+    
+    
     
     func panTheNote(sender:UIPanGestureRecognizer) {
         
@@ -94,16 +90,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         NoteImageView.center = point
         
     }
-    
-    
-    
-    
-    @IBAction func printIMage(_ sender: Any) {
-        self.saveNoteData()
-
-    }
-    
-    
     
     
     

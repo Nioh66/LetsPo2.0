@@ -47,7 +47,14 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         boardCheckBtn.layer.cornerRadius = 10.0
         topBg.layer.cornerRadius = 10.0
         topBg.layer.masksToBounds = true
-    
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tap.cancelsTouchesInView = false
+        tap.numberOfTapsRequired = 1
+        
+        self.view.addGestureRecognizer(tap)
+        
+        
+        
         let tapToNext = UITapGestureRecognizer(target: self, action: #selector(goToNextPage))
         boardCheckBtn.isUserInteractionEnabled = true
         boardCheckBtn.addGestureRecognizer(tapToNext)
@@ -64,6 +71,15 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = true
     }
+    
+    func hideKeyboard(tapG:UITapGestureRecognizer){
+        // self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5) {
+            self.titleTextfield.resignFirstResponder()
+        }
+        
+    }
+
     
    // Notification method
 

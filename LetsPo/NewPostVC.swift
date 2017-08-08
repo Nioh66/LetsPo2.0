@@ -161,9 +161,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         //這個uiview are who?
         UIView.animate(withDuration: 0.1) {
-           self.myTextView.isEditable = false
-            
-           self.myTextView.setContentOffset(CGPoint.zero, animated: false)
+            let theBegining = self.myTextView.beginningOfDocument
+            self.myTextView.selectedTextRange = self.myTextView.textRange(from: theBegining, to: theBegining)
+            self.myTextView.isEditable = false
         }
         
         Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in

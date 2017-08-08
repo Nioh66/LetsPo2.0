@@ -12,8 +12,7 @@ import CoreLocation
 class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,LocationManagerDelegate{
     
     let boardSearchfield = "board_Id"
-    let boardSearchKeyword = ""
-    let cellSpace = 10
+    let boardSearchKeyword = "1"
     let itemCount:CGFloat = 3
     let spacing:CGFloat = 3
     
@@ -45,17 +44,13 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         collectionView.dataSource = self
         
         getAllBoard()
-
+        
         collectionView.register(
             UICollectionReusableView.self,
             forSupplementaryViewOfKind:
             UICollectionElementKindSectionHeader,
             withReuseIdentifier: "Header")
-        collectionView.register(
-            UICollectionReusableView.self,
-            forSupplementaryViewOfKind:
-            UICollectionElementKindSectionFooter,
-            withReuseIdentifier: "Footer")
+        
         print("\(allBoardScreenShot.count)")
         print("\(allBoardID.count)")
         print("\(nearbyDic.count)")
@@ -95,10 +90,12 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var returnCount : Int = 0
-        if section == 1{
+        if section == 0{
             returnCount = nearbyDic.count
-        }else{
+        }else if section == 1{
             returnCount = allBoardScreenShot.count
+        }else{
+            
         }
         return returnCount
     }
@@ -108,9 +105,9 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         
         let section = indexPath.section
         
-        if section == 1{
+        if section == 0 {
             cell.existBoardImageV.image = nearbyDic[indexPath.row]["screenshot"] as? UIImage
-        }else if section == 2{
+        }else if section == 1{
             cell.existBoardImageV.image = allBoardScreenShot[indexPath.row]
         }else{
             
@@ -121,12 +118,21 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = indexPath.section
         
-        if section == 1 {
+        if section == 0 {
             let dragExistBoardVC = storyboard?.instantiateViewController(withIdentifier:"DragExistBoardVC") as! DragExistBoardVC
+            dragExistBoardVC.bgImage = nearbyDic[indexPath.row]["screenshot"] as! UIImage
+            dragExistBoardVC.boardID = nearbyDic[indexPath.row]["board_id"] as! Int16
+            dragExistBoardVC.allNoteData = allNoteData
+            dragExistBoardVC.resizeNote = resizeNote
             navigationController?.pushViewController(dragExistBoardVC, animated: true)
 
-        }else if section == 2 {
+        }else if section == 1 {
             let dragExistBoardVC = storyboard?.instantiateViewController(withIdentifier:"DragExistBoardVC") as! DragExistBoardVC
+            dragExistBoardVC.boardID = allBoardID[indexPath.row]
+            dragExistBoardVC.bgImage = allBoardScreenShot[indexPath.row]
+            dragExistBoardVC.allNoteData = allNoteData
+            dragExistBoardVC.resizeNote = resizeNote
+            
             navigationController?.pushViewController(dragExistBoardVC, animated: true)
 
         }else{
@@ -153,11 +159,13 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        
         var reuseView = UICollectionReusableView()
-        let label = UILabel(frame: CGRect(
-            x: 0, y: 0,
-            width: collectionView.frame.size.width, height: 40))
-        label.textAlignment = .center
+        let section = indexPath.section
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0,
+            width: collectionView.frame.size.width/3, height: 40))
+        label.textAlignment = .left
         
         // header
         if kind == UICollectionElementKindSectionHeader {
@@ -168,32 +176,26 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
                     withReuseIdentifier: "Header",
                     for: indexPath)
             // 設置 header 的內容
-            reuseView.backgroundColor =
-                UIColor.darkGray
-            label.text = "Header";
-            label.textColor = UIColor.white
-            
-        } else if kind ==
-            UICollectionElementKindSectionFooter {
-            // 依據前面註冊設置的識別名稱 "Footer" 取得目前使用的 footer
-            reuseView =
-                collectionView.dequeueReusableSupplementaryView(
-                    ofKind: UICollectionElementKindSectionFooter,
-                    withReuseIdentifier: "Footer",
-                    for: indexPath)
-            // 設置 footer 的內容
-            reuseView.backgroundColor =
-                UIColor.cyan
-            label.text = "Footer";
-            label.textColor = UIColor.black
-            
+            if section == 0{
+                reuseView.backgroundColor = UIColor.darkGray
+                label.text = "Nearby";
+                label.textColor = UIColor.white
+            }else if section == 1{
+                reuseView.backgroundColor = UIColor.darkGray
+                label.text = "All-";
+                label.textColor = UIColor.white
+            }else{
+            }
         }
-        
         reuseView.addSubview(label)
         return reuseView
     }
     
-    override func didReceiveMemoryWarning() {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.size.width/3, height: 40)
+    }
+       override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }

@@ -19,6 +19,8 @@
 		303B08F61F1CC61600D7F6B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303B08F41F1CC61600D7F6B1 /* Main.storyboard */; };
 		303B08F81F1CC61600D7F6B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303B08F71F1CC61600D7F6B1 /* Assets.xcassets */; };
 		303B08FB1F1CC61600D7F6B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303B08F91F1CC61600D7F6B1 /* LaunchScreen.storyboard */; };
+		303BB4BD1F38CE0300B7B20C /* ExistBoardHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303BB4BB1F38CE0300B7B20C /* ExistBoardHeaderCell.swift */; };
+		303BB4BE1F38CE0300B7B20C /* ExistBoardHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 303BB4BC1F38CE0300B7B20C /* ExistBoardHeaderCell.xib */; };
 		304CB6751F258F6D00AEF632 /* SelfPostBgSelectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */; };
 		304CB6771F258F8F00AEF632 /* SelfNewPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */; };
 		304CB6791F258FAF00AEF632 /* SelfPostHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */; };
@@ -104,6 +106,8 @@
 		303B08F71F1CC61600D7F6B1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		303B08FA1F1CC61600D7F6B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		303B08FC1F1CC61600D7F6B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		303BB4BB1F38CE0300B7B20C /* ExistBoardHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistBoardHeaderCell.swift; sourceTree = "<group>"; };
+		303BB4BC1F38CE0300B7B20C /* ExistBoardHeaderCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExistBoardHeaderCell.xib; sourceTree = "<group>"; };
 		304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfPostBgSelectVC.swift; sourceTree = "<group>"; };
 		304CB6761F258F8F00AEF632 /* SelfNewPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfNewPostVC.swift; sourceTree = "<group>"; };
 		304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfPostHomeVC.swift; sourceTree = "<group>"; };
@@ -281,6 +285,8 @@
 				30AB320A1F206454001B1D0E /* BoardBgImageSetVC.swift */,
 				300842451F387DC200061192 /* ExistBoardVC.swift */,
 				300842471F387F4000061192 /* ExistBoardCell.swift */,
+				303BB4BC1F38CE0300B7B20C /* ExistBoardHeaderCell.xib */,
+				303BB4BB1F38CE0300B7B20C /* ExistBoardHeaderCell.swift */,
 				3008424C1F38A76F00061192 /* DragExistBoardVC.swift */,
 				9BABCA671F24C4000055B07A /* accountManage */,
 				3086F3201F378907008C71D2 /* AllPostsImageCell.swift */,
@@ -511,6 +517,7 @@
 				304CB6831F25970A00AEF632 /* right-arrow.png in Resources */,
 				30D092C51F1E950800CB3F88 /* ooxx.png in Resources */,
 				30D092A11F1E3FDF00CB3F88 /* SelfPost.storyboard in Resources */,
+				303BB4BE1F38CE0300B7B20C /* ExistBoardHeaderCell.xib in Resources */,
 				304CB6811F25916A00AEF632 /* Wall2.jpg in Resources */,
 				30D092A91F1E41D600CB3F88 /* Discover.storyboard in Resources */,
 				9BA62C701F1F6F11008CDEC0 /* ManageCollectionViewCell.xib in Resources */,
@@ -581,6 +588,7 @@
 				304CB6771F258F8F00AEF632 /* SelfNewPostVC.swift in Sources */,
 				3018026E1F249FC600838425 /* CoreDataManager.swift in Sources */,
 				309EAFAD1F26785900FC3F34 /* MyNiggerVC.swift in Sources */,
+				303BB4BD1F38CE0300B7B20C /* ExistBoardHeaderCell.swift in Sources */,
 				30D092B61F1E490600CB3F88 /* DragBoardVC.swift in Sources */,
 				300954171F2B92DB008EA764 /* GetBoardNotes.swift in Sources */,
 			);
