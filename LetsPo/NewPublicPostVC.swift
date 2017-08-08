@@ -21,6 +21,8 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     var animationsCount = 0
     
 
+    var reUpdate = NSLock()
+    var shouldReUpdate = Bool()
    
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -114,7 +116,14 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             self.publicPost.addSubview(self.myTextView)
         }
     }
-//    typealias Completion = (_ success: Bool ) -> ()
+    
+    func doUnlock(){
+        reUpdate.unlock()
+        if shouldReUpdate{
+            shouldReUpdate = false
+        }
+    }
+
     
     // MARK: Perpare segue
     
@@ -123,7 +132,9 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         let dragSegue = storyboard?.instantiateViewController(withIdentifier: "DragPublicPostVC") as! DragPublicPostVC
         
         
+
         let newPosition = self.myTextView.beginningOfDocument
+
         
             self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
             self.myTextView.isEditable = false
@@ -144,7 +155,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         self.navigationController?.pushViewController(dragSegue, animated: true)
         }
     }
-    
+        
     
     
     
