@@ -43,7 +43,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     var keyboardHeight:CGFloat? = nil
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
-    let resetNote = Notification.Name("resetPublicNote")
+  //  let resetNoteNN = Notification.Name("resetPublicNote")
     var bgImage = UIImage()
     var allNoteData = [String:Any]()
     var boardID = Int16()
@@ -127,45 +127,37 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     // MARK: Perpare segue
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
+    @IBAction func goDragGo(_ sender: UIBarButtonItem) {
+        let dragSegue = storyboard?.instantiateViewController(withIdentifier: "DragPublicPostVC") as! DragPublicPostVC
         
         
-        let dragSegue = segue.destination as! DragPublicPostVC
-        
-//        self.doUnlock()
-        
-        
-//        
-//            if reUpdate.try() == false {
-//                shouldReUpdate = true
-//                return
-//            }
+
+        let newPosition = self.myTextView.beginningOfDocument
 
         
-        UIView.animate(withDuration: 0.1) {
-            self.myTextView.isEditable = false
-
-            let newPosition = self.myTextView.beginningOfDocument
             self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
-
+            self.myTextView.isEditable = false
             
-        }
-       
-        print("---2---")
-        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+           Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+            
             let resizeNote = self.publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
-        dragSegue.resizeNote = resizeNote
-       
-        }
-        print("----3--")
+            dragSegue.resizeNote = resizeNote
+        
+        
+        
         
         self.saveNoteData()
-        dragSegue.allNoteData = allNoteData
-        dragSegue.bgImage = bgImage
-        dragSegue.boardID = boardID
-        
+        dragSegue.allNoteData = self.allNoteData
+        dragSegue.bgImage = self.bgImage
+        dragSegue.boardID = self.boardID
+                
+        self.navigationController?.pushViewController(dragSegue, animated: true)
+        }
     }
         
+    
+    
     
     func setKeyboardObserver() {
         

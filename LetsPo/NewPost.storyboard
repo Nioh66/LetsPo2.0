@@ -32,7 +32,7 @@
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oBT-Jq-JWb">
                                 <rect key="frame" x="0.0" y="404" width="375" height="204"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pof-EC-ngc">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -46,8 +46,11 @@
                                 </connections>
                             </collectionView>
                             <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="JhC-3R-TBb">
-                                <rect key="frame" x="168" y="571" width="39" height="37"/>
+                                <rect key="frame" x="168" y="573" width="39" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="pageControlValueChanged:" destination="hCD-hw-x7X" eventType="valueChanged" id="lMN-7I-c2v"/>
+                                </connections>
                             </pageControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -302,9 +305,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="M77-0j-hKi">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="M77-0j-hKi">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="KRm-3b-Rzr">
                                     <size key="itemSize" width="50" height="50"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -344,10 +347,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="M77-0j-hKi" firstAttribute="leading" secondItem="fhI-fm-Ekx" secondAttribute="leading" id="Rr7-wE-QoF"/>
-                            <constraint firstAttribute="trailing" secondItem="M77-0j-hKi" secondAttribute="trailing" id="XIQ-dC-OfX"/>
-                            <constraint firstItem="t5P-v8-Zjt" firstAttribute="top" secondItem="M77-0j-hKi" secondAttribute="bottom" id="eJD-G2-GUI"/>
-                            <constraint firstItem="M77-0j-hKi" firstAttribute="top" secondItem="W1A-iv-t0q" secondAttribute="bottom" id="qT8-AQ-rcy"/>
+                            <constraint firstItem="M77-0j-hKi" firstAttribute="top" secondItem="fhI-fm-Ekx" secondAttribute="top" id="BiE-lQ-rCO"/>
+                            <constraint firstItem="M77-0j-hKi" firstAttribute="bottom" secondItem="t5P-v8-Zjt" secondAttribute="top" id="Gie-ey-SP2"/>
+                            <constraint firstItem="M77-0j-hKi" firstAttribute="leading" secondItem="fhI-fm-Ekx" secondAttribute="leading" id="MRT-UT-D4c"/>
+                            <constraint firstAttribute="trailing" secondItem="M77-0j-hKi" secondAttribute="trailing" id="X4G-SL-YnX"/>
                         </constraints>
                     </view>
                     <connections>
