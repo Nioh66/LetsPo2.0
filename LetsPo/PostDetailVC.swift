@@ -9,17 +9,17 @@
 import UIKit
 
 class PostDetailVC: UIViewController {
-
+    
     let getPost = GetNoteDetail()
     var detilPostID:Int16 = 0
     var post = Note()
     var postT = NoteText()
-
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         post.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
         postT.frame = CGRect(x: 0, y: 0, width: post.frame.size.width, height: post.frame.size.height)
         
@@ -28,7 +28,7 @@ class PostDetailVC: UIViewController {
             print("getNoteSetting fail")
             return
         }
-
+        
         
         
         let postText = getPost.getNoteText(boardID: 1, noteID: 1, noteText: postT)
@@ -39,7 +39,7 @@ class PostDetailVC: UIViewController {
         
         
         view.addSubview(post)
-
+        
         
         // Do any additional setup after loading the view.
     }
@@ -47,26 +47,26 @@ class PostDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         
         DispatchQueue.main.async {
-              self.post.addSubview(self.postT)
-        
+            self.post.addSubview(self.postT)
+            
         }
     }
     
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

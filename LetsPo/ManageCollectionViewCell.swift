@@ -16,7 +16,7 @@ import UIKit
 
 
 class ManageCollectionViewCell: UICollectionViewCell {
-
+    
     var deleteBtn:UIButton!
     
     @IBOutlet weak var backdroundImage: UIImageView!
@@ -70,5 +70,5 @@ class ManageCollectionViewCell: UICollectionViewCell {
         deleteBtn.addTarget(self, action: #selector(fadeAndDelete), for: .touchUpInside)
         contentView.addSubview(deleteBtn)
     }
-
+    
 }

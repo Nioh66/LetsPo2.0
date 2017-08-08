@@ -11,7 +11,7 @@ import CoreData
 
 
 class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
-   
+    
     var targetModelName:String
     var targetDBfilename:String
     var targetDBPathURL:URL?
@@ -20,12 +20,12 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
     var saveCompletion:SaveCompletion?
     
     init(initWithModel modelName:String,
-                dbFileName:String,
-                dbPathURL:URL?,
-                sortKey:String,
-                entityName:String){
+         dbFileName:String,
+         dbPathURL:URL?,
+         sortKey:String,
+         entityName:String){
         
-//        super.init()
+        //        super.init()
         //Keep parameters as variables
         targetModelName = modelName
         targetDBfilename = dbFileName
@@ -42,7 +42,7 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
     
     
     
-
+    
     func createItem() -> ItemType {
         let newItem = NSEntityDescription.insertNewObject(forEntityName: targetEntityName, into: self.managedObjectContext) as! ItemType
         
@@ -71,19 +71,19 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
         request.predicate = predicate
         var result = [NSFetchRequestResult]()
         do {
-             result = try self.managedObjectContext.fetch(request)
+            result = try self.managedObjectContext.fetch(request)
         } catch  {
             print("erro")
         }
-    return result
+        return result
     }
     
-   // "%@ contains[cd] %%@" ％％＠ 將％％合成％ contains[cd]不區分大小寫
+    // "%@ contains[cd] %%@" ％％＠ 將％％合成％ contains[cd]不區分大小寫
     
     func count() -> Int{
         let sectionInfo = self.fetchedResultsController.sections![0] //一維先由section改為0
         return sectionInfo.numberOfObjects
-
+        
     }
     
     
@@ -93,7 +93,7 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
     //Mark - Core Data stack
     lazy var managedObjectModel: NSManagedObjectModel = {
         
-    
+        
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         //xcddata是原始碼 XCode Compile後會變momd
         let modelURL = Bundle.main.url(forResource: self.targetModelName, withExtension: "momd")!
@@ -208,7 +208,7 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
     
     
     
-   
+    
     //掌握存檔完成時間點 使用它時存擋已完成
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         // In the simplest, most efficient, case, reload the table view.
@@ -216,10 +216,10 @@ class CoreDataManager<ItemType>: NSObject ,NSFetchedResultsControllerDelegate{
             completion(true)
             saveCompletion = nil
         }
-//        if saveCompletion != nil {
-//            saveCompletion!(true)
-//            saveCompletion = nil
-//        }
+        //        if saveCompletion != nil {
+        //            saveCompletion!(true)
+        //            saveCompletion = nil
+        //        }
         
     }
 }
@@ -232,7 +232,7 @@ extension CoreDataManager{
     func transformImageTOJson(images:[UIImage]) -> NSData?{
         
         var imageWithPath = [String:Any]()
-//        var jsonContent:String = ""
+        //        var jsonContent:String = ""
         
         for (index,image) in images.enumerated(){
             let hashFileName = String(format: "image_%d.jpg", image.hash)
@@ -249,8 +249,8 @@ extension CoreDataManager{
                 imageData.write(to: finalPath, atomically: true)
                 
                 imageWithPath.updateValue("\(hashFileName)", forKey: "Image\(index)")
-
- //               jsonContent += "image\(index):\(hashFileName),"
+                
+                //               jsonContent += "image\(index):\(hashFileName),"
                 
             }else{
                 print("File already exist!")
@@ -262,16 +262,16 @@ extension CoreDataManager{
             print("Json transform failure!!!")
             return nil
         }
-//        Fake JSON
-//        jsonContent = jsonContent.substring(to: jsonContent.index(before: jsonContent.endIndex))
-//        let jsonBegin = "{"
-//        let jsonEnd = "}"
-//        let finalJson = jsonContent
+        //        Fake JSON
+        //        jsonContent = jsonContent.substring(to: jsonContent.index(before: jsonContent.endIndex))
+        //        let jsonBegin = "{"
+        //        let jsonEnd = "}"
+        //        let finalJson = jsonContent
         
         return imageJSONData
     }
-
-
+    
+    
     
     func transformDataToImage(imageJSONData: NSData) -> [UIImage]? {
         
@@ -287,7 +287,7 @@ extension CoreDataManager{
         //Get URL
         for index in 0 ..< myAlbum.count {
             guard let stringPath = myAlbum["Image\(index)"] as? String
-                 else {
+                else {
                     print("------String transform to URL failure------")
                     return nil
             }
@@ -303,12 +303,12 @@ extension CoreDataManager{
                 // Do whatever you want with the image
             }
             //..
-           
+            
         }
         return album
     }
-
-
+    
+    
     func reverseColorDataToColor(data: NSData) -> UIColor {
         
         // Transform NSData to UIColor
@@ -323,7 +323,7 @@ extension CoreDataManager{
         print("reverse-----\(color)")
         return color
     }
-
+    
     
     
     func transformColorToData(targetColor:UIColor) -> NSData {
@@ -342,8 +342,8 @@ extension CoreDataManager{
         return colorData
     }
     
-
-
+    
+    
 }
 
 
@@ -355,9 +355,9 @@ extension CoreDataManager{
 //            return nil
 //    }
 //    print("-------\(stringPath)------")
-//    
+//
 //    print("===========\(finalPath)=========")
-//    
+//
 //    //..
 //    guard let img = UIImage(contentsOfFile: finalPath)
 //        else{

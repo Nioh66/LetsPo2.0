@@ -74,10 +74,10 @@ class FlowLayout: UICollectionViewFlowLayout {
         return arr
     }
     
-//     用於決定 collectionView停止滑動時的偏移量
+    //     用於決定 collectionView停止滑動時的偏移量
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         
-       
+        
         // 存放最小的間距值
         var offsetAdjustment = CGFloat(MAXFLOAT)
         // 計算 collectionView 最中心點的x值
@@ -97,5 +97,5 @@ class FlowLayout: UICollectionViewFlowLayout {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
 }

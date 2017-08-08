@@ -14,7 +14,7 @@ import CoreData
 
 class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDelegate {
     
-//    var dataManager:CoreDataManager<BoardData>!
+    //    var dataManager:CoreDataManager<BoardData>!
     var dataManagerCount = Int()
     
     let locationManager = LocationManager()
@@ -63,10 +63,10 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationButton.imageView?.contentMode = .center
         locationButton.setImage(btnImage, for: .normal)
         self.view.addSubview(locationButton)
-
+        
     }
     
-
+    
     func zoomToUserLocation(){
         var mapRegion = MKCoordinateRegion()
         mapRegion.center = self.mapView.userLocation.coordinate
@@ -130,17 +130,17 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         if (annotation is MKUserLocation) {
             return nil
         }
-                
+        
         let PinIdentifier = "PinIdentifier"
         var pin = mapView.dequeueReusableAnnotationView(withIdentifier: PinIdentifier)
         if (pin == nil){
-             pin = MKAnnotationView.init(annotation: annotation, reuseIdentifier: PinIdentifier)
+            pin = MKAnnotationView.init(annotation: annotation, reuseIdentifier: PinIdentifier)
         }else {
             
             pin?.annotation = annotation
         }
         let rightBtn = UIButton(type: .detailDisclosure)
-//        rightBtn.setImage(UIImage(named: "rightBtn.png"), for: .normal)
+        //        rightBtn.setImage(UIImage(named: "rightBtn.png"), for: .normal)
         pin?.rightCalloutAccessoryView = rightBtn
         let left = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
         pin?.leftCalloutAccessoryView = left
@@ -203,7 +203,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             print("Press one callout view")
         }else {
             NotificationCenter.default.post(name:Notification.Name(rawValue: "comeFromMap"), object: nil, userInfo: nil)
-            tabBarController?.selectedIndex = 1
+            tabBarController?.selectedIndex = 0
             navigationController?.popToRootViewController(animated: true)
             print("Press many callout view")
         }
@@ -236,7 +236,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         print("Enter \(region.identifier)")
         mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
     }
-
+    
     func mutableNotificationContent(title:String, body:String, indentifier:String){
         let content = UNMutableNotificationContent()
         content.title = title
@@ -263,15 +263,15 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             //let time = value["lastUpdateDateTime"] as! String
             
             let lat = value["lat"] as! Double
-
+            
             let lon = value["lon"] as! Double
             
             let img = value["BgPic"] as! UIImage
             
             let alert = value["alert"] as! Bool
             
-//            let pins = CLLocation.init(latitude: lat, longitude: lon)
-//            distance = pins.distance(from: userLocation) * 1.09361
+            //            let pins = CLLocation.init(latitude: lat, longitude: lon)
+            //            distance = pins.distance(from: userLocation) * 1.09361
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             
             // 距離小於 2500 則存回 near
@@ -285,26 +285,26 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                     count = 1
                 }
                 if nearbyDictionary.count < 20 {
-//                    if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
-//                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "\(board_ID)")
-//                        
-//                        // nearbyDictionary 內的定位開始 Monitoring
-//                        locationManager.startRegionMonitoring(region: region)
-//                        
-//                        // 超過 2300 則停止 Monitoring
-//                        if distance > 2300 {
-//                            locationManager.stopRegionMonitoring(region: region)
-//
-//                        }
-//                    }
+                    //                    if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
+                    //                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                    //                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "\(board_ID)")
+                    //
+                    //                        // nearbyDictionary 內的定位開始 Monitoring
+                    //                        locationManager.startRegionMonitoring(region: region)
+                    //
+                    //                        // 超過 2300 則停止 Monitoring
+                    //                        if distance > 2300 {
+                    //                            locationManager.stopRegionMonitoring(region: region)
+                    //
+                    //                        }
+                    //                    }
                     locationManager.isMonitoringAvailable(lat: lat, lon: lon, regi: region, distance: distance,identifier:"\(board_ID)")
                 }
             }
         }
         nearbyDictionary.sort { ($0["distance"] as! Double) < ($1["distance"] as! Double) }
         
-
+        
     }
     
     func spot() -> [SpotAnnotation] {
@@ -334,11 +334,11 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     
     func getLocations() -> [[String:Any]] {
         var locations = [[String:Any]]()
-       
+        
         
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
-//            let Creater = item.board_Creater
+            //            let Creater = item.board_Creater
             let board_ID = item.board_Id
             let lat = item.board_Lat
             let lon = item.board_Lon
@@ -351,20 +351,20 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                 
             }
         }
-//        print("locations :\(locations)")
+        //        print("locations :\(locations)")
         print("location count :\(locations.count)")
-
-//        let UrlString = "http://class.softarts.cc/FindMyFriends/queryFriendLocations.php?GroupName=bp102"
-//        let myUrl = NSURL(string: UrlString)
-//        let optData = try? Data(contentsOf: myUrl! as URL)
-//        guard let data = optData else {
-//            return friends
-//        }
-//        if let jsonArray = try? JSONSerialization.jsonObject(with: data, options:[])  as? [String:AnyObject] {
-//            friends = (jsonArray?["friends"] as? [[String:Any]])!
-//            friends.sort { ($0["lastUpdateDateTime"] as! String) > ($1["lastUpdateDateTime"] as! String) }
-//            
-//        }
+        
+        //        let UrlString = "http://class.softarts.cc/FindMyFriends/queryFriendLocations.php?GroupName=bp102"
+        //        let myUrl = NSURL(string: UrlString)
+        //        let optData = try? Data(contentsOf: myUrl! as URL)
+        //        guard let data = optData else {
+        //            return friends
+        //        }
+        //        if let jsonArray = try? JSONSerialization.jsonObject(with: data, options:[])  as? [String:AnyObject] {
+        //            friends = (jsonArray?["friends"] as? [[String:Any]])!
+        //            friends.sort { ($0["lastUpdateDateTime"] as! String) > ($1["lastUpdateDateTime"] as! String) }
+        //
+        //        }
         
         return locations
     }
@@ -376,11 +376,11 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-//        self.navigationController?.isNavigationBarHidden = true
+        //        self.navigationController?.isNavigationBarHidden = true
         navigationController?.setNavigationBarHidden(true, animated: false)
         locationManager.startUpdate()
         dataManagerCount = boardDataManager.count()
         places = spot()
     }
-   
+    
 }

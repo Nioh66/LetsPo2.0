@@ -32,7 +32,7 @@ class MyPhoto:NSObject,UIImagePickerControllerDelegate,UINavigationControllerDel
             importImage.delegate = self
             importImage.allowsEditing = true
             
-           viewcontroller.present(importImage, animated: true, completion: nil)
+            viewcontroller.present(importImage, animated: true, completion: nil)
         }
         else{
             print("Your photoLibrary are unvailable")
@@ -48,11 +48,11 @@ class MyPhoto:NSObject,UIImagePickerControllerDelegate,UINavigationControllerDel
         if (UIImagePickerController.isSourceTypeAvailable(sourceType) == false) {
             return
         }
-       let myPicker = UIImagePickerController()
+        let myPicker = UIImagePickerController()
         myPicker.sourceType = sourceType
         myPicker.mediaTypes = [String(kUTTypeImage),String(kUTTypeMovie)]
         myPicker.delegate = self
-       VC.present(myPicker, animated: true, completion: nil)
+        VC.present(myPicker, animated: true, completion: nil)
     }
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -60,14 +60,14 @@ class MyPhoto:NSObject,UIImagePickerControllerDelegate,UINavigationControllerDel
             // we got back an error!
             let saveAlert = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
             saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
- //           self.present(saveAlert, animated: true)
+            //           self.present(saveAlert, animated: true)
         } else {
             let saveAlert = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
             saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
- //           self.present(saveAlert, animated: true)
+            //           self.present(saveAlert, animated: true)
         }
     }
-       
+    
     
     func resizeFromImage(input:UIImage) -> UIImage? {
         let maxLength:CGFloat = 1024.0
@@ -102,70 +102,70 @@ class MyPhoto:NSObject,UIImagePickerControllerDelegate,UINavigationControllerDel
     
 }
 
-       //Fixed photo capture direction
+//Fixed photo capture direction
 
-    extension UIImage {
-        
-        
-        /// fix orientation
-        public class func fixOrientation(ofImage image: UIImage) -> UIImage {
-            guard image.imageOrientation != .up else {
-                return image
-            }
-            var transform = CGAffineTransform.identity
-            switch image.imageOrientation {
-            case .down, .downMirrored:
-                transform = transform.translatedBy(x: image.size.width, y: image.size.height)
-                transform = transform.rotated(by: CGFloat.pi)
-                break
-            case .left, .leftMirrored:
-                transform = transform.translatedBy(x: image.size.width, y: 0)
-                transform = transform.rotated(by: CGFloat.pi/2)
-                break
-            case .right, .rightMirrored:
-                transform = transform.translatedBy(x: 0, y: image.size.height)
-                transform = transform.rotated(by: -CGFloat.pi/2)
-                break
-            default:
-                break
-            }
-            
-            switch image.imageOrientation {
-            case .upMirrored, .downMirrored:
-                transform = transform.translatedBy(x: image.size.width, y: 0)
-                transform = transform.scaledBy(x: -1, y: 1)
-                break
-            case .leftMirrored, .rightMirrored:
-                transform = transform.translatedBy(x: image.size.height, y: 0)
-                transform = transform.scaledBy(x: -1, y: 1)
-                break
-            default:
-                break
-            }
-            
-            guard let cgImage = image.cgImage else {
-                return image
-            }
-            let colorSpace = CGColorSpaceCreateDeviceRGB()
-            let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
-            guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: Int(cgImage.bitsPerComponent), bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
-                return image
-            }
-            context.concatenate(transform)
-            switch image.imageOrientation {
-            case .left, .leftMirrored, .right, .rightMirrored:
-                context.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.height, height: image.size.width))
-                break
-            default:
-                context.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
-                break
-            }
-            
-            if let cgImg = context.makeImage() {
-                return UIImage(cgImage: cgImg)
-            }
-            
+extension UIImage {
+    
+    
+    /// fix orientation
+    public class func fixOrientation(ofImage image: UIImage) -> UIImage {
+        guard image.imageOrientation != .up else {
             return image
         }
-
+        var transform = CGAffineTransform.identity
+        switch image.imageOrientation {
+        case .down, .downMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: image.size.height)
+            transform = transform.rotated(by: CGFloat.pi)
+            break
+        case .left, .leftMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: 0)
+            transform = transform.rotated(by: CGFloat.pi/2)
+            break
+        case .right, .rightMirrored:
+            transform = transform.translatedBy(x: 0, y: image.size.height)
+            transform = transform.rotated(by: -CGFloat.pi/2)
+            break
+        default:
+            break
+        }
+        
+        switch image.imageOrientation {
+        case .upMirrored, .downMirrored:
+            transform = transform.translatedBy(x: image.size.width, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+            break
+        case .leftMirrored, .rightMirrored:
+            transform = transform.translatedBy(x: image.size.height, y: 0)
+            transform = transform.scaledBy(x: -1, y: 1)
+            break
+        default:
+            break
+        }
+        
+        guard let cgImage = image.cgImage else {
+            return image
+        }
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        guard let context = CGContext(data: nil, width: Int(image.size.width), height: Int(image.size.height), bitsPerComponent: Int(cgImage.bitsPerComponent), bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue) else {
+            return image
+        }
+        context.concatenate(transform)
+        switch image.imageOrientation {
+        case .left, .leftMirrored, .right, .rightMirrored:
+            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.height, height: image.size.width))
+            break
+        default:
+            context.draw(cgImage, in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+            break
+        }
+        
+        if let cgImg = context.makeImage() {
+            return UIImage(cgImage: cgImg)
+        }
+        
+        return image
+    }
+    
 }

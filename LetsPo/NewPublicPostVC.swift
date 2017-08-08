@@ -20,10 +20,10 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     }
     var animationsCount = 0
     
-
+    
     var reUpdate = NSLock()
     var shouldReUpdate = Bool()
-   
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -43,7 +43,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     var keyboardHeight:CGFloat? = nil
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
-  //  let resetNoteNN = Notification.Name("resetPublicNote")
+    //  let resetNoteNN = Notification.Name("resetPublicNote")
     var bgImage = UIImage()
     var allNoteData = [String:Any]()
     var boardID = Int16()
@@ -57,7 +57,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         //self.configureDataSource()
         self.configureCollectionView()
         self.configurePageControl()
-
+        
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
                                                                 FileManager.SearchPathDomainMask.userDomainMask, true)
@@ -105,14 +105,16 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     }
     
     override func viewWillAppear(_ animated: Bool) {
-
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {
             
             self.myTextView.isEditable = true
-
+            
             self.publicPost.addSubview(self.myTextView)
         }
     }
@@ -123,7 +125,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             shouldReUpdate = false
         }
     }
-
+    
     
     // MARK: Perpare segue
     
@@ -132,30 +134,30 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         let dragSegue = storyboard?.instantiateViewController(withIdentifier: "DragPublicPostVC") as! DragPublicPostVC
         
         
-
-        let newPosition = self.myTextView.beginningOfDocument
-
         
-            self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
-            self.myTextView.isEditable = false
-            
-           Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
+        let newPosition = self.myTextView.beginningOfDocument
+        
+        
+        self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
+        self.myTextView.isEditable = false
+        
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
             
             let resizeNote = self.publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
             dragSegue.resizeNote = resizeNote
-        
-        
-        
-        
-        self.saveNoteData()
-        dragSegue.allNoteData = self.allNoteData
-        dragSegue.bgImage = self.bgImage
-        dragSegue.boardID = self.boardID
-                
-        self.navigationController?.pushViewController(dragSegue, animated: true)
+            
+            
+            
+            
+            self.saveNoteData()
+            dragSegue.allNoteData = self.allNoteData
+            dragSegue.bgImage = self.bgImage
+            dragSegue.boardID = self.boardID
+            
+            self.navigationController?.pushViewController(dragSegue, animated: true)
         }
     }
-        
+    
     
     
     
@@ -425,7 +427,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     func changeBgBtn(button:UIButton) {
         publicPost.changeBgColor(button: button)
-            }
+    }
     
     
     

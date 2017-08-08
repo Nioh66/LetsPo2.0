@@ -31,10 +31,10 @@ class NoteScrollview :Note {
     
     override func draw(_ rect: CGRect) {
         
-//        self.addSubview(textScrollview)
+        //        self.addSubview(textScrollview)
         
         
-
+        
     }
     
     

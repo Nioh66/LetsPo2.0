@@ -22,23 +22,23 @@ class GetBoardNotes {
         
         for noteAttribute:NoteData in result{
             
-                //let noteID = noteAttribute.note_ID
+            //let noteID = noteAttribute.note_ID
             
             
-                guard let noteSelfieData = noteAttribute.note_Selfie,
-                    let noteSelfieImage = UIImage(data: noteSelfieData as Data)
-                    else{
-                        print("noteSelfieImage----------------NoteAttributes case failure!!!!!")
-                        return nil
-                }
-            
-                allNotes.append(noteSelfieImage)
+            guard let noteSelfieData = noteAttribute.note_Selfie,
+                let noteSelfieImage = UIImage(data: noteSelfieData as Data)
+                else{
+                    print("noteSelfieImage----------------NoteAttributes case failure!!!!!")
+                    return nil
             }
+            
+            allNotes.append(noteSelfieImage)
+        }
         return allNotes
     }
     
     func presentNotes(boardID: Int16, selfies: [UIImage]) -> [UIImageView]? {
-     
+        
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
         var allNotesSelfie = [UIImageView]()
@@ -51,8 +51,8 @@ class GetBoardNotes {
         
         for noteAttribute:NoteData in result{
             
-                let noteX = noteAttribute.note_X
-                let noteY = noteAttribute.note_Y
+            let noteX = noteAttribute.note_X
+            let noteY = noteAttribute.note_Y
             
             let noteSelfie = UIImageView(frame: CGRect(x: noteX, y: noteY, width: 100, height: 100))
             
@@ -73,10 +73,10 @@ class GetBoardNotes {
         }
         
         for boardBg:BoardData in result{
-           guard let bgImageData = boardBg.board_BgPic as Data?,
-            let bgImage = UIImage(data: bgImageData) else{
-                print("BgImage case failure!!!!!!")
-                return nil
+            guard let bgImageData = boardBg.board_BgPic as Data?,
+                let bgImage = UIImage(data: bgImageData) else{
+                    print("BgImage case failure!!!!!!")
+                    return nil
             }
             boardBgImage = bgImage
         }
@@ -96,9 +96,9 @@ class GetBoardNotes {
             let noteID = noteAttribute.note_ID
             allNotesID.append(noteID)
         }
-
+        
         return allNotesID
     }
     
     
-      }
+}

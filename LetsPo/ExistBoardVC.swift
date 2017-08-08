@@ -29,12 +29,12 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     let locationManager = LocationManager()
     let dataManagerCount = boardDataManager.count()
     var count = 0
-
+    
     
     @IBOutlet weak var collectionView: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         locationManager.delegate = self
         
         let location = CLLocation(latitude: Lat, longitude: Lon)
@@ -55,17 +55,17 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         print("\(allBoardID.count)")
         print("\(nearbyDic.count)")
         collectionView.reloadData()
-
         
-                // Do any additional setup after loading the view.
+        
+        // Do any additional setup after loading the view.
     }
     // MARK: Get board data
     func getAllBoard() {
         let allBoardCount = boardDataManager.count()
         
         for i in 0..<allBoardCount{
-        let result = boardDataManager.itemWithIndex(index: i)
-
+            let result = boardDataManager.itemWithIndex(index: i)
+            
             guard let boardSSD = result.board_ScreenShot as Data?,
                 let boardSS = UIImage(data: boardSSD) else{
                     return
@@ -80,7 +80,7 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     // MARK: CollectionView Delegate method
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 2
-
+        
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var returnCount : Int = 0
@@ -119,7 +119,7 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
             dragExistBoardVC.allNoteData = allNoteData
             dragExistBoardVC.resizeNote = resizeNote
             navigationController?.pushViewController(dragExistBoardVC, animated: true)
-
+            
         }else if section == 1 {
             let dragExistBoardVC = storyboard?.instantiateViewController(withIdentifier:"DragExistBoardVC") as! DragExistBoardVC
             dragExistBoardVC.boardID = allBoardID[indexPath.row]
@@ -128,7 +128,7 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
             dragExistBoardVC.resizeNote = resizeNote
             
             navigationController?.pushViewController(dragExistBoardVC, animated: true)
-
+            
         }else{
             
         }
@@ -141,7 +141,7 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         let width = (screenWidth-(itemCount-1)*spacing)/itemCount
         let size = CGSize(width: width, height: width)
         return size
-            }
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return spacing
@@ -158,7 +158,7 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         let section = indexPath.section
         
         let label = UILabel(frame: CGRect(x: 0, y: 0,
-            width: collectionView.frame.size.width/3, height: 40))
+                                          width: collectionView.frame.size.width/3, height: 40))
         label.textAlignment = .left
         
         // header
@@ -189,20 +189,20 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.frame.size.width/3, height: 40)
     }
-       override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     func locationManager(updatedUserLocation coordinate: CLLocation) {
         print("----M----")
@@ -240,14 +240,14 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
                 imgWithData = UIImage(data: img as Data)!
             }
             
-//            let pins = CLLocation.init(latitude: lat, longitude: lon)
-//            distance = pins.distance(from: userLocation) * 1.09361
+            //            let pins = CLLocation.init(latitude: lat, longitude: lon)
+            //            distance = pins.distance(from: userLocation) * 1.09361
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
                     nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
-//                    nearbyBoardScreenShot.append(imgWithData)
-//                    nearbyBoardID.append(board_id)
+                    //                    nearbyBoardScreenShot.append(imgWithData)
+                    //                    nearbyBoardID.append(board_id)
                     
                     
                 }else {
@@ -260,5 +260,5 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         }
         nearbyDic.sort { ($0["distance"] as! Double) < ($1["distance"] as! Double) }
     }
-
+    
 }

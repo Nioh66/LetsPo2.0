@@ -11,14 +11,14 @@ import UIKit
 class MapDetailViewController: UIViewController {
     
     var dataManagerCount = Int()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         dataManagerCount = boardDataManager.count()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

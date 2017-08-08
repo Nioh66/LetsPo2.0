@@ -15,7 +15,7 @@ class GetNoteDetail {
     func getNoteSetting(boardID: Int16,noteID: Int16,note:Note) -> Note? {
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
-      
+        
         
         guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
             print("Result case to [NoteData] failure!!!!")
@@ -46,7 +46,7 @@ class GetNoteDetail {
         
         let searchField = "note_BoardID"
         let keyword = "\(boardID)"
-//        let noteText = NoteText()
+        //        let noteText = NoteText()
         
         guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
             print("Result case to [NoteData] failure!!!!")
@@ -109,5 +109,5 @@ class GetNoteDetail {
         return noteImages
     }
     
-
+    
 }

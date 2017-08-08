@@ -14,14 +14,14 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var topBg: UIImageView!
     @IBOutlet weak var boardSetting: UIView!
-
+    
     @IBOutlet weak var boardCheckBtn: UIImageView!
     let sendBgImageNN = Notification.Name("sendBgImage")
     var topBgImage:UIImage!
     var thePost:Note!
     var resizeNote:UIImage!
     let resetNote = Notification.Name("resetNote")
-
+    
     var boardAlert:Bool = false
     var boardPrivacy:Bool = false
     var boardLat:Double = 0.0
@@ -30,7 +30,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     var boardTitle = ""
     
     
-    var allNoteData = [String:Any]()    
+    var allNoteData = [String:Any]()
     deinit {
         NotificationCenter.default.removeObserver(self,
                                                   name: sendBgImageNN,
@@ -58,9 +58,9 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         let tapToNext = UITapGestureRecognizer(target: self, action: #selector(goToNextPage))
         boardCheckBtn.isUserInteractionEnabled = true
         boardCheckBtn.addGestureRecognizer(tapToNext)
-
         
-
+        
+        
         NotificationCenter.default.addObserver(self, selector: #selector(theChooseOne),
                                                name: sendBgImageNN,
                                                object: nil)
@@ -69,6 +69,8 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -79,18 +81,18 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         }
         
     }
-
     
-   // Notification method
-
+    
+    // Notification method
+    
     func theChooseOne(notification:Notification) {
-      
+        
         topBgImage = notification.userInfo!["myBg"] as! UIImage
         print("get bg")
         topBg.image = topBgImage
     }
-
-   // Go to next page
+    
+    // Go to next page
     func goToNextPage() {
         
         let dragVC = storyboard?.instantiateViewController(withIdentifier:"DragBoardVC") as! DragBoardVC
@@ -113,7 +115,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         
     }
     
-   
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goExistBoard" {
             let existBoardSegue = segue.destination as! ExistBoardVC
@@ -121,9 +123,9 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
             existBoardSegue.allNoteData = allNoteData
             existBoardSegue.Lat = boardLat
             existBoardSegue.Lon = boardLon
-
+            
         }else if segue.identifier == "goDragBoard"{
-
+            
         }else{
             
         }
@@ -134,7 +136,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     @IBAction func privacyValueSwitchToChange(_ sender: UISwitch) {
         
         if sender.isOn {
-             boardPrivacy = true
+            boardPrivacy = true
         }else{
             boardPrivacy = false
         }

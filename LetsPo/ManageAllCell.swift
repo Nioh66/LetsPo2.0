@@ -74,7 +74,7 @@ class ManageAllCell: UICollectionViewCell {
         deleteBtn.setImage(UIImage(named: "garbage"), for: .normal)
         deleteBtn.isHidden = true
         deleteBtn.addTarget(self, action: #selector(fadeAndDelete), for: .touchUpInside)
-
+        
         self.addSubview(deleteBtn)
     }
     

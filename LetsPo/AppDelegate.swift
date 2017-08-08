@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
             }
         }
         UNUserNotificationCenter.current().delegate = self
-
+        
         return true
     }
 

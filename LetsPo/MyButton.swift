@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class MyButton: UIButton {
-
+    
     init(frame:CGRect,title:String,tag:Int,bgColor:UIColor,imageStr:String) {
         super.init(frame:frame)
         

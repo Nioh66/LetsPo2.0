@@ -9,7 +9,7 @@
 import UIKit
 
 class DragExistBoardVC: UIViewController {
-
+    
     
     @IBOutlet weak var publicBgImage: UIImageView!
     
@@ -23,11 +23,11 @@ class DragExistBoardVC: UIViewController {
     var boardID = Int16()
     var noteCount:Int16 = 0
     let resetNote = Notification.Name("resetNote")
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         publicBgImage.image = bgImage
         publicBgImage.isUserInteractionEnabled = true
         print(resizeNote)
@@ -44,7 +44,7 @@ class DragExistBoardVC: UIViewController {
         
         theDragNote.addGestureRecognizer(panGesture)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
-
+        
         // Do any additional setup after loading the view.
     }
     func panTheNote(sender:UIPanGestureRecognizer) {
@@ -56,29 +56,34 @@ class DragExistBoardVC: UIViewController {
         theDragNote.center = point
     }
     
-   
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        
+    }
+    
     func saveAndPop() {
         self.saveNoteData()
         self.uploadBoardBg()
         NotificationCenter.default.post(name: resetNote, object: nil)
         
-        tabBarController?.selectedIndex = 1
+        tabBarController?.selectedIndex = 0
         navigationController?.popToRootViewController(animated: true)
-
-//            self.navigationController?.popToRootViewController(animated: true)
-//        for controller in (self.navigationController?.viewControllers)!
-//        {
-//            if controller.isKind(of: ManageDetailViewController.self) == true{
-//                
-//                self.dismiss(animated: false) {
-//                    self.navigationController?.popToViewController(controller, animated: true)
-//                }
-//                
-//                break
-//            }
-//        }
+        
+        //            self.navigationController?.popToRootViewController(animated: true)
+        //        for controller in (self.navigationController?.viewControllers)!
+        //        {
+        //            if controller.isKind(of: ManageDetailViewController.self) == true{
+        //
+        //                self.dismiss(animated: false) {
+        //                    self.navigationController?.popToViewController(controller, animated: true)
+        //                }
+        //
+        //                break
+        //            }
+        //        }
     }
-
+    
     
     func uploadBoardBg() {
         guard let newBoardPic = self.view.boardScreenShot(),
@@ -162,21 +167,21 @@ class DragExistBoardVC: UIViewController {
             }
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }

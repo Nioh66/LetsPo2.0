@@ -12,7 +12,7 @@ import CoreLocation
 
 class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerControllerDelegate ,UICollectionViewDelegate ,UICollectionViewDataSource ,LocationManagerDelegate{
     private var collectionViewLayout : PostsLinearFlowLayout!
-//    private var dataSource: Array<Int>!
+    //    private var dataSource: Array<Int>!
     private var pageWidth : CGFloat{
         return  self.collectionViewLayout.itemSize.width + self.collectionViewLayout.minimumLineSpacing
     }
@@ -22,7 +22,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     }
     var animationsCount = 0
     
-
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var pageControl: UIPageControl!
@@ -31,7 +31,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     var myTextView = NoteText()
     var textContainer = NSTextContainer()
-
+    
     var imageForCell = [UIImage]()
     let cellSpace:CGFloat = 1
     
@@ -44,7 +44,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     let locationManager = LocationManager()
     var boardLat = Double()
     var boardLon = Double()
-
+    
     var allNoteData = [String:Any]()
     
     deinit {
@@ -62,7 +62,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         //self.configureDataSource()
         self.configureCollectionView()
         self.configurePageControl()
-
+        
         locationManager.delegate = self
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,
@@ -70,18 +70,18 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         //let documnetPath = documentPaths[0] as! String
         print(documentPaths)
         
-       
+        
         myTextView.frame = CGRect(x: 0, y: 0, width: thePost.frame.size.width, height: thePost.frame.size.height*0.8)
         thePost.clipsToBounds = true
-       
+        
         DispatchQueue.main.async {
-        self.thePost.addSubview(self.myTextView)
-  
-               }
+            self.thePost.addSubview(self.myTextView)
+            
+        }
         
         //        myTextView.setNeedsDisplay()
         //        myScrollView.addSubview(myTextView)
-       
+        
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
         tap.cancelsTouchesInView = false
@@ -124,14 +124,16 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         locationManager.startUpdate()
         
         myTextView.isEditable = true
-
+        
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         tabBarController?.tabBar.isHidden = false
-        navigationController?.navigationBar.topItem?.title = "定位便貼"
+//navigationController?.navigationBar.topItem?.title = "定位便貼"
         
     }
     
@@ -140,22 +142,22 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     }
     
     func reset(notification:Notification) {
-       
+        
         
         thePost.giveMeFreshNewNote()
         myTextView.giveMeFreshNewNoteText()
         imageForCell.removeAll()
         self.collectionView.reloadData()
-
+        
     }
-
     
-  
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         
         let newPostSegue = segue.destination as! BoardSettingVC
-     //   newPostSegue.thePost = thePost
+        //   newPostSegue.thePost = thePost
         
         
         
@@ -185,8 +187,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         //      NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: ncName, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
-      }
-   
+    }
+    
     func keyboardWillShow(kbNotification:Notification) {
         
         guard let kbInfo:[AnyHashable:Any] = kbNotification.userInfo,
@@ -354,7 +356,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     // MARK: Change post background color
     
     func changeBackgroundColor() {
-       
+        
         myInputView = nil
         
         myInputView = UIView()
@@ -448,7 +450,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     func changeBgBtn(button:UIButton) {
         thePost.changeBgColor(button: button)
-
+        
     }
     
     
@@ -529,11 +531,11 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
                 return
         }
         
-       // UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
+        // UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         
         imageForCell.append(imageX)
         collectionView.reloadData()
-    //    myTextView.addImageInText(image: imageX, NoteView: thePost)
+        //    myTextView.addImageInText(image: imageX, NoteView: thePost)
         
         self.dismiss(animated: true, completion: nil)
         
@@ -550,12 +552,12 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         self.collectionViewLayout = PostsLinearFlowLayout.configureLayout(collectionView: self.collectionView, itemSize: CGSize.init(width: 180, height: 180), minimumLineSpacing: 0)
     }
     
-//    func configureDataSource ()  {
-//        self.dataSource = [Int]()
-//        for i in 0..<imageForCell.count{
-//            self.dataSource.append(i)
-//        }
-//    }
+    //    func configureDataSource ()  {
+    //        self.dataSource = [Int]()
+    //        for i in 0..<imageForCell.count{
+    //            self.dataSource.append(i)
+    //        }
+    //    }
     
     func configurePageControl() {
         self.pageControl.numberOfPages = imageForCell.count
@@ -603,7 +605,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     @IBAction func pageControlValueChanged(_ sender: Any) {
         self.scrollToPage(page: self.pageControl.currentPage, animated: true)
-
+        
     }
     // MARK: collectionView delegate method
     
@@ -618,14 +620,14 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         //       self.configurebtn
         
     }
-
-
+    
+    
     
     
     //----------------
     
-       // MARK : Location method
-   
+    // MARK : Location method
+    
     func locationManager(updatedUserLocation coordinate: CLLocation) {
         print("1111")
         let boardPosition = coordinate
@@ -642,11 +644,11 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         print("Enter \(region.identifier)")
         
     }
-
+    
     
     
     // MARK: Save note data
-
+    
     func saveNoteData() {
         
         allNoteData.removeAll()
@@ -654,23 +656,23 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let noteContent = myTextView.text
         
         guard let fontColor = myTextView.textColor
-        else {
-            return
+            else {
+                return
         }
-
+        
         let textColorData = NSKeyedArchiver.archivedData(withRootObject: fontColor ) as NSData
         let noteFontColor = textColorData
         let noteFontSize = fontSizeData
         let noteImage = imageForCell
-       
+        
         let noteBgColor = noteDataManager.transformColorToData(targetColor: thePost.uploadcolor)
-
+        
         allNoteData = ["noteContent":noteContent ?? "",
                        "noteBgColor":noteBgColor,
                        "noteFontColor":noteFontColor ,
                        "noteFontSize":noteFontSize,
-                        "noteImage":noteImage]
-          }
+                       "noteImage":noteImage]
+    }
     
     
     override func didReceiveMemoryWarning() {
@@ -680,7 +682,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     
     
-
+    
 }
 
-    
+

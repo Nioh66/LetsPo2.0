@@ -20,65 +20,65 @@ class PublicPostDetailVC: UIViewController ,UICollectionViewDelegate ,UICollecti
     }
     var animationsCount = 0
     
-
-
+    
+    
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var displayNoteV: Note!
-
-     let getNoteDetail = GetNoteDetail()
-        var publicPostID = Int16()
-        var publicPost = Note()
-        var publicPostT = NoteText()
-        var imageForCell = [UIImage]()
-        let cellSpace:CGFloat = 1
-        var boardID = Int16()
+    
+    let getNoteDetail = GetNoteDetail()
+    var publicPostID = Int16()
+    var publicPost = Note()
+    var publicPostT = NoteText()
+    var imageForCell = [UIImage]()
+    let cellSpace:CGFloat = 1
+    var boardID = Int16()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        override func viewDidLoad() {
-            super.viewDidLoad()
-            
-            
-            //self.configureDataSource()
-            self.configureCollectionView()
-            self.configurePageControl()
-
-            
-            //  selfPost.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
-            publicPostT.frame = CGRect(x: 0, y: 0, width: displayNoteV.frame.size.width*0.8, height: displayNoteV.frame.size.height*0.7)
-            
-            guard let postBg = getNoteDetail.getNoteSetting(boardID: boardID, noteID: publicPostID, note: displayNoteV),
-                let postText = getNoteDetail.getNoteText(boardID: boardID, noteID: publicPostID, noteText: publicPostT)
-                else{
-                    print("getNoteSetting fail")
-                    return
-            }
-
-
-            
-            displayNoteV = postBg
-            publicPostT = postText
-            if let postImage = getNoteDetail.getNoteImage(boardID: boardID, noteID: publicPostID){
-                imageForCell = postImage
-            }
-            
-        }
         
-        override func viewWillAppear(_ animated: Bool) {
-            
-            DispatchQueue.main.async {
-                self.publicPostT.isEditable = false
-                self.displayNoteV.addSubview(self.publicPostT)
-            }
+        //self.configureDataSource()
+        self.configureCollectionView()
+        self.configurePageControl()
+        
+        
+        //  selfPost.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
+        publicPostT.frame = CGRect(x: 0, y: 0, width: displayNoteV.frame.size.width*0.8, height: displayNoteV.frame.size.height*0.7)
+        
+        guard let postBg = getNoteDetail.getNoteSetting(boardID: boardID, noteID: publicPostID, note: displayNoteV),
+            let postText = getNoteDetail.getNoteText(boardID: boardID, noteID: publicPostID, noteText: publicPostT)
+            else{
+                print("getNoteSetting fail")
+                return
         }
         
         
-        override func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-            // Dispose of any resources that can be recreated.
+        
+        displayNoteV = postBg
+        publicPostT = postText
+        if let postImage = getNoteDetail.getNoteImage(boardID: boardID, noteID: publicPostID){
+            imageForCell = postImage
         }
         
-        // MARK: Collectionview delegate method
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        DispatchQueue.main.async {
+            self.publicPostT.isEditable = false
+            self.displayNoteV.addSubview(self.publicPostT)
+        }
+    }
+    
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Collectionview delegate method
     
     
     func configureCollectionView() {

@@ -11,8 +11,8 @@ import UIKit
 
 class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
-  //  @IBOutlet weak var boardBackgroundImage: UIImageView!
-  //  let sendBgImageNN = Notification.Name("sendBgImage")
+    //  @IBOutlet weak var boardBackgroundImage: UIImageView!
+    //  let sendBgImageNN = Notification.Name("sendBgImage")
     var topBgImages:UIImage?
     
     @IBOutlet weak var topImage: UIImageView!
@@ -27,7 +27,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     //Note data
     var allNoteData = [String:Any]()
     var boardID = Int16()
-
+    
     //Board data
     var boardScreenShot = UIImage()
     var boardAlert = Bool()
@@ -41,20 +41,20 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
-   //     self.navigationController?.navigationBar.isHidden = true
+        //     self.navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
         topImage.image = topBgImages
         topImage.isUserInteractionEnabled = true
-       
+        
         NoteImageView.frame = CGRect(x: posterX,
-                              y: posterY,
-                              width: posterEdge,
-                              height: posterEdge)
+                                     y: posterY,
+                                     width: posterEdge,
+                                     height: posterEdge)
         NoteImageView.image = resizeNote
         print(resizeNote)
         print(NoteImageView.frame)
         topImage.addSubview(NoteImageView)
-
+        
         NoteImageView.isUserInteractionEnabled = true
         NoteImageView.isMultipleTouchEnabled = true
         
@@ -67,6 +67,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         tabBarController?.tabBar.isHidden = true
         
     }
@@ -76,7 +78,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         self.saveBoardData()
         self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
-        tabBarController?.selectedIndex = 1
+        tabBarController?.selectedIndex = 0
         navigationController?.popToRootViewController(animated: true)
     }
     
@@ -97,17 +99,17 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
     func saveNoteData() {
         let noteItem = noteDataManager.createItem()
-
+        
         let postX = NoteImageView.frame.minX
         let postY = NoteImageView.frame.minY
         let noteX = Double(postX)
         let noteY = Double(postY)
-
+        
         guard let noteContent = allNoteData["noteContent"] as? String?,
-             let noteBgColor = allNoteData["noteBgColor"] as? NSData,
-             let noteFontColor = allNoteData["noteFontColor"] as? NSData,
-             let noteFontSize = allNoteData["noteFontSize"] as? Double,
-             let noteImage = allNoteData["noteImage"] as? [UIImage],
+            let noteBgColor = allNoteData["noteBgColor"] as? NSData,
+            let noteFontColor = allNoteData["noteFontColor"] as? NSData,
+            let noteFontSize = allNoteData["noteFontSize"] as? Double,
+            let noteImage = allNoteData["noteImage"] as? [UIImage],
             let noteSelfie = UIImagePNGRepresentation(resizeNote) as NSData?
             else {
                 print("Case failure!!!!!!!!")
@@ -117,7 +119,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             print("imageJson transform failure!!!!")
             return
         }
-
+        
         print("---------\(imageJson)-------------")
         
         
@@ -165,10 +167,10 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     func saveBoardData() {
         //BoardID set
         let itemCount = boardDataManager.count()
-
+        
         if itemCount == 0{
             let boardItem = boardDataManager.createItem()
-
+            
             boardItem.board_Id = 1
             boardID = 1
             
@@ -199,11 +201,11 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                     print("BoardData save failure!!!")
                 }
             }
-
+            
         }else{
             let lastBoardItem = boardDataManager.itemWithIndex(index: 0)
             let boardItem = boardDataManager.createItem()
-
+            
             boardItem.board_Id = lastBoardItem.board_Id + 1
             boardID = boardItem.board_Id
             
@@ -233,12 +235,12 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                     print("BoardData save failure!!!")
                 }
             }
-
+            
         }
         
-    //  boardItem.board_Creater = nil
-
-          }
+        //  boardItem.board_Creater = nil
+        
+    }
     func transformDateTimeZone() -> String {
         let dateFormate = DateFormatter()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -248,5 +250,5 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         print("stringOfDate \(stringOfDate)")
         return stringOfDate
     }
- 
-  }
+    
+}

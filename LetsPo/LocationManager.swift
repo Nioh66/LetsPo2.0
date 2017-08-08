@@ -32,7 +32,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.requestAlwaysAuthorization()
         
     }
- 
+    
     public func startUpdate(){
         locationManager.startUpdatingLocation()
     }
@@ -67,12 +67,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     public func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion){
         guard ((delegate?.locationManager!(userDidEnterRegion: region)) != nil) else {return}
-
+        
     }
     
     public func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion){
         guard ((delegate?.locationManager!(userDidExitRegion: region)) != nil) else {return}
-     }
+    }
     
     public func isMonitoringAvailable(lat:CLLocationDegrees,lon:CLLocationDegrees,regi: CLCircularRegion,distance:CLLocationDistance,identifier:String){
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){

@@ -12,7 +12,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     
     let boardSettingNN = Notification.Name("boardSetting")
     let newNoteComingNN = Notification.Name("newPublicNoteComing")
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self,name: boardSettingNN,object: nil)
         NotificationCenter.default.removeObserver(self,name: newNoteComingNN,object: nil)
@@ -25,16 +25,16 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     let getBoardPosts = GetBoardNotes()
     var secondTime:Bool!
     var fromNewNote:Bool!
-
-
+    
+    
     
     @IBOutlet weak var boardSettingBtn: UIButton!
     @IBOutlet weak var addPostBtn: UIButton!
     @IBOutlet weak var deletePostBtn: UIButton!
-        
+    
     @IBOutlet weak var detailNoteAppearPoint: UIView!
     @IBOutlet weak var backGroundImage: UIImageView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,44 +48,44 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         dataManagerCount = boardDataManager.count()
         
         print("select Index ID \(selectIndexID)")
-//        print("select ID from map \(selectIDformMap)")
+        //        print("select ID from map \(selectIDformMap)")
         
-//        if selectIndexID == 0 {
-//            print("nil")
-//            return
-//        }
-//        selectIndexID = 1
+        //        if selectIndexID == 0 {
+        //            print("nil")
+        //            return
+        //        }
+        //        selectIndexID = 1
         
-//        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
-//            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
-//            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
-//            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
-//            else{
-//                return
-//        }
-//        print(backGroundImage)
-//        
-//        backGroundImage.image = bgImage
-//        backGroundImage.isUserInteractionEnabled = true
-//        
-//        for (index,imageview) in allPosts.enumerated(){
-//            print(index)
-//            imageview.isUserInteractionEnabled = true
-//            imageview.backgroundColor = UIColor.clear
-//            
-//            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
-//            detailBtn.postImageView = imageview
-//            detailBtn.postID = allPostsID[index]
-//            detailBtn.boardID = selectIndexID
-//            backGroundImage.addSubview(imageview)
-//            
-//            imageview.addGestureRecognizer(detailBtn)
-//        }
+        //        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
+        //            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
+        //            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
+        //            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
+        //            else{
+        //                return
+        //        }
+        //        print(backGroundImage)
+        //
+        //        backGroundImage.image = bgImage
+        //        backGroundImage.isUserInteractionEnabled = true
+        //
+        //        for (index,imageview) in allPosts.enumerated(){
+        //            print(index)
+        //            imageview.isUserInteractionEnabled = true
+        //            imageview.backgroundColor = UIColor.clear
+        //
+        //            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
+        //            detailBtn.postImageView = imageview
+        //            detailBtn.postID = allPostsID[index]
+        //            detailBtn.boardID = selectIndexID
+        //            backGroundImage.addSubview(imageview)
+        //
+        //            imageview.addGestureRecognizer(detailBtn)
+        //        }
         
     }
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
-
+        
         let detailPostID = gestureRecognizer.postID
         let detailboardID = gestureRecognizer.boardID
         print("GoToDetail did press")
@@ -104,7 +104,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     
     
     @IBAction func boardSettingBtnPressed(_ sender: UIButton) {
-       // PublicBoardSettingVC
+        // PublicBoardSettingVC
         
         print("boardSettingBtnPressed action")
         
@@ -118,7 +118,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         popDetailPostVC?.sourceView = boardSettingBtn
         popDetailPostVC?.sourceRect = boardSettingBtn.bounds
         present(publicBoardSettinglVC, animated: true, completion: nil)
-
+        
         
     }
     
@@ -133,6 +133,8 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         tabBarController?.tabBar.isHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         dataManagerCount = boardDataManager.count()
@@ -187,7 +189,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             print("index ... =  \(allPostsID[index])")
             backGroundImage.addSubview(imageview)
             print("add add add")
-
+            
         }
         // fromNewNote 設成 false 等一下跳來跳去 又是一條好漢 繼續全部拔掉再貼上
         fromNewNote = false
@@ -197,12 +199,12 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     }
     // MARK: Adding NotificationCenter observer
     func addingObserver() {
-  //      NotificationCenter.default.addObserver(self, selector: #selector(boardReset),name: boardSettingNN,object: nil)
+        //      NotificationCenter.default.addObserver(self, selector: #selector(boardReset),name: boardSettingNN,object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newNoteComing), name: newNoteComingNN, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(theChooseOne),
                                                name: NSNotification.Name(rawValue: "notificationCenter"),
                                                object: nil)
-
+        
         
     }
     func theChooseOne(notification:Notification) {
@@ -226,13 +228,13 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         print("fromNewNote \(fromNewNote)")
         
     }
-//    func boardReset(notification:Notification) {
-//        
-//        let  BgImage:UIImage = notification.userInfo!["selfBg"] as! UIImage
-//        
-//        selfBgImage.image = BgImage
-//    }
-//
+    //    func boardReset(notification:Notification) {
+    //
+    //        let  BgImage:UIImage = notification.userInfo!["selfBg"] as! UIImage
+    //
+    //        selfBgImage.image = BgImage
+    //    }
+    //
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "newPublicNote"){
@@ -260,5 +262,5 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         
         return BGimageWithPosts!
     }
-
-   }
+    
+}

@@ -17,6 +17,6 @@ class PublicDetailImageCell: UICollectionViewCell {
         detailImage.layer.cornerRadius = 10.0
         detailImage.layer.masksToBounds = true
     }
-
+    
     
 }

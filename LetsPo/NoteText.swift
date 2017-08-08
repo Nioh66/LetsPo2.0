@@ -13,12 +13,12 @@ class NoteText: UITextView {
     
     let IMAGE_PADDING:CGFloat = 10
     
-   // var myText = UITextView()
+    // var myText = UITextView()
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame:frame ,textContainer:textContainer)
         
         
-//        self.frame = frame
+        //        self.frame = frame
         // 背景顏色
         self.backgroundColor = UIColor.clear
         // 文字顏色
@@ -35,18 +35,18 @@ class NoteText: UITextView {
         // 鍵盤上的 return 鍵樣式 這邊選擇預設的
         self.returnKeyType = .default
         
-
-           }    
+        
+    }
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func draw(_ rect: CGRect) {
-       
- //       self.addSubview(myText)
+        
+        //       self.addSubview(myText)
     }
     
     // MARK: Change font color
-
+    
     func changeFontColor(tag:Int){
         switch tag {
         case 111:
@@ -76,9 +76,9 @@ class NoteText: UITextView {
         self.textColor = UIColor.black
         self.text = "Enter Post content"
         self.font = UIFont.boldSystemFont(ofSize: 14)
-
+        
     }
-
+    
     func changeFontsize(value:CGFloat) {
         self.font = UIFont.boldSystemFont(ofSize: value)
     }
@@ -86,7 +86,7 @@ class NoteText: UITextView {
     // MARK: addImage
     func addImageInText(image:UIImage ,NoteView:Note){
         
-
+        
         let textAttachment = NSTextAttachment()
         var attributedString :NSMutableAttributedString!
         attributedString = NSMutableAttributedString(attributedString:self.attributedText)
@@ -95,7 +95,7 @@ class NoteText: UITextView {
         
         fixedImage = UIImage.fixOrientation(ofImage: fixedImage)
         
-
+        
         
         textAttachment.image = fixedImage
         
@@ -104,9 +104,9 @@ class NoteText: UITextView {
         let oldWidth = textAttachment.image!.size.width;
         
         // 10px for padding
-//        let scaleFactor = oldWidth / (self.frame.size.width - IMAGE_PADDING);
+        //        let scaleFactor = oldWidth / (self.frame.size.width - IMAGE_PADDING);
         let scaleFactor = oldWidth / (self.frame.size.width - 100);
-
+        
         textAttachment.image = UIImage(cgImage: textAttachment.image!.cgImage!, scale: scaleFactor, orientation: .up)
         textAttachment.accessibilityElementCount()
         let attrStringWithImage = NSAttributedString(attachment: textAttachment)

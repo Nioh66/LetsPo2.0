@@ -10,13 +10,13 @@ import UIKit
 
 class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
-     let cellTitle = ["個人資料","通知管理","好友管理"]
+    let cellTitle = ["個人資料","通知管理","好友管理"]
     let selfieBgImageNN = Notification.Name("selfie")
     
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var personalName: UILabel!
     @IBOutlet weak var personalImage: UIImageView!
-
+    
     deinit {
         NotificationCenter.default.removeObserver(self, name: selfieBgImageNN, object: nil)
     }
@@ -28,7 +28,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         // Do any additional setup after loading the view.
     }
     func theBGimage(notification:Notification) {
-         personalImage.image = notification.userInfo!["selfieBg"] as? UIImage//??
+        personalImage.image = notification.userInfo!["selfieBg"] as? UIImage//??
         
     }
     
@@ -66,7 +66,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             let nextPage = storyboard?.instantiateViewController(withIdentifier: "MyNiggerVC") as? MyNiggerVC
             nextPage?.navigationItem.leftItemsSupplementBackButton = true
             navigationController?.pushViewController(nextPage!, animated: true)
-
+            
         }else{
             
         }
@@ -77,7 +77,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
         personalImage.layer.masksToBounds = true
-
+        
         
     }
 }

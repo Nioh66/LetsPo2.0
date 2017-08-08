@@ -9,7 +9,7 @@
 import UIKit
 
 class PublicBoardSettingVC: UIViewController {
-   
+    
     
     @IBOutlet weak var boardPrivacyValue: UISwitch!
     @IBOutlet weak var boardAlertValue: UISwitch!
@@ -25,7 +25,7 @@ class PublicBoardSettingVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(boardID)") as! [BoardData]
         
         
@@ -40,14 +40,14 @@ class PublicBoardSettingVC: UIViewController {
                     boardPrivacyValue.isOn = true
                 }else{
                     boardPrivacyValue.isOn = false
-
+                    
                 }
             }
         }
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -63,7 +63,7 @@ class PublicBoardSettingVC: UIViewController {
         self.updateBoardData()
         print("ssssss")
     }
-
+    
     @IBAction func noticeSwitchChangeValue(_ sender: UISwitch) {
         
         if sender.isOn {
@@ -96,5 +96,5 @@ class PublicBoardSettingVC: UIViewController {
             }
         }
     }
-
+    
 }

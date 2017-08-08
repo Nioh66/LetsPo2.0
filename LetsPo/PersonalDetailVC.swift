@@ -9,7 +9,7 @@
 import UIKit
 
 class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
-
+    
     
     @IBOutlet weak var personalImage: UIImageView!
     @IBOutlet weak var selfDataTable: UITableView!
@@ -29,32 +29,32 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
         personalImage.layer.masksToBounds = true
-//      personalImage.frame = CGRect(x: self.view.center.x - 75, y: 75, width: 150, height: 150)
+        //      personalImage.frame = CGRect(x: self.view.center.x - 75, y: 75, width: 150, height: 150)
         
-       
+        
     }
     @IBAction func editeSelfie(_ sender: Any) {
-    let alert = UIAlertController(title: "Edite", message: "Please select source", preferredStyle:.alert)
-    let camera = UIAlertAction(title: "Camera", style: .default) { _ in
-        self.photographer.sourceType = .camera
-        self.photographer.cameraDevice = .rear
-        self.photographer.allowsEditing = true
-        self.photographer.delegate = self
-        self.present(self.photographer, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Edite", message: "Please select source", preferredStyle:.alert)
+        let camera = UIAlertAction(title: "Camera", style: .default) { _ in
+            self.photographer.sourceType = .camera
+            self.photographer.cameraDevice = .rear
+            self.photographer.allowsEditing = true
+            self.photographer.delegate = self
+            self.present(self.photographer, animated: true, completion: nil)
         }
         
-    let photos = UIAlertAction(title: "Photos", style: .default) { _ in
-        
-        self.photographer.sourceType = .photoLibrary
-        self.photographer.allowsEditing = true
-        self.photographer.delegate = self
-        self.present(self.photographer, animated: true, completion: nil)
-        
+        let photos = UIAlertAction(title: "Photos", style: .default) { _ in
+            
+            self.photographer.sourceType = .photoLibrary
+            self.photographer.allowsEditing = true
+            self.photographer.delegate = self
+            self.present(self.photographer, animated: true, completion: nil)
+            
         }
-    let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         
-       
+        
         alert.addAction(camera)
         alert.addAction(photos)
         alert.addAction(cancel)
@@ -70,7 +70,7 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellTitle.count
     }
-   
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
@@ -89,13 +89,13 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     func setLabelWithFrame(){
         nameLabel.font = UIFont.systemFont(ofSize: 25)
         nameLabel.frame = CGRect(x: 0, y: self.view.center.y * 0.70, width: UIScreen.main.bounds.size.width, height: 30)
-      }
-   
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationItem.title = "個人資料"
-   //     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editBtnAction))
+        //     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editBtnAction))
     }
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
@@ -131,12 +131,12 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
         
         //Change selfie image
         personalImage.image = imageX
-
+        
         
         self.dismiss(animated: true, completion: nil)
         
     }
-
+    
     
 }
 extension UIColor {

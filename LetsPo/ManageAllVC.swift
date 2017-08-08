@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 
 class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionViewDelegateFlowLayout,Delegation {
-
+    
     let cellId = "CellId"
     var colView: UICollectionView!
     var all = [[String:Any]]()
@@ -207,5 +207,5 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
     override func viewWillDisappear(_ animated: Bool) {
         hideAllDeleteBtn()
     }
-
+    
 }

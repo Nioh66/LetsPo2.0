@@ -17,7 +17,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
     
     
     deinit {
-      NotificationCenter.default.removeObserver(self,
+        NotificationCenter.default.removeObserver(self,
                                                   name: sendBgImageNN,
                                                   object: nil)
     }
@@ -36,7 +36,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         let tapDefault02 = UITapGestureRecognizer(target: self, action: #selector(getDefault02Bg))
         let tapDefault03 = UITapGestureRecognizer(target: self, action: #selector(getDefault03Bg))
         let tapDefault04 = UITapGestureRecognizer(target: self, action: #selector(getDefault04Bg))
-
+        
         let tapGetPhotos = UITapGestureRecognizer(target: self, action: #selector(addPictureBtn))
         let tapTakePhoto = UITapGestureRecognizer(target: self, action: #selector(takePictureBtn))
         
@@ -85,16 +85,16 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         
         defaultBg02.layer.cornerRadius = 10.0
         defaultBg02.layer.masksToBounds = true
-
+        
         defaultBg03.layer.cornerRadius = 10.0
         defaultBg03.layer.masksToBounds = true
-
+        
         defaultBg04.layer.cornerRadius = 10.0
         defaultBg04.layer.masksToBounds = true
-
+        
         photosBg.layer.cornerRadius = 10.0
         photosBg.layer.masksToBounds = true
-
+        
         takeAPhoto.layer.cornerRadius = 10.0
         takeAPhoto.layer.masksToBounds = true
         
@@ -120,10 +120,12 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         self.view.addSubview(defaultBg04)
         self.view.addSubview(photosBg)
         self.view.addSubview(takeAPhoto)
-           }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         tabBarController?.tabBar.isHidden = true
         
     }
@@ -137,37 +139,37 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         
         
         navigationController?.popViewController(animated: true)
-
+        
         
         //        let nextVC = storyboard?.instantiateViewController(withIdentifier:"BoardSettingVC") as! BoardSettingVC
-//               dismiss(animated: true, completion: nil)
-
-
+        //               dismiss(animated: true, completion: nil)
+        
+        
     }
     func getDefault02Bg(){
         bgImage = UIImage(named: "myNigger.jpg")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         print("get the default bg pic!")
         navigationController?.popViewController(animated: true)
-
+        
     }
-
+    
     func getDefault03Bg(){
         bgImage = UIImage(named: "whiteboard-303145_960_720")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         print("get the default bg pic!")
         
         navigationController?.popViewController(animated: true)
-
+        
     }
-
+    
     func getDefault04Bg(){
         bgImage = UIImage(named: "Sky.jpg")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         print("get the default bg pic!")
         navigationController?.popViewController(animated: true)
     }
-
+    
     // MARK: Add photo from photos
     
     func addPictureBtn() {
@@ -179,7 +181,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
             importImage.delegate = self
             importImage.allowsEditing = true
             present(importImage, animated: true, completion: nil)
-
+            
         }
         else{
             print("Your photoLibrary are unvailable")
@@ -230,7 +232,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         print("XXXX")
-
+        
         
         guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage,
             let imageX = imageFactory.resizeFromImage(input: image) //resize image
@@ -242,7 +244,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":imageX])
         self.dismiss(animated: true, completion: nil)
         navigationController?.popViewController(animated: true)
-
+        
     }
     
     
