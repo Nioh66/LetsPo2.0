@@ -129,9 +129,8 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
         myTextView.isEditable = true
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+
         tabBarController?.tabBar.isHidden = false
 //navigationController?.navigationBar.topItem?.title = "定位便貼"
         

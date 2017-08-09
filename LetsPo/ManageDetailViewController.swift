@@ -102,6 +102,9 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         present(publicPostDetailVC, animated: true, completion: nil)
     }
     
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: false)
+    }
     
     @IBAction func boardSettingBtnPressed(_ sender: UIButton) {
         // PublicBoardSettingVC
@@ -132,11 +135,10 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        tabBarController?.tabBar.isHidden = false
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        navigationController?.setNavigationBarHidden(true, animated: false)
+       
+        tabBarController?.tabBar.isHidden = true
+        
         dataManagerCount = boardDataManager.count()
         if selectIndexID == 0 {
             print("nil")

@@ -68,9 +68,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.isNavigationBarHidden = true
         tabBarController?.tabBar.isHidden = true
     }
     
@@ -115,6 +113,9 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         
     }
     
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goExistBoard" {

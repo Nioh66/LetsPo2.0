@@ -35,6 +35,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var collectionViewOne: UICollectionView!
     //    var collectionViewThree:UICollectionView!
     
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "comeFromMap"), object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

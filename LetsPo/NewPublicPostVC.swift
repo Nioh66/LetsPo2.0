@@ -106,9 +106,8 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     override func viewWillAppear(_ animated: Bool) {
         
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+       
         tabBarController?.tabBar.isHidden = true
         
         DispatchQueue.main.async {
@@ -118,19 +117,12 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             self.publicPost.addSubview(self.myTextView)
         }
     }
-    
-    func doUnlock(){
-        reUpdate.unlock()
-        if shouldReUpdate{
-            shouldReUpdate = false
-        }
+    // MARK: Button method
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
     
-    
-    // MARK: Perpare segue
-    
-    
-    @IBAction func goDragGo(_ sender: UIBarButtonItem) {
+    @IBAction func saveBtnPressed(_ sender: UIButton) {
         let dragSegue = storyboard?.instantiateViewController(withIdentifier: "DragPublicPostVC") as! DragPublicPostVC
         
         
@@ -156,11 +148,14 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             
             self.navigationController?.pushViewController(dragSegue, animated: true)
         }
+
     }
-    
-    
-    
-    
+    func doUnlock(){
+        reUpdate.unlock()
+        if shouldReUpdate{
+            shouldReUpdate = false
+        }
+    }
     func setKeyboardObserver() {
         
         //      NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: ncName, object: nil)

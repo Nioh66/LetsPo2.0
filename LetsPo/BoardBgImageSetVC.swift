@@ -123,11 +123,15 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
         tabBarController?.tabBar.isHidden = true
         
+    }
+    
+    // MARK: Button method
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
     
     func getDefault01Bg(){

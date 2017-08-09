@@ -47,13 +47,13 @@ class DragPublicPostVC: UIViewController {
         publicBgImage.image = bgImage
         publicBgImage.isUserInteractionEnabled = true
         
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
         // Do any additional setup after loading the view.
     }
     
-    
-    func saveAndPop() {
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
+    @IBAction func saveBtnPressed(_ sender: UIButton) {
         self.saveNoteData()
         self.uploadBoardBg()
         NotificationCenter.default.post(name: newNoteComingNN, object: nil)
@@ -71,13 +71,12 @@ class DragPublicPostVC: UIViewController {
                 break
             }
         }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        tabBarController?.tabBar.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: false)
+            tabBarController?.tabBar.isHidden = true
         
     }
     

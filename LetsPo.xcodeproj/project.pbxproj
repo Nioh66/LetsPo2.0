@@ -196,6 +196,7 @@
 		300842421F3862F500061192 /* SelfBoard */ = {
 			isa = PBXGroup;
 			children = (
+				30D092A01F1E3FDF00CB3F88 /* SelfPost.storyboard */,
 				304CB6741F258F6D00AEF632 /* SelfPostBgSelectVC.swift */,
 				304CB6781F258FAF00AEF632 /* SelfPostHomeVC.swift */,
 				30CAD4171F3074EC0042B059 /* SelfPostDetailVC.swift */,
@@ -347,7 +348,6 @@
 		30D092831F1E34C700CB3F88 /* PL */ = {
 			isa = PBXGroup;
 			children = (
-				30D092A01F1E3FDF00CB3F88 /* SelfPost.storyboard */,
 				30D092A51F1E41A300CB3F88 /* NewPost.storyboard */,
 				30D092B71F1E49E800CB3F88 /* Account.storyboard */,
 			);

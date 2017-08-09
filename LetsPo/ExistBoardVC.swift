@@ -59,6 +59,12 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     // MARK: Get board data
     func getAllBoard() {
         let allBoardCount = boardDataManager.count()

@@ -40,9 +40,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
+        
         //     self.navigationController?.navigationBar.isHidden = true
-        self.tabBarController?.tabBar.isHidden = false
         topImage.image = topBgImages
         topImage.isUserInteractionEnabled = true
         
@@ -66,21 +65,24 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        
         tabBarController?.tabBar.isHidden = true
         
     }
     // MARK: Btn method
     
-    func saveAndPop() {
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: false)
+    }
+    @IBAction func saveBtnPressed(_ sender: UIButton) {
         self.saveBoardData()
         self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
         tabBarController?.selectedIndex = 0
         navigationController?.popToRootViewController(animated: true)
     }
+    
     
     
     

@@ -43,8 +43,6 @@ class DragExistBoardVC: UIViewController {
         panGesture.minimumNumberOfTouches = 1
         
         theDragNote.addGestureRecognizer(panGesture)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveAndPop))
-        
         // Do any additional setup after loading the view.
     }
     func panTheNote(sender:UIPanGestureRecognizer) {
@@ -57,33 +55,21 @@ class DragExistBoardVC: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        navigationController?.navigationBar.isTranslucent = true
-        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    func saveAndPop() {
+    
+    @IBAction func saveBtnPressed(_ sender: UIButton) {
         self.saveNoteData()
         self.uploadBoardBg()
         NotificationCenter.default.post(name: resetNote, object: nil)
         
         tabBarController?.selectedIndex = 0
         navigationController?.popToRootViewController(animated: true)
-        
-        //            self.navigationController?.popToRootViewController(animated: true)
-        //        for controller in (self.navigationController?.viewControllers)!
-        //        {
-        //            if controller.isKind(of: ManageDetailViewController.self) == true{
-        //
-        //                self.dismiss(animated: false) {
-        //                    self.navigationController?.popToViewController(controller, animated: true)
-        //                }
-        //
-        //                break
-        //            }
-        //        }
     }
-    
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
     
     func uploadBoardBg() {
         guard let newBoardPic = self.view.boardScreenShot(),
