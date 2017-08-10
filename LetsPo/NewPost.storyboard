@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vlh-Qj-ywM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vlh-Qj-ywM">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -53,9 +53,9 @@
                                     <action selector="pageControlValueChanged:" destination="hCD-hw-x7X" eventType="valueChanged" id="lMN-7I-c2v"/>
                                 </connections>
                             </pageControl>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35V-8H-xyq">
-                                <rect key="frame" x="333" y="350" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="35V-8H-xyq">
+                                <rect key="frame" x="327" y="340" width="40" height="40"/>
+                                <state key="normal" image="success"/>
                                 <connections>
                                     <segue destination="S9c-oC-CrO" kind="show" id="wqV-zW-VQr"/>
                                 </connections>
@@ -123,10 +123,10 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vt0-o3-az9">
                                 <rect key="frame" x="56" y="510" width="263" height="41"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="backgroundColor" red="0.88555645942687988" green="0.88762921094894409" blue="0.90514421463012695" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
                                 <state key="normal" title="從現有的板上新增">
-                                    <color key="titleColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -211,8 +211,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="success" translatesAutoresizingMaskIntoConstraints="NO" id="sCD-1k-QNN">
-                                        <rect key="frame" x="106" y="340" width="50" height="50"/>
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="next" translatesAutoresizingMaskIntoConstraints="NO" id="sCD-1k-QNN">
+                                        <rect key="frame" x="111" y="350" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="sCD-1k-QNN" secondAttribute="height" multiplier="1:1" id="MlB-MA-7Ax"/>
                                         </constraints>
@@ -238,9 +238,9 @@
                                     <constraint firstItem="sCD-1k-QNN" firstAttribute="centerX" secondItem="Oih-ln-eRa" secondAttribute="centerX" id="wLw-Fu-YBl"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ldd-1v-FlE">
-                                <rect key="frame" x="16" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ldd-1v-FlE">
+                                <rect key="frame" x="16" y="20" width="40" height="40"/>
+                                <state key="normal" image="back"/>
                                 <connections>
                                     <action selector="backBtnPressed:" destination="S9c-oC-CrO" eventType="touchUpInside" id="ral-1S-aTd"/>
                                 </connections>
@@ -288,16 +288,16 @@
                             <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="HD1-4n-gb7">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAP-3l-jRx">
-                                <rect key="frame" x="16" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oAP-3l-jRx">
+                                <rect key="frame" x="16" y="20" width="40" height="40"/>
+                                <state key="normal" image="back"/>
                                 <connections>
                                     <action selector="backBtnPressed:" destination="zWl-V2-hYI" eventType="touchUpInside" id="d0p-CA-vzr"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJ9-7d-oxh">
-                                <rect key="frame" x="325" y="20" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJ9-7d-oxh">
+                                <rect key="frame" x="319" y="20" width="40" height="40"/>
+                                <state key="normal" image="success"/>
                                 <connections>
                                     <action selector="saveBtnPressed:" destination="zWl-V2-hYI" eventType="touchUpInside" id="plD-2f-DDL"/>
                                 </connections>
@@ -408,16 +408,16 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wyG-J8-3VI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="93A-tp-5Xs">
-                                <rect key="frame" x="325" y="20" width="34" height="30"/>
-                                <state key="normal" title="Save"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="93A-tp-5Xs">
+                                <rect key="frame" x="319" y="20" width="40" height="40"/>
+                                <state key="normal" image="success"/>
                                 <connections>
                                     <action selector="saveBtnPressed:" destination="bqM-m3-axf" eventType="touchUpInside" id="dJB-Sc-ltP"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="de2-D9-kQ3">
-                                <rect key="frame" x="16" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="de2-D9-kQ3">
+                                <rect key="frame" x="16" y="20" width="40" height="40"/>
+                                <state key="normal" image="back"/>
                                 <connections>
                                     <action selector="backBtnPressed:" destination="bqM-m3-axf" eventType="touchUpInside" id="cKC-is-rUn"/>
                                 </connections>
@@ -506,9 +506,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYB-ks-mBX">
-                                <rect key="frame" x="16" y="20" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYB-ks-mBX">
+                                <rect key="frame" x="16" y="20" width="40" height="40"/>
+                                <state key="normal" image="back"/>
                                 <connections>
                                     <action selector="backBtnPressed:" destination="kkj-us-Qpl" eventType="touchUpInside" id="sEo-Cp-EdV"/>
                                 </connections>
@@ -528,7 +528,9 @@
     </scenes>
     <resources>
         <image name="Sky.jpg" width="960" height="635"/>
+        <image name="back" width="40" height="40"/>
+        <image name="next" width="40" height="40"/>
         <image name="plus" width="30" height="30"/>
-        <image name="success" width="50" height="50"/>
+        <image name="success" width="40" height="40"/>
     </resources>
 </document>

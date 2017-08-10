@@ -59,8 +59,8 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         let y = UIScreen.main.bounds.size.height * 0.76
         locationButton.frame = CGRect(x: x, y: y, width: 80, height: 85)
         locationButton.addTarget(self, action: #selector(zoomToUserLocation), for: .touchUpInside)
-        let btnImage = UIImage(named: "rightBtn.png")
-        locationButton.imageView?.contentMode = .center
+        let btnImage = UIImage(named: "ufo_1")
+        locationButton.imageView?.contentMode = .scaleAspectFit
         locationButton.setImage(btnImage, for: .normal)
         self.view.addSubview(locationButton)
         

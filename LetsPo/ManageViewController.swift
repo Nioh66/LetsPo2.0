@@ -24,6 +24,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     var deleteBtnFlag:Bool!
     var recent = [UIImage]()
+    var recentArr = [String]()
     //    var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
@@ -68,14 +69,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         allBtn.setTitleColor(UIColor.lightGray, for: .normal)
         allBtn.adjustsImageWhenHighlighted = false
         
-        
-        //        collectionViewThree = UICollectionView(frame: self.view.frame, collectionViewLayout: FlowLayout())
-        //        collectionViewThree.register(UINib.init(nibName: "ManageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: identifier)
-        //        collectionViewThree.delegate = self
-        //        collectionViewThree.dataSource = self
-        //        collectionViewThree.backgroundColor = UIColor.clear
-        //        self.view.addSubview(collectionViewThree)
-        
         dataManagerCount = boardDataManager.count()
         
         // 第一次進入還沒新增時的底圖
@@ -102,25 +95,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             ("NEARBY", collectionViewTwo)
             ])
         
-        
-        
     }
     
     func arrayImageData(){
-        //        all.removeAll()
         recent.removeAll()
-        
-        //        for i in 0..<dataManagerCount {
-        //            let item = boardDataManager.itemWithIndex(index: i)
-        //            let id = item.board_Id
-        //            if let img = item.board_ScreenShot {
-        //                let imgWithData = UIImage(data: img as Data)
-        //                all.append(imgWithData!)
-        //            }
-        //
-        //            print("\(i) = \(id)")
-        //        }
-        // 只取前五個 作為最近的內容
+        recentArr.removeAll()
         if dataManagerCount >= 5 {
             for i in 0..<5 {
                 let item = boardDataManager.itemWithIndex(index: i)
@@ -128,6 +107,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                     let imgWithData = UIImage(data: img as Data)
                     recent.append(imgWithData!)
                 }
+                let title = item.board_Title ?? ""
+                recentArr.append(title)
             }
         }else {
             for i in 0..<dataManagerCount {
@@ -135,6 +116,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 if let img = item.board_ScreenShot {
                     let imgWithData = UIImage(data: img as Data)
                     recent.append(imgWithData!)
+                    let title = item.board_Title ?? ""
+                    recentArr.append(title)
                 }
             }
         }
@@ -142,7 +125,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         print("recent count: \(recent.count)")
         print("nearbyDic count : \(nearbyDic.count)")
-        //        print("all count: \(all.count)")
     }
     
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
@@ -158,9 +140,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         else if collectionView == self.collectionViewTwo {
             count = nearbyDic.count
         }
-        //        else if collectionView == self.collectionViewThree {
-        //            count = all.count
-        //        }
         return count
     }
     
@@ -172,21 +151,18 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             
             let imageString = recent[indexPath.item]
             cell.backdroundImage.image = imageString
+            let title = recentArr[indexPath.item]
+            cell.titleLabel.text = title
             
         }else if collectionView == self.collectionViewTwo {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
             let imageString = nearbyDic[indexPath.item]
             let imageName = imageString["BgPic"] as! UIImage
+            let title = imageString["title"]
             cell.backdroundImage.image = imageName
+            cell.titleLabel.text = title as? String
             
         }
-        //        else if collectionView == self.collectionViewThree {
-        //            cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-        //
-        //            let imageString = all[indexPath.item]
-        //            cell.backdroundImage.image = imageString
-        //
-        //        }
         setCellBtn(cell: cell)
         return cell
     }
@@ -215,14 +191,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             coreDataDeleteAndSaveMethod(board_id: keyword)
             
         }
-        //        else if let indexPath = collectionViewThree.indexPath(for: cell) {
-        //            all.remove(at: indexPath.item)
-        //            collectionViewThree.deleteItems(at: [indexPath])
-        //            // 用按下的indexPath 來取得board_id 並一併刪除note
-        //            let item = boardDataManager.itemWithIndex(index: indexPath.row)
-        //            let keyword = "\(item.board_Id)"
-        //            coreDataDeleteAndSaveMethod(board_id: keyword)
-        //        }
     }
     func coreDataDeleteAndSaveMethod(board_id:String){
         let searchField = "board_Id"
@@ -359,7 +327,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     func reloadAllData(){
         collectionViewOne.reloadData()
         collectionViewTwo.reloadData()
-        //        collectionViewThree.reloadData()
     }
     
     // MARK: location manager methods
@@ -389,11 +356,12 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
             
-            let Creater = item.board_Creater
+//            let Creater = item.board_Creater
             let lat = item.board_Lat
             let lon = item.board_Lon
             var imgWithData = UIImage()
             let board_id = item.board_Id
+            let title = item.board_Title ?? ""
             if let img = item.board_ScreenShot {
                 imgWithData = UIImage(data: img as Data)!
             }
@@ -401,11 +369,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
-                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
+                    nearbyDic.append(["title":title ,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
                 }else {
                     count = 0
                     nearbyDic.removeAll()
-                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
+                    nearbyDic.append(["title":title ,"lat":lat, "lon":lon, "distance":distance,"BgPic":imgWithData,"index":i,"board_id":board_id])
                     count = 1
                 }
             }

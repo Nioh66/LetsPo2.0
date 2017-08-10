@@ -17,13 +17,28 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     
     
     let cellTitle = ["ID:","Name:","E-Mail:"]
-    let cellSubtitle = ["9527","PinLiao","nioh946@gmail.com"]
+    var cellSubtitle = [String]()
     let selfieBgImageNN = Notification.Name("selfie")
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
     override func viewDidLoad() {
         super.viewDidLoad()
+        let userId = "need form server"
+        var userName = String()
+        var email = String()
         
+        let count = memberDataManager.count()
+        for i in 0 ..< count {
+            let item = memberDataManager.itemWithIndex(index: i)
+            userName = item.member_Name!
+            email = item.member_Email!
+            guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
+            personalImage.image = ii
+        }
+        
+        let cellSub = [userId,userName,email]
+        cellSubtitle = cellSub
+
         nameLabel.text = cellSubtitle[1]
         setLabelWithFrame()
         personalImage.backgroundColor = UIColor.black
@@ -61,6 +76,23 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
         
         self.present(alert, animated: true, completion: nil)
         
+    }
+    func resaveImageToCoreData(selfImage:UIImage){
+        let item = memberDataManager.itemWithIndex(index: 0)
+        
+        
+        guard let imagedata = UIImagePNGRepresentation(selfImage) else {
+            
+            return
+        }
+        item.member_Selfie = imagedata as NSData
+        memberDataManager.saveContexWithCompletion { (success) in
+            if (success) {
+                print("BoardData save succeed!!!")
+            }else{
+                print("BoardData save failure!!!")
+            }
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -132,6 +164,7 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
         //Change selfie image
         personalImage.image = imageX
         
+        resaveImageToCoreData(selfImage: imageX)
         
         self.dismiss(animated: true, completion: nil)
         
