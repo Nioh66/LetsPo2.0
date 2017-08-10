@@ -45,6 +45,7 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         
     }
     func allArrayData(){
+        all.removeAll()
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
             let id = item.board_Id
@@ -203,6 +204,11 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         navigationController?.navigationBar.topItem?.title = "全部選集"
         navigationController?.navigationBar.tintColor = UIColor.ownColor
         navigationController?.navigationBar.backgroundColor = UIColor.white
+        dataManagerCount = boardDataManager.count()
+        
+        allArrayData()
+        colView.reloadData()
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         hideAllDeleteBtn()
