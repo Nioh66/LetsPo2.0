@@ -38,7 +38,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             personalImage.image = ii
         }
         
-//
+        personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2
         personalImage.clipsToBounds = true

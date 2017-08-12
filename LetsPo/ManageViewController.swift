@@ -385,7 +385,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         locationManager.startUpdate()
         
         // 每次回來都回到recent
-        scrollPager.setSelectedIndex(index: 0, animated: false)
+//        scrollPager.setSelectedIndex(index: 0, animated: false)
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
             self.arrayImageData()
             self.reloadAllData()

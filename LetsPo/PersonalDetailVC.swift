@@ -42,6 +42,8 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
 
         nameLabel.text = cellSubtitle[1]
         setLabelWithFrame()
+        
+        personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
         personalImage.layer.masksToBounds = true

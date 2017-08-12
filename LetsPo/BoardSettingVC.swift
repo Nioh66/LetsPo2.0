@@ -100,7 +100,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
             dragVC.boardTitle = titleTextfield.placeholder!
             print("sssss\(dragVC.boardTitle)")
         }else{
-            dragVC.boardTitle = boardTitle
+            dragVC.boardTitle = titleTextfield.text!
             print("------\(dragVC.boardTitle)")
         }
         

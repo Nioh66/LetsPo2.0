@@ -28,7 +28,7 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         layout.minimumLineSpacing = 5
         
         // 設置每個 cell 的尺寸
-        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width/3 - 10.0, height: UIScreen.main.bounds.size.width/3 - 10.0)
+        layout.itemSize = CGSize(width: UIScreen.main.bounds.size.width/3 - 10.0, height: UIScreen.main.bounds.size.width/3)
         
         colView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
         colView.delegate   = self
@@ -66,11 +66,22 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         var cell = ManageAllCell()
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath as IndexPath) as! ManageAllCell
         let imageString = all[indexPath.item]["board_ScreenShot"] as! UIImage
+        
         cell.backdroundImage.image = imageString
         
         setCellBtn(cell: cell)
         
         return cell
+    }
+    func size(image:UIImage)-> UIImage{
+        let rect = CGRect(x: 0, y: 0, width: 300, height: 300)
+        UIGraphicsBeginImageContext(rect.size)
+        image.draw(in: rect)
+        let picture = UIGraphicsGetImageFromCurrentImageContext()
+        let imageDate = UIImagePNGRepresentation(picture!)
+        let finalImage = UIImage(data: imageDate!)
+
+        return finalImage!
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -199,6 +210,7 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        tabBarController?.tabBar.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.topItem?.title = "全部選集"
         navigationController?.navigationBar.backgroundColor = UIColor.white
@@ -210,6 +222,7 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
     }
     override func viewWillDisappear(_ animated: Bool) {
         hideAllDeleteBtn()
+        dismiss(animated: false, completion: nil)
     }
     
 }
