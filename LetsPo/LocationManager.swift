@@ -78,7 +78,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             var region = regi
-            region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: identifier)
+            region = CLCircularRegion.init(center: coordinate, radius: 50, identifier: identifier)
             // nearbyDictionary 內的定位開始 Monitoring
             
             startRegionMonitoring(region: region)

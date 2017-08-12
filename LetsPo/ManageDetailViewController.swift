@@ -28,6 +28,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     
     
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var boardSettingBtn: UIButton!
     @IBOutlet weak var addPostBtn: UIButton!
     @IBOutlet weak var deletePostBtn: UIButton!
@@ -38,51 +39,24 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         secondTime = false
         fromNewNote = false
         
         self.addingObserver()
         
-        
-        
         dataManagerCount = boardDataManager.count()
         
         print("select Index ID \(selectIndexID)")
-        //        print("select ID from map \(selectIDformMap)")
-        
-        //        if selectIndexID == 0 {
-        //            print("nil")
-        //            return
-        //        }
-        //        selectIndexID = 1
-        
-        //        guard let postsScreenShot = getBoardPosts.getNotesSelfie(boardID: selectIndexID),
-        //            let allPosts = getBoardPosts.presentNotes(boardID: selectIndexID, selfies: postsScreenShot),
-        //            let bgImage = getBoardPosts.getBgImage(boardID: selectIndexID),
-        //            let allPostsID = getBoardPosts.getNotesID(boardID: selectIndexID)
-        //            else{
-        //                return
-        //        }
-        //        print(backGroundImage)
-        //
-        //        backGroundImage.image = bgImage
-        //        backGroundImage.isUserInteractionEnabled = true
-        //
-        //        for (index,imageview) in allPosts.enumerated(){
-        //            print(index)
-        //            imageview.isUserInteractionEnabled = true
-        //            imageview.backgroundColor = UIColor.clear
-        //
-        //            let detailBtn = TapToShowDetail(target: self, action: #selector(goToDetail(gestureRecognizer:)))
-        //            detailBtn.postImageView = imageview
-        //            detailBtn.postID = allPostsID[index]
-        //            detailBtn.boardID = selectIndexID
-        //            backGroundImage.addSubview(imageview)
-        //
-        //            imageview.addGestureRecognizer(detailBtn)
-        //        }
-        
-    }
+        for i in 0 ..< dataManagerCount{
+            let item = boardDataManager.itemWithIndex(index: i)
+            let boardId = item.board_Id
+            if boardId == selectIndexID {
+                let title = item.board_Title
+                titleLabel.text = title ?? ""
+            }
+        }
+       }
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
         
@@ -255,7 +229,6 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         boardSettingBtn.alpha = 0.0
         addPostBtn.alpha = 0.0
         deletePostBtn.alpha = 0.0
-        //       self.tabBarController?.tabBar.isHidden = true
         let BGimageWithPosts = self.view.boardScreenShot()
         
         boardSettingBtn.alpha = 1

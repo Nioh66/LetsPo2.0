@@ -93,9 +93,6 @@ class DragExistBoardVC: UIViewController {
                 }
             }
         }
-        
-        
-        
     }
     
     

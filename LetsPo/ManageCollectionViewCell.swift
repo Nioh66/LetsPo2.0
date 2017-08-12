@@ -20,6 +20,7 @@ class ManageCollectionViewCell: UICollectionViewCell {
     var deleteBtn:UIButton!
     
     @IBOutlet weak var backdroundImage: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
     
     weak var delegation : ActionDelegation!
     
@@ -31,10 +32,11 @@ class ManageCollectionViewCell: UICollectionViewCell {
         layer.borderColor = UIColor.lightGray.cgColor
         self.clipsToBounds = true
         backdroundImage.contentMode = .scaleAspectFill
-        
+        titleLabel.text = ""
         setCall()
         
     }
+    
     func setCall(){
         addDeleteButton()
         addLongPressGesture()

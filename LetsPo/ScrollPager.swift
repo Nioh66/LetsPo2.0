@@ -50,7 +50,7 @@ import UIKit
         }
     }
     
-    @IBInspectable public var textColor: UIColor = UIColor.lightGray {
+    @IBInspectable public var textColor: UIColor = UIColor.white {
         didSet { redrawComponents() }
     }
     

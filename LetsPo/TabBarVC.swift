@@ -17,7 +17,7 @@ var memberDataManager = CoreDataManager<MemberData>.init(initWithModel: "LetsPoM
                                            dbFileName: "LetsPoDB.sqlite",
                                            dbPathURL: nil,
                                            sortKey: "member_ID",
-                                           entityName: "NoteData")
+                                           entityName: "MemberData")
 
 var boardDataManager = CoreDataManager<BoardData>.init(initWithModel: "LetsPoModel",
                                                        dbFileName: "LetsPoDB.sqlite",

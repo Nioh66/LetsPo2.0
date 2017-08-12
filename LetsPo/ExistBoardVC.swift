@@ -177,12 +177,12 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
                     for: indexPath)
             // 設置 header 的內容
             if section == 0{
-                reuseView.backgroundColor = UIColor.darkGray
-                label.text = "Nearby";
+                reuseView.backgroundColor = UIColor.ownColor
+                label.text = " Nearby-";
                 label.textColor = UIColor.white
             }else if section == 1{
-                reuseView.backgroundColor = UIColor.darkGray
-                label.text = "All-";
+                reuseView.backgroundColor = UIColor.ownColor
+                label.text = " All-";
                 label.textColor = UIColor.white
             }else{
             }
@@ -245,16 +245,11 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
             if let img = item.board_ScreenShot {
                 imgWithData = UIImage(data: img as Data)!
             }
-            
-            //            let pins = CLLocation.init(latitude: lat, longitude: lon)
-            //            distance = pins.distance(from: userLocation) * 1.09361
+    
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
                     nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
-                    //                    nearbyBoardScreenShot.append(imgWithData)
-                    //                    nearbyBoardID.append(board_id)
-                    
                     
                 }else {
                     count = 0

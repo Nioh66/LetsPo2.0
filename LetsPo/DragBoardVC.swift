@@ -12,6 +12,8 @@ import UIKit
 class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
     //  @IBOutlet weak var boardBackgroundImage: UIImageView!
+    @IBOutlet weak var backBtn: UIButton!
+    @IBOutlet weak var saveBtn: UIButton!
     //  let sendBgImageNN = Notification.Name("sendBgImage")
     var topBgImages:UIImage?
     
@@ -76,6 +78,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         navigationController?.popViewController(animated: false)
     }
     @IBAction func saveBtnPressed(_ sender: UIButton) {
+        backBtn.isHidden = true
+        saveBtn.isHidden = true
         self.saveBoardData()
         self.saveNoteData()
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
@@ -230,6 +234,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             boardItem.board_ScreenShot = boardScreenShot
             boardItem.board_BgPic = boardBgPic
             boardItem.board_CreateTime = NSDate()
+            boardItem.board_Title = boardTitle
             boardDataManager.saveContexWithCompletion { (success) in
                 if (success) {
                     print("BoardData save succeed!!!")

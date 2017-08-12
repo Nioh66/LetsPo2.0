@@ -12,6 +12,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     let cellTitle = ["個人資料","通知管理","好友管理"]
     let selfieBgImageNN = Notification.Name("selfie")
+    var login:Bool!
     
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var personalName: UILabel!
@@ -23,6 +24,29 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.clear
+        login = false
+        if memberDataManager.count() > 0 {
+            login = true
+        }
+        
+        let count = memberDataManager.count()
+        for i in 0 ..< count {
+            let item = memberDataManager.itemWithIndex(index: i)
+            personalName.text = item.member_Name
+            guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
+            personalImage.image = ii
+        }
+        
+//
+        personalImage.backgroundColor = UIColor.black
+        personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2
+        personalImage.clipsToBounds = true
+        print("width \(personalImage.frame.size.width)")
+        print("height \(personalImage.frame.size.height)")
+        print("\(UIScreen.main.bounds.size.width)")
+
+
         
         NotificationCenter.default.addObserver(self, selector: #selector(theBGimage), name: selfieBgImageNN, object: nil)
         // Do any additional setup after loading the view.
@@ -60,13 +84,21 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             navigationController?.pushViewController(nextPage!, animated: true)
         }else if indexPath.row == 1{
             let nextPage = storyboard?.instantiateViewController(withIdentifier: "NotiSettingVC") as? NotiSettingVC
-            nextPage?.navigationItem.leftItemsSupplementBackButton = true
-            navigationController?.pushViewController(nextPage!, animated: true)
+                nextPage?.navigationItem.leftItemsSupplementBackButton = true
+                navigationController?.pushViewController(nextPage!, animated: true)
+            
         }else if indexPath.row == 2{
+            if login == false {
+                let nextPage = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+                //                nextPage?.navigationItem.leftItemsSupplementBackButton = true
+                navigationController?.pushViewController(nextPage!, animated: true)
+                
+                
+            }else {
             let nextPage = storyboard?.instantiateViewController(withIdentifier: "MyNiggerVC") as? MyNiggerVC
             nextPage?.navigationItem.leftItemsSupplementBackButton = true
             navigationController?.pushViewController(nextPage!, animated: true)
-            
+            }
         }else{
             
         }
@@ -74,10 +106,6 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        personalImage.backgroundColor = UIColor.black
-        personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
-        personalImage.layer.masksToBounds = true
-        
         
     }
 }

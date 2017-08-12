@@ -14,7 +14,7 @@ class FindNiggerVC: UIViewController {
     @IBOutlet weak var inputID: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.clear
         self.navigationItem.leftItemsSupplementBackButton = true
         
         
