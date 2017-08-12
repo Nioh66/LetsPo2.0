@@ -16,10 +16,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        window?.backgroundColor = UIColor(patternImage: UIImage(named:"backgroundImage")!)
+        
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert,.sound]) { (granted, error) in
             if (error != nil) {
                 print(error!)
+                
+            }
+            if (granted){
+                UserDefaults.standard.set(true, forKey: "UserNotification")
+            }else {
+                UserDefaults.standard.set(false, forKey: "UserNotification")
             }
         }
         UNUserNotificationCenter.current().delegate = self

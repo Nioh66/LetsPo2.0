@@ -24,8 +24,12 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.clear
         login = false
+        if memberDataManager.count() > 0 {
+            login = true
+        }
+        
         let count = memberDataManager.count()
         for i in 0 ..< count {
             let item = memberDataManager.itemWithIndex(index: i)
@@ -33,6 +37,15 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
             personalImage.image = ii
         }
+        
+//
+        personalImage.backgroundColor = UIColor.black
+        personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2
+        personalImage.clipsToBounds = true
+        print("width \(personalImage.frame.size.width)")
+        print("height \(personalImage.frame.size.height)")
+        print("\(UIScreen.main.bounds.size.width)")
+
 
         
         NotificationCenter.default.addObserver(self, selector: #selector(theBGimage), name: selfieBgImageNN, object: nil)
@@ -93,10 +106,6 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        personalImage.backgroundColor = UIColor.black
-        personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
-        personalImage.layer.masksToBounds = true
-        
         
     }
 }

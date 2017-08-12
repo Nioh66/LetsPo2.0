@@ -62,7 +62,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         //self.configureDataSource()
         self.configureCollectionView()
         self.configurePageControl()
-        
+        self.view.backgroundColor = UIColor.clear
         locationManager.delegate = self
         
         let documentPaths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory,

@@ -25,7 +25,6 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-        //        layout.itemSize = CGSize(width: 111, height: 111)
         layout.minimumLineSpacing = 5
         
         // 設置每個 cell 的尺寸
@@ -202,7 +201,6 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.topItem?.title = "全部選集"
-        navigationController?.navigationBar.tintColor = UIColor.ownColor
         navigationController?.navigationBar.backgroundColor = UIColor.white
         dataManagerCount = boardDataManager.count()
         

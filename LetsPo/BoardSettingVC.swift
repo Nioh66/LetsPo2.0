@@ -39,7 +39,9 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.clear
         titleTextfield.placeholder = "\(boardCreatetime)"
+        print("\(boardCreatetime)")
         setBgImageBtn.layer.cornerRadius = 10.0
         setBgImageBtn.layer.masksToBounds = true
         
@@ -96,8 +98,10 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         let dragVC = storyboard?.instantiateViewController(withIdentifier:"DragBoardVC") as! DragBoardVC
         if titleTextfield.text == "" {
             dragVC.boardTitle = titleTextfield.placeholder!
+            print("sssss\(dragVC.boardTitle)")
         }else{
             dragVC.boardTitle = boardTitle
+            print("------\(dragVC.boardTitle)")
         }
         
         dragVC.topBgImages = topBg.image

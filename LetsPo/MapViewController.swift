@@ -11,10 +11,10 @@ import MapKit
 import CoreLocation
 import UserNotifications
 import CoreData
+import AudioToolbox
 
 class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDelegate {
     
-    //    var dataManager:CoreDataManager<BoardData>!
     var dataManagerCount = Int()
     
     let locationManager = LocationManager()
@@ -181,7 +181,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         pin?.image = privacy_pins
         
         
-        
         return pin
     }
     
@@ -192,6 +191,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         if placeCount <= 0 {return}
         
         if placeCount == 1 {
+            // 如果大頭針只有一根 則進入該版
             titleName = myAnnotation.currentTitle
             if (control as? UIButton)?.buttonType == .detailDisclosure {
                 let id = myAnnotation.board_Id
@@ -202,6 +202,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             }
             print("Press one callout view")
         }else {
+            // 如果大頭針不只一根 就跳轉 post manage vc
             NotificationCenter.default.post(name:Notification.Name(rawValue: "comeFromMap"), object: nil, userInfo: nil)
             tabBarController?.selectedIndex = 0
             navigationController?.popToRootViewController(animated: true)
@@ -222,26 +223,38 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             shouldReUpdate = true
             return
         }
-        print("==========")
         monitorRegion(userLocation: coordinate)
         locationManager.stopUpdate()
         
     }
     func locationManager(userDidExitRegion region: CLRegion) {
         print("Exit \(region.identifier)")
-        mutableNotificationContent(title: "You Did Exit My Monitoring Area", body: "CLLocationManager did Exit region:\(region.identifier)", indentifier: "DidExitRegion")
+        mutableNotificationContent(title: "離開！", body: "點擊查閱", indentifier: "DidExitRegion")
+        if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
+        
     }
     
     func locationManager(userDidEnterRegion region: CLRegion) {
         print("Enter \(region.identifier)")
-        mutableNotificationContent(title: "You Did Enter My Monitoring Area", body: "CLLocationManager did enter region:\(region.identifier)", indentifier: "DidEnterRegion")
+        
+        mutableNotificationContent(title: "附近有留言板喔!", body: "", indentifier: "DidEnterRegion")
+        // 是否震動
+        if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
+            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        }
     }
     
     func mutableNotificationContent(title:String, body:String, indentifier:String){
         let content = UNMutableNotificationContent()
         content.title = title
         content.body = body
-        content.sound = UNNotificationSound.default()
+        if UserDefaults.standard.bool(forKey: "soundNotice") == true {
+            content.sound = UNNotificationSound.default()
+        }else {
+            content.sound = nil
+        }
         let request = UNNotificationRequest.init(identifier: indentifier, content: content, trigger: nil)
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
         UNUserNotificationCenter.current().add(request) { (error) in
@@ -259,23 +272,15 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         count = count + 1
         for value in dic {
             let board_ID = value["board_Id"] as! Int16
-            
-            //let time = value["lastUpdateDateTime"] as! String
-            
             let lat = value["lat"] as! Double
-            
             let lon = value["lon"] as! Double
-            
             let img = value["BgPic"] as! UIImage
-            
             let alert = value["alert"] as! Bool
             
-            //            let pins = CLLocation.init(latitude: lat, longitude: lon)
-            //            distance = pins.distance(from: userLocation) * 1.09361
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             
-            // 距離小於 2500 則存回 near
-            if distance <  2500 && alert == true {
+            // 距離小於 1000 則存回 near
+            if distance <  1000 && alert == true {
                 if count == 1 {
                     nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
                 }else {
@@ -285,19 +290,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                     count = 1
                 }
                 if nearbyDictionary.count < 20 {
-                    //                    if CLLocationManager.isMonitoringAvailable(for: CLCircularRegion.self){
-                    //                        let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-                    //                        region = CLCircularRegion.init(center: coordinate, radius: 150, identifier: "\(board_ID)")
-                    //
-                    //                        // nearbyDictionary 內的定位開始 Monitoring
-                    //                        locationManager.startRegionMonitoring(region: region)
-                    //
-                    //                        // 超過 2300 則停止 Monitoring
-                    //                        if distance > 2300 {
-                    //                            locationManager.stopRegionMonitoring(region: region)
-                    //
-                    //                        }
-                    //                    }
+                    // 開始進行追蹤
                     locationManager.isMonitoringAvailable(lat: lat, lon: lon, regi: region, distance: distance,identifier:"\(board_ID)")
                 }
             }
@@ -313,8 +306,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         let dic = getLocations()
         for value in dic {
             let createTime = value["board_CreateTime"] as! Date
-            
-            // let time = value["lastUpdateDateTime"] as! String
             let board_Id = value["board_Id"] as! Int16
             let lat = value["lat"] as! Double
             let lon = value["lon"] as! Double
@@ -324,11 +315,12 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             dateFormate.dateFormat = "MM-dd-yyyy HH:mm"
             let stringOfDate = dateFormate.string(from: createTime as Date)
             
+            // 加入大頭針
             let annotation = SpotAnnotation( atitle: stringOfDate, lat: lat, lon: lon, imageName: img,privacyBool: privacy,Id:board_Id)
             
             result.append(annotation)
         }
-        print("result count \(result.count)")
+//        print("result count \(result.count)")
         return result
     }
     
@@ -338,7 +330,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
-            //            let Creater = item.board_Creater
             let board_ID = item.board_Id
             let lat = item.board_Lat
             let lon = item.board_Lon
@@ -352,7 +343,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             }
         }
         //        print("locations :\(locations)")
-        print("location count :\(locations.count)")
+//        print("location count :\(locations.count)")
         
         //        let UrlString = "http://class.softarts.cc/FindMyFriends/queryFriendLocations.php?GroupName=bp102"
         //        let myUrl = NSURL(string: UrlString)
@@ -376,7 +367,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
-        //        self.navigationController?.isNavigationBarHidden = true
         navigationController?.setNavigationBarHidden(true, animated: false)
         locationManager.startUpdate()
         dataManagerCount = boardDataManager.count()

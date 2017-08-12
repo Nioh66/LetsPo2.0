@@ -23,6 +23,7 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     var imageFactory = MyPhoto()
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let userId = "need form server"
         var userName = String()
         var email = String()

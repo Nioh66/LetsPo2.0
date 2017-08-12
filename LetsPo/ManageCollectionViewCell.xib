@@ -21,21 +21,26 @@
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iLy-2k-X64">
                         <rect key="frame" x="0.0" y="0.0" width="250" height="350"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWd-Pu-tFJ">
-                        <rect key="frame" x="14" y="7" width="223" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wWd-Pu-tFJ">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="28"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="28" id="Bhe-gB-hnp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
             <constraints>
+                <constraint firstAttribute="trailing" secondItem="wWd-Pu-tFJ" secondAttribute="trailing" id="001-AL-cWg"/>
                 <constraint firstItem="iLy-2k-X64" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Rki-Rl-72D"/>
                 <constraint firstAttribute="bottom" secondItem="iLy-2k-X64" secondAttribute="bottom" id="b8U-1K-8OT"/>
                 <constraint firstAttribute="trailing" secondItem="iLy-2k-X64" secondAttribute="trailing" id="cmD-no-1JH"/>
                 <constraint firstItem="iLy-2k-X64" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="f4O-ky-alF"/>
+                <constraint firstItem="wWd-Pu-tFJ" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="qgw-C1-hRC"/>
+                <constraint firstItem="wWd-Pu-tFJ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="zg0-6o-xRV"/>
             </constraints>
             <connections>
                 <outlet property="backdroundImage" destination="iLy-2k-X64" id="vc3-M9-Ix7"/>

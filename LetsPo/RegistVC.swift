@@ -23,17 +23,16 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     let selfieBgImageNN = Notification.Name("selfie")
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
-    var account = String()
-    var password = String()
-    var name = String()
-    var mail = String()
     var selfImage = UIImage()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
+//        self.view.backgroundColor = UIColor.clear
+        emailTextField.placeholder = "請輸入e-mail"
+        nameTextField.placeholder = "請輸入名字"
+        passTextField.placeholder = "請輸入8位字母或數字密碼"
         
+        // 個人照片 frame
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
         personalImage.layer.masksToBounds = true
@@ -69,16 +68,42 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     }
     
     @IBAction func pressedRegist(_ sender: Any) {
-    if emailTextField.text == "" || nameTextField.text == "" || passTextField.text == "" {
+        //值不為空
+        if emailTextField.text == "" || nameTextField.text == "" || passTextField.text == "" {
+            alertMakeSure()
+        }else if (checkMail() != true || checkPassword() != true){
             alertMakeSure()
         }else {
             saveMamberInfo()
             memberDataManager.saveContexWithCompletion(completion: { (success) in
                 if(success){
-                print("-success-")
+                    print("-success-")
                 }
             })
         }
+    }
+    
+    func checkMail()->Bool {
+        var checkOk:Bool
+        guard let mail = emailTextField.text else {return false}
+        if mail.contains("@"){
+            checkOk = true
+        }else {
+            checkOk = false
+        }
+        
+        return checkOk
+    }
+    func checkPassword()->Bool {
+        var checkOk:Bool
+        guard let password = passTextField.text else {return false}
+        if password.characters.count >= 8 {
+            checkOk = true
+        }else {
+            checkOk = false
+        }
+        
+        return checkOk
     }
     
     func alertMakeSure(){

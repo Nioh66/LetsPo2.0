@@ -42,7 +42,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = UIColor.clear
         locationManager.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(comeFromMap),
@@ -65,8 +65,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         collectionViewTwo.backgroundColor = UIColor.clear
         self.view.addSubview(collectionViewTwo)
         
+        //  全部選集的按鈕
         allBtn.setTitleColor(UIColor.darkGray, for: .highlighted)
-        allBtn.setTitleColor(UIColor.lightGray, for: .normal)
+        allBtn.setTitleColor(UIColor.white, for: .normal)
         allBtn.adjustsImageWhenHighlighted = false
         
         dataManagerCount = boardDataManager.count()
@@ -77,14 +78,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         //            recent.append(UIImage(named: "first")!)
         //            all.append(UIImage(named: "first")!)
         //        }
-        
-        
-        // incase core location too slow
-        //        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
-        //            self.arrayImageData()
-        //            self.secondTime = true
-        //        }
-        
         
         setFlagAndGsr()
         
@@ -123,8 +116,8 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }
         reloadAllData()
         
-        print("recent count: \(recent.count)")
-        print("nearbyDic count : \(nearbyDic.count)")
+//        print("recent count: \(recent.count)")
+//        print("nearbyDic count : \(nearbyDic.count)")
     }
     
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
@@ -179,14 +172,14 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             coreDataDeleteAndSaveMethod(board_id: keyword)
             
         }else if let indexPath = collectionViewTwo.indexPath(for: cell) {
-            print("nearbyDic \(nearbyDic)")
-            print("nearbyDic  indexPath.item  \(indexPath.item)")
+//            print("nearbyDic \(nearbyDic)")
+//            print("nearbyDic  indexPath.item  \(indexPath.item)")
             // 因為 nearbyDic 有經過排序 所以在排序前就先記錄原本的 indexPath 再透過原本存的 indexPath 來刪除
             let board_id = nearbyDic[indexPath.item]["board_id"] as! Int16
             nearbyDic.remove(at: indexPath.item)
-            print("nearbyDic \(nearbyDic)")
+//            print("nearbyDic \(nearbyDic)")
             collectionViewTwo.deleteItems(at: [indexPath])
-            print("board_id: \(board_id)")
+//            print("board_id: \(board_id)")
             let keyword = "\(board_id)"
             coreDataDeleteAndSaveMethod(board_id: keyword)
             
@@ -230,7 +223,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             })
         }
     }
-    
+    // 刪除存在 Document 資料夾的照片
     func removeImageformDocument(items:NSData) {
         let fileManager = FileManager.default
         let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
@@ -331,18 +324,17 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     // MARK: location manager methods
     func locationManager(updatedUserLocation coordinate: CLLocation) {
-        print("----M----")
         monitorRegion(userLocation: coordinate)
         locationManager.stopUpdate()
         
     }
     func locationManager(userDidExitRegion region: CLRegion) {
-        print("Exit \(region.identifier)")
+//        print("Exit \(region.identifier)")
         
     }
     
     func locationManager(userDidEnterRegion region: CLRegion) {
-        print("Enter \(region.identifier)")
+//        print("Enter \(region.identifier)")
         
     }
     
@@ -355,8 +347,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         count = count + 1
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
-            
-//            let Creater = item.board_Creater
             let lat = item.board_Lat
             let lon = item.board_Lon
             var imgWithData = UIImage()
@@ -394,7 +384,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         // 從其他頁面跳過來的時候可以更新內容
         locationManager.startUpdate()
         
-        // 每次回來都回到recent ? 暫定
+        // 每次回來都回到recent
         scrollPager.setSelectedIndex(index: 0, animated: false)
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
             self.arrayImageData()
