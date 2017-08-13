@@ -29,9 +29,9 @@ class ManageAllCell: UICollectionViewCell {
         
         layer.cornerRadius = 4.0
         // 建立一個 UIImageView
-        backdroundImage = UIImageView(frame: CGRect(x: 0, y: 0,width: w/3 - 10.0, height: w/3 - 10.0))
+        backdroundImage = UIImageView(frame: CGRect(x: 0, y: 0,width: w/3 - 10.0, height: w/3))
         backdroundImage.contentMode = .scaleToFill
-        
+        backdroundImage.setNeedsDisplay()
         self.addSubview(backdroundImage)
         
         setCall()

@@ -125,7 +125,7 @@
                                 <state key="normal" image="garbage"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcl-Yi-H9f">
-                                <rect key="frame" x="329" y="20" width="30" height="30"/>
+                                <rect key="frame" x="329" y="25" width="30" height="30"/>
                                 <state key="normal" image="settings"/>
                                 <connections>
                                     <action selector="boardSettingBtnPressed:" destination="YjR-tB-jJT" eventType="touchUpInside" id="Q3S-Ul-H13"/>
@@ -160,7 +160,6 @@
                         <constraints>
                             <constraint firstItem="zWo-Bo-wsM" firstAttribute="trailing" secondItem="GmV-oQ-KsQ" secondAttribute="trailingMargin" id="36l-HY-9ia"/>
                             <constraint firstItem="MsW-QA-iWN" firstAttribute="centerX" secondItem="GmV-oQ-KsQ" secondAttribute="centerX" id="5aJ-N6-HMJ"/>
-                            <constraint firstItem="vcl-Yi-H9f" firstAttribute="top" secondItem="Vdm-zt-Yqm" secondAttribute="bottom" id="9Ub-Ja-NzJ"/>
                             <constraint firstItem="MsW-QA-iWN" firstAttribute="centerY" secondItem="GmV-oQ-KsQ" secondAttribute="centerY" id="Ax1-Xf-MBr"/>
                             <constraint firstItem="Ue2-p8-4xs" firstAttribute="leading" secondItem="GmV-oQ-KsQ" secondAttribute="leading" id="B47-Zm-Oe9"/>
                             <constraint firstItem="6Qr-gH-JM8" firstAttribute="centerX" secondItem="GmV-oQ-KsQ" secondAttribute="centerX" id="JCH-si-q3r"/>
@@ -173,6 +172,7 @@
                             <constraint firstItem="6Qr-gH-JM8" firstAttribute="top" secondItem="Vdm-zt-Yqm" secondAttribute="bottom" constant="10" id="TC8-VX-QG9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vcl-Yi-H9f" secondAttribute="trailing" id="bGa-Tm-qj3"/>
                             <constraint firstAttribute="trailing" secondItem="Ue2-p8-4xs" secondAttribute="trailing" id="byh-oO-Cdl"/>
+                            <constraint firstItem="vcl-Yi-H9f" firstAttribute="centerY" secondItem="fgT-kS-Ige" secondAttribute="centerY" id="hJQ-GD-Lwr"/>
                             <constraint firstAttribute="bottomMargin" secondItem="zWo-Bo-wsM" secondAttribute="bottom" constant="20" id="lDU-GP-Wfn"/>
                             <constraint firstItem="6Qr-gH-JM8" firstAttribute="width" secondItem="GmV-oQ-KsQ" secondAttribute="width" multiplier="0.6" id="yGM-KG-2Uq"/>
                         </constraints>
@@ -180,6 +180,7 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
                         <outlet property="addPostBtn" destination="zWo-Bo-wsM" id="wyg-5k-68z"/>
+                        <outlet property="backBtn" destination="fgT-kS-Ige" id="aKf-Xi-qZn"/>
                         <outlet property="backGroundImage" destination="Ue2-p8-4xs" id="9jo-48-LAD"/>
                         <outlet property="boardSettingBtn" destination="vcl-Yi-H9f" id="262-8f-GZb"/>
                         <outlet property="deletePostBtn" destination="FFi-UB-gVL" id="4f7-11-tes"/>
@@ -494,7 +495,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backBtn" destination="EFi-wx-lrg" id="mhU-jC-UcJ"/>
                         <outlet property="publicBgImage" destination="76t-wc-Iuk" id="Pot-L7-ZaY"/>
+                        <outlet property="saveBtn" destination="ZUI-AZ-0kw" id="Zyl-M0-BCl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VWM-1g-K22" userLabel="First Responder" sceneMemberID="firstResponder"/>

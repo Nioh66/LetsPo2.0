@@ -10,6 +10,7 @@ import UIKit
 
 class ManageDetailViewController: UIViewController ,UIPopoverPresentationControllerDelegate{
     
+    @IBOutlet weak var backBtn: UIButton!
     let boardSettingNN = Notification.Name("boardSetting")
     let newNoteComingNN = Notification.Name("newPublicNoteComing")
     
@@ -112,6 +113,8 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         navigationController?.setNavigationBarHidden(true, animated: false)
        
         tabBarController?.tabBar.isHidden = true
+        titleLabel.isHidden = false
+        backBtn.isHidden = false
         
         dataManagerCount = boardDataManager.count()
         if selectIndexID == 0 {
@@ -226,6 +229,10 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     
     
     func getBGimageWithPosts() -> UIImage {
+        titleLabel.isHidden = true
+        backBtn.isHidden = true
+        
+
         boardSettingBtn.alpha = 0.0
         addPostBtn.alpha = 0.0
         deletePostBtn.alpha = 0.0

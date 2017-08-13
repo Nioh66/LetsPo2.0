@@ -12,6 +12,8 @@ class DragPublicPostVC: UIViewController {
     
     @IBOutlet weak var publicBgImage: UIImageView!
     
+    @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var backBtn: UIButton!
     var posterX:CGFloat = 150
     var posterY:CGFloat = 150
     let posterEdge:CGFloat = 100
@@ -54,6 +56,9 @@ class DragPublicPostVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func saveBtnPressed(_ sender: UIButton) {
+        saveBtn.isHidden = true
+        backBtn.isHidden = true
+        
         self.saveNoteData()
         self.uploadBoardBg()
         NotificationCenter.default.post(name: newNoteComingNN, object: nil)

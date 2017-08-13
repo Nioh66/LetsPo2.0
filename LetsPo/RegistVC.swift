@@ -33,6 +33,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         passTextField.placeholder = "請輸入8位字母或數字密碼"
         
         // 個人照片 frame
+        personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = personalImage.frame.size.width / 2
         personalImage.layer.masksToBounds = true
