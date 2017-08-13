@@ -65,6 +65,7 @@
 		30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */; };
 		30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C91F1E956200CB3F88 /* myNigger.jpg */; };
 		9B0CC3D91F3EE51600280A55 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B0CC3D81F3EE51600280A55 /* AudioToolbox.framework */; };
+		9B0CC3DD1F3F4FA100280A55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CC3DC1F3F4FA100280A55 /* LaunchScreen.storyboard */; };
 		9B1D167D1F3C6EA60004F032 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D167C1F3C6EA60004F032 /* LoginVC.swift */; };
 		9B1D167F1F3C77B70004F032 /* RegistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D167E1F3C77B70004F032 /* RegistVC.swift */; };
 		9B273DA31F3802EA00E726A4 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B273DA21F3802EA00E726A4 /* LocationManager.swift */; };
@@ -155,6 +156,7 @@
 		30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteboard-303145_960_720.png"; sourceTree = "<group>"; };
 		30D092C91F1E956200CB3F88 /* myNigger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = myNigger.jpg; sourceTree = "<group>"; };
 		9B0CC3D81F3EE51600280A55 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		9B0CC3DC1F3F4FA100280A55 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B1D167C1F3C6EA60004F032 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		9B1D167E1F3C77B70004F032 /* RegistVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistVC.swift; sourceTree = "<group>"; };
 		9B273DA21F3802EA00E726A4 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 				9BA62C6E1F1F6F11008CDEC0 /* ManageCollectionViewCell.xib */,
 				30D092A21F1E40AE00CB3F88 /* ManagePost.storyboard */,
 				30D092A71F1E41D600CB3F88 /* Discover.storyboard */,
+				9B0CC3DC1F3F4FA100280A55 /* LaunchScreen.storyboard */,
 			);
 			name = ZY;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */,
 				30D092A41F1E40AE00CB3F88 /* ManagePost.storyboard in Resources */,
 				303B08F81F1CC61600D7F6B1 /* Assets.xcassets in Resources */,
+				9B0CC3DD1F3F4FA100280A55 /* LaunchScreen.storyboard in Resources */,
 				9BA62C681F1E6752008CDEC0 /* rightBtn.png in Resources */,
 				30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */,
 				304CB6831F25970A00AEF632 /* right-arrow.png in Resources */,
