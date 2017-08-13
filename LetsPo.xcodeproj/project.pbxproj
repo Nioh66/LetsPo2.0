@@ -15,6 +15,7 @@
 		3018026E1F249FC600838425 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3018026D1F249FC600838425 /* CoreDataManager.swift */; };
 		301802701F24A0A300838425 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3018026F1F24A0A300838425 /* CoreData.framework */; };
 		301802731F24A26500838425 /* LetsPoModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 301802711F24A26500838425 /* LetsPoModel.xcdatamodeld */; };
+		30313C5F1F402755003FD9FD /* AlamoMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30313C5E1F402755003FD9FD /* AlamoMachine.swift */; };
 		303B08F11F1CC61600D7F6B1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 303B08F01F1CC61600D7F6B1 /* AppDelegate.swift */; };
 		303B08F61F1CC61600D7F6B1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 303B08F41F1CC61600D7F6B1 /* Main.storyboard */; };
 		303B08F81F1CC61600D7F6B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 303B08F71F1CC61600D7F6B1 /* Assets.xcassets */; };
@@ -64,6 +65,7 @@
 		30D092C61F1E950800CB3F88 /* Sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C21F1E950800CB3F88 /* Sky.jpg */; };
 		30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */; };
 		30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C91F1E956200CB3F88 /* myNigger.jpg */; };
+		919DEF6EBC9CA50E3579F6C3 /* Pods_LetsPo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F3DFB6B441BA04E8FA7CD /* Pods_LetsPo.framework */; };
 		9B0CC3D91F3EE51600280A55 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B0CC3D81F3EE51600280A55 /* AudioToolbox.framework */; };
 		9B0CC3DD1F3F4FA100280A55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CC3DC1F3F4FA100280A55 /* LaunchScreen.storyboard */; };
 		9B1D167D1F3C6EA60004F032 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D167C1F3C6EA60004F032 /* LoginVC.swift */; };
@@ -96,6 +98,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		03DD28E8FFB5F95AF517FD55 /* Pods-LetsPo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsPo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LetsPo/Pods-LetsPo.debug.xcconfig"; sourceTree = "<group>"; };
 		300842451F387DC200061192 /* ExistBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistBoardVC.swift; sourceTree = "<group>"; };
 		300842471F387F4000061192 /* ExistBoardCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExistBoardCell.swift; sourceTree = "<group>"; };
 		3008424C1F38A76F00061192 /* DragExistBoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragExistBoardVC.swift; sourceTree = "<group>"; };
@@ -104,6 +107,7 @@
 		3018026D1F249FC600838425 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3018026F1F24A0A300838425 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		301802721F24A26500838425 /* LetsPoModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LetsPoModel.xcdatamodel; sourceTree = "<group>"; };
+		30313C5E1F402755003FD9FD /* AlamoMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamoMachine.swift; sourceTree = "<group>"; };
 		303B08ED1F1CC61600D7F6B1 /* LetsPo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LetsPo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		303B08F01F1CC61600D7F6B1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		303B08F51F1CC61600D7F6B1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 		9BABCA651F24C16F0055B07A /* AccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
 		9BABCA681F24C4860055B07A /* PersonalDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersonalDetailVC.swift; sourceTree = "<group>"; };
 		9BABCA6A1F24C6DA0055B07A /* InfoEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoEditVC.swift; sourceTree = "<group>"; };
+		AB3F3DFB6B441BA04E8FA7CD /* Pods_LetsPo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LetsPo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E0B64AD38CE529E9A3A53FB5 /* Pods-LetsPo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LetsPo.release.xcconfig"; path = "Pods/Target Support Files/Pods-LetsPo/Pods-LetsPo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +202,7 @@
 				30D092BB1F1E8BD900CB3F88 /* Photos.framework in Frameworks */,
 				30D092B01F1E45A900CB3F88 /* CoreLocation.framework in Frameworks */,
 				30D092AE1F1E45A200CB3F88 /* MapKit.framework in Frameworks */,
+				919DEF6EBC9CA50E3579F6C3 /* Pods_LetsPo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -232,6 +239,7 @@
 				303B08EE1F1CC61600D7F6B1 /* Products */,
 				303B08EF1F1CC61600D7F6B1 /* LetsPo */,
 				30D092AC1F1E45A100CB3F88 /* Frameworks */,
+				CA3034BAD0DD3A2217F63FD8 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -385,6 +393,7 @@
 		30D092861F1E352800CB3F88 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				30313C5E1F402755003FD9FD /* AlamoMachine.swift */,
 				3018026D1F249FC600838425 /* CoreDataManager.swift */,
 				303B08F01F1CC61600D7F6B1 /* AppDelegate.swift */,
 				303B08F71F1CC61600D7F6B1 /* Assets.xcassets */,
@@ -403,6 +412,7 @@
 				30D092BA1F1E8BD900CB3F88 /* Photos.framework */,
 				30D092AF1F1E45A900CB3F88 /* CoreLocation.framework */,
 				30D092AD1F1E45A200CB3F88 /* MapKit.framework */,
+				AB3F3DFB6B441BA04E8FA7CD /* Pods_LetsPo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -456,6 +466,15 @@
 			name = accountManage;
 			sourceTree = "<group>";
 		};
+		CA3034BAD0DD3A2217F63FD8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				03DD28E8FFB5F95AF517FD55 /* Pods-LetsPo.debug.xcconfig */,
+				E0B64AD38CE529E9A3A53FB5 /* Pods-LetsPo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -463,9 +482,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 303B08FF1F1CC61600D7F6B1 /* Build configuration list for PBXNativeTarget "LetsPo" */;
 			buildPhases = (
+				96572A837EFCE52335289232 /* [CP] Check Pods Manifest.lock */,
 				303B08E91F1CC61600D7F6B1 /* Sources */,
 				303B08EA1F1CC61600D7F6B1 /* Frameworks */,
 				303B08EB1F1CC61600D7F6B1 /* Resources */,
+				AB0DD4E994144D6608269096 /* [CP] Embed Pods Frameworks */,
+				BCBDBD87D66EE12C7BCB0089 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -543,6 +565,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		96572A837EFCE52335289232 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		AB0DD4E994144D6608269096 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LetsPo/Pods-LetsPo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCBDBD87D66EE12C7BCB0089 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LetsPo/Pods-LetsPo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		303B08E91F1CC61600D7F6B1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -564,6 +634,7 @@
 				30D0928D1F1E35BB00CB3F88 /* NoteText.swift in Sources */,
 				9BABCA661F24C16F0055B07A /* AccountVC.swift in Sources */,
 				30CAD4161F2FBAA00042B059 /* SelfNoteImageCell.swift in Sources */,
+				30313C5F1F402755003FD9FD /* AlamoMachine.swift in Sources */,
 				3086F3221F378907008C71D2 /* AllPostsImageCell.swift in Sources */,
 				9B1D167D1F3C6EA60004F032 /* LoginVC.swift in Sources */,
 				303B08F11F1CC61600D7F6B1 /* AppDelegate.swift in Sources */,
@@ -753,6 +824,7 @@
 		};
 		303B09001F1CC61600D7F6B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03DD28E8FFB5F95AF517FD55 /* Pods-LetsPo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = G5G94ZY4FA;
@@ -766,6 +838,7 @@
 		};
 		303B09011F1CC61600D7F6B1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E0B64AD38CE529E9A3A53FB5 /* Pods-LetsPo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = G5G94ZY4FA;

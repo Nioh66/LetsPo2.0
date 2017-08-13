@@ -1,0 +1,72 @@
+//
+//  AlamoMachine.swift
+//  LetsPo
+//
+//  Created by Pin Liao on 13/08/2017.
+//  Copyright © 2017 Walker. All rights reserved.
+//
+
+import Foundation
+import Alamofire
+import SwiftyJSON
+
+class AlamoMachine {
+    let DELETE_BOARD = "deleteBoard.php"
+    let DELETE_NOTE = "deleteNote.php"
+    let FINDFRIEND = "findFriend.php"
+    let SAVE_BOARD = "saveBoardData.php"
+    let SAVE_NOTE = "saveNoteData.php"
+    let UPDATE_BOARDBG = "updataBoardBG.php"
+    let UPDATE_BOARDSETTING = "updateBoard.php"
+    let UPDATE_BOARDSCREENSHOT = "updateBoardScreenshot.php"
+    let UPDATE_ALL = "updateAll.php"
+    let NEW_MEMBER_URL = "newMember.php"
+   
+    let BASE_URL = "https://nioh66.000webhostapp.com/LetsPo/"
+    let DATA_KEY = "data"
+    
+    
+    
+    
+    
+    
+    typealias doneHandler = (_ erro:Error?,_ result:Any?) -> ()
+    
+    
+    func doPostJobWith(urlString:String,parameter:[String:Any?],imageDic:[UIImage]?) {
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: parameter, options: .prettyPrinted),
+            let jsonString = String.init(data: jsonData, encoding: .utf8)else{
+                return
+        }
+        
+        
+        NSLog("DoPost Parameter: %@", jsonString)
+        let finalParameter:[String:String] = [DATA_KEY:jsonString]
+        
+        //        guard let uploadJson = try? JSONSerialization.data(withJSONObject: finalParameter, options: .prettyPrinted) else { return  }
+        //
+        
+        
+        Alamofire.request(BASE_URL+urlString, method: .post,parameters:finalParameter,
+                          headers: nil).response { (Response) in
+                            
+                            
+                            if let err = Response.error{
+                                print(err)
+                            }
+                            
+                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
+                            print(str!)
+                            
+                            guard let response = try? JSONSerialization.jsonObject(with: Response.data!, options: [])else{
+                                return
+                            }
+                            print("Server response----------\(response)")
+                            
+        }
+        
+    }
+    
+
+}
