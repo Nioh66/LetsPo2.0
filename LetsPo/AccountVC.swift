@@ -30,14 +30,14 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             login = true
         }
         
-        let count = memberDataManager.count()
-        for i in 0 ..< count {
-            let item = memberDataManager.itemWithIndex(index: i)
-            personalName.text = item.member_Name
-            guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
-            personalImage.image = ii
-        }
-        
+//        let count = memberDataManager.count()
+//        for i in 0 ..< count {
+//            let item = memberDataManager.itemWithIndex(index: i)
+//            personalName.text = item.member_Name
+//            guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
+//            personalImage.image = ii
+//        }
+//        
         personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2

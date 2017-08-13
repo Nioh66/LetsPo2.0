@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwiftyJSON
 
 class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     @IBOutlet weak var personalImage: UIImageView!
@@ -23,14 +24,25 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     let selfieBgImageNN = Notification.Name("selfie")
     var photographer = UIImagePickerController()
     var imageFactory = MyPhoto()
-    var selfImage = UIImage()
-
+    var selfImage:UIImage? = nil
+    var memberID:Int64? = nil
+    
+    
+    let uploadMachine = AlamoMachine()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.view.backgroundColor = UIColor.clear
+//      self.view.backgroundColor = UIColor.clear
         emailTextField.placeholder = "請輸入e-mail"
         nameTextField.placeholder = "請輸入名字"
-        passTextField.placeholder = "請輸入8位字母或數字密碼"
+        passTextField.placeholder = "請輸入>6位字母或數字密碼"
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
+        tap.cancelsTouchesInView = false
+        tap.numberOfTapsRequired = 1
+        
+        self.view.addGestureRecognizer(tap)
+
         
         // 個人照片 frame
         personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
@@ -39,6 +51,19 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         personalImage.layer.masksToBounds = true
        
     }
+    func hideKeyboard(tapG:UITapGestureRecognizer){
+        
+        emailTextField.resignFirstResponder()
+        nameTextField.resignFirstResponder()
+        passTextField.resignFirstResponder()
+        
+    }
+
+//    func resignFirstResponder(){
+//        emailTextField.resignFirstResponder()
+//        nameTextField.resignFirstResponder()
+//        passTextField.resignFirstResponder()
+//    }
     
     
     @IBAction func editSelfImage(_ sender: UIButton) {
@@ -75,15 +100,52 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         }else if (checkMail() != true || checkPassword() != true){
             alertMakeSure()
         }else {
-            saveMamberInfo()
-            memberDataManager.saveContexWithCompletion(completion: { (success) in
-                if(success){
-                    print("-success-")
-                }
-            })
+            upload()
         }
     }
-    
+    func upload() {
+        var selfieData:String? = nil
+        
+        if let selfImage = selfImage{
+        let selfImageData = UIImageJPEGRepresentation(selfImage, 0.8)
+            let base64String = selfImageData?.base64EncodedString()
+//        let strImageData = String.init(data: selfImageData!, encoding: .utf8)
+            selfieData = base64String
+        }
+        let registDic:[String:Any?] = ["Member_Name":nameTextField.text,
+                                       "Member_Password":passTextField.text,
+                                       "Member_Email":emailTextField.text,
+                                       "Member_Selfie":selfieData]
+        uploadMachine.doPostJobWith(urlString: uploadMachine.NEW_MEMBER, parameter: registDic, imageDic: nil) { (error, rtn) in
+            if error != nil{
+                print(error!)
+            }
+            else{
+                let response = rtn!
+                let result = response["result"] as! Bool
+                if result {
+                    guard let rspMemberID = response["Member_ID"] as? Int64 else{
+                        return
+                    }
+                    print(rspMemberID)
+                          self.memberID = rspMemberID
+
+                    if self.memberID != nil{
+                        self.saveMamberInfo()
+                        memberDataManager.saveContexWithCompletion(completion: { (success) in
+                            if(success){
+                                print("-success-")
+                                self.navigationController?.popViewController(animated: true)
+                            }
+                        })
+                    }
+                }else{
+                    self.sameEmailAler()
+
+                }
+            }
+        }
+    }
     func checkMail()->Bool {
         var checkOk:Bool
         guard let mail = emailTextField.text else {return false}
@@ -98,7 +160,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     func checkPassword()->Bool {
         var checkOk:Bool
         guard let password = passTextField.text else {return false}
-        if password.characters.count >= 8 {
+        if password.characters.count >= 6 {
             checkOk = true
         }else {
             checkOk = false
@@ -108,12 +170,23 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     }
     
     func alertMakeSure(){
-        let alert = UIAlertController(title: "資料填寫不完全", message: "請從新確認", preferredStyle: .alert)
+        let alert = UIAlertController(title: "資料填寫不完全", message: "", preferredStyle: .alert)
         
         let ok = UIAlertAction(title: "OK", style: .default)
         
         alert.addAction(ok)
         present(alert, animated: true, completion: nil)
+
+    }
+    
+    func sameEmailAler(){
+        let alert = UIAlertController(title: "", message: "此E-mail已註冊", preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "OK", style: .default)
+        
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+        
 
     }
     func saveMamberInfo(){
@@ -122,7 +195,8 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         finalItem.member_Name = nameTextField.text
         finalItem.member_Email = emailTextField.text
         finalItem.member_Password = passTextField.text
-        guard let imagedata = UIImagePNGRepresentation(selfImage) else {
+        finalItem.member_ID = memberID!
+        guard let imagedata = UIImagePNGRepresentation(selfImage!) else {
             
             return
         }
@@ -157,6 +231,8 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         }
     }
     
+        
+    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         
@@ -169,8 +245,6 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
             else {
                 return
         }
-        
-        UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
         
         
         NotificationCenter.default.post(name: selfieBgImageNN, object: nil, userInfo: ["selfieBg":imageX])

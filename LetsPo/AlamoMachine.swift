@@ -10,7 +10,11 @@ import Foundation
 import Alamofire
 import SwiftyJSON
 
+typealias doneHandler = (_ erro:Error?,_ result:[String:Any]?) -> ()
+
 class AlamoMachine {
+    
+    
     let DELETE_BOARD = "deleteBoard.php"
     let DELETE_NOTE = "deleteNote.php"
     let FINDFRIEND = "findFriend.php"
@@ -20,20 +24,21 @@ class AlamoMachine {
     let UPDATE_BOARDSETTING = "updateBoard.php"
     let UPDATE_BOARDSCREENSHOT = "updateBoardScreenshot.php"
     let UPDATE_ALL = "updateAll.php"
-    let NEW_MEMBER_URL = "newMember.php"
+    let NEW_MEMBER = "newMember.php"
+
    
-    let BASE_URL = "https://nioh66.000webhostapp.com/LetsPo/"
-    let DATA_KEY = "data"
     
     
     
     
     
     
-    typealias doneHandler = (_ erro:Error?,_ result:Any?) -> ()
     
-    
-    func doPostJobWith(urlString:String,parameter:[String:Any?],imageDic:[UIImage]?) {
+    func doPostJobWith(urlString:String,parameter:[String:Any?],imageDic:[UIImage]?,complete:@escaping doneHandler) {
+        let BASE_URL = "https://nioh66.000webhostapp.com/LetsPo/"
+        let DATA_KEY = "data"
+        
+        
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: parameter, options: .prettyPrinted),
             let jsonString = String.init(data: jsonData, encoding: .utf8)else{
@@ -51,19 +56,28 @@ class AlamoMachine {
         Alamofire.request(BASE_URL+urlString, method: .post,parameters:finalParameter,
                           headers: nil).response { (Response) in
                             
+                            if Response.error == nil{
                             
-                            if let err = Response.error{
-                                print(err)
+                                guard let returnDic = JSON(Response.data!).dictionaryObject else{
+                                    return
+                                }
+                                complete(nil,returnDic)
+//                                if JSON(Response.data!)["result"].boolValue{
+//                                    complete(nil,returnDic)
+//
+//                                }else{
+//                                    let falseDic:[String:Any]
+//                                    let error = returnDic["errorCode"] as Any
+//                                    let
+//                                    let errorAlert = ["errorCode":error]
+//                                    complete(nil, errorAlert)
+//                                }
+                            }
+                            else{
+                            complete(Response.error,nil)
                             }
                             
-                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
-                            print(str!)
-                            
-                            guard let response = try? JSONSerialization.jsonObject(with: Response.data!, options: [])else{
-                                return
-                            }
-                            print("Server response----------\(response)")
-                            
+                                
         }
         
     }
