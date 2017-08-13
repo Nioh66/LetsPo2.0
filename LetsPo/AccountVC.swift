@@ -13,6 +13,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     let cellTitle = ["個人資料","通知管理","好友管理"]
     let selfieBgImageNN = Notification.Name("selfie")
     var login:Bool!
+    let resetAccount = Notification.Name("resetAccount")
     
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var personalName: UILabel!
@@ -31,14 +32,19 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         }
         
         
-//        let count = memberDataManager.count()
-//        for i in 0 ..< count {
-//            let item = memberDataManager.itemWithIndex(index: i)
-//            personalName.text = item.member_Name
-//            guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
-//            personalImage.image = ii
-//        }
-//        
+        let count = memberDataManager.count()
+        for i in 0 ..< count {
+            let item = memberDataManager.itemWithIndex(index: i)
+            personalName.text = item.member_Name
+            let image = item.member_Selfie
+            if image != nil {
+                guard let ii = UIImage(data: image! as Data) else {return}
+                personalImage.image = ii
+            }else {
+                // 預設頭像？
+            }
+        }
+//
         personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2
@@ -48,9 +54,20 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         print("\(UIScreen.main.bounds.size.width)")
 
 
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(reset),
+                                               name: resetAccount,
+                                               object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(theBGimage), name: selfieBgImageNN, object: nil)
         // Do any additional setup after loading the view.
+    }
+    func reset(notification:Notification) {
+        let refreshVC = storyboard?.instantiateViewController(withIdentifier: "AccountVC") as! AccountVC
+        
+        // how to refresh
+        self.dismiss(animated: false, completion: nil)
+        self.present(refreshVC, animated: false, completion: nil)
+    
+        
     }
     func theBGimage(notification:Notification) {
         personalImage.image = notification.userInfo!["selfieBg"] as? UIImage//??
@@ -107,6 +124,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
+        
         
     }
 }

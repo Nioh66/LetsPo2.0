@@ -26,6 +26,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     var imageFactory = MyPhoto()
     var selfImage:UIImage? = nil
     var memberID:Int64? = nil
+    let resetAccount = Notification.Name("resetAccount")
     
     
     let uploadMachine = AlamoMachine()
@@ -135,7 +136,9 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                         memberDataManager.saveContexWithCompletion(completion: { (success) in
                             if(success){
                                 print("-success-")
-                                self.navigationController?.popViewController(animated: true)
+                                NotificationCenter.default.post(name: self.resetAccount, object: nil, userInfo: nil)
+                                self.tabBarController?.selectedIndex = 3
+                                self.navigationController?.popToRootViewController(animated: true)
                             }
                         })
                     }
@@ -197,13 +200,15 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         finalItem.member_Password = passTextField.text
         finalItem.member_ID = memberID!
         UserDefaults.standard.set(memberID, forKey: "Member_ID")
-        guard let imagedata = UIImagePNGRepresentation(selfImage!) else {
-            
-            return
-        }
-        finalItem.member_Selfie = imagedata as NSData
-        print("\(finalItem)")
+        if selfImage != nil {
+            guard let imagedata = UIImagePNGRepresentation(selfImage!) else {
+                return
+            }
+            finalItem.member_Selfie = imagedata as NSData
+            print("\(finalItem)")
 
+        }
+        
     }
     
     

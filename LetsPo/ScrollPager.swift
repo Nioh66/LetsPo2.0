@@ -54,7 +54,7 @@ import UIKit
         didSet { redrawComponents() }
     }
     
-    @IBInspectable public var selectedTextColor: UIColor = UIColor.darkGray {
+    @IBInspectable public var selectedTextColor: UIColor = UIColor.white {
         didSet { redrawComponents() }
     }
     
@@ -62,7 +62,7 @@ import UIKit
         didSet { redrawComponents() }
     }
     
-    @IBInspectable public var selectedFont: UIFont = UIFont.boldSystemFont(ofSize: 13) {
+    @IBInspectable public var selectedFont: UIFont = UIFont.boldSystemFont(ofSize: 14) {
         didSet { redrawComponents() }
     }
     

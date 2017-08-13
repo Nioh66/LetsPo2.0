@@ -286,7 +286,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
             MyButton(frame: CGRect(x: buttonWidth*3, y: buttonHeight, width: buttonWidth, height: buttonHeight),
                      title: "",
                      tag: 119,
-                     bgColor: UIColor.white,imageStr:"colors_2")
+                     bgColor: UIColor.white,imageStr:"fontColorWhite@1x")
         white.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let black =
             MyButton(frame: CGRect(x: buttonWidth*4, y: buttonHeight, width: buttonWidth, height: buttonHeight),

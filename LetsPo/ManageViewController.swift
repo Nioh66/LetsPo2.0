@@ -66,7 +66,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         self.view.addSubview(collectionViewTwo)
         
         //  全部選集的按鈕
-        allBtn.setTitleColor(UIColor.darkGray, for: .highlighted)
+        allBtn.setTitleColor(UIColor.lightGray, for: .highlighted)
         allBtn.setTitleColor(UIColor.white, for: .normal)
         allBtn.adjustsImageWhenHighlighted = false
         
