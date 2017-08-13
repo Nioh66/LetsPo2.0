@@ -26,7 +26,7 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     var boardPrivacy:Bool = false
     var boardLat:Double = 0.0
     var boardLon:Double = 0.0
-    let boardCreatetime = NSDate()
+    var boardCreatetime = NSDate()
     var boardTitle = ""
     
     
@@ -40,8 +40,8 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
-        titleTextfield.placeholder = "\(boardCreatetime)"
-        print("\(boardCreatetime)")
+        titleTextfield.placeholder = transformDateTimeZone()
+//        print("\(boardCreatetime)")
         setBgImageBtn.layer.cornerRadius = 10.0
         setBgImageBtn.layer.masksToBounds = true
         
@@ -153,6 +153,15 @@ class BoardSettingVC: UIViewController ,UINavigationControllerDelegate{
         }else{
             boardAlert = false
         }
+    }
+    func transformDateTimeZone() -> String {
+        let dateFormate = DateFormatter()
+        dateFormate.dateFormat = "yyyy-MM-dd HH:mm"
+        let date = NSDate()
+        let stringOfDate = dateFormate.string(from: date as Date)
+        
+        print("stringOfDate \(stringOfDate)")
+        return stringOfDate
     }
     
 }

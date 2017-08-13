@@ -207,10 +207,20 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             }
             
         }else{
-            let lastBoardItem = boardDataManager.itemWithIndex(index: 0)
-            let boardItem = boardDataManager.createItem()
+            var idArray = [Int16]()
+            for i in 0 ..< boardDataManager.count() {
+                let lastBoardItem = boardDataManager.itemWithIndex(index: i)
+                let id = lastBoardItem.board_Id
+                idArray.append(id)
+                
+            }
+            idArray.sort { $0 > $1 }
             
-            boardItem.board_Id = lastBoardItem.board_Id + 1
+            let boardItem = boardDataManager.createItem()
+            let lastID = idArray[0]
+            
+            boardItem.board_Id = lastID + 1
+            print("boardItem.board_Id \(boardItem.board_Id)")
             boardID = boardItem.board_Id
             
             guard let screenShotImage = self.view.boardScreenShot(),

@@ -24,7 +24,7 @@ class NoteText: UITextView {
         // 文字顏色
         self.textColor = UIColor.black
         // 文字字型及大小
-        self.font = UIFont.boldSystemFont(ofSize: 14)
+        self.font = UIFont.boldSystemFont(ofSize: 20)
         //myText.font?.withSize(UIFont.systemFontSize)
         // 文字向左對齊
         self.textAlignment = .left
