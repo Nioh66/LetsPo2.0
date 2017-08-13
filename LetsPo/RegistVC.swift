@@ -43,7 +43,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         
         self.view.addGestureRecognizer(tap)
 
-        
+       
         // 個人照片 frame
         personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
@@ -196,6 +196,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         finalItem.member_Email = emailTextField.text
         finalItem.member_Password = passTextField.text
         finalItem.member_ID = memberID!
+        UserDefaults.standard.set(memberID, forKey: "Member_ID")
         guard let imagedata = UIImagePNGRepresentation(selfImage!) else {
             
             return

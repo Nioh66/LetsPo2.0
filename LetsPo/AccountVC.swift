@@ -30,6 +30,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             login = true
         }
         
+        
 //        let count = memberDataManager.count()
 //        for i in 0 ..< count {
 //            let item = memberDataManager.itemWithIndex(index: i)
