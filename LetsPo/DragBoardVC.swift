@@ -92,7 +92,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         self.saveNoteData()
         member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
         
-        if(member_ID != nil){
+        if(member_ID != 0){
         self.uploadBoard()
        // self.uploadNote()
         }

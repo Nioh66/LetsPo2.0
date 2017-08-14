@@ -24,6 +24,14 @@ class DragPublicPostVC: UIViewController {
     var boardID = Int16()
     var noteCount:Int16 = 0
     let newNoteComingNN = Notification.Name("newPublicNoteComing")
+    //for upload
+    let uploadMachine = AlamoMachine()
+    var member_ID:Int? = nil
+    var boardLat = Double()
+    var boardLon = Double()
+    var noteX = Double()
+    var noteY = Double()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +68,15 @@ class DragPublicPostVC: UIViewController {
         backBtn.isHidden = true
         
         self.saveNoteData()
-        self.uploadBoardBg()
+        self.updateBoardBg()
+        
+        member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
+
+        if(member_ID != 0){
+            self.updateServerBoard()
+            // self.uploadNote()
+        }
+        
         NotificationCenter.default.post(name: newNoteComingNN, object: nil)
         
         
@@ -96,7 +112,89 @@ class DragPublicPostVC: UIViewController {
     }
     
     
-    func uploadBoardBg() {
+    func updateServerBoard() {
+        guard let screenShotImage = self.view.boardScreenShot(),
+            let boardScreenShotData = UIImageJPEGRepresentation(screenShotImage, 0.8)
+            else{
+                return
+        }
+        let boardScreenShot = boardScreenShotData.base64EncodedString()
+        
+        let registDic:[String:Any] = ["Board_Lat":boardLat,
+                                      "Board_Lon":boardLon,
+                                      "Board_ScreenShot":boardScreenShot,
+                                      "Board_CreateMemberID":member_ID!]
+        
+        uploadMachine.doPostJobWith(urlString: uploadMachine.UPDATE_BOARDSCREENSHOT, parameter: registDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            print("Upload board complete!")
+            self.saveNewNote()
+        }
+
+    }
+    
+    func saveNewNote() {
+        guard let noteContent = allNoteData["noteContent"] as? String?,
+            let noteBgColor = allNoteData["noteBgColor"] as? Data,
+            let noteFontColor = allNoteData["noteFontColor"] as? Data,
+            let noteFontSize = allNoteData["noteFontSize"] as? Double,
+            let noteImage = allNoteData["noteImage"] as? [UIImage],
+            let noteSelfie = UIImagePNGRepresentation(resizeNote!)
+            else {
+                print("Case failure!!!!!!!!")
+                return
+        }
+        var imageArray:[String]?
+        
+        if noteImage.count>=1{
+            imageArray = [String]()
+            for image in noteImage{
+                
+                let imageData = UIImageJPEGRepresentation(image,0.8)
+                if let imageStr = imageData?.base64EncodedString(options:.lineLength64Characters){
+                    imageArray?.append(imageStr)
+                    
+                }
+            }
+            
+        }
+        let noteSelfie64 = noteSelfie.base64EncodedString()
+        let noteBgColor64 = noteBgColor.base64EncodedString()
+        let noteFontColor64 = noteFontColor.base64EncodedString()
+        
+        
+        
+        
+        
+        let registDic:[String:Any?] = ["Note_Content":noteContent,
+                                       "Note_FontColor":noteFontColor64,
+                                       "Note_FontSize":noteFontSize,
+                                       "Note_BgColor":noteBgColor64,
+                                       "Note_Selfie":noteSelfie64,
+                                       "Note_X":noteX,
+                                       "Note_Y":noteY,
+                                       "Board_CreateMemberID":member_ID!,
+                                       "Board_Lat":boardLat,
+                                       "Board_Lon":boardLon,
+                                       "Note_Image":imageArray]
+        
+        uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_NOTE, parameter: registDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            print("Upload note complete!")
+            
+        }
+    
+
+    }
+    
+    
+    
+    
+    func updateBoardBg() {
         guard let newBoardPic = self.view.boardScreenShot(),
             let newBoardBg = UIImageJPEGRepresentation(newBoardPic, 1.0) as NSData? else{
                 return
@@ -109,6 +207,9 @@ class DragPublicPostVC: UIViewController {
             if data.board_Id == boardID{
                 data.board_CreateTime = NSDate()
                 data.board_ScreenShot = newBoardBg
+                //for server
+                boardLat = data.board_Lat
+                boardLon = data.board_Lon
                 boardDataManager.saveContexWithCompletion { (success) in
                     if (success) {
                         print("BoardData save succeed!!!")
@@ -161,23 +262,20 @@ class DragPublicPostVC: UIViewController {
         }
         
 
-        
-        
-//        guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
-//            print("imageJson transform failure!!!!")
-//            return
-//        }
-//        
-//        print("---------\(imageJson)-------------")
+        let postX = theDragNote.frame.minX
+        let postY = theDragNote.frame.minY
+        noteX = Double(postX)
+        noteY = Double(postY)
 
+        
         item.note_BoardID = boardID
         item.note_ID = noteCount + 1
         item.note_BgColor = noteBgColor
         item.note_Content = noteContent
         item.note_FontColor = noteFontColor
         item.note_FontSize = noteFontSize
-        item.note_X = Double(theDragNote.frame.minX)
-        item.note_Y = Double(theDragNote.frame.minY)
+        item.note_X = noteX
+        item.note_Y = noteY
         item.note_Selfie = noteSelfie
 //        item.note_Image = imageJson
         
