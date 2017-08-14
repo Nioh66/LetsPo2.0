@@ -18,8 +18,6 @@ class NotiSettingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let member_id = UserDefaults.standard.integer(forKey: "Member_ID")
-        print(member_id)
         contentView.layer.cornerRadius = 10.0
         contentView.layer.masksToBounds = true
         

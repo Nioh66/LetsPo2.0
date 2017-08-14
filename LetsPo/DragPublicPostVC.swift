@@ -150,13 +150,26 @@ class DragPublicPostVC: UIViewController {
                 print("Case failure!!!!!!!!")
                 return
         }
-        guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
-            print("imageJson transform failure!!!!")
-            return
+        if noteImage.count>=1{
+            
+            guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
+                print("imageJson transform failure!!!!")
+                return
+            }
+            item.note_Image = imageJson
+            print("---------\(imageJson)-------------")
         }
         
-        print("---------\(imageJson)-------------")
+
         
+        
+//        guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
+//            print("imageJson transform failure!!!!")
+//            return
+//        }
+//        
+//        print("---------\(imageJson)-------------")
+
         item.note_BoardID = boardID
         item.note_ID = noteCount + 1
         item.note_BgColor = noteBgColor
@@ -166,9 +179,8 @@ class DragPublicPostVC: UIViewController {
         item.note_X = Double(theDragNote.frame.minX)
         item.note_Y = Double(theDragNote.frame.minY)
         item.note_Selfie = noteSelfie
-        item.note_Image = imageJson
+//        item.note_Image = imageJson
         
-        print("noteID:-------\(item.note_ID)")
         
         noteDataManager.saveContexWithCompletion { (success) in
             if(success){

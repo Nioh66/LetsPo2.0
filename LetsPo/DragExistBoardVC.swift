@@ -122,12 +122,17 @@ class DragExistBoardVC: UIViewController {
                 print("Case failure!!!!!!!!")
                 return
         }
-        guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
-            print("imageJson transform failure!!!!")
-            return
-        }
         
-        print("---------\(imageJson)-------------")
+        if noteImage != [UIImage](){
+            
+            guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
+                print("imageJson transform failure!!!!")
+                return
+            }
+            item.note_Image = imageJson
+            print("---------\(imageJson)-------------")
+        }
+
         
         item.note_BoardID = boardID
         item.note_ID = noteCount + 1
@@ -138,7 +143,7 @@ class DragExistBoardVC: UIViewController {
         item.note_X = Double(theDragNote.frame.minX)
         item.note_Y = Double(theDragNote.frame.minY)
         item.note_Selfie = noteSelfie
-        item.note_Image = imageJson
+ //       item.note_Image = imageJson
         
         print("noteID:-------\(item.note_ID)")
         

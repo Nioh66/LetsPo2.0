@@ -117,7 +117,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                                        "Member_Password":passTextField.text,
                                        "Member_Email":emailTextField.text,
                                        "Member_Selfie":selfieData]
-        uploadMachine.doPostJobWith(urlString: uploadMachine.NEW_MEMBER, parameter: registDic, imageDic: nil) { (error, rtn) in
+        uploadMachine.doPostJobWith(urlString: uploadMachine.NEW_MEMBER, parameter: registDic) { (error, rtn) in
             if error != nil{
                 print(error!)
             }

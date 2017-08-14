@@ -29,6 +29,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     //Note data
     var allNoteData = [String:Any]()
     var boardID = Int16()
+    var noteX = Double()
+    var noteY = Double()
     
     //Board data
     var boardScreenShot = UIImage()
@@ -38,6 +40,11 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     var boardLon = Double()
     var boardCreatetime = NSDate()
     var boardTitle = ""
+    
+    //upload
+    let uploadMachine = AlamoMachine()
+    var uploadBoardScreenShot = UIImage()
+    var member_ID:Int? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,8 +87,16 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     @IBAction func saveBtnPressed(_ sender: UIButton) {
         backBtn.isHidden = true
         saveBtn.isHidden = true
+        
         self.saveBoardData()
         self.saveNoteData()
+        member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
+        
+        if(member_ID != nil){
+        self.uploadBoard()
+       // self.uploadNote()
+        }
+        
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
         tabBarController?.selectedIndex = 0
         navigationController?.popToRootViewController(animated: true)
@@ -98,18 +113,107 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         NoteImageView.center = point
         
     }
+    // MARK: Upload to server
+    
+    func uploadBoard() {
+        let boardBg = topImage.image
+        
+
+        guard let screenShotImage = self.view.boardScreenShot(),
+            let boardScreenShotData = UIImageJPEGRepresentation(screenShotImage, 0.8),
+            let boardBgPicData = UIImageJPEGRepresentation(boardBg!, 0.8)
+            else{
+                return
+        }
+        let boardBgPic = boardBgPicData.base64EncodedString()
+        let boardScreenShot = boardScreenShotData.base64EncodedString()
+        
+        let registDic:[String:Any] = ["Board_Title":boardTitle,
+                                      "Board_Lat":boardLat,
+                                      "Board_Lon":boardLon,
+                                      "Board_Alert":boardAlert,
+                                      "Board_BgPic":boardBgPic,
+                                      "Board_ScreenShot":boardScreenShot,
+                                      "Board_CreateMemberID":member_ID!,
+                                      "Board_Privacy":boardPrivacy]
+        uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_BOARD, parameter: registDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            print("Upload board complete!")
+            self.uploadNote()
+        }
+    }
     
     
     
-    // Save Data
+    func uploadNote() {
+        
+        
+        
+        guard let noteContent = allNoteData["noteContent"] as? String?,
+            let noteBgColor = allNoteData["noteBgColor"] as? Data,
+            let noteFontColor = allNoteData["noteFontColor"] as? Data,
+            let noteFontSize = allNoteData["noteFontSize"] as? Double,
+            let noteImage = allNoteData["noteImage"] as? [UIImage],
+            let noteSelfie = UIImagePNGRepresentation(resizeNote)
+            else {
+                print("Case failure!!!!!!!!")
+                return
+        }
+        var imageArray:[String]?
+        
+        if noteImage.count>=1{
+            imageArray = [String]()
+            for image in noteImage{
+                
+                let imageData = UIImageJPEGRepresentation(image,0.8)
+                if let imageStr = imageData?.base64EncodedString(options:.lineLength64Characters){
+                    imageArray?.append(imageStr)
+                    
+                }
+            }
+            
+        }
+        let noteSelfie64 = noteSelfie.base64EncodedString()
+        let noteBgColor64 = noteBgColor.base64EncodedString()
+        let noteFontColor64 = noteFontColor.base64EncodedString()
+        
+        
+        
+        
+        
+        let registDic:[String:Any?] = ["Note_Content":noteContent,
+                                       "Note_FontColor":noteFontColor64,
+                                       "Note_FontSize":noteFontSize,
+                                       "Note_BgColor":noteBgColor64,
+                                       "Note_Selfie":noteSelfie64,
+                                       "Note_X":noteX,
+                                       "Note_Y":noteY,
+                                       "Board_CreateMemberID":member_ID!,
+                                       "Board_Lat":boardLat,
+                                       "Board_Lon":boardLon,
+                                       "Note_Image":imageArray]
+        
+        uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_NOTE, parameter: registDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            print("Upload note complete!")
+
+        }
+    }
+    
+    
+    // MARK: Save Data
     
     func saveNoteData() {
         let noteItem = noteDataManager.createItem()
         
         let postX = NoteImageView.frame.minX
         let postY = NoteImageView.frame.minY
-        let noteX = Double(postX)
-        let noteY = Double(postY)
+        noteX = Double(postX)
+        noteY = Double(postY)
         
         guard let noteContent = allNoteData["noteContent"] as? String?,
             let noteBgColor = allNoteData["noteBgColor"] as? NSData,
@@ -121,31 +225,13 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                 print("Case failure!!!!!!!!")
                 return
         }
-        guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
-            print("imageJson transform failure!!!!")
-            return
-        }
-        
-        print("---------\(imageJson)-------------")
-        
-        
-        guard let album = noteDataManager.transformDataToImage(imageJSONData: imageJson) else{
-            print("Get image failure!")
-            return
-        }
-        
-        
-        for (index,image) in album.enumerated(){
+        if noteImage.count>=1{
             
-            let x = (self.view.frame.size.width)*CGFloat(index)/CGFloat(album.count)
-            let y = (self.view.frame.size.height)*CGFloat(index)/CGFloat(album.count)
-            let w = self.view.frame.size.width/CGFloat(album.count)
-            let h = self.view.frame.size.height/CGFloat(album.count)
-            
-            let imgView = UIImageView(image: image)
-            imgView.frame = CGRect(x: x, y: y, width: w, height: h)
-            self.view.addSubview(imgView)
-            
+            guard let imageJson = noteDataManager.transformImageTOJson(images: noteImage) else{
+                print("imageJson transform failure!!!!")
+                return
+            }
+            noteItem.note_Image = imageJson
         }
         
         noteItem.note_Content = noteContent
@@ -155,7 +241,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         noteItem.note_ID = 1
         noteItem.note_X = noteX
         noteItem.note_Y = noteY
-        noteItem.note_Image = imageJson
         noteItem.note_Selfie = noteSelfie
         noteItem.note_BoardID = boardID
         
@@ -183,9 +268,11 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                 else {
                     return
             }
+            //For board upload
+            uploadBoardScreenShot = screenShotImage
             
-            guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
-                let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 1.0) as NSData?
+            guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 0.8) as NSData? ,
+                let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 0.8) as NSData?
                 else{
                     return
             }
@@ -229,8 +316,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                     return
             }
             
-            guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 1.0) as NSData? ,
-                let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 1.0) as NSData?
+            guard let boardBgPic = UIImageJPEGRepresentation(bgPic, 0.8) as NSData? ,
+                let boardScreenShot = UIImageJPEGRepresentation(screenShotImage, 0.8) as NSData?
                 else{
                     return
             }
