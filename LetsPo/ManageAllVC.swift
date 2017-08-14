@@ -213,7 +213,8 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         tabBarController?.tabBar.isHidden = true
         navigationController?.setNavigationBarHidden(false, animated: false)
         navigationController?.navigationBar.topItem?.title = "全部選集"
-        navigationController?.navigationBar.backgroundColor = UIColor.white
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        
         dataManagerCount = boardDataManager.count()
         
         allArrayData()
@@ -223,6 +224,7 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
     override func viewWillDisappear(_ animated: Bool) {
         hideAllDeleteBtn()
         dismiss(animated: false, completion: nil)
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
 }

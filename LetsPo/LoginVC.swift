@@ -22,8 +22,21 @@ class LoginVC: UIViewController {
             registBtn.isHidden = true
         }
         
-//            self.border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height:self.frame.size.height)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
+        tap.cancelsTouchesInView = false
+        tap.numberOfTapsRequired = 1
         
+        self.view.addGestureRecognizer(tap)
+        
+    }
+    func hideKeyboard(tapG:UITapGestureRecognizer){
+        
+        passwordLabel.resignFirstResponder()
+        accountLabel.resignFirstResponder()
+        
+    }
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,7 +50,9 @@ class LoginVC: UIViewController {
         
     }
     override func viewWillAppear(_ animated: Bool) {
-         self.navigationController?.isNavigationBarHidden = false
+        tabBarController?.tabBar.isHidden = true
+         self.navigationController?.isNavigationBarHidden = true
+        
     }
-
+   
 }

@@ -124,7 +124,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
-        
+        tabBarController?.tabBar.isHidden = false
         
     }
 }

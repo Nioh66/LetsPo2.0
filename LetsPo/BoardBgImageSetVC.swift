@@ -126,7 +126,11 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         navigationController?.setNavigationBarHidden(true, animated: false)
         
         tabBarController?.tabBar.isHidden = true
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
     // MARK: Button method

@@ -101,3 +101,13 @@ class TapToShowDetail: UITapGestureRecognizer {
     var boardID : Int16 = 0
     var postImageView:UIImageView? = nil
 }
+class deleteView:UIButton {
+    var postImageView:UIImageView? = nil
+    var postID : Int16 = 0
+}
+class manageView:UIButton {
+    var postImageView:UIButton? = nil
+    var button:[[String:UIButton]]? = nil
+    var postID : Int16 = 0
+}
+

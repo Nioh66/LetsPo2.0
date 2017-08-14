@@ -26,6 +26,12 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     let getBoardPosts = GetBoardNotes()
     var secondTime:Bool!
     var fromNewNote:Bool!
+    var deleteBtns = [[String:UIButton]]()
+    var hidehide:Bool!
+    var imagArr = [UIImageView]()
+    var deleteBtn = deleteView()
+    var deleteBtnControll = manageView()
+
     
     
     
@@ -63,7 +69,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         
         let detailPostID = gestureRecognizer.postID
         let detailboardID = gestureRecognizer.boardID
-        print("GoToDetail did press")
+        print("--PostID\(detailPostID)")
         
         let publicPostDetailVC =  storyboard?.instantiateViewController(withIdentifier: "PublicPostDetailVC") as! PublicPostDetailVC
         publicPostDetailVC.modalPresentationStyle = .popover
@@ -104,6 +110,9 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        uploadBoardBg()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -115,7 +124,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         tabBarController?.tabBar.isHidden = true
         titleLabel.isHidden = false
         backBtn.isHidden = false
-        
+        hidehide = false
         dataManagerCount = boardDataManager.count()
         if selectIndexID == 0 {
             print("nil")
@@ -143,14 +152,24 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             detailBtn.postID = allPostsID[index]
             detailBtn.boardID = selectIndexID
             
+            deleteBtn = deleteView(type: .custom)
+            deleteBtn.frame = CGRect(x: 3, y: 3, width: 20, height: 20)
+            deleteBtn.setImage(UIImage(named: "garbage"), for: .normal)
+            deleteBtn.isHidden = true
+            deleteBtn.addTarget(self, action: #selector(delete(sender:)), for: .touchUpInside)
+            deleteBtn.postImageView = imageview
+            deleteBtn.postID = allPostsID[index]
+            
+            deleteBtnControll = manageView(type:.custom)
+            deleteBtnControll.frame = CGRect(x: 3, y:(view.frame.size.height) * 0.9, width: 40, height: 40)
+            deleteBtnControll.setImage(UIImage(named: "garbage"), for: .normal)
+            deleteBtnControll.addTarget(self, action: #selector(deleteBtnAction(sender:)), for: .touchUpInside)
+            deleteBtnControll.postID = allPostsID[index]
             
             imageview.addGestureRecognizer(detailBtn)
             
-            print("fromNewNote \(fromNewNote)")
-            
             // 如果是普通的第二次進入這頁 先拔掉所有的 imageV
             if secondTime == true && fromNewNote == false {
-                print("DispatchQueue secondTime = \(secondTime)indexID \(allPostsID[index])")
                 DispatchQueue.main.async() {
                     // 不知道為什麼要在 DispatchQueue 拔，但網路上都這樣寫
                     imageview.removeFromSuperview()
@@ -163,29 +182,150 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
                 DispatchQueue.main.async() {
                     imageview.removeFromSuperview()
                 }
-                print("secondTime\(secondTime) fromNewNote\(fromNewNote) index\(index)")
             }
-            print("index ... =  \(allPostsID[index])")
             backGroundImage.addSubview(imageview)
-            print("add add add")
+            deleteBtn.tag = Int(allPostsID[index])
+            
+            print("\(deleteBtns.count)")
+            print("index-\(allPostsID[index]),id- \(selectIndexID)")
+            
+            
+            deleteBtns.append(["id":deleteBtn])
+            deleteBtnControll.button = deleteBtns
+            deleteBtn.postImageView?.addSubview(deleteBtn)
+            backGroundImage.addSubview(deleteBtnControll)
+            deleteBtnControll.postImageView = deleteBtn
+
             
         }
         // fromNewNote 設成 false 等一下跳來跳去 又是一條好漢 繼續全部拔掉再貼上
         fromNewNote = false
         secondTime = true
-        print("addSubview secondTime = \(secondTime)fromNewNote \(fromNewNote)")
         
     }
     // MARK: Adding NotificationCenter observer
     func addingObserver() {
-        //      NotificationCenter.default.addObserver(self, selector: #selector(boardReset),name: boardSettingNN,object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(newNoteComing), name: newNoteComingNN, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(theChooseOne),
                                                name: NSNotification.Name(rawValue: "notificationCenter"),
                                                object: nil)
-        
-        
     }
+    
+    func deleteBtnAction(sender:manageView) {
+        if hidehide != false {
+            guard let btnCount = sender.button?.count else {
+                return
+            }
+            print("--btnCount--\(btnCount)-")
+            for i in 0 ..< Int(btnCount) {
+                let senderBtn = sender.button?[i]["id"]
+                DispatchQueue.main.async {
+                    senderBtn?.isHidden = true
+                }
+            }
+            hidehide = false
+        }else {
+            let btnCount = sender.button?.count
+            for i in 0 ..< Int(btnCount!) {
+                let senderBtn = sender.button?[i]["id"]
+                DispatchQueue.main.async {
+                    senderBtn?.isHidden = false
+                }
+            }
+            hidehide = true
+        }
+    }
+    
+    
+    func delete(sender:deleteView) {
+        let tag = sender.tag
+        for i in deleteBtns {
+            if tag == i["id"]?.tag && tag == Int(sender.postID) {
+                print(tag)
+                coreDataDeleteAndSaveMethod(note_ID: "\(tag)",board_id:"\(selectIndexID)")
+                sender.postImageView?.isHidden = true
+                hidehide = true
+            }
+        }
+    }
+    
+    func coreDataDeleteAndSaveMethod(note_ID:String,board_id:String){
+        let searchField = "note_BoardID"
+        let keyword = "\(board_id)"
+        guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
+            print("Result case to [NoteData] failure!!!!")
+            return
+        }
+        for noteAttribute:NoteData in result {
+            let noteID = noteAttribute.note_ID
+            let boardID = noteAttribute.note_BoardID
+            guard let image = noteAttribute.note_Image else {
+                return
+            }
+            if "\(noteID)" == note_ID {
+                print("noteID \(noteID),boardID \(boardID)")
+                // 勿刪！！！！！ 做好之後再打開功能
+//                noteDataManager.deleteItem(item: noteAttribute)
+//                noteDataManager.saveContexWithCompletion(completion: { (success) in
+//                    print("delete note with all image success")
+//                })
+//                self.removeImageformDocument(items: image)
+            }
+        }
+    }
+    
+    func removeImageformDocument(items:NSData) {
+        let fileManager = FileManager.default
+        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
+        let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
+        let paths = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
+        guard let dirPath = paths.first else {
+            return
+        }
+        guard let json = try? JSONSerialization.jsonObject(with: items as Data),
+            let myAlbum = json as? [String: Any] else{
+                print("imageJSONData transform to result failure!!!!!")
+                return
+        }
+        for index in 0 ..< myAlbum.count {
+            guard let stringPath = myAlbum["Image\(index)"] as? String
+                else {
+                    print("------String transform to URL failure------")
+                    return
+            }
+            let filePath = "\(dirPath)/\(stringPath)"
+            do {
+                try fileManager.removeItem(atPath: filePath)
+                print("delete image OK")
+            } catch let error as NSError {
+                print(error.debugDescription)
+            }
+        }
+    }
+    func uploadBoardBg() {
+        guard let newBoardPic = self.view.boardScreenShot(),
+            let newBoardBg = UIImageJPEGRepresentation(newBoardPic, 1.0) as NSData? else{
+                return
+        }
+        
+        
+        let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(selectIndexID)") as! [BoardData]
+        
+        for data:BoardData in oldBoardData{
+            if data.board_Id == selectIndexID {
+                data.board_CreateTime = NSDate()
+                data.board_ScreenShot = newBoardBg
+                boardDataManager.saveContexWithCompletion { (success) in
+                    if (success) {
+                        print("BoardData save succeed!!!")
+                    }else{
+                        print("BoardData save failure!!!")
+                    }
+                }
+            }
+        }
+    }
+    
     func theChooseOne(notification:Notification) {
         if let board_Id = notification.userInfo?["id"] as? Int16 {
             selectIndexID = board_Id
@@ -207,13 +347,6 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         print("fromNewNote \(fromNewNote)")
         
     }
-    //    func boardReset(notification:Notification) {
-    //
-    //        let  BgImage:UIImage = notification.userInfo!["selfBg"] as! UIImage
-    //
-    //        selfBgImage.image = BgImage
-    //    }
-    //
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "newPublicNote"){
@@ -235,12 +368,12 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
 
         boardSettingBtn.alpha = 0.0
         addPostBtn.alpha = 0.0
-        deletePostBtn.alpha = 0.0
+        
         let BGimageWithPosts = self.view.boardScreenShot()
         
         boardSettingBtn.alpha = 1
         addPostBtn.alpha = 1
-        deletePostBtn.alpha = 1
+        
         
         return BGimageWithPosts!
     }

@@ -14,6 +14,7 @@ let identifier = "identifier"
 
 class ManageViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource, ActionDelegation, ScrollPagerDelegate,LocationManagerDelegate {
     
+    @IBOutlet weak var noticeImageView: UIImageView!
     @IBOutlet weak var scrollPager: ScrollPager!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -31,6 +32,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var count1 = 0
     var secondTime = false
     var formMap = false
+    var scrollPage = Int()
     
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
@@ -122,6 +124,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
         print("scrollPager index changed: \(changedIndex)")
+        scrollPage = changedIndex
+        firstTimeNoticeImage()
+
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -324,6 +329,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     // MARK: location manager methods
     func locationManager(updatedUserLocation coordinate: CLLocation) {
+        locationManager.startUpdate()
         monitorRegion(userLocation: coordinate)
         locationManager.stopUpdate()
         
@@ -394,6 +400,29 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         if formMap == true {
             scrollPager.setSelectedIndex(index: 1, animated: false)
         }
+        firstTimeNoticeImage()
+    }
+    
+    func firstTimeNoticeImage(){
+        var imageView = UIImage()
+        if dataManagerCount == 0 {
+            if scrollPage == 0 {
+                imageView = UIImage(named: "first")!
+                
+            }else {
+                imageView = UIImage(named: "nearby_1")!
+            }
+        }
+        if nearbyDic.count == 0 {
+            if scrollPage == 1 {
+                imageView = UIImage(named: "nearby_1")!
+            }
+        }
+        
+        noticeImageView.clipsToBounds = true
+        noticeImageView.layer.cornerRadius = 4.0
+        noticeImageView.contentMode = .scaleToFill
+        noticeImageView.image = imageView
     }
     
     // set frame for scroll view
@@ -401,5 +430,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         scrollView.frame = CGRect(x: 0.0, y: 0.0, width: contentView.bounds.size.width, height: view.bounds.size.height)
         
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        noticeImageView.image = nil
+    }
+
     
 }

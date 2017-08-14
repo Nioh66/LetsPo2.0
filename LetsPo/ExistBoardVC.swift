@@ -63,6 +63,10 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: false)
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
     // MARK: Get board data

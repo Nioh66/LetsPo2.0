@@ -223,6 +223,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             shouldReUpdate = true
             return
         }
+        locationManager.startUpdate()
         monitorRegion(userLocation: coordinate)
         locationManager.stopUpdate()
         
@@ -368,9 +369,14 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         locationManager.startUpdate()
         dataManagerCount = boardDataManager.count()
         places = spot()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
 }

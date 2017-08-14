@@ -60,12 +60,6 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         
     }
 
-//    func resignFirstResponder(){
-//        emailTextField.resignFirstResponder()
-//        nameTextField.resignFirstResponder()
-//        passTextField.resignFirstResponder()
-//    }
-    
     
     @IBAction func editSelfImage(_ sender: UIButton) {
         let alert = UIAlertController(title: "Edite", message: "Please select source", preferredStyle:.alert)
@@ -211,6 +205,9 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         
     }
     
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -218,11 +215,12 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationItem.title = "個人資料"
-        //     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editBtnAction))
+        tabBarController?.tabBar.isHidden = true
+        self.navigationController?.isNavigationBarHidden = true
+        
+        
     }
+    
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {

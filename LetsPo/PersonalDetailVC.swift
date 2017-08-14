@@ -130,7 +130,11 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.barTintColor = UIColor.white
         self.navigationItem.title = "個人資料"
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         //     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editBtnAction))
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
