@@ -75,7 +75,7 @@ class LoginVC: UIViewController {
             }
         }
         // 上資料庫去驗證
-        
+        navigationController?.popViewController(animated: true)
     }
     
     func saveToCoreData(data:[String:Any]) {
@@ -117,6 +117,7 @@ class LoginVC: UIViewController {
         if shouldReUpdate{
             shouldReUpdate = false
         }
+        // 記得呼叫 要上鎖的方法
     }
     
     func downloadAllData(memberID:Int64) {
@@ -227,6 +228,8 @@ class LoginVC: UIViewController {
                 print("Case from String failure!!!!!")
                 return
         }
+        
+        /*
         noteItem.note_BoardID =
         noteItem.note_Content = noteContent
         noteItem.note_FontColor = noteFontColor
@@ -236,6 +239,7 @@ class LoginVC: UIViewController {
         noteItem.note_X = noteX
         noteItem.note_Y = noteY
         noteItem.note_Image =
+        */
 
     }
     

@@ -38,7 +38,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationManager.startUpdate()
         Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
             // 防止秒數內再度觸發方法
-            self.doUnlock()
+//            self.doUnlock()
             self.locationManager.startUpdate()
         }
         
@@ -215,6 +215,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         if shouldReUpdate{
             shouldReUpdate = false
         }
+        
     }
     
     // mark - Region monitoring method
@@ -369,7 +370,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
-        
+        tabBarController?.tabBar.isHidden = false
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         locationManager.startUpdate()
         dataManagerCount = boardDataManager.count()

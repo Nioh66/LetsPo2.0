@@ -12,6 +12,8 @@ class DragExistBoardVC: UIViewController {
     
     
     @IBOutlet weak var publicBgImage: UIImageView!
+    @IBOutlet weak var saveBtn: UIButton!
+    @IBOutlet weak var backBtn: UIButton!
     
     var posterX:CGFloat = 150
     var posterY:CGFloat = 150
@@ -56,17 +58,23 @@ class DragExistBoardVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
+        backBtn.isHidden = false
+        saveBtn.isHidden = false
+        
     }
     
     
     @IBAction func saveBtnPressed(_ sender: UIButton) {
+        backBtn.isHidden = true
+        saveBtn.isHidden = true
+        
         self.saveNoteData()
         self.uploadBoardBg()
         NotificationCenter.default.post(name: resetNote, object: nil)
-        
         tabBarController?.selectedIndex = 0
         navigationController?.popToRootViewController(animated: true)
     }
+    
     @IBAction func backBtnPressed(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
@@ -98,17 +106,16 @@ class DragExistBoardVC: UIViewController {
     
     func saveNoteData() {
         
-        
-        
         guard let allBoardsID = noteDataManager.searchField(field: "note_BoardID", forKeyword: "\(boardID)") as? [NoteData] else{
             return
         }
         
+        var idArray = [Int16]()
         for boardsID:NoteData in allBoardsID{
-            if boardsID.note_BoardID == boardID {
-                noteCount += 1
-            }
+            let id = boardsID.note_ID
+            idArray.append(id)
         }
+        idArray.sort { ($0) > ($1) }
         
         let item = noteDataManager.createItem()
         
@@ -135,7 +142,12 @@ class DragExistBoardVC: UIViewController {
 
         
         item.note_BoardID = boardID
-        item.note_ID = noteCount + 1
+        if idArray.count > 0 {
+            item.note_ID = idArray[0] + 1
+        }else {
+            item.note_ID = 1
+        }
+
         item.note_BgColor = noteBgColor
         item.note_Content = noteContent
         item.note_FontColor = noteFontColor

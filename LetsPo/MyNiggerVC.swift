@@ -35,6 +35,10 @@ class MyNiggerVC: UITableViewController {
         self.navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
     }
     
     func addFriend() {

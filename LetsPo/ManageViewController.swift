@@ -26,7 +26,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     var deleteBtnFlag:Bool!
     var recent = [UIImage]()
     var recentArr = [String]()
-    //    var all = [UIImage]()
     var nearbyDic = [[String:Any]]()
     var count = 0
     var count1 = 0
@@ -36,7 +35,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
-    //    var collectionViewThree:UICollectionView!
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "comeFromMap"), object: nil)
@@ -74,13 +72,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         dataManagerCount = boardDataManager.count()
         
-        // 第一次進入還沒新增時的底圖
-        //        if dataManagerCount == 0 {
-        //            nearby.append(UIImage(named: "nearby_1")!)
-        //            recent.append(UIImage(named: "first")!)
-        //            all.append(UIImage(named: "first")!)
-        //        }
-        
         setFlagAndGsr()
         
         // assign view to each page
@@ -93,8 +84,10 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     }
     
     func arrayImageData(){
+        // 每次刷新都先移掉所有內容
         recent.removeAll()
         recentArr.removeAll()
+        // 只取前五張近期的留言板
         if dataManagerCount >= 5 {
             for i in 0..<5 {
                 let item = boardDataManager.itemWithIndex(index: i)
@@ -117,9 +110,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             }
         }
         reloadAllData()
-        
-//        print("recent count: \(recent.count)")
-//        print("nearbyDic count : \(nearbyDic.count)")
     }
     
     func scrollPager(scrollPager: ScrollPager, changedIndex: Int) {
@@ -146,7 +136,6 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         if collectionView == self.collectionViewOne {
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexPath) as! ManageCollectionViewCell
-            
             let imageString = recent[indexPath.item]
             cell.backdroundImage.image = imageString
             let title = recentArr[indexPath.item]
@@ -177,19 +166,15 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             coreDataDeleteAndSaveMethod(board_id: keyword)
             
         }else if let indexPath = collectionViewTwo.indexPath(for: cell) {
-//            print("nearbyDic \(nearbyDic)")
-//            print("nearbyDic  indexPath.item  \(indexPath.item)")
             // 因為 nearbyDic 有經過排序 所以在排序前就先記錄原本的 indexPath 再透過原本存的 indexPath 來刪除
             let board_id = nearbyDic[indexPath.item]["board_id"] as! Int16
             nearbyDic.remove(at: indexPath.item)
-//            print("nearbyDic \(nearbyDic)")
             collectionViewTwo.deleteItems(at: [indexPath])
-//            print("board_id: \(board_id)")
             let keyword = "\(board_id)"
             coreDataDeleteAndSaveMethod(board_id: keyword)
-            
         }
     }
+    
     func coreDataDeleteAndSaveMethod(board_id:String){
         let searchField = "board_Id"
         let keyword = "\(board_id)"
@@ -200,6 +185,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         for boardData:BoardData in result {
             let boardID = boardData.board_Id
             print("boardID \(boardID)")
+            //先刪除該留言板
             boardDataManager.deleteItem(item: boardData)
             boardDataManager.saveContexWithCompletion(completion: { (success) in
                 let searchField = "note_BoardID"
@@ -210,15 +196,20 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 for noteAttribute:NoteData in result{
                     let noteID = noteAttribute.note_ID
                     let boardID = noteAttribute.note_BoardID
-                    guard let image = noteAttribute.note_Image else {
-                        return
+                    var imageData:NSData? = nil
+                    if let image = noteAttribute.note_Image {
+                        imageData = image
                     }
                     print("noteID \(noteID),boardID \(boardID)")
+                    // 刪除留言板上所有的note
                     noteDataManager.deleteItem(item: noteAttribute)
                     noteDataManager.saveContexWithCompletion(completion: { (success) in
                         print("delete note with all image success")
                     })
-                    self.removeImageformDocument(items: image)
+                    if imageData != nil {
+                        print("imageData not nil")
+                        self.removeImageformDocument(items:imageData!)
+                    }
                 }
                 self.dataManagerCount = boardDataManager.count()
                 self.locationManager.startUpdate()
@@ -272,6 +263,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }
         hideAllDeleteBtn()
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "manageDetail" {
             let vc = segue.destination as! ManageDetailViewController
@@ -335,13 +327,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
     }
     func locationManager(userDidExitRegion region: CLRegion) {
-//        print("Exit \(region.identifier)")
-        
+        //print("Exit \(region.identifier)")
     }
     
     func locationManager(userDidEnterRegion region: CLRegion) {
-//        print("Enter \(region.identifier)")
-        
+        //print("Enter \(region.identifier)")
     }
     
     func monitorRegion(userLocation:CLLocation){
@@ -405,6 +395,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     func firstTimeNoticeImage(){
         var imageView = UIImage()
+        // 如果沒有任何資料 放上教學頁面
         if dataManagerCount == 0 {
             if scrollPage == 0 {
                 imageView = UIImage(named: "first")!
@@ -413,6 +404,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
                 imageView = UIImage(named: "nearby_1")!
             }
         }
+        // 如果附近沒有 放上指定圖片 避免空曠
         if nearbyDic.count == 0 {
             if scrollPage == 1 {
                 imageView = UIImage(named: "nearby_1")!

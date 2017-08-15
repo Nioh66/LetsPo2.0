@@ -35,10 +35,8 @@ class DragPublicPostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //    theDragNote.backgroundColor = UIColor.blue
         
         theDragNote.backgroundColor = UIColor.clear
-        
         
         theDragNote.frame = CGRect(x: posterX, y: posterY, width: posterEdge, height: posterEdge)
         theDragNote.image = resizeNote
@@ -79,8 +77,6 @@ class DragPublicPostVC: UIViewController {
         
         NotificationCenter.default.post(name: newNoteComingNN, object: nil)
         
-        
-        //    self.navigationController?.popToRootViewController(animated: true)
         for controller in (self.navigationController?.viewControllers)!
         {
             if controller.isKind(of: ManageDetailViewController.self) == true{
@@ -88,11 +84,9 @@ class DragPublicPostVC: UIViewController {
                 self.dismiss(animated: false) {
                     self.navigationController?.popToViewController(controller, animated: true)
                 }
-                
                 break
             }
         }
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -155,11 +149,10 @@ class DragPublicPostVC: UIViewController {
                 let imageData = UIImageJPEGRepresentation(image,0.8)
                 if let imageStr = imageData?.base64EncodedString(options:.lineLength64Characters){
                     imageArray?.append(imageStr)
-                    
                 }
             }
-            
         }
+        
         let noteSelfie64 = noteSelfie.base64EncodedString()
         let noteBgColor64 = noteBgColor.base64EncodedString()
         let noteFontColor64 = noteFontColor.base64EncodedString()
@@ -200,7 +193,6 @@ class DragPublicPostVC: UIViewController {
                 return
         }
         
-        
         let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(boardID)") as! [BoardData]
         
         for data:BoardData in oldBoardData{
@@ -232,12 +224,14 @@ class DragPublicPostVC: UIViewController {
         guard let allBoardsID = noteDataManager.searchField(field: "note_BoardID", forKeyword: "\(boardID)") as? [NoteData] else{
             return
         }
-        
+
+        var idArray = [Int16]()
         for boardsID:NoteData in allBoardsID{
-            if boardsID.note_BoardID == boardID {
-                noteCount += 1
-            }
+            let id = boardsID.note_ID
+            idArray.append(id)
         }
+        
+        idArray.sort { ($0) > ($1) }
         
         let item = noteDataManager.createItem()
         
@@ -269,7 +263,11 @@ class DragPublicPostVC: UIViewController {
 
         
         item.note_BoardID = boardID
-        item.note_ID = noteCount + 1
+        if idArray.count > 0 {
+            item.note_ID = idArray[0] + 1
+        }else {
+            item.note_ID = 1
+        }
         item.note_BgColor = noteBgColor
         item.note_Content = noteContent
         item.note_FontColor = noteFontColor
@@ -294,17 +292,5 @@ class DragPublicPostVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+    }    
 }

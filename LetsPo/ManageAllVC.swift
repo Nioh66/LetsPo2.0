@@ -66,22 +66,10 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         var cell = ManageAllCell()
         cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath as IndexPath) as! ManageAllCell
         let imageString = all[indexPath.item]["board_ScreenShot"] as! UIImage
-        
         cell.backdroundImage.image = imageString
-        
         setCellBtn(cell: cell)
         
         return cell
-    }
-    func size(image:UIImage)-> UIImage{
-        let rect = CGRect(x: 0, y: 0, width: 300, height: 300)
-        UIGraphicsBeginImageContext(rect.size)
-        image.draw(in: rect)
-        let picture = UIGraphicsGetImageFromCurrentImageContext()
-        let imageDate = UIImagePNGRepresentation(picture!)
-        let finalImage = UIImage(data: imageDate!)
-
-        return finalImage!
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -99,7 +87,6 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
         guard let indexPath = colView.indexPath(for: cell) else {return}
         let board_id = all[indexPath.item]["board_Id"] as! Int16
         all.remove(at: indexPath.item)
-        print("nearbyDic \(all)")
         colView.deleteItems(at: [indexPath])
         print("board_id: \(board_id)")
         let keyword = "\(board_id)"
@@ -126,15 +113,19 @@ class ManageAllVC: UIViewController,UICollectionViewDataSource, UICollectionView
                 for noteAttribute:NoteData in result{
                     let noteID = noteAttribute.note_ID
                     let boardID = noteAttribute.note_BoardID
-                    guard let image = noteAttribute.note_Image else {
-                        return
+                    var imageData:NSData? = nil
+                    if let image = noteAttribute.note_Image {
+                        imageData = image
                     }
+
                     print("noteID \(noteID),boardID \(boardID)")
                     noteDataManager.deleteItem(item: noteAttribute)
                     noteDataManager.saveContexWithCompletion(completion: { (success) in
                         print("delete note with all image success")
                     })
-                    self.removeImageformDocument(items: image)
+                    if imageData != nil {
+                        self.removeImageformDocument(items:imageData!)
+                    }
                 }
                 self.dataManagerCount = boardDataManager.count()
                 print("delete success")

@@ -107,11 +107,10 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             
         }else if indexPath.row == 2{
             if login == false {
+                print("還沒有資料和登錄")
                 let nextPage = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
                 //                nextPage?.navigationItem.leftItemsSupplementBackButton = true
                 navigationController?.pushViewController(nextPage!, animated: true)
-                
-                
             }else {
             let nextPage = storyboard?.instantiateViewController(withIdentifier: "MyNiggerVC") as? MyNiggerVC
             nextPage?.navigationItem.leftItemsSupplementBackButton = true
@@ -125,6 +124,10 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.isNavigationBarHidden = true
         tabBarController?.tabBar.isHidden = false
+        login = false
+        if memberDataManager.count() > 0 {
+            login = true
+        }
         
     }
 }

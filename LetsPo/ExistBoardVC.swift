@@ -241,7 +241,7 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
             
-            let Creater = item.board_Creater
+//            let Creater = item.board_Creater
             let lat = item.board_Lat
             let lon = item.board_Lon
             var imgWithData = UIImage()
@@ -253,12 +253,12 @@ class ExistBoardVC: UIViewController ,UICollectionViewDataSource,UICollectionVie
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
             if distance <  2500 {
                 if count == 1 {
-                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
+                    nearbyDic.append(["lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
                     
                 }else {
                     count = 0
                     nearbyDic.removeAll()
-                    nearbyDic.append(["name":Creater ?? "","lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
+                    nearbyDic.append(["lat":lat, "lon":lon, "distance":distance,"screenshot":imgWithData,"index":i,"board_id":board_id])
                     count = 1
                 }
             }

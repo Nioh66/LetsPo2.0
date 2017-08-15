@@ -69,10 +69,9 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
                 //For server
                     deleteBoardLat = item.board_Lat
                     deleteBoardLon = item.board_Lon
-                    
             }
         }
-       }
+    }
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
         
@@ -121,9 +120,6 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        uploadBoardBg()
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -131,7 +127,6 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     }
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
-       
         tabBarController?.tabBar.isHidden = true
         titleLabel.isHidden = false
         backBtn.isHidden = false
@@ -163,6 +158,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             detailBtn.postID = allPostsID[index]
             detailBtn.boardID = selectIndexID
             
+            // 每張note上的刪除鈕
             deleteBtn = deleteView(type: .custom)
             deleteBtn.frame = CGRect(x: 3, y: 3, width: 20, height: 20)
             deleteBtn.setImage(UIImage(named: "garbage"), for: .normal)
@@ -171,6 +167,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             deleteBtn.postImageView = imageview
             deleteBtn.postID = allPostsID[index]
             
+            // 頁面上的刪除鈕 總控
             deleteBtnControll = manageView(type:.custom)
             deleteBtnControll.frame = CGRect(x: 3, y:(view.frame.size.height) * 0.9, width: 40, height: 40)
             deleteBtnControll.setImage(UIImage(named: "garbage"), for: .normal)
@@ -195,12 +192,10 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
                 }
             }
             backGroundImage.addSubview(imageview)
+            // 刪除鈕上加上tag ID
             deleteBtn.tag = Int(allPostsID[index])
             
-            print("\(deleteBtns.count)")
-            print("index-\(allPostsID[index]),id- \(selectIndexID)")
-            
-            
+            // 把所有刪除鈕妝到按鈕陣列 才能一起控制
             deleteBtns.append(["id":deleteBtn])
             deleteBtnControll.button = deleteBtns
             deleteBtn.postImageView?.addSubview(deleteBtn)
@@ -223,11 +218,11 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     }
     
     func deleteBtnAction(sender:manageView) {
+        //控制所有小垃圾桶的隱藏和開啟
         if hidehide != false {
             guard let btnCount = sender.button?.count else {
                 return
             }
-            print("--btnCount--\(btnCount)-")
             for i in 0 ..< Int(btnCount) {
                 let senderBtn = sender.button?[i]["id"]
                 DispatchQueue.main.async {
@@ -247,24 +242,25 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         }
     }
     
-    
+    // MARK: - delete note form core Data
     func delete(sender:deleteView) {
         let tag = sender.tag
         for i in deleteBtns {
             if tag == i["id"]?.tag && tag == Int(sender.postID) {
-                print(tag)
                 coreDataDeleteAndSaveMethod(note_ID: "\(tag)",board_id:"\(selectIndexID)")
+                // 暫時隱藏被刪除的note 反正出去回來後就會重刷
                 sender.postImageView?.isHidden = true
-                hidehide = true
+                
             }
+            // 刪除後 隱藏所有刪除鈕並拍照刷新
+            i["id"]?.isHidden = true
+            uploadBoardBg()
         }
         memberID = UserDefaults.standard.integer(forKey: "Member_ID")
         
         if(memberID != 0){
             self.deleteServerNoteData()
         }
-        
-        
     }
     
     // MARK: Server delete
@@ -289,8 +285,8 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         }
     }
     
-    
     func coreDataDeleteAndSaveMethod(note_ID:String,board_id:String){
+        // 搜索並刪除被刪除的note
         let searchField = "note_BoardID"
         let keyword = "\(board_id)"
         guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
@@ -300,8 +296,9 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         for noteAttribute:NoteData in result {
             let noteID = noteAttribute.note_ID
             let boardID = noteAttribute.note_BoardID
-            guard let image = noteAttribute.note_Image else {
-                return
+            var imageData:NSData? = nil
+            if let image = noteAttribute.note_Image {
+                imageData = image
             }
             //for server 
             deleteNoteX = noteAttribute.note_X
@@ -309,17 +306,20 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             
             if "\(noteID)" == note_ID {
                 print("noteID \(noteID),boardID \(boardID)")
-                // 勿刪！！！！！ 做好之後再打開功能
-//                noteDataManager.deleteItem(item: noteAttribute)
-//                noteDataManager.saveContexWithCompletion(completion: { (success) in
-//                    print("delete note with all image success")
-//                })
-//                self.removeImageformDocument(items: image)
+                noteDataManager.deleteItem(item: noteAttribute)
+                noteDataManager.saveContexWithCompletion(completion: { (success) in
+                    print("delete note with all image success")
+                })
+                if imageData != nil {
+                    print("imageData not nil")
+                    self.removeImageformDocument(items:imageData!)
+                }
             }
         }
     }
     
     func removeImageformDocument(items:NSData) {
+        // 取得欲刪除的note的照片路徑 並刪除
         let fileManager = FileManager.default
         let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
         let nsUserDomainMask = FileManager.SearchPathDomainMask.userDomainMask
@@ -327,6 +327,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         guard let dirPath = paths.first else {
             return
         }
+        
         guard let json = try? JSONSerialization.jsonObject(with: items as Data),
             let myAlbum = json as? [String: Any] else{
                 print("imageJSONData transform to result failure!!!!!")
@@ -347,6 +348,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             }
         }
     }
+    
     func uploadBoardBg() {
         guard let newBoardPic = self.view.boardScreenShot(),
             let newBoardBg = UIImageJPEGRepresentation(newBoardPic, 1.0) as NSData? else{
@@ -405,17 +407,14 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     }
     
     
-    
     func getBGimageWithPosts() -> UIImage {
         titleLabel.isHidden = true
         backBtn.isHidden = true
         
-
         boardSettingBtn.alpha = 0.0
         addPostBtn.alpha = 0.0
         
         let BGimageWithPosts = self.view.boardScreenShot()
-        
         boardSettingBtn.alpha = 1
         addPostBtn.alpha = 1
         

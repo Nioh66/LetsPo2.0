@@ -445,7 +445,9 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="backBtn" destination="de2-D9-kQ3" id="vGp-YQ-OYN"/>
                         <outlet property="publicBgImage" destination="wyG-J8-3VI" id="EVt-cE-e2g"/>
+                        <outlet property="saveBtn" destination="93A-tp-5Xs" id="tOZ-qg-ebY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JYt-7q-IZR" userLabel="First Responder" sceneMemberID="firstResponder"/>
