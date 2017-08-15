@@ -31,8 +31,13 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     var imagArr = [UIImageView]()
     var deleteBtn = deleteView()
     var deleteBtnControll = manageView()
-
-    
+    //for server
+    var deleteNoteX = Double()
+    var deleteNoteY = Double()
+    var deleteBoardLat = Double()
+    var deleteBoardLon = Double()
+    var memberID:Int? = nil
+    let uploadMachine = AlamoMachine()
     
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -58,9 +63,13 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         for i in 0 ..< dataManagerCount{
             let item = boardDataManager.itemWithIndex(index: i)
             let boardId = item.board_Id
-            if boardId == selectIndexID {
+                if boardId == selectIndexID {
                 let title = item.board_Title
                 titleLabel.text = title ?? ""
+                //For server
+                    deleteBoardLat = item.board_Lat
+                    deleteBoardLon = item.board_Lon
+                    
             }
         }
        }
@@ -105,6 +114,8 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         
         
     }
+    
+    
     
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -247,7 +258,37 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
                 hidehide = true
             }
         }
+        memberID = UserDefaults.standard.integer(forKey: "Member_ID")
+        
+        if(memberID != 0){
+            self.deleteServerNoteData()
+        }
+        
+        
     }
+    
+    // MARK: Server delete
+    func deleteServerNoteData() {
+        print(memberID)
+        print(deleteBoardLat)
+        print(deleteBoardLon)
+        print(deleteNoteX)
+        print(deleteNoteY)
+        let deleteDic:[String:Any?] = ["Board_CreateMemberID":memberID!,
+                                       "Board_Lat":deleteBoardLat,
+                                       "Board_Lon":deleteBoardLon,
+                                       "Note_X":deleteNoteX,
+                                       "Note_Y":deleteNoteY]
+        
+        uploadMachine.doPostJobWith(urlString: uploadMachine.DELETE_NOTE, parameter: deleteDic) { (error, response) in
+            if error != nil{
+                print("Delete Note failure!!")
+                print(error!)
+            }
+                print("Delete Note complete!!")
+        }
+    }
+    
     
     func coreDataDeleteAndSaveMethod(note_ID:String,board_id:String){
         let searchField = "note_BoardID"
@@ -262,6 +303,10 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             guard let image = noteAttribute.note_Image else {
                 return
             }
+            //for server 
+            deleteNoteX = noteAttribute.note_X
+            deleteNoteY = noteAttribute.note_Y
+            
             if "\(noteID)" == note_ID {
                 print("noteID \(noteID),boardID \(boardID)")
                 // 勿刪！！！！！ 做好之後再打開功能

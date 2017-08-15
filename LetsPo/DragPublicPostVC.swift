@@ -136,11 +136,11 @@ class DragPublicPostVC: UIViewController {
     }
     
     func saveNewNote() {
-        guard let noteContent = allNoteData["noteContent"] as? String?,
-            let noteBgColor = allNoteData["noteBgColor"] as? Data,
-            let noteFontColor = allNoteData["noteFontColor"] as? Data,
-            let noteFontSize = allNoteData["noteFontSize"] as? Double,
-            let noteImage = allNoteData["noteImage"] as? [UIImage],
+        guard let noteContent = allNoteData["publicNoteContent"] as? String?,
+            let noteBgColor = allNoteData["publicNoteBgColor"] as? Data,
+            let noteFontColor = allNoteData["publicNoteFontColor"] as? Data,
+            let noteFontSize = allNoteData["publicNoteFontSize"] as? Double,
+            let noteImage = allNoteData["publicNoteImage"] as? [UIImage],
             let noteSelfie = UIImagePNGRepresentation(resizeNote!)
             else {
                 print("Case failure!!!!!!!!")

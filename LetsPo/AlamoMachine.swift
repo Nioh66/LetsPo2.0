@@ -23,8 +23,9 @@ class AlamoMachine {
     let UPDATE_BOARDBG = "updataBoardBG.php"
     let UPDATE_BOARDSETTING = "updateBoard.php"
     let UPDATE_BOARDSCREENSHOT = "updateBoardScreenshot.php"
-    let UPDATE_ALL = "updateAll.php"
+    let DOWNLOAD_ALL = "downloadAll.php"
     let NEW_MEMBER = "newMember.php"
+    let LOGIN = "login.php"
 
    
     
@@ -65,22 +66,11 @@ class AlamoMachine {
                                     return
                                 }
                                 complete(nil,returnDic)
-//                                if JSON(Response.data!)["result"].boolValue{
-//                                    complete(nil,returnDic)
-//
-//                                }else{
-//                                    let falseDic:[String:Any]
-//                                    let error = returnDic["errorCode"] as Any
-//                                    let
-//                                    let errorAlert = ["errorCode":error]
-//                                    complete(nil, errorAlert)
-//                                }
+
                             }
                             else{
                            complete(Response.error,nil)
                             }
-                            
-                                
         }
         
     }
