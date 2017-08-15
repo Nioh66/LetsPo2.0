@@ -57,8 +57,8 @@ class AlamoMachine {
         Alamofire.request(BASE_URL+urlString, method: .post,parameters:finalParameter,
                           headers: nil).response { (Response) in
                             
-                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
-                            print(str!)
+                            //let str = String(data:Response.data!, encoding: String.Encoding.utf8)
+                            //print(str!)
                             
                             if Response.error == nil{
                             

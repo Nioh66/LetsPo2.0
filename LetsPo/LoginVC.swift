@@ -14,6 +14,13 @@ class LoginVC: UIViewController {
     @IBOutlet weak var registBtn: UIButton!
     @IBOutlet weak var passwordLabel: UITextField!
     @IBOutlet weak var accountLabel: UITextField!
+    
+    let alamoMachine = AlamoMachine()
+    var boardIDCounter = Int()
+    var reUpdate = NSLock()
+    var shouldReUpdate = Bool()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         contentView.layer.cornerRadius = 10.0
@@ -45,11 +52,10 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: UIButton) {
-        let verifiMachine = AlamoMachine()
         
         let verification = ["Account":accountLabel.text,
                             "Password":passwordLabel.text]
-        verifiMachine.doPostJobWith(urlString: verifiMachine.LOGIN, parameter: verification) { (error, response) in
+        alamoMachine.doPostJobWith(urlString: alamoMachine.LOGIN, parameter: verification) { (error, response) in
             if error != nil {
                 print(error!)
             }
@@ -100,11 +106,141 @@ class LoginVC: UIViewController {
         memberDataManager.saveContexWithCompletion { (success) in
             if(success){
                 print("Save member data success!!!!!")
+                self.downloadAllData(memberID: memberIDInt64)
             }else{
                 print("Save member data failure!!!!!")
             }
         }
     }
+    func doUnlock(){
+        reUpdate.unlock()
+        if shouldReUpdate{
+            shouldReUpdate = false
+        }
+    }
+    
+    func downloadAllData(memberID:Int64) {
+        
+        
+        let memberDic:[String:Any?] = ["Member_ID":memberID]
+        
+        alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_ALL, parameter: memberDic) { (error, rsp) in
+            if error != nil{
+                print(error!)
+            }
+            else{
+                guard let response = rsp,
+                    let resultBool = response["result"] as? Bool else{
+                        return
+                }
+                if resultBool {
+                    print("=========================Start download================================")
+                    //                    print(response)
+                    guard let allData = response["AllData"] as? [String:Any] else{
+                        print("Case from download JSON failure!!!!!")
+                        return
+                    }
+                    for (_,values) in allData{
+                        guard let board = values as? [String:Any],
+                            let boardData = board["BoardData"] as? [String:Any?],
+                            let noteData = board["NoteData"] as? [String:Any?] else{
+                                print("Case from allData failure!!!!!")
+                                return
+                        }
+                        
+                        guard let boardTitle = boardData["Board_Title"] as? String,
+                            let boardLatS = boardData["Board_Lat"] as? String,
+                            let boardLonS = boardData["Board_Lon"] as? String,
+                            let boardBgPicS = boardData["Board_BgPic"] as? String,
+                            let boardAlertS = boardData["Board_Alert"] as? String,
+                            let boardPrivacyS = boardData["Board_Privacy"] as? String,
+                            let boardScreenShotS = boardData["Board_ScreenShot"] as? String,
+                            let boardCreateTimeS = boardData["Board_CreateTime"] as? String else{
+                                print("Case from boardData failure!!!!!")
+                                return
+                        }
+                        //Adjust GMT0:00 time from server
+                        let dateFormatter = DateFormatter()
+                        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+                        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+8:00")
+                        let date = dateFormatter.date(from: boardCreateTimeS)
+                        
+                        guard let boardLat = Double(boardLatS),
+                            let boardLon = Double(boardLonS),
+                            let boardBgPic = NSData(base64Encoded: boardBgPicS, options: []),
+                            let boardAlert = Bool(boardAlertS),
+                            let boardPrivacy = Bool(boardPrivacyS),
+                            let boardScreenShot = NSData(base64Encoded: boardScreenShotS, options: []),
+                            let boardCreateTime = date as NSDate? else{
+                                print("Case from String failure!!!!!")
+                                return
+                        }
+                        
+                        let boardItem = boardDataManager.createItem()
+                        boardItem.board_Title = boardTitle
+                        boardItem.board_Lat = boardLat
+                        boardItem.board_Lon = boardLon
+                        boardItem.board_BgPic = boardBgPic
+                        boardItem.board_Alert = boardAlert
+                        boardItem.board_Privacy = boardPrivacy
+                        boardItem.board_ScreenShot = boardScreenShot
+                        boardItem.board_CreateTime = boardCreateTime
+                        
+                        
+                        
+                        
+                        if self.reUpdate.try() == false {
+                            self.shouldReUpdate = true
+                            continue
+                        }
+
+                    }
+                    
+                }else{
+                    print("No MemberID")
+                }
+            }
+        }
+        
+    }
+    func saveDownloadNoteData(noteData:[String:Any]) {
+        let noteItem = noteDataManager.createItem()
+        
+        guard let noteContent = noteData["Note_Content"] as? String,
+            let noteFontColorS = noteData["Note_FontColor"] as? String,
+            let noteFontSizeS = noteData["Note_FontSize"] as? String,
+            let noteBgColorS = noteData["Note_BgColor"] as? String,
+            let noteSelfieS = noteData["Note_Selfie"] as? String,
+            let noteXS = noteData["Note_X"] as? String,
+            let noteYS = noteData["Note_Y"] as? String,
+            let noteImage = noteData["Note_Image"] as? String else{
+                print("Case from noteData failure!!!!!")
+                return
+        }
+        
+        guard let noteFontColor = NSData(base64Encoded: noteFontColorS, options: []),
+            let noteFontSize = Double(noteFontSizeS),
+            let noteBgColor = NSData(base64Encoded: noteBgColorS, options: []),
+            let noteSelfie = NSData(base64Encoded: noteSelfieS, options: []),
+            let noteX = Double(noteXS),
+            let noteY = Double(noteYS) else{
+                print("Case from String failure!!!!!")
+                return
+        }
+        noteItem.note_BoardID =
+        noteItem.note_Content = noteContent
+        noteItem.note_FontColor = noteFontColor
+        noteItem.note_FontSize = noteFontSize
+        noteItem.note_BgColor = noteBgColor
+        noteItem.note_Selfie = noteSelfie
+        noteItem.note_X = noteX
+        noteItem.note_Y = noteY
+        noteItem.note_Image =
+
+    }
+    
+    
+    
     
     func vertificateAlert(errorCode:String) {
         let alert = UIAlertController.init(title: errorCode, message: nil, preferredStyle: .alert)
