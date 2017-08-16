@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginVC: UIViewController {
-
+    
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var registBtn: UIButton!
     @IBOutlet weak var passwordLabel: UITextField!
@@ -19,7 +19,7 @@ class LoginVC: UIViewController {
     var boardIDCounter = Int()
     var reUpdate = NSLock()
     var shouldReUpdate = Bool()
-
+    var boardIDs = Int16()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +45,7 @@ class LoginVC: UIViewController {
     @IBAction func backBtnPressed(_ sender: UIButton) {
         navigationController?.popViewController(animated: true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -73,13 +73,14 @@ class LoginVC: UIViewController {
                     print(errorResult)
                 }
             }
+            
         }
         // 上資料庫去驗證
         navigationController?.popViewController(animated: true)
     }
     
     func saveToCoreData(data:[String:Any]) {
-        print("\(data)")
+        //     print("\(data)")
         
         guard let memberID = data["Member_ID"] as?  String,
             let memberName = data["Member_Name"] as? String,
@@ -88,9 +89,9 @@ class LoginVC: UIViewController {
             let memberIDInt64 = Int64(memberID)
             else{
                 return
-            }
+        }
         let memberItem = memberDataManager.createItem()
-
+        
         
         let memberSelfieDataString = data["Member_Selfie"] as? String
         if memberSelfieDataString != nil{
@@ -102,7 +103,7 @@ class LoginVC: UIViewController {
         memberItem.member_Password = memberPassword
         memberItem.member_Email = memberEmail
         UserDefaults.standard.set(memberIDInt64, forKey: "Member_ID")
-
+        
         memberDataManager.saveContexWithCompletion { (success) in
             if(success){
                 print("Save member data success!!!!!")
@@ -111,13 +112,6 @@ class LoginVC: UIViewController {
                 print("Save member data failure!!!!!")
             }
         }
-    }
-    func doUnlock(){
-        reUpdate.unlock()
-        if shouldReUpdate{
-            shouldReUpdate = false
-        }
-        // 記得呼叫 要上鎖的方法
     }
     
     func downloadAllData(memberID:Int64) {
@@ -136,15 +130,22 @@ class LoginVC: UIViewController {
                 }
                 if resultBool {
                     print("=========================Start download================================")
-                    //                    print(response)
+                    //  Search BoardID
+                    let count = boardDataManager.count()
+                    if count == 0{
+                        self.boardIDs = 1
+                    }else{
+                        let lastID = boardDataManager.itemWithIndex(index: 0)
+                        self.boardIDs = lastID.board_Id + 1
+                    }
+                    
                     guard let allData = response["AllData"] as? [String:Any] else{
                         print("Case from download JSON failure!!!!!")
                         return
                     }
                     for (_,values) in allData{
                         guard let board = values as? [String:Any],
-                            let boardData = board["BoardData"] as? [String:Any?],
-                            let noteData = board["NoteData"] as? [String:Any?] else{
+                            let boardData = board["BoardData"] as? [String:Any?] else{
                                 print("Case from allData failure!!!!!")
                                 return
                         }
@@ -162,15 +163,15 @@ class LoginVC: UIViewController {
                         }
                         //Adjust GMT0:00 time from server
                         let dateFormatter = DateFormatter()
-                        dateFormatter.dateFormat = "dd-MM-yyyy HH:mm:ss"
+                        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                         dateFormatter.timeZone = TimeZone(abbreviation: "GMT+8:00")
                         let date = dateFormatter.date(from: boardCreateTimeS)
                         
                         guard let boardLat = Double(boardLatS),
                             let boardLon = Double(boardLonS),
                             let boardBgPic = NSData(base64Encoded: boardBgPicS, options: []),
-                            let boardAlert = Bool(boardAlertS),
-                            let boardPrivacy = Bool(boardPrivacyS),
+                            let boardAlert = Int(boardAlertS),
+                            let boardPrivacy = Int(boardPrivacyS),
                             let boardScreenShot = NSData(base64Encoded: boardScreenShotS, options: []),
                             let boardCreateTime = date as NSDate? else{
                                 print("Case from String failure!!!!!")
@@ -178,23 +179,31 @@ class LoginVC: UIViewController {
                         }
                         
                         let boardItem = boardDataManager.createItem()
+                        boardItem.board_Id = self.boardIDs
                         boardItem.board_Title = boardTitle
                         boardItem.board_Lat = boardLat
                         boardItem.board_Lon = boardLon
                         boardItem.board_BgPic = boardBgPic
-                        boardItem.board_Alert = boardAlert
-                        boardItem.board_Privacy = boardPrivacy
+                        boardItem.board_Alert = Bool(boardAlert as NSNumber)
+                        boardItem.board_Privacy = Bool(boardPrivacy as NSNumber)
                         boardItem.board_ScreenShot = boardScreenShot
                         boardItem.board_CreateTime = boardCreateTime
                         
+                        print("=========================Start download noteData================================")
                         
-                        
-                        
-                        if self.reUpdate.try() == false {
-                            self.shouldReUpdate = true
-                            continue
+                        if let noteData = board["NoteData"] as? [String:Any]{
+                            self.saveDownloadNoteData(boardID: boardItem.board_Id, noteDatas: noteData)
                         }
-
+                        boardDataManager.saveContexWithCompletion(completion: { (success) in
+                            if success {
+                                print("Store boardData success!!!!!")
+                            }
+                            else{
+                                print("Store boardData failure!!!!!")
+                            }
+                        })
+                        
+                        
                     }
                     
                 }else{
@@ -204,43 +213,72 @@ class LoginVC: UIViewController {
         }
         
     }
-    func saveDownloadNoteData(noteData:[String:Any]) {
-        let noteItem = noteDataManager.createItem()
+    func saveDownloadNoteData(boardID:Int16,noteDatas:[String:Any]) {
         
-        guard let noteContent = noteData["Note_Content"] as? String,
-            let noteFontColorS = noteData["Note_FontColor"] as? String,
-            let noteFontSizeS = noteData["Note_FontSize"] as? String,
-            let noteBgColorS = noteData["Note_BgColor"] as? String,
-            let noteSelfieS = noteData["Note_Selfie"] as? String,
-            let noteXS = noteData["Note_X"] as? String,
-            let noteYS = noteData["Note_Y"] as? String,
-            let noteImage = noteData["Note_Image"] as? String else{
-                print("Case from noteData failure!!!!!")
+        print("noteDatasnoteDatasnoteDatasnoteDatas\(noteDatas.count)")
+        
+        for i in 0..<noteDatas.count{
+            guard let noteData = noteDatas["Note\(i)"] as? [String:Any?] else {
                 return
+            }
+            
+            
+            
+            guard let noteContent = noteData["Note_Content"] as? String,
+                let noteFontColorS = noteData["Note_FontColor"] as? String,
+                let noteFontSizeS = noteData["Note_FontSize"] as? String,
+                let noteBgColorS = noteData["Note_BgColor"] as? String,
+                let noteSelfieS = noteData["Note_Selfie"] as? String,
+                let noteXS = noteData["Note_X"] as? String,
+                let noteYS = noteData["Note_Y"] as? String else{
+                    print("Case from noteData failure!!!!!")
+                    return
+            }
+            
+            guard let noteFontColor = NSData(base64Encoded: noteFontColorS, options: []),
+                let noteFontSize = Double(noteFontSizeS),
+                let noteBgColor = NSData(base64Encoded: noteBgColorS, options: []),
+                let noteSelfie = NSData(base64Encoded: noteSelfieS, options: []),
+                let noteX = Double(noteXS),
+                let noteY = Double(noteYS) else{
+                    print("Case from String failure!!!!!")
+                    return
+            }
+            
+            var noteImages = [UIImage]()
+            if let noteImage = noteData["Note_Image"] as? [String:String]{
+                let imageDic = alamoMachine.downloadImage(imageDic: noteImage)
+                for x in 0..<imageDic.count{
+                    noteImages.append(imageDic["Image\(x)"]!)
+                }
+            }
+            let noteItem = noteDataManager.createItem()
+            
+            if noteImages.count >= 1{
+                let noteImageData = noteDataManager.transformImageTOJson(images: noteImages)
+                noteItem.note_Image = noteImageData
+                
+            }
+            
+            noteItem.note_BoardID = boardID
+            noteItem.note_Content = noteContent
+            noteItem.note_FontColor = noteFontColor
+            noteItem.note_FontSize = noteFontSize
+            noteItem.note_BgColor = noteBgColor
+            noteItem.note_Selfie = noteSelfie
+            noteItem.note_X = noteX
+            noteItem.note_Y = noteY
+            
+            
+            noteDataManager.saveContexWithCompletion { (success) in
+                if success {
+                    print("Note save success!!!!!!")
+                    
+                }else{
+                    print("Note save failure!!!!!!")
+                }
+            }
         }
-        
-        guard let noteFontColor = NSData(base64Encoded: noteFontColorS, options: []),
-            let noteFontSize = Double(noteFontSizeS),
-            let noteBgColor = NSData(base64Encoded: noteBgColorS, options: []),
-            let noteSelfie = NSData(base64Encoded: noteSelfieS, options: []),
-            let noteX = Double(noteXS),
-            let noteY = Double(noteYS) else{
-                print("Case from String failure!!!!!")
-                return
-        }
-        
-        /*
-        noteItem.note_BoardID =
-        noteItem.note_Content = noteContent
-        noteItem.note_FontColor = noteFontColor
-        noteItem.note_FontSize = noteFontSize
-        noteItem.note_BgColor = noteBgColor
-        noteItem.note_Selfie = noteSelfie
-        noteItem.note_X = noteX
-        noteItem.note_Y = noteY
-        noteItem.note_Image =
-        */
-
     }
     
     
@@ -255,8 +293,8 @@ class LoginVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tabBarController?.tabBar.isHidden = true
-         self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.isNavigationBarHidden = true
         
     }
-   
+    
 }

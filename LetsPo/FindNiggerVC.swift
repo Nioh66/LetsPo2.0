@@ -12,6 +12,10 @@ class FindNiggerVC: UIViewController {
     
     @IBOutlet weak var friendImage: UIImageView!
     @IBOutlet weak var inputID: UITextField!
+    
+    var friendID = Int64()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
@@ -29,14 +33,47 @@ class FindNiggerVC: UIViewController {
     }
     
     @IBAction func searchBtnPressed(_ sender: UIButton) {
-        let theMemberID = "2"
         
-        let searchId = inputID.text
-        if searchId == theMemberID {
-        }else{
-            //..
+        guard let searchId = inputID.text,
+            let friendID = Int64(searchId) else {
+            notNumberAlert()
+            return
+        }
+       searchID(friendID: friendID)
+    }
+    func searchID(friendID:Int64) {
+        let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
+        let alamoMachine = AlamoMachine()
+        let findDic = ["Member_ID":friendID]
+        alamoMachine.doPostJobWith(urlString: alamoMachine.FIND_FRIEND, parameter: findDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            else{
+                guard let result = response?["result"] as? Bool else{
+                    return
+                }
+                if result {
+                    
+                }else{
+                    self.notNumberAlert()
+                }
+                
+                
+            }
         }
         
+        
+    }
+    
+    func notNumberAlert() {
+        
+        let alert = UIAlertController.init(title: "不存在此ID", message: nil, preferredStyle: .alert)
+            present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (Timer) in
+            alert.dismiss(animated: false, completion: nil)
+        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

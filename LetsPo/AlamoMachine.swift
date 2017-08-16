@@ -17,7 +17,7 @@ class AlamoMachine {
     
     let DELETE_BOARD = "deleteBoard.php"
     let DELETE_NOTE = "deleteNote.php"
-    let FINDFRIEND = "findFriend.php"
+    let FIND_FRIEND = "findFriend.php"
     let SAVE_BOARD = "saveBoardData.php"
     let SAVE_NOTE = "saveNoteData.php"
     let UPDATE_BOARDBG = "updataBoardBG.php"
@@ -28,7 +28,23 @@ class AlamoMachine {
     let LOGIN = "login.php"
 
    
-    
+    func downloadImage(imageDic:[String:String]) -> [String:UIImage] {
+        var noteImages = [String:UIImage]()
+        let imageCount = imageDic.count
+        
+        for i in 0..<imageCount{
+          let downloadURL = imageDic["Image\(i)"]
+            
+            
+            Alamofire.download(downloadURL!).responseData(completionHandler: { (DownloadResponse) in
+                let target = UIImage(data: DownloadResponse.result.value!)
+                
+                noteImages.updateValue(target!, forKey: "Image\(i)")
+            })
+        }
+        
+        return noteImages
+    }
     
     
     
@@ -57,12 +73,14 @@ class AlamoMachine {
         Alamofire.request(BASE_URL+urlString, method: .post,parameters:finalParameter,
                           headers: nil).response { (Response) in
                             
-                            //let str = String(data:Response.data!, encoding: String.Encoding.utf8)
-                            //print(str!)
+                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
+                            print(str!)
                             
                             if Response.error == nil{
-                            
+                                print(Response.data!)
                                 guard let returnDic = JSON(Response.data!).dictionaryObject else{
+                                    print(JSON(Response.data!).dictionaryObject)
+
                                     return
                                 }
                                 complete(nil,returnDic)
