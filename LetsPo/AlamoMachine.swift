@@ -11,6 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 typealias doneHandler = (_ erro:Error?,_ result:[String:Any]?) -> ()
+
 typealias imageHandler = (_ error:Error?,_ images:[String:UIImage]?) -> ()
 class AlamoMachine {
     
@@ -26,40 +27,45 @@ class AlamoMachine {
     let DOWNLOAD_ALL = "downloadAll.php"
     let NEW_MEMBER = "newMember.php"
     let LOGIN = "login.php"
-
+    
    
     func downloadImage(imageDic:[String:String],complete:@escaping imageHandler) {
         
         var noteImages = [String:UIImage]()
-        
+        var images = [UIImage]()
         let imageCount = imageDic.count
         print("===imageCount==\(imageCount)======")
         for i in 0..<imageCount{
           let downloadURL = imageDic["Image\(i)"]
             print("=================downloadURL==\(downloadURL)==========================================")
             
-            
-            Alamofire.download(downloadURL!).responseData(completionHandler: { (DownloadResponse) in
-                
-                print("~~~~~~~~~~~~~~DownloadResponse==\(DownloadResponse.result.value)~~~~~~~~~~~~~~~~~~~~~~~~~")
-
-                
-                if DownloadResponse.error == nil{
-                    
-                    let target = UIImage(data: DownloadResponse.result.value!)
-                    noteImages.updateValue(target!, forKey: "Image\(i)")
-                    complete(nil, noteImages)
-                    
-                }else{
-                    complete(DownloadResponse.error, nil)
+            Alamofire.request( downloadURL!, method: .post)
+                .downloadProgress { progress in
+                    print("Download Progress: \(progress.fractionCompleted)")
                 }
-            })
-        }
+                .responseData { response in
+                    if let data = response.result.value {
+                        let image = UIImage(data: data)
+                        if image != nil {
+                            noteImages.updateValue(image!, forKey: "Image\(i)")
+                            print("$$$$$$$$$$\(noteImages)")
+                            complete(nil, noteImages)  
+                            print("image load success")
+                        } else {
+                            print("image load fail........1.................")
+                       
+                        }
+                }
+                
+            }
+
+                   }
        
     }
     
     
-    
+    func load(requestUrl:String){
+           }
     
 //    for i in 0..<imageCount{
 //    let downloadURL = imageDic["Image\(i)"]
@@ -84,6 +90,34 @@ class AlamoMachine {
 //    
 //    }
 //
+    
+    
+    
+    
+    
+//    
+//    
+//    Alamofire.download(downloadURL!).responseData(completionHandler: { (DownloadResponse) in
+//    
+//    print("~~~~~~~~~~~~~~DownloadResponse==\(DownloadResponse.result.value)~~~~~~~~~~~~~~~~~~~~~~~~~")
+//    
+//    
+//    if DownloadResponse.error == nil{
+//    
+//    let target = UIImage(data: DownloadResponse.result.value!)
+//    noteImages.updateValue(target!, forKey: "Image\(i)")
+//    complete(nil, noteImages)
+//    
+//    }else{
+//    complete(DownloadResponse.error, nil)
+//    }
+//    })
+//
+    
+    
+    
+    
+    
     
     
     
