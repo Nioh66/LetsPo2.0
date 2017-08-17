@@ -20,7 +20,7 @@ class LoginVC: UIViewController {
     var reUpdate = NSLock()
     var shouldReUpdate = Bool()
     var boardIDs = Int16()
-    
+    var boardcount:Int16 = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         contentView.layer.cornerRadius = 10.0
@@ -129,21 +129,24 @@ class LoginVC: UIViewController {
                         return
                 }
                 if resultBool {
-                    print("=========================Start download================================")
                     //  Search BoardID
-                    let count = boardDataManager.count()
-                    if count == 0{
-                        self.boardIDs = 1
-                    }else{
-                        let lastID = boardDataManager.itemWithIndex(index: 0)
-                        self.boardIDs = lastID.board_Id + 1
-                    }
-                    
                     guard let allData = response["AllData"] as? [String:Any] else{
                         print("Case from download JSON failure!!!!!")
                         return
                     }
+                    let count = boardDataManager.count()
+                    if count == 0{
+                        self.boardIDs = 0
+                    }else{
+                        let lastID = boardDataManager.itemWithIndex(index: 0)
+                        self.boardIDs = lastID.board_Id
+                    }
+
+                    
+                    
                     for (_,values) in allData{
+                        self.boardcount += 1
+                        
                         guard let board = values as? [String:Any],
                             let boardData = board["BoardData"] as? [String:Any?] else{
                                 print("Case from allData failure!!!!!")
@@ -179,7 +182,7 @@ class LoginVC: UIViewController {
                         }
                         
                         let boardItem = boardDataManager.createItem()
-                        boardItem.board_Id = self.boardIDs
+                        boardItem.board_Id = self.boardIDs + self.boardcount
                         boardItem.board_Title = boardTitle
                         boardItem.board_Lat = boardLat
                         boardItem.board_Lon = boardLon
@@ -189,7 +192,6 @@ class LoginVC: UIViewController {
                         boardItem.board_ScreenShot = boardScreenShot
                         boardItem.board_CreateTime = boardCreateTime
                         
-                        print("=========================Start download noteData================================")
                         
                         if let noteData = board["NoteData"] as? [String:Any]{
                             self.saveDownloadNoteData(boardID: boardItem.board_Id, noteDatas: noteData)
@@ -215,20 +217,21 @@ class LoginVC: UIViewController {
     }
     func saveDownloadNoteData(boardID:Int16,noteDatas:[String:Any]) {
         
-        print("noteDatasnoteDatasnoteDatasnoteDatas\(noteDatas.count)")
+        var noteIDCount:Int16 = 0
         
         for i in 0..<noteDatas.count{
+            noteIDCount += 1
+
             guard let noteData = noteDatas["Note\(i)"] as? [String:Any?] else {
                 return
             }
-            
-            
             
             guard let noteContent = noteData["Note_Content"] as? String,
                 let noteFontColorS = noteData["Note_FontColor"] as? String,
                 let noteFontSizeS = noteData["Note_FontSize"] as? String,
                 let noteBgColorS = noteData["Note_BgColor"] as? String,
                 let noteSelfieS = noteData["Note_Selfie"] as? String,
+                let noteImageJSON = noteData["Note_Image"] as? String,
                 let noteXS = noteData["Note_X"] as? String,
                 let noteYS = noteData["Note_Y"] as? String else{
                     print("Case from noteData failure!!!!!")
@@ -245,22 +248,58 @@ class LoginVC: UIViewController {
                     return
             }
             
-            var noteImages = [UIImage]()
-            if let noteImage = noteData["Note_Image"] as? [String:String]{
-                let imageDic = alamoMachine.downloadImage(imageDic: noteImage)
-                for x in 0..<imageDic.count{
-                    noteImages.append(imageDic["Image\(x)"]!)
+           
+           if noteImageJSON != ""{
+            let noteImageJ = convertToDictionary(text: noteImageJSON)
+            
+                guard let noteImage = noteImageJ as? [String:String] else {
+                    return
                 }
-            }
+                alamoMachine.downloadImage(imageDic: noteImage, complete: { (error, rspImages) in
+                    var noteImages = [UIImage]()
+                    if error != nil{
+                        print(error!)
+                    }else{
+                        guard let theImages = rspImages else{
+                            return
+                        }
+                    for x in 0..<theImages.count{
+                        noteImages.append(theImages["Image\(x)"]!)
+                    }
+                        
+                    let noteItem = noteDataManager.createItem()
+                    
+                    
+                    let noteImageData = noteDataManager.transformImageTOJson(images: noteImages)
+                    
+                    noteItem.note_Image = noteImageData
+                    noteItem.note_ID = noteIDCount
+                    noteItem.note_BoardID = boardID
+                    noteItem.note_Content = noteContent
+                    noteItem.note_FontColor = noteFontColor
+                    noteItem.note_FontSize = noteFontSize
+                    noteItem.note_BgColor = noteBgColor
+                    noteItem.note_Selfie = noteSelfie
+                    noteItem.note_X = noteX
+                    noteItem.note_Y = noteY
+                    
+                    
+                    noteDataManager.saveContexWithCompletion { (success) in
+                        if success {
+                            print("==================Note save success!!!!!!======================")
+                            
+                        }else{
+                            print("Note save failure!!!!!!")
+                        }
+                    }
+                    }})
+                
+            }else{
             let noteItem = noteDataManager.createItem()
             
-            if noteImages.count >= 1{
-                let noteImageData = noteDataManager.transformImageTOJson(images: noteImages)
-                noteItem.note_Image = noteImageData
-                
-            }
             
             noteItem.note_BoardID = boardID
+            noteItem.note_ID = noteIDCount
             noteItem.note_Content = noteContent
             noteItem.note_FontColor = noteFontColor
             noteItem.note_FontSize = noteFontSize
@@ -272,17 +311,28 @@ class LoginVC: UIViewController {
             
             noteDataManager.saveContexWithCompletion { (success) in
                 if success {
-                    print("Note save success!!!!!!")
+                    print("=================Note save success!!!!!!======================")
                     
                 }else{
                     print("Note save failure!!!!!!")
                 }
             }
+
+            }
         }
     }
     
     
-    
+    func convertToDictionary(text: String) -> [String: Any]? {
+        if let data = text.data(using: .utf8) {
+            do {
+                return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        return nil
+    }
     
     func vertificateAlert(errorCode:String) {
         let alert = UIAlertController.init(title: errorCode, message: nil, preferredStyle: .alert)

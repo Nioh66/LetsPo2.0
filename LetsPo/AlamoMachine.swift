@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 
 typealias doneHandler = (_ erro:Error?,_ result:[String:Any]?) -> ()
-
+typealias imageHandler = (_ error:Error?,_ images:[String:UIImage]?) -> ()
 class AlamoMachine {
     
     
@@ -28,26 +28,62 @@ class AlamoMachine {
     let LOGIN = "login.php"
 
    
-    func downloadImage(imageDic:[String:String]) -> [String:UIImage] {
-        var noteImages = [String:UIImage]()
-        let imageCount = imageDic.count
+    func downloadImage(imageDic:[String:String],complete:@escaping imageHandler) {
         
+        var noteImages = [String:UIImage]()
+        
+        let imageCount = imageDic.count
+        print("===imageCount==\(imageCount)======")
         for i in 0..<imageCount{
           let downloadURL = imageDic["Image\(i)"]
+            print("=================downloadURL==\(downloadURL)==========================================")
             
             
             Alamofire.download(downloadURL!).responseData(completionHandler: { (DownloadResponse) in
-                let target = UIImage(data: DownloadResponse.result.value!)
                 
-                noteImages.updateValue(target!, forKey: "Image\(i)")
+                print("~~~~~~~~~~~~~~DownloadResponse==\(DownloadResponse.result.value)~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+                
+                if DownloadResponse.error == nil{
+                    
+                    let target = UIImage(data: DownloadResponse.result.value!)
+                    noteImages.updateValue(target!, forKey: "Image\(i)")
+                    complete(nil, noteImages)
+                    
+                }else{
+                    complete(DownloadResponse.error, nil)
+                }
             })
         }
-        
-        return noteImages
+       
     }
     
     
     
+    
+//    for i in 0..<imageCount{
+//    let downloadURL = imageDic["Image\(i)"]
+//    
+//    SessionManager.default.startRequestsImmediately = false
+//    let ImageRequest = Alamofire.request(downloadURL!)
+//    requestChain.append(ImageRequest)
+//    
+//    }
+//    let chain = RequestChain(requests: requestChain)
+//    
+//    chain.start { (done,error) in
+//    if done {
+//    let target = UIImage(data: DownloadResponse.result.value!)
+//    noteImages.updateValue(target!, forKey: "Image\(i)")
+//    complete(nil, noteImages)
+//    }
+//    else{
+//    complete(DownloadResponse.error, nil)
+//    }
+//    
+//    
+//    }
+//
     
     
     
@@ -90,8 +126,45 @@ class AlamoMachine {
                            complete(Response.error,nil)
                             }
         }
-        
+    }
+}
+
+
+class RequestChain {
+    typealias CompletionHandler = (_ success:Bool, _ errorResult:ErrorResult?) -> Void
+    
+    struct ErrorResult {
+        let request:DataRequest?
+        let error:Error?
+    }
+    var album = [String:UIImage]()
+
+    fileprivate var requests:[DataRequest] = []
+    
+    init(requests:[DataRequest]) {
+        self.requests = requests
     }
     
-
+    func start(_ completionHandler:@escaping CompletionHandler) {
+        if let request = requests.first {
+            request.response(completionHandler: { (response:DefaultDataResponse) in
+                if let error = response.error {
+                    completionHandler(false, ErrorResult(request: request, error: error))
+                    return
+                }
+                
+                self.requests.removeFirst()
+                self.start(completionHandler)
+            })
+            request.resume()
+        }else {
+            completionHandler(true, nil)
+            return
+        }
+        
+    }
 }
+
+
+
+
