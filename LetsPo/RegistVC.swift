@@ -131,8 +131,16 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                             if(success){
                                 print("-success-")
                                 NotificationCenter.default.post(name: self.resetAccount, object: nil, userInfo: nil)
-                                self.tabBarController?.selectedIndex = 3
-                                self.navigationController?.popToRootViewController(animated: true)
+                                for controller in (self.navigationController?.viewControllers)!
+                                {
+                                    if controller.isKind(of: AccountVC.self) == true{
+                                        
+                                        self.dismiss(animated: false) {
+                                            self.navigationController?.popToViewController(controller, animated: false)
+                                        }
+                                        break
+                                    }
+                                }
                             }
                         })
                     }

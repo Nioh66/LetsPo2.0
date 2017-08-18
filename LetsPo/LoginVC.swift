@@ -21,8 +21,21 @@ class LoginVC: UIViewController {
     var shouldReUpdate = Bool()
     var boardIDs = Int16()
     var boardcount:Int16 = 0
+    let advanceImageView = AdvanceImageView()
+//    let advanceImage = UIActivityIndicatorView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        advanceImage.activityIndicatorViewStyle = .whiteLarge
+//        advanceImage.color = UIColor.blue
+//        //        advanceImageView.frame = loadingViewFrame
+//        advanceImage.hidesWhenStopped = true
+//        advanceImage.center = view.center
+//        
+//        view.addSubview(advanceImage)
+//        advanceImage.startAnimating()
+        
         contentView.layer.cornerRadius = 10.0
         contentView.layer.masksToBounds = true
         if memberDataManager.count() > 0 {
@@ -52,9 +65,10 @@ class LoginVC: UIViewController {
     }
     
     @IBAction func loginBtn(_ sender: UIButton) {
-        
+        advanceImageView.prepareIndicatorView(view: self.view)
         let verification = ["Account":accountLabel.text,
                             "Password":passwordLabel.text]
+        
         alamoMachine.doPostJobWith(urlString: alamoMachine.LOGIN, parameter: verification) { (error, response) in
             if error != nil {
                 print(error!)
@@ -76,7 +90,7 @@ class LoginVC: UIViewController {
             
         }
         // 上資料庫去驗證
-        navigationController?.popViewController(animated: true)
+        
     }
     
     func saveToCoreData(data:[String:Any]) {
@@ -318,6 +332,8 @@ class LoginVC: UIViewController {
 
             }
         }
+        
+        navigationController?.popViewController(animated: true)
     }
     
     

@@ -150,36 +150,61 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         
     }
     
-    
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    @IBAction func saveNoteBtnAction(_ sender: UIButton) {
+        let newPostSegue = storyboard?.instantiateViewController(withIdentifier: "BoardSettingVC") as! BoardSettingVC
         
         
-        let newPostSegue = segue.destination as! BoardSettingVC
-        //   newPostSegue.thePost = thePost
+        let newPosition = myTextView.beginningOfDocument
+
+        myTextView.contentInset = UIEdgeInsetsMake(-7.0,0.0,0,0.0)
+        myTextView.selectedTextRange = myTextView.textRange(from: newPosition, to: newPosition)
+        self.myTextView.isEditable = false
         
-        
-        
-        //這個uiview are who?
-        UIView.animate(withDuration: 0.1) {
-            let theBegining = self.myTextView.beginningOfDocument
-            self.myTextView.selectedTextRange = self.myTextView.textRange(from: theBegining, to: theBegining)
-            self.myTextView.isEditable = false
-        }
-        
-        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
             let resizeNote = self.thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
             newPostSegue.resizeNote = resizeNote
             
+            self.saveNoteData()
+            newPostSegue.allNoteData = self.allNoteData
+            newPostSegue.boardLat = self.boardLat
+            newPostSegue.boardLon = self.boardLon
+            
+            self.navigationController?.pushViewController(newPostSegue, animated: true)
         }
-        
-        
-        
-        self.saveNoteData()
-        newPostSegue.allNoteData = allNoteData
-        newPostSegue.boardLat = boardLat
-        newPostSegue.boardLon = boardLon
     }
+    
+    
+    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        
+//        
+//        let newPostSegue = segue.destination as! BoardSettingVC
+//        //   newPostSegue.thePost = thePost
+//        
+//        
+//        
+//        //這個uiview are who?
+//        UIView.animate(withDuration: 0.1) {
+//            let theBegining = self.myTextView.beginningOfDocument
+//            self.myTextView.selectedTextRange = self.myTextView.textRange(from: theBegining, to: theBegining)
+//            self.myTextView.isEditable = false
+//        }
+//        
+//        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
+//            let resizeNote = self.thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
+//            newPostSegue.resizeNote = resizeNote
+//            
+//        }
+//
+//        
+//        
+//        self.saveNoteData()
+//        newPostSegue.allNoteData = allNoteData
+//        newPostSegue.boardLat = boardLat
+//        newPostSegue.boardLon = boardLon
+//    }
+    
+    
     
     
     func setKeyboardObserver() {

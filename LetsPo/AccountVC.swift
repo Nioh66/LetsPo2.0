@@ -21,6 +21,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
     deinit {
         NotificationCenter.default.removeObserver(self, name: selfieBgImageNN, object: nil)
+        NotificationCenter.default.removeObserver(self, name: resetAccount, object: nil)
     }
     
     override func viewDidLoad() {

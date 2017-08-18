@@ -28,7 +28,8 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         let imageWidth = self.view.frame.size.width/3
         let imageHight = self.view.frame.size.height/5
         let width_Padding = self.view.frame.size.width/9
-        let hight_Padding = self.view.frame.size.height/10
+        let hight_Padding = self.view.frame.size.height/8.5
+        let hight_PaddingTwo = self.view.frame.size.height/10
         
         
         
@@ -51,27 +52,26 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
                                                     height: imageHight))
         
         let defaultBg03 = UIImageView(frame: CGRect(x: width_Padding,
-                                                    y: hight_Padding*2+imageHight,
+                                                    y: hight_PaddingTwo*2+imageHight,
                                                     width: imageWidth,
                                                     height: imageHight))
         
         let defaultBg04 = UIImageView(frame: CGRect(x: (width_Padding*2)+imageWidth,
-                                                    y: hight_Padding*2+imageHight,
+                                                    y: hight_PaddingTwo*2+imageHight,
                                                     width: imageWidth,
                                                     height: imageHight))
         
         let photosBg = UIImageView(frame: CGRect(x: width_Padding,
-                                                 y: hight_Padding*3+imageHight*2,
+                                                 y: hight_PaddingTwo*3+imageHight*2,
                                                  width: imageWidth,
                                                  height: imageHight))
         
         let takeAPhoto = UIImageView(frame: CGRect(x: (width_Padding*2)+imageWidth,
-                                                   y: hight_Padding*3+imageHight*2,
+                                                   y: hight_PaddingTwo*3+imageHight*2,
                                                    width: imageWidth,
                                                    height: imageHight))
         
         defaultBg01.image = UIImage(named: "Wall2.jpg")
-        //   defaultBg01.image = UIImage(contentsOfFile: "ooxx")
         defaultBg02.image = UIImage(named: "myNigger.jpg")
         defaultBg03.image = UIImage(named: "whiteboard-303145_960_720")
         defaultBg04.image = UIImage(named: "Sky.jpg")

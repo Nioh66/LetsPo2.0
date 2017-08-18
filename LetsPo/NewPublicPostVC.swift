@@ -131,7 +131,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         
         
         self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
-        self.myTextView.isEditable = false
+//        self.myTextView.isEditable = false
         
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
             

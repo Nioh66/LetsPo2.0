@@ -57,7 +57,7 @@
                                 <rect key="frame" x="327" y="340" width="40" height="40"/>
                                 <state key="normal" image="success"/>
                                 <connections>
-                                    <segue destination="S9c-oC-CrO" kind="show" id="wqV-zW-VQr"/>
+                                    <action selector="saveNoteBtnAction:" destination="hCD-hw-x7X" eventType="touchUpInside" id="lbz-bD-aYM"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -517,6 +517,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="jb4-OR-NaM">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYB-ks-mBX">
                                 <rect key="frame" x="16" y="23" width="40" height="40"/>
                                 <state key="normal" image="back"/>
@@ -528,6 +531,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="bYB-ks-mBX" firstAttribute="leading" secondItem="ndV-sd-aCe" secondAttribute="leadingMargin" id="2z3-5O-FZQ"/>
+                            <constraint firstAttribute="bottom" secondItem="jb4-OR-NaM" secondAttribute="bottom" id="G0t-Ws-gyb"/>
+                            <constraint firstAttribute="trailing" secondItem="jb4-OR-NaM" secondAttribute="trailing" id="Hdh-FM-jvK"/>
+                            <constraint firstItem="jb4-OR-NaM" firstAttribute="leading" secondItem="ndV-sd-aCe" secondAttribute="leading" id="MoH-Ax-wg6"/>
+                            <constraint firstItem="jb4-OR-NaM" firstAttribute="top" secondItem="ndV-sd-aCe" secondAttribute="top" id="Ybp-kQ-WPo"/>
                             <constraint firstItem="bYB-ks-mBX" firstAttribute="top" secondItem="mrN-WI-eNP" secondAttribute="bottom" constant="3" id="haS-9r-Vrb"/>
                         </constraints>
                     </view>
