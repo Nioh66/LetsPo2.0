@@ -220,7 +220,6 @@ class LoginVC: UIViewController {
         var noteIDCount:Int16 = 0
         
         for i in 0..<noteDatas.count{
-            noteIDCount += 1
 
             guard let noteData = noteDatas["Note\(i)"] as? [String:Any?] else {
                 return
@@ -252,25 +251,23 @@ class LoginVC: UIViewController {
            if noteImageJSON != ""{
             let noteImageJ = convertToDictionary(text: noteImageJSON)
             
-                guard let noteImage = noteImageJ as? [String:String] else {
+            guard let noteImage = noteImageJ as? [String:String] else {
+                return
+            }
+            
+            alamoMachine.downloadImage(imageDic: noteImage, complete: { (error, rspImages) in
+                if error != nil{
                     return
-                }
-                alamoMachine.downloadImage(imageDic: noteImage, complete: { (error, rspImages) in
-                    var noteImages = [UIImage]()
-                    if error != nil{
-                        print(error!)
-                    }else{
-                        guard let theImages = rspImages else{
-                            return
-                        }
-                    for x in 0..<theImages.count{
-                        noteImages.append(theImages["Image\(x)"]!)
+                }else{
+                    guard let theImages = rspImages else{
+                        return
                     }
-                        
+                    
                     let noteItem = noteDataManager.createItem()
+                    noteIDCount += 1
+
                     
-                    
-                    let noteImageData = noteDataManager.transformImageTOJson(images: noteImages)
+                    let noteImageData = noteDataManager.transformImageTOJson(images: theImages)
                     
                     noteItem.note_Image = noteImageData
                     noteItem.note_ID = noteIDCount
@@ -297,7 +294,8 @@ class LoginVC: UIViewController {
             }else{
             let noteItem = noteDataManager.createItem()
             
-            
+            noteIDCount += 1
+
             noteItem.note_BoardID = boardID
             noteItem.note_ID = noteIDCount
             noteItem.note_Content = noteContent

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 typealias doneHandler = (_ erro:Error?,_ result:[String:Any]?) -> ()
 
-typealias imageHandler = (_ error:Error?,_ images:[String:UIImage]?) -> ()
+typealias imageHandler = (_ error:Error?,_ images:[UIImage]?) -> ()
 class AlamoMachine {
     
     
@@ -31,88 +31,31 @@ class AlamoMachine {
    
     func downloadImage(imageDic:[String:String],complete:@escaping imageHandler) {
         
-        var noteImages = [String:UIImage]()
-        var images = [UIImage]()
+        
+        var requestChain = [DataRequest]()
         let imageCount = imageDic.count
-        print("===imageCount==\(imageCount)======")
-        for i in 0..<imageCount{
-          let downloadURL = imageDic["Image\(i)"]
-            print("=================downloadURL==\(downloadURL)==========================================")
-            
-            Alamofire.request( downloadURL!, method: .post)
-                .downloadProgress { progress in
-                    print("Download Progress: \(progress.fractionCompleted)")
-                }
-                .responseData { response in
-                    if let data = response.result.value {
-                        let image = UIImage(data: data)
-                        if image != nil {
-                            noteImages.updateValue(image!, forKey: "Image\(i)")
-                            print("$$$$$$$$$$\(noteImages)")
-                            complete(nil, noteImages)  
-                            print("image load success")
-                        } else {
-                            print("image load fail........1.................")
-                       
-                        }
-                }
-                
+        
+        for num in 0..<imageCount{
+            guard let targetURL = imageDic["Image\(num)"] else{
+                print("TargetURL case failure")
+                return
             }
-
-                   }
-       
+            let imageReqest = Alamofire.request(targetURL)
+            requestChain.append(imageReqest)
+            
+        }
+        SessionManager.default.startRequestsImmediately = false
+        let chain = RequestChain(requests: requestChain)
+        chain.start { (downloadImages, error) in
+           
+           
+                    complete(nil,downloadImages)
+            
+        }
     }
     
     
-    func load(requestUrl:String){
-           }
     
-//    for i in 0..<imageCount{
-//    let downloadURL = imageDic["Image\(i)"]
-//    
-//    SessionManager.default.startRequestsImmediately = false
-//    let ImageRequest = Alamofire.request(downloadURL!)
-//    requestChain.append(ImageRequest)
-//    
-//    }
-//    let chain = RequestChain(requests: requestChain)
-//    
-//    chain.start { (done,error) in
-//    if done {
-//    let target = UIImage(data: DownloadResponse.result.value!)
-//    noteImages.updateValue(target!, forKey: "Image\(i)")
-//    complete(nil, noteImages)
-//    }
-//    else{
-//    complete(DownloadResponse.error, nil)
-//    }
-//    
-//    
-//    }
-//
-    
-    
-    
-    
-    
-//    
-//    
-//    Alamofire.download(downloadURL!).responseData(completionHandler: { (DownloadResponse) in
-//    
-//    print("~~~~~~~~~~~~~~DownloadResponse==\(DownloadResponse.result.value)~~~~~~~~~~~~~~~~~~~~~~~~~")
-//    
-//    
-//    if DownloadResponse.error == nil{
-//    
-//    let target = UIImage(data: DownloadResponse.result.value!)
-//    noteImages.updateValue(target!, forKey: "Image\(i)")
-//    complete(nil, noteImages)
-//    
-//    }else{
-//    complete(DownloadResponse.error, nil)
-//    }
-//    })
-//
     
     
     
@@ -165,14 +108,14 @@ class AlamoMachine {
 
 
 class RequestChain {
-    typealias CompletionHandler = (_ success:Bool, _ errorResult:ErrorResult?) -> Void
+    typealias CompletionHandler = (_ Images:[UIImage]?, _ errorResult:ErrorResult?) -> Void
     
     struct ErrorResult {
         let request:DataRequest?
         let error:Error?
     }
-    var album = [String:UIImage]()
-
+    var album = [UIImage]()
+    
     fileprivate var requests:[DataRequest] = []
     
     init(requests:[DataRequest]) {
@@ -183,16 +126,20 @@ class RequestChain {
         if let request = requests.first {
             request.response(completionHandler: { (response:DefaultDataResponse) in
                 if let error = response.error {
-                    completionHandler(false, ErrorResult(request: request, error: error))
+                    completionHandler(nil, ErrorResult(request: request, error: error))
                     return
                 }
+                print("~~~~~~~~~~~~~~~~~~~~~~~ChainData=============\(response.data)")
+                let image = UIImage(data: response.data!)
+                self.album.append(image!)
+                
                 
                 self.requests.removeFirst()
                 self.start(completionHandler)
             })
             request.resume()
         }else {
-            completionHandler(true, nil)
+            completionHandler(album, nil)
             return
         }
         

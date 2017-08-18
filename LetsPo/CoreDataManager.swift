@@ -253,6 +253,7 @@ extension CoreDataManager{
                 //               jsonContent += "image\(index):\(hashFileName),"
                 
             }else{
+                imageWithPath.updateValue("\(hashFileName)", forKey: "Image\(index)")
                 print("File already exist!")
             }
         }
