@@ -34,6 +34,12 @@ var selfNoteDataManager = CoreDataManager<SelfNoteData>.init(initWithModel: "Let
                                                        dbPathURL: nil,
                                                        sortKey: "selfNote_ID",
                                                        entityName: "SelfNoteData")
+var friendDataManager = CoreDataManager<FriendData>.init(initWithModel: "LetsPoModel",
+                                                             dbFileName: "LetsPoDB.sqlite",
+                                                             dbPathURL: nil,
+                                                             sortKey: "friend_ID",
+                                                             entityName: "FriendData")
+
 
 
 

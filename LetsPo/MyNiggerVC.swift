@@ -8,27 +8,76 @@
 
 import UIKit
 
+let friendComing = Notification.Name("friendComing")
+
 class MyNiggerVC: UITableViewController {
     
-    var imageTitle = [UIImage]()
-    let f1:UIImage = UIImage(named: "Sky.jpg")!
-    let f2:UIImage = UIImage(named: "Wall2.jpg")!
-    let friends = ["PinLiao","ZiYU"]
+    var friendsSelfie = [UIImage]()
+    var friends = [String]()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self,
+                                                  name: friendComing,
+                                                  object: nil)
+           }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageTitle = [f1,f2]
-        print(imageTitle)
+        let friendNumber = friendDataManager.count()
+        
+        for i in 0..<friendNumber{
+            let friend = friendDataManager.itemWithIndex(index: i)
+            friends.append(friend.friend_FriendName!)
+            if friend.friend_FriendSelfie == nil {
+                friendsSelfie.append(#imageLiteral(resourceName: "success"))
+            }else{
+                if let selfieData = friend.friend_FriendSelfie {
+                    let selfie = UIImage(data: selfieData as Data)
+                    
+                    friendsSelfie.append(selfie!)
+                }
+            }
+        }
+        
         self.navigationItem.leftItemsSupplementBackButton = true
         let addFrienfBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addFriend))
         navigationItem.rightBarButtonItem = addFrienfBtn
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(newFriendComing),
+                                               name: friendComing,
+                                               object: nil)
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    func newFriendComing(notification:Notification) {
+        
+        friendsSelfie.removeAll()
+        friends.removeAll()
+        
+        let friendNumber = friendDataManager.count()
+        
+        for i in 0..<friendNumber{
+            let friend = friendDataManager.itemWithIndex(index: i)
+            friends.append(friend.friend_FriendName!)
+            if friend.friend_FriendSelfie == nil {
+                friendsSelfie.append(#imageLiteral(resourceName: "success"))
+            }else{
+                if let selfieData = friend.friend_FriendSelfie {
+                    let selfie = UIImage(data: selfieData as Data)
+                    
+                    friendsSelfie.append(selfie!)
+                }
+            }
+        }
+        
+        self.tableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,7 +109,7 @@ class MyNiggerVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return imageTitle.count
+        return friendsSelfie.count
     }
     
     
@@ -72,7 +121,7 @@ class MyNiggerVC: UITableViewController {
             return cell
         }
         
-        finalCell.friendImage.image = imageTitle[indexPath.row]
+        finalCell.friendImage.image = friendsSelfie[indexPath.row]
         finalCell.friendName.text = friends[indexPath.row]
         
         

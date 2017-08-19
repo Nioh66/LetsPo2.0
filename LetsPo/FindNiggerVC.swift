@@ -18,7 +18,12 @@ class FindNiggerVC: UIViewController {
     var friendID = Int64()
     var member_ID:Int = 0
     let alamoMachine = AlamoMachine()
-
+    //for CoreData
+    var friendSelfieDataForC:NSData? = nil
+    var friendNameForC:String? = nil
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addBtn.isHidden = true
@@ -39,15 +44,24 @@ class FindNiggerVC: UIViewController {
     }
     
     @IBAction func searchBtnPressed(_ sender: UIButton) {
-        
+        friendSelfieDataForC = nil
         guard let searchId = inputID.text,
             let friendID64 = Int64(searchId) else {
                 notNumberAlert()
                 return
         }
-         friendID = friendID64
-        searchID(friendID: friendID)
+            let friendSearch = friendDataManager.searchField(field: "friend_FriendID", forKeyword: searchId)
+        //判斷有無此朋友
+        if friendSearch.count < 1{
+            friendID = friendID64
+            searchID(friendID: friendID)
+        }else{
+            haveFriendAlert()
+        }
     }
+   
+    
+    
     func searchID(friendID:Int64) {
         
         if friendID == Int64(member_ID) {
@@ -68,6 +82,11 @@ class FindNiggerVC: UIViewController {
                             let friendSelfieData = NSData(base64Encoded: friendSelfieString, options: [])
                             let friendSelfie = UIImage(data: friendSelfieData! as Data)
                             self.friendImage.image = friendSelfie
+
+                            //for CoreData
+                            self.friendSelfieDataForC = friendSelfieData
+                            
+                            
                         }else{
                             self.friendImage.image = #imageLiteral(resourceName: "success")
 
@@ -78,10 +97,11 @@ class FindNiggerVC: UIViewController {
                                 return
                         }
                         
-                        
                         self.friendLabel.text = friendName
                         self.addBtn.isHidden = false
                         
+                        //for CoreData
+                        self.friendNameForC = friendName
                         
                     }else{
                         self.notNumberAlert()
@@ -94,7 +114,7 @@ class FindNiggerVC: UIViewController {
         
         let alert = UIAlertController.init(title: "不存在此ID", message: nil, preferredStyle: .alert)
         present(alert, animated: true, completion: nil)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (Timer) in
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
             alert.dismiss(animated: false, completion: nil)
         }
         
@@ -103,7 +123,7 @@ class FindNiggerVC: UIViewController {
         
         let alert = UIAlertController.init(title: "這是你的帳號！", message: nil, preferredStyle: .alert)
         present(alert, animated: true, completion: nil)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (Timer) in
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
             alert.dismiss(animated: false, completion: nil)
         }
         
@@ -112,7 +132,16 @@ class FindNiggerVC: UIViewController {
         
         let alert = UIAlertController.init(title: "已新增好友", message: nil, preferredStyle: .alert)
         present(alert, animated: true, completion: nil)
-        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (Timer) in
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
+            alert.dismiss(animated: false, completion: nil)
+        }
+        
+    }
+    func haveFriendAlert() {
+        
+        let alert = UIAlertController.init(title: "你已有此好友", message: nil, preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
             alert.dismiss(animated: false, completion: nil)
         }
         
@@ -129,17 +158,47 @@ class FindNiggerVC: UIViewController {
                     return
                 }
                 if result{
-                    print("Add friend success")
-                    self.addFriendAlert()
                     self.addBtn.isHidden = true
+
+                    //加入CoreData
+                    
+                    var idArray = [Int16]()
+                    for i in 0 ..< friendDataManager.count() {
+                        let lastFriendItem = friendDataManager.itemWithIndex(index: i)
+                        let id = lastFriendItem.friend_ID
+                        idArray.append(id)
+                    }
+                    idArray.sort { $0 > $1 }
+                    
+                    let item = friendDataManager.createItem()
+                    if idArray.count < 1{
+                        item.friend_ID = 1
+
+                    }else{
+                        let lastID = idArray[0]
+
+                        item.friend_ID = lastID + 1
+                    }
+                    
+                    item.friend_FriendName = self.friendNameForC
+                    item.friend_FriendSelfie = self.friendSelfieDataForC
+                    item.friend_FriendID = self.friendID
+                    
+                    
+                    friendDataManager.saveContexWithCompletion(completion: { (success) in
+                            print("Add friend success")
+                        NotificationCenter.default.post(name: friendComing, object: nil, userInfo: nil)
+
+                        self.addFriendAlert()
+                        
+                    })
+                    
                 }
             }
             
         }
 
     }
-    
-    
     
     
     @IBAction func backBtnPressed(_ sender: UIButton) {

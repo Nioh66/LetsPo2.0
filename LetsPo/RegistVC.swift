@@ -106,7 +106,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         if let selfImage = selfImage{
         let selfImageData = UIImageJPEGRepresentation(selfImage, 0.8)
             let base64String = selfImageData?.base64EncodedString()
-//        let strImageData = String.init(data: selfImageData!, encoding: .utf8)
+        let strImageData = String.init(data: selfImageData!, encoding: .utf8)
             selfieData = base64String
         }
         let registDic:[String:Any?] = ["Member_Name":nameTextField.text,
@@ -138,6 +138,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                                     if controller.isKind(of: AccountVC.self) == true{
                                         
                                         self.dismiss(animated: false) {
+                                            self.advanceImageView.advanceStop()
                                             self.navigationController?.popToViewController(controller, animated: false)
                                         }
                                         break
@@ -149,7 +150,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                 }else{
                     
                     self.sameEmailAler()
-//                    self.advanceImageView.stopAnimating()
+                    self.advanceImageView.advanceStop()
                 }
             }
         }
