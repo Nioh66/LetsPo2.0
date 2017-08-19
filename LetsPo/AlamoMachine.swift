@@ -19,6 +19,7 @@ class AlamoMachine {
     let DELETE_BOARD = "deleteBoard.php"
     let DELETE_NOTE = "deleteNote.php"
     let FIND_FRIEND = "findFriend.php"
+    let ADD_FRIEND = "addFriend.php"
     let SAVE_BOARD = "saveBoardData.php"
     let SAVE_NOTE = "saveNoteData.php"
     let UPDATE_BOARDBG = "updataBoardBG.php"

@@ -10,16 +10,22 @@ import UIKit
 
 class FindNiggerVC: UIViewController {
     
+    @IBOutlet weak var friendLabel: UILabel!
     @IBOutlet weak var friendImage: UIImageView!
     @IBOutlet weak var inputID: UITextField!
+    @IBOutlet weak var addBtn: UIButton!
     
     var friendID = Int64()
-    
-    
+    var member_ID:Int = 0
+    let alamoMachine = AlamoMachine()
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.addBtn.isHidden = true
+        friendImage.layer.cornerRadius = 10.0
+        friendImage.layer.masksToBounds = true
+        member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
         self.view.backgroundColor = UIColor.clear
-        self.navigationItem.leftItemsSupplementBackButton = true
         
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -35,49 +41,117 @@ class FindNiggerVC: UIViewController {
     @IBAction func searchBtnPressed(_ sender: UIButton) {
         
         guard let searchId = inputID.text,
-            let friendID = Int64(searchId) else {
-            notNumberAlert()
-            return
+            let friendID64 = Int64(searchId) else {
+                notNumberAlert()
+                return
         }
-       searchID(friendID: friendID)
+         friendID = friendID64
+        searchID(friendID: friendID)
     }
     func searchID(friendID:Int64) {
-        let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
-        let alamoMachine = AlamoMachine()
-        let findDic = ["Member_ID":friendID]
-        alamoMachine.doPostJobWith(urlString: alamoMachine.FIND_FRIEND, parameter: findDic) { (error, response) in
-            if error != nil{
-                print(error!)
-            }
-            else{
-                guard let result = response?["result"] as? Bool else{
-                    return
-                }
-                if result {
-                    
-                }else{
-                    self.notNumberAlert()
-                }
-                
-                
-            }
-        }
         
-        
-    }
+        if friendID == Int64(member_ID) {
+            sameAlert()
+        }else{
+            let findDic = ["Member_ID":friendID]
+            alamoMachine.doPostJobWith(urlString: alamoMachine.FIND_FRIEND, parameter: findDic) { (error, response) in
+                if error != nil{
+                    print(error!)
+                }
+                else{
+                    guard let result = response?["result"] as? Bool else{
+                        return
+                    }
+                    if result {
+                        
+                        if let friendSelfieString = response?["Member_Selfie"] as? String{
+                            let friendSelfieData = NSData(base64Encoded: friendSelfieString, options: [])
+                            let friendSelfie = UIImage(data: friendSelfieData! as Data)
+                            self.friendImage.image = friendSelfie
+                        }else{
+                            self.friendImage.image = #imageLiteral(resourceName: "success")
+
+                        }
+                        
+                        guard let friendName = response?["Member_Name"] as? String
+                            else{
+                                return
+                        }
+                        
+                        
+                        self.friendLabel.text = friendName
+                        self.addBtn.isHidden = false
+                        
+                        
+                    }else{
+                        self.notNumberAlert()
+                    }
+                }
+            }
+        }}
     
     func notNumberAlert() {
         
         let alert = UIAlertController.init(title: "不存在此ID", message: nil, preferredStyle: .alert)
-            present(alert, animated: true, completion: nil)
-        Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (Timer) in
+        present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (Timer) in
             alert.dismiss(animated: false, completion: nil)
+        }
+        
+    }
+    func sameAlert() {
+        
+        let alert = UIAlertController.init(title: "這是你的帳號！", message: nil, preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (Timer) in
+            alert.dismiss(animated: false, completion: nil)
+        }
+        
+    }
+    func addFriendAlert() {
+        
+        let alert = UIAlertController.init(title: "已新增好友", message: nil, preferredStyle: .alert)
+        present(alert, animated: true, completion: nil)
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (Timer) in
+            alert.dismiss(animated: false, completion: nil)
+        }
+        
+    }
+
+    @IBAction func addBtnPressed(_ sender: UIButton) {
+        
+        let addDic:[String:Any?] = ["SelfMember_ID":member_ID,"Member_ID":friendID]
+        alamoMachine.doPostJobWith(urlString: alamoMachine.ADD_FRIEND, parameter: addDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }else{
+                guard let result = response?["result"] as? Bool else{
+                    return
+                }
+                if result{
+                    print("Add friend success")
+                    self.addFriendAlert()
+                    self.addBtn.isHidden = true
+                }
+            }
+            
         }
 
     }
     
+    
+    
+    
+    @IBAction func backBtnPressed(_ sender: UIButton) {
+        
+        self.dismiss(animated: false, completion: nil)
+        
+    }
+    
+    
+    
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     // MARK: hideKeyboard
@@ -89,15 +163,5 @@ class FindNiggerVC: UIViewController {
         
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

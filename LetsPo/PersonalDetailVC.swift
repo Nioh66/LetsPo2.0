@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSource,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     
@@ -23,21 +24,21 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     var imageFactory = MyPhoto()
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let userId = "need form server"
+
+        let memberID = UserDefaults.standard.integer(forKey: "Member_ID")
+        let userID = "\(memberID)"
         var userName = String()
         var email = String()
         
-        let count = memberDataManager.count()
-        for i in 0 ..< count {
-            let item = memberDataManager.itemWithIndex(index: i)
+            let item = memberDataManager.itemWithIndex(index: 0)
             userName = item.member_Name!
             email = item.member_Email!
-            guard let ii = UIImage(data: item.member_Selfie! as Data) else {return}
-            personalImage.image = ii
+        if let selfie = item.member_Selfie as Data?{
+            let selfieImage = UIImage(data: selfie)
+            personalImage.image = selfieImage
         }
         
-        let cellSub = [userId,userName,email]
+        let cellSub = [userID,userName,email]
         cellSubtitle = cellSub
 
         nameLabel.text = cellSubtitle[1]
@@ -127,15 +128,19 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
-        self.navigationController?.navigationBar.barTintColor = UIColor.white
-        self.navigationItem.title = "個人資料"
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        tabBarController?.tabBar.isHidden = true
+        
+//        self.navigationController?.navigationBar.barTintColor = UIColor.white
+//        self.navigationItem.title = "個人資料"
         //     self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(editBtnAction))
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
+        @IBAction func backBtnPressed(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
+    
+    
+    
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
