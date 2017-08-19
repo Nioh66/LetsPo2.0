@@ -18,10 +18,12 @@ class AdvanceImageView: UIImageView {
         view.addSubview(advanceContent)
         
         
-        // 再調整
         let backView = UIView()
         backView.center = view.center
-        backView.frame = CGRect(x: view.center.x - 50, y: view.center.y - 50 , width: 100.0, height: 100.0)
+        print(view.center.x)
+        print(view.center.y)
+        
+        backView.frame = CGRect(x: view.center.x - 50 , y: view.center.y - 50, width: 100.0, height: 100.0)
         backView.backgroundColor = UIColor(colorLiteralRed: 150.0/255, green: 150.0/255, blue: 150.0/255, alpha: 0.8)
         backView.layer.cornerRadius = 4.0
         
@@ -29,16 +31,18 @@ class AdvanceImageView: UIImageView {
         advanceImageView.color = UIColor.white
         advanceImageView.hidesWhenStopped = true
         advanceImageView.center = view.center
-        backView.addSubview(advanceImageView)
+        
         
         advanceContent.addSubview(backView)
+        advanceContent.addSubview(advanceImageView)
+        
         advanceImageView.startAnimating()
     }
     
     func advanceStart(){
         advanceImageView.startAnimating()
     }
-    func advanceStop(){
+    func advanceStop(view:UIView){
         advanceImageView.stopAnimating()
         advanceContent.removeFromSuperview()
         advanceImageView.removeFromSuperview()

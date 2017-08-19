@@ -100,7 +100,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         }
     }
     func upload() {
-//        advanceImageView.prepareIndicatorView(view: self.view)
+        advanceImageView.prepareIndicatorView(view: self.view)
         var selfieData:String? = nil
         
         if let selfImage = selfImage{
@@ -138,7 +138,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                                     if controller.isKind(of: AccountVC.self) == true{
                                         
                                         self.dismiss(animated: false) {
-                                            self.advanceImageView.advanceStop()
+                                            self.advanceImageView.advanceStop(view: self.view)
                                             self.navigationController?.popToViewController(controller, animated: false)
                                         }
                                         break
@@ -150,7 +150,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                 }else{
                     
                     self.sameEmailAler()
-                    self.advanceImageView.advanceStop()
+                    self.advanceImageView.advanceStop(view: self.view)
                 }
             }
         }

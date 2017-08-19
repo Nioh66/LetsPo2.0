@@ -241,12 +241,21 @@
                                     <action selector="noticeSwitchChangeValue:" destination="0Fe-Sj-dSx" eventType="valueChanged" id="uyK-6q-nGQ"/>
                                 </connections>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2U-4l-Sbu">
+                                <rect key="frame" x="100" y="130" width="175" height="31"/>
+                                <state key="normal" image="deleteAll"/>
+                                <connections>
+                                    <action selector="deleteAllButtonPressed:" destination="0Fe-Sj-dSx" eventType="touchUpInside" id="TAu-wO-37M"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Grn-pp-b0i" secondAttribute="trailing" id="E61-U6-Njd"/>
                             <constraint firstItem="Cte-7Z-j4x" firstAttribute="leading" secondItem="L0f-Ec-T2Y" secondAttribute="leadingMargin" id="Ijf-ZV-eZA"/>
                             <constraint firstItem="Cte-7Z-j4x" firstAttribute="top" secondItem="js0-c9-XRd" secondAttribute="bottom" constant="20" id="NFq-CR-IcY"/>
+                            <constraint firstItem="h2U-4l-Sbu" firstAttribute="top" secondItem="8k9-uM-E9X" secondAttribute="bottom" constant="25" id="SnG-Jd-WEM"/>
+                            <constraint firstItem="h2U-4l-Sbu" firstAttribute="centerX" secondItem="L0f-Ec-T2Y" secondAttribute="centerX" id="UKe-FG-3KF"/>
                             <constraint firstItem="Grn-pp-b0i" firstAttribute="top" secondItem="lPy-kD-y2K" secondAttribute="bottom" constant="15" id="adR-j7-af9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lPy-kD-y2K" secondAttribute="trailing" id="eXn-TO-0vH"/>
                             <constraint firstItem="8k9-uM-E9X" firstAttribute="leading" secondItem="L0f-Ec-T2Y" secondAttribute="leadingMargin" id="h5q-HB-W28"/>
@@ -257,6 +266,7 @@
                     <connections>
                         <outlet property="boardAlertValue" destination="Grn-pp-b0i" id="Dyr-X5-oL7"/>
                         <outlet property="boardPrivacyValue" destination="lPy-kD-y2K" id="PxX-hD-8pd"/>
+                        <outlet property="deleteAllBtn" destination="h2U-4l-Sbu" id="lFG-FX-3Ap"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dib-K5-p01" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -505,6 +515,7 @@
         <image name="albums" width="30" height="30"/>
         <image name="back" width="40" height="40"/>
         <image name="backgroundImage" width="375" height="667"/>
+        <image name="deleteAll" width="175" height="31"/>
         <image name="plus-2" width="60" height="60"/>
         <image name="settings" width="30" height="30"/>
         <image name="success" width="40" height="40"/>

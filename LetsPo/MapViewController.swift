@@ -20,6 +20,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     let locationManager = LocationManager()
     var location = CLLocation()
     var places:[SpotAnnotation]!
+    var frinedPlace:[SpotAnnotation]!
     var zoomLevel = CLLocationDegrees()
     var region = CLCircularRegion()
     var reUpdate = NSLock()
@@ -51,7 +52,9 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         
         
         places = spot()
-        filterAnnotations(paramPlaces: places)
+        mapView.addAnnotations(places)
+        frinedPlace = friendsSpot()
+        mapView.addAnnotations(friendsSpot())
         
         // 回到當前位置
         let locationButton = UIButton(type: .custom)
@@ -74,55 +77,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         mapRegion.span.longitudeDelta = 0.01
         
         mapView.setRegion(mapRegion, animated: true)
-    }
-    
-    // mark - pins method
-    func filterAnnotations(paramPlaces:[SpotAnnotation]){
-        let latDelta = self.mapView.region.span.latitudeDelta / 15
-        let lonDelta = self.mapView.region.span.longitudeDelta / 15
-        
-        for p:SpotAnnotation in paramPlaces {
-            p.cleanPlaces()
-        }
-        var spotsToShow = [SpotAnnotation]()
-        
-        for i in 0..<places.count {
-            
-            let currentObject = paramPlaces[i]
-            let lat = currentObject.coordinate.latitude
-            let lon = currentObject.coordinate.longitude
-            
-            var found = false
-            
-            for tempAnnotation:SpotAnnotation in spotsToShow {
-                let tempLat = tempAnnotation.coordinate.latitude - lat
-                let tempLon = tempAnnotation.coordinate.longitude - lon
-                if fabs(tempLat) < latDelta && fabs(tempLon) < lonDelta {
-                    
-                    self.mapView.removeAnnotation(currentObject)
-                    found = true
-                    tempAnnotation.addPlasce(place: currentObject)
-                    
-                    break
-                }
-            }
-            if !found {
-                spotsToShow.append(currentObject)
-                mapView.addAnnotation(currentObject)
-            }
-        }
-    }
-    
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        if zoomLevel != mapView.region.span.longitudeDelta {
-            
-            for ano:Any in mapView.selectedAnnotations {
-                mapView .deselectAnnotation(ano as? MKAnnotation, animated: false)
-                
-            }
-            filterAnnotations(paramPlaces: places)
-            zoomLevel = mapView.region.span.longitudeDelta
-        }
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -173,25 +127,28 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         pin?.detailCalloutAccessoryView = detailImage
         pin?.canShowCallout = true
         pin?.isEnabled = true
-        if myAnnotation.privacy == true {
-            privacy_pins = UIImage(named: "pin_1")!
+        
+        let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
+        if myAnnotation.member_Id == member_ID {
+            
+            if myAnnotation.privacy == true {
+                privacy_pins = UIImage(named: "pin_2")!
+            }else{
+                privacy_pins = UIImage(named: "pin_1")!
+            }
         }else {
-            privacy_pins = UIImage(named: "pin_2")!
+            privacy_pins = #imageLiteral(resourceName: "friendPin")
         }
         pin?.image = privacy_pins
-        
         
         return pin
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let myAnnotation = view.annotation as! SpotAnnotation
-        let placeCount = myAnnotation.placesCount()
+        let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
         
-        if placeCount <= 0 {return}
-        
-        if placeCount == 1 {
-            // 如果大頭針只有一根 則進入該版
+        if myAnnotation.member_Id == member_ID {
             titleName = myAnnotation.currentTitle
             if (control as? UIButton)?.buttonType == .detailDisclosure {
                 let id = myAnnotation.board_Id
@@ -200,14 +157,22 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                 vc.selectIndexID = id
                 navigationController?.pushViewController(vc, animated: false)
             }
-            print("Press one callout view")
         }else {
-            // 如果大頭針不只一根 就跳轉 post manage vc
-            NotificationCenter.default.post(name:Notification.Name(rawValue: "comeFromMap"), object: nil, userInfo: nil)
-            tabBarController?.selectedIndex = 0
-            navigationController?.popToRootViewController(animated: true)
-            print("Press many callout view")
+            titleName = myAnnotation.currentTitle
+            if (control as? UIButton)?.buttonType == .detailDisclosure {
+                let id = myAnnotation.board_Id
+                let member_id = myAnnotation.member_Id
+                let image = myAnnotation.image
+                
+                let vc = storyboard?.instantiateViewController(withIdentifier: "MapDetailViewController") as! MapDetailViewController
+                vc.selectIndexID = id
+                vc.selectMember_id = member_id
+                vc.image = image
+                vc.boardTitle = titleName
+                navigationController?.pushViewController(vc, animated: false)
+            }
         }
+
     }
     
     func doUnlock(){
@@ -307,24 +272,37 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         
         let dic = getLocations()
         for value in dic {
-            let createTime = value["board_CreateTime"] as! Date
             let board_Id = value["board_Id"] as! Int16
             let lat = value["lat"] as! Double
             let lon = value["lon"] as! Double
             let img = value["BgPic"] as! UIImage
             let privacy = value["privacy"] as! Bool
-            let dateFormate = DateFormatter()
-            dateFormate.dateFormat = "MM-dd-yyyy HH:mm"
-            let stringOfDate = dateFormate.string(from: createTime as Date)
-            
+            let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
+            let title = value["title"] as! String
             // 加入大頭針
-            let annotation = SpotAnnotation( atitle: stringOfDate, lat: lat, lon: lon, imageName: img,privacyBool: privacy,Id:board_Id)
+            let annotation = SpotAnnotation( atitle: title, lat: lat, lon: lon, imageName: img,privacyBool: privacy,Id:board_Id, member_ID: member_ID)
             
             result.append(annotation)
         }
-//        print("result count \(result.count)")
+
         return result
     }
+    func friendsSpot() -> [SpotAnnotation]{
+        var result = [SpotAnnotation]()
+        let dic = getFriendLocation()
+        for value in dic {
+            let name = value["friendName"] as! String
+            let lat = value["lat"] as! Double
+            let lon = value["lon"] as! Double
+            let image = UIImage(named: "deer.jpg")
+            
+            let id = value["id"] as! Int
+            let annotation = SpotAnnotation( atitle: name, lat: lat, lon: lon, imageName: image!,privacyBool: true,Id:1, member_ID: id)
+            result.append(annotation)
+        }
+        return result
+    }
+
     
     func getLocations() -> [[String:Any]] {
         var locations = [[String:Any]]()
@@ -338,29 +316,68 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             let time = item.board_CreateTime
             let privacy = item.board_Privacy
             let alert = item.board_Alert
+            let title = item.board_Title
             if let img = item.board_ScreenShot {
                 let imgWithData = UIImage(data: img as Data)
-                locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert])
+                locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert,"title":title ?? ""])
                 
             }
         }
-        //        print("locations :\(locations)")
-//        print("location count :\(locations.count)")
-        
-        //        let UrlString = "http://class.softarts.cc/FindMyFriends/queryFriendLocations.php?GroupName=bp102"
-        //        let myUrl = NSURL(string: UrlString)
-        //        let optData = try? Data(contentsOf: myUrl! as URL)
-        //        guard let data = optData else {
-        //            return friends
-        //        }
-        //        if let jsonArray = try? JSONSerialization.jsonObject(with: data, options:[])  as? [String:AnyObject] {
-        //            friends = (jsonArray?["friends"] as? [[String:Any]])!
-        //            friends.sort { ($0["lastUpdateDateTime"] as! String) > ($1["lastUpdateDateTime"] as! String) }
+         return locations
+    }
+    
+    func getFriendLocation()->[[String:Any]]{
+        var friendLocations = [[String:Any]]()
+        //        var feinenData = [String:Any?]()
+        //        alamoMachine.doPostJobWith(urlString: "", parameter: feinenData) { (error, rsp) in
+        //            if let error = error {
+        //                print(error)
+        //            }
+        //            guard let response = rsp,
+        //                let resultBool = response["result"] as? Bool else {
+        //                    return
+        //            }
+        //            if resultBool {
+        //
+        //            }
+        //
         //
         //        }
         
-        return locations
+        let UrlString = "http://class.softarts.cc/FindMyFriends/queryFriendLocations.php?GroupName=bp102"
+        let myUrl = NSURL(string: UrlString)
+        let optData = try? Data(contentsOf: myUrl! as URL)
+        guard let data = optData else {
+            return friendLocations
+        }
+        if let jsonArray = try? JSONSerialization.jsonObject(with: data, options:[])  as? [String:AnyObject] {
+            if let friends = jsonArray?["friends"] as? [[String:Any]] {
+                for value in friends {
+                    let strName = value["friendName"] as! String
+                    
+                    //                        let time = value["lastUpdateDateTime"] as! String
+                    
+                    var lat = Double()
+                    if let latt = Double(value["lat"] as! String) {
+                        lat = latt
+                    }
+                    var lon = Double()
+                    if let lonn = Double(value["lon"] as! String) {
+                        lon = lonn
+                    }
+                    
+                    let id = Int(value["id"] as! String)!
+                    
+                    friendLocations.append(["friendName":strName,"lat":lat,"lon":lon,"id":id])
+                    
+                }
+            }
+            
+        }
+        
+        return friendLocations
     }
+
     
     
     
@@ -375,6 +392,8 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationManager.startUpdate()
         dataManagerCount = boardDataManager.count()
         places = spot()
+        mapView.removeAnnotations(places)
+        mapView.addAnnotations(places)
     }
     override func viewWillDisappear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent

@@ -74,6 +74,7 @@
 		9B273DAF1F38BFB400E726A4 /* ManageAllVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B273DAE1F38BFB400E726A4 /* ManageAllVC.swift */; };
 		9B273DB11F38C01900E726A4 /* ManageAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B273DB01F38C01900E726A4 /* ManageAllCell.swift */; };
 		9B4103901F46D3EB000D2604 /* AdvanceImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B41038F1F46D3EA000D2604 /* AdvanceImageView.swift */; };
+		9B41039C1F488CCD000D2604 /* FriendsPostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B41039B1F488CCD000D2604 /* FriendsPostDetailVC.swift */; };
 		9B89D47B1F31C8FA001943C1 /* NewPublicPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */; };
 		9B89D47D1F31C913001943C1 /* DragPublicPostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */; };
 		9B89D47F1F31C92C001943C1 /* PublicPostDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */; };
@@ -168,6 +169,7 @@
 		9B273DAE1F38BFB400E726A4 /* ManageAllVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAllVC.swift; sourceTree = "<group>"; };
 		9B273DB01F38C01900E726A4 /* ManageAllCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageAllCell.swift; sourceTree = "<group>"; };
 		9B41038F1F46D3EA000D2604 /* AdvanceImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvanceImageView.swift; sourceTree = "<group>"; };
+		9B41039B1F488CCD000D2604 /* FriendsPostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendsPostDetailVC.swift; sourceTree = "<group>"; };
 		9B89D47A1F31C8FA001943C1 /* NewPublicPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewPublicPostVC.swift; sourceTree = "<group>"; };
 		9B89D47C1F31C913001943C1 /* DragPublicPostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragPublicPostVC.swift; sourceTree = "<group>"; };
 		9B89D47E1F31C92C001943C1 /* PublicPostDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PublicPostDetailVC.swift; sourceTree = "<group>"; };
@@ -449,6 +451,7 @@
 			children = (
 				9BA62C5E1F1E65A0008CDEC0 /* MapViewController.swift */,
 				9BA62C601F1E66C8008CDEC0 /* MapDetailViewController.swift */,
+				9B41039B1F488CCD000D2604 /* FriendsPostDetailVC.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -682,6 +685,7 @@
 				9B4103901F46D3EB000D2604 /* AdvanceImageView.swift in Sources */,
 				30D092B61F1E490600CB3F88 /* DragBoardVC.swift in Sources */,
 				300954171F2B92DB008EA764 /* GetBoardNotes.swift in Sources */,
+				9B41039C1F488CCD000D2604 /* FriendsPostDetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

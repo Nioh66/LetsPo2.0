@@ -32,7 +32,7 @@ class MyNiggerVC: UITableViewController {
             let friend = friendDataManager.itemWithIndex(index: i)
             friends.append(friend.friend_FriendName!)
             if friend.friend_FriendSelfie == nil {
-                friendsSelfie.append(#imageLiteral(resourceName: "success"))
+                friendsSelfie.append(#imageLiteral(resourceName: "user"))
             }else{
                 if let selfieData = friend.friend_FriendSelfie {
                     let selfie = UIImage(data: selfieData as Data)
@@ -67,7 +67,7 @@ class MyNiggerVC: UITableViewController {
             let friend = friendDataManager.itemWithIndex(index: i)
             friends.append(friend.friend_FriendName!)
             if friend.friend_FriendSelfie == nil {
-                friendsSelfie.append(#imageLiteral(resourceName: "success"))
+                friendsSelfie.append(#imageLiteral(resourceName: "user"))
             }else{
                 if let selfieData = friend.friend_FriendSelfie {
                     let selfie = UIImage(data: selfieData as Data)

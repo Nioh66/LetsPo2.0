@@ -88,7 +88,7 @@ class FindNiggerVC: UIViewController {
                             
                             
                         }else{
-                            self.friendImage.image = #imageLiteral(resourceName: "success")
+                            self.friendImage.image = #imageLiteral(resourceName: "user")
 
                         }
                         

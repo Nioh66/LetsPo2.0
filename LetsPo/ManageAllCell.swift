@@ -34,7 +34,7 @@ class ManageAllCell: UICollectionViewCell {
         backdroundImage.setNeedsDisplay()
         self.addSubview(backdroundImage)
         
-        setCall()
+//        setCall()
         
     }
     
@@ -47,7 +47,7 @@ class ManageAllCell: UICollectionViewCell {
         addLongPressGesture()
     }
     
-    // merk: fade animation with delete func
+//     merk: fade animation with delete func
     func fadeAndDelete() {
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 0

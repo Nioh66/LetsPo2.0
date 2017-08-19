@@ -12,7 +12,7 @@ import CoreLocation
 
 let identifier = "identifier"
 
-class ManageViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource, ActionDelegation, ScrollPagerDelegate,LocationManagerDelegate {
+class ManageViewController: UIViewController, UICollectionViewDelegate,UICollectionViewDataSource, ScrollPagerDelegate,LocationManagerDelegate {
     
     @IBOutlet weak var noticeImageView: UIImageView!
     @IBOutlet weak var scrollPager: ScrollPager!
@@ -35,20 +35,16 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     var collectionViewTwo:UICollectionView!
     var collectionViewOne: UICollectionView!
+    let dismissSelf = Notification.Name("dismissSelf")
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "comeFromMap"), object: nil)
+        NotificationCenter.default.removeObserver(self,name: dismissSelf,object: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clear
         locationManager.delegate = self
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(comeFromMap),
-                                               name: NSNotification.Name(rawValue: "comeFromMap"),
-                                               object: nil)
-        
         
         // register three collectionView
         collectionViewOne = UICollectionView(frame: self.view.frame, collectionViewLayout: FlowLayout())
@@ -72,7 +68,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
         dataManagerCount = boardDataManager.count()
         
-        setFlagAndGsr()
+         NotificationCenter.default.addObserver(self, selector: #selector(userPressDeleteBtn), name: dismissSelf, object: nil)
         
         // assign view to each page
         scrollPager.delegate = self
@@ -81,6 +77,9 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             ("NEARBY", collectionViewTwo)
             ])
         
+    }
+    func userPressDeleteBtn(){
+        arrayImageData()
     }
     
     func arrayImageData(){
@@ -150,7 +149,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             cell.titleLabel.text = title as? String
             
         }
-        setCellBtn(cell: cell)
+        
         return cell
     }
     
@@ -261,7 +260,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
             print("did selected board_Id =  \(board_Id)")
             performSegue(withIdentifier:"manageDetail", sender: board_Id)
         }
-        hideAllDeleteBtn()
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -271,50 +270,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         }
     }
     
-    func comeFromMap(notification:Notification){
-        formMap = true
-    }
-    
-    
-    // set gesture method
-    func setFlagAndGsr(){
-        deleteBtnFlag = true
-        addDoubleTapGesture()
-    }
-    
-    func setCellBtn(cell:ManageCollectionViewCell){
-        
-        if deleteBtnFlag == true {
-            cell.deleteBtn.isHidden = true
-        }else {
-            cell.deleteBtn.isHidden = false
-        }
-        cell.delegation = self
-    }
-    
-    func handleDoubleTap(gestureRecognizer:UITapGestureRecognizer){
-        hideAllDeleteBtn()
-    }
-    
-    func addDoubleTapGesture(){
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(handleDoubleTap(gestureRecognizer:)))
-        doubleTap.numberOfTapsRequired = 2
-        view.addGestureRecognizer(doubleTap)
-    }
-    
-    func hideAllDeleteBtn() {
-        if !deleteBtnFlag{
-            deleteBtnFlag = true
-            reloadAllData()
-        }
-    }
-    
-    func showAllDeleteBtn(){
-        deleteBtnFlag = false
-        reloadAllData()
-    }
-    
-    func reloadAllData(){
+     func reloadAllData(){
         collectionViewOne.reloadData()
         collectionViewTwo.reloadData()
     }
@@ -380,16 +336,11 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         // 從其他頁面跳過來的時候可以更新內容
         locationManager.startUpdate()
         
-        // 每次回來都回到recent
-//        scrollPager.setSelectedIndex(index: 0, animated: false)
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (timer) in
             self.arrayImageData()
             self.reloadAllData()
         }
         
-        if formMap == true {
-            scrollPager.setSelectedIndex(index: 1, animated: false)
-        }
         firstTimeNoticeImage()
     }
     

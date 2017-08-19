@@ -11,13 +11,17 @@ import UIKit
 class ManageDetailViewController: UIViewController ,UIPopoverPresentationControllerDelegate{
     
     @IBOutlet weak var backBtn: UIButton!
-    let boardSettingNN = Notification.Name("boardSetting")
+//    let boardSettingNN = Notification.Name("boardSetting")
     let newNoteComingNN = Notification.Name("newPublicNoteComing")
+    let dismissSelf = Notification.Name("dismissSelf")
+    let theChooseOneNoti = Notification.Name("notificationCenter")
+    
     
     deinit {
-        NotificationCenter.default.removeObserver(self,name: boardSettingNN,object: nil)
+//        NotificationCenter.default.removeObserver(self,name: boardSettingNN,object: nil)
         NotificationCenter.default.removeObserver(self,name: newNoteComingNN,object: nil)
-        NotificationCenter.default.removeObserver(self,name: NSNotification.Name(rawValue: "notificationCenter"),object: nil)
+        NotificationCenter.default.removeObserver(self,name: theChooseOneNoti,object: nil)
+        NotificationCenter.default.removeObserver(self,name: dismissSelf,object: nil)
     }
     
     var dataManagerCount = Int()
@@ -103,7 +107,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         let publicBoardSettinglVC =  storyboard?.instantiateViewController(withIdentifier: "PublicBoardSettingVC") as! PublicBoardSettingVC
         publicBoardSettinglVC.modalPresentationStyle = .popover
         publicBoardSettinglVC.boardID = selectIndexID
-        publicBoardSettinglVC.preferredContentSize = CGSize(width: 125, height: 100)
+        publicBoardSettinglVC.preferredContentSize = CGSize(width: 125, height: 150)
         let popDetailPostVC = publicBoardSettinglVC.popoverPresentationController
         popDetailPostVC?.delegate = self
         popDetailPostVC?.permittedArrowDirections = .up
@@ -213,8 +217,12 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     func addingObserver() {
         NotificationCenter.default.addObserver(self, selector: #selector(newNoteComing), name: newNoteComingNN, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(theChooseOne),
-                                               name: NSNotification.Name(rawValue: "notificationCenter"),
+                                               name: theChooseOneNoti,
                                                object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userPressDeleteBtn), name: dismissSelf, object: nil)
+    }
+    func userPressDeleteBtn(){
+        navigationController?.popViewController(animated: false)
     }
     
     func deleteBtnAction(sender:manageView) {

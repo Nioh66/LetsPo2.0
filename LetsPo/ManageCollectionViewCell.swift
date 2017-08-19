@@ -33,7 +33,7 @@ class ManageCollectionViewCell: UICollectionViewCell {
         self.clipsToBounds = true
         backdroundImage.contentMode = .scaleAspectFill
         titleLabel.text = ""
-        setCall()
+//        setCall()
         
     }
     
