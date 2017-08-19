@@ -199,7 +199,6 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             deleteBtns.append(["id":deleteBtn])
             deleteBtnControll.button = deleteBtns
             deleteBtn.postImageView?.addSubview(deleteBtn)
-            backGroundImage.addSubview(deleteBtnControll)
             deleteBtnControll.postImageView = deleteBtn
 
             
@@ -207,6 +206,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         // fromNewNote 設成 false 等一下跳來跳去 又是一條好漢 繼續全部拔掉再貼上
         fromNewNote = false
         secondTime = true
+        backGroundImage.addSubview(deleteBtnControll)
         
     }
     // MARK: Adding NotificationCenter observer
@@ -254,8 +254,11 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             }
             // 刪除後 隱藏所有刪除鈕並拍照刷新
             i["id"]?.isHidden = true
-            uploadBoardBg()
+            hidehide = false
+            
         }
+        uploadBoardBg()
+        
         memberID = UserDefaults.standard.integer(forKey: "Member_ID")
         
         if(memberID != 0){
@@ -410,9 +413,10 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     func getBGimageWithPosts() -> UIImage {
         titleLabel.isHidden = true
         backBtn.isHidden = true
-        
+        deleteBtnControll.alpha = 0.0
         boardSettingBtn.alpha = 0.0
         addPostBtn.alpha = 0.0
+
         
         let BGimageWithPosts = self.view.boardScreenShot()
         boardSettingBtn.alpha = 1

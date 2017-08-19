@@ -19,12 +19,6 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         return self.collectionView.contentOffset.x + self.collectionView.contentInset.left
     }
     var animationsCount = 0
-    
-    
-    var reUpdate = NSLock()
-    var shouldReUpdate = Bool()
-    
-    
     @IBOutlet weak var collectionView: UICollectionView!
     
     @IBOutlet weak var pageControl: UIPageControl!
@@ -64,7 +58,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         //let documnetPath = documentPaths[0] as! String
         print(documentPaths)
         
-        myTextView.frame = CGRect(x: 0, y: 0, width: publicPost.frame.size.width, height: publicPost.frame.size.height*0.8)
+        myTextView.frame = CGRect(x: 0, y: 3, width: publicPost.frame.size.width, height: publicPost.frame.size.height*0.77)
         publicPost.clipsToBounds = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))
@@ -125,20 +119,13 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     @IBAction func saveBtnPressed(_ sender: UIButton) {
         let dragSegue = storyboard?.instantiateViewController(withIdentifier: "DragPublicPostVC") as! DragPublicPostVC
         
-        
-        
-        let newPosition = self.myTextView.beginningOfDocument
-        
-        
-        self.myTextView.selectedTextRange = self.myTextView.textRange(from: newPosition, to: newPosition)
-//        self.myTextView.isEditable = false
+        myTextView.selectedRange = NSMakeRange(0, 0)
+        myTextView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: false)
         
         Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
             
             let resizeNote = self.publicPost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
             dragSegue.resizeNote = resizeNote
-            
-            
             
             
             self.saveNoteData()
@@ -150,12 +137,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         }
 
     }
-    func doUnlock(){
-        reUpdate.unlock()
-        if shouldReUpdate{
-            shouldReUpdate = false
-        }
-    }
+    
     func setKeyboardObserver() {
         
         //      NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: ncName, object: nil)
@@ -252,7 +234,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             MyButton(frame: CGRect(x: buttonWidth*2, y: buttonHeight, width: buttonWidth, height: buttonHeight),
                      title: "",
                      tag: 118,
-                     bgColor: UIColor.lightGray,imageStr:"colors_2")
+                     bgColor: UIColor.orangeC,imageStr:"colors_2")
         LightGray.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let white =
             MyButton(frame: CGRect(x: buttonWidth*3, y: buttonHeight, width: buttonWidth, height: buttonHeight),

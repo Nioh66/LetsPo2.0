@@ -27,13 +27,14 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     var selfImage:UIImage? = nil
     var memberID:Int64? = nil
     let resetAccount = Notification.Name("resetAccount")
+    let advanceImageView = AdvanceImageView()
     
     
     let uploadMachine = AlamoMachine()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//      self.view.backgroundColor = UIColor.clear
+
         emailTextField.placeholder = "請輸入e-mail"
         nameTextField.placeholder = "請輸入名字"
         passTextField.placeholder = "請輸入>6位字母或數字密碼"
@@ -99,6 +100,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         }
     }
     func upload() {
+//        advanceImageView.prepareIndicatorView(view: self.view)
         var selfieData:String? = nil
         
         if let selfImage = selfImage{
@@ -145,8 +147,9 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                         })
                     }
                 }else{
+                    
                     self.sameEmailAler()
-
+//                    self.advanceImageView.stopAnimating()
                 }
             }
         }

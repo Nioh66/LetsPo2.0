@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NoteText: UITextView {
+class NoteText: UITextView ,UITextViewDelegate{
     
     let IMAGE_PADDING:CGFloat = 10
     
@@ -22,7 +22,7 @@ class NoteText: UITextView {
         // 背景顏色
         self.backgroundColor = UIColor.clear
         // 文字顏色
-        self.textColor = UIColor.black
+        self.textColor = UIColor.lightGray
         // 文字字型及大小
         self.font = UIFont.boldSystemFont(ofSize: 20)
         //myText.font?.withSize(UIFont.systemFontSize)
@@ -34,6 +34,7 @@ class NoteText: UITextView {
         self.keyboardType = .default
         // 鍵盤上的 return 鍵樣式 這邊選擇預設的
         self.returnKeyType = .default
+        self.delegate = self
         
         
     }
@@ -44,6 +45,22 @@ class NoteText: UITextView {
         
         //       self.addSubview(myText)
     }
+    // MARK: TextView placeholder
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray{
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Enter Post content"
+            textView.textColor = UIColor.lightGray
+        }
+
+    }
+    
     
     // MARK: Change font color
     
@@ -64,7 +81,7 @@ class NoteText: UITextView {
         case 117:
             self.textColor = UIColor.gray
         case 118:
-            self.textColor = UIColor.lightGray
+            self.textColor = UIColor.orangeC
         case 119:
             self.textColor = UIColor.white
         default:

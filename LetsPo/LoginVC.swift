@@ -22,19 +22,10 @@ class LoginVC: UIViewController {
     var boardIDs = Int16()
     var boardcount:Int16 = 0
     let advanceImageView = AdvanceImageView()
-//    let advanceImage = UIActivityIndicatorView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        advanceImage.activityIndicatorViewStyle = .whiteLarge
-//        advanceImage.color = UIColor.blue
-//        //        advanceImageView.frame = loadingViewFrame
-//        advanceImage.hidesWhenStopped = true
-//        advanceImage.center = view.center
-//        
-//        view.addSubview(advanceImage)
-//        advanceImage.startAnimating()
         
         contentView.layer.cornerRadius = 10.0
         contentView.layer.masksToBounds = true

@@ -71,7 +71,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         print(documentPaths)
         
         
-        myTextView.frame = CGRect(x: 0, y: 0, width: thePost.frame.size.width, height: thePost.frame.size.height*0.8)
+        myTextView.frame = CGRect(x: 0, y: 3, width: thePost.frame.size.width, height: thePost.frame.size.height*0.77)
         thePost.clipsToBounds = true
         
         DispatchQueue.main.async {
@@ -154,13 +154,12 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let newPostSegue = storyboard?.instantiateViewController(withIdentifier: "BoardSettingVC") as! BoardSettingVC
         
         
-        let newPosition = myTextView.beginningOfDocument
-
-        myTextView.contentInset = UIEdgeInsetsMake(-7.0,0.0,0,0.0)
-        myTextView.selectedTextRange = myTextView.textRange(from: newPosition, to: newPosition)
+        myTextView.selectedRange = NSMakeRange(0, 0)
+        myTextView.setContentOffset(CGPoint(x: 0.0, y: 0.0), animated: false)
+        
         self.myTextView.isEditable = false
         
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (_) in
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: false) { (_) in
             let resizeNote = self.thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
             newPostSegue.resizeNote = resizeNote
             
@@ -172,40 +171,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
             self.navigationController?.pushViewController(newPostSegue, animated: true)
         }
     }
-    
-    
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        
-//        
-//        let newPostSegue = segue.destination as! BoardSettingVC
-//        //   newPostSegue.thePost = thePost
-//        
-//        
-//        
-//        //這個uiview are who?
-//        UIView.animate(withDuration: 0.1) {
-//            let theBegining = self.myTextView.beginningOfDocument
-//            self.myTextView.selectedTextRange = self.myTextView.textRange(from: theBegining, to: theBegining)
-//            self.myTextView.isEditable = false
-//        }
-//        
-//        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
-//            let resizeNote = self.thePost.resizeNote(targetWidth: 300, targetHeight: 300, x: 0, y: 0, textView: self.myTextView)
-//            newPostSegue.resizeNote = resizeNote
-//            
-//        }
-//
-//        
-//        
-//        self.saveNoteData()
-//        newPostSegue.allNoteData = allNoteData
-//        newPostSegue.boardLat = boardLat
-//        newPostSegue.boardLon = boardLon
-//    }
-    
-    
-    
+ 
     
     func setKeyboardObserver() {
         
@@ -305,7 +271,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
             MyButton(frame: CGRect(x: buttonWidth*2, y: buttonHeight, width: buttonWidth, height: buttonHeight),
                      title: "",
                      tag: 118,
-                     bgColor: UIColor.lightGray,imageStr:"colors_2")
+                     bgColor: UIColor.orangeC,imageStr:"colors_2")
         LightGray.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let white =
             MyButton(frame: CGRect(x: buttonWidth*3, y: buttonHeight, width: buttonWidth, height: buttonHeight),

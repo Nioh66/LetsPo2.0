@@ -17,26 +17,21 @@ class AdvanceImageView: UIImageView {
         advanceContent.backgroundColor = UIColor(colorLiteralRed: 255.0/255, green: 255.0/255, blue: 255.0/255, alpha: 0.1)
         view.addSubview(advanceContent)
         
-        if advanceImageView.isAnimating {
-            print("這這這這這這這這這這這這")
-            advanceImageView.removeFromSuperview()
-        }
         
         // 再調整
-//        let backView = UIImageView()
-//        backView.center = view.center
-//        backView.frame = CGRect(x: view.center.x, y: view.center.y, width: 100.0, height: 100.0)
-//        backView.backgroundColor = UIColor.lightGray
-//        backView.layer.cornerRadius = 4.0
+        let backView = UIView()
+        backView.center = view.center
+        backView.frame = CGRect(x: view.center.x - 50, y: view.center.y - 50 , width: 100.0, height: 100.0)
+        backView.backgroundColor = UIColor(colorLiteralRed: 150.0/255, green: 150.0/255, blue: 150.0/255, alpha: 0.8)
+        backView.layer.cornerRadius = 4.0
         
-
         advanceImageView.activityIndicatorViewStyle = .whiteLarge
         advanceImageView.color = UIColor.white
         advanceImageView.hidesWhenStopped = true
         advanceImageView.center = view.center
-//        backView.addSubview(advanceImageView)
+        backView.addSubview(advanceImageView)
         
-        advanceContent.addSubview(advanceImageView)
+        advanceContent.addSubview(backView)
         advanceImageView.startAnimating()
     }
     
@@ -45,7 +40,9 @@ class AdvanceImageView: UIImageView {
     }
     func advanceStop(){
         advanceImageView.stopAnimating()
+        advanceContent.removeFromSuperview()
+        advanceImageView.removeFromSuperview()
     }
-
+    
 
 }
