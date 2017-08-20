@@ -294,7 +294,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             let name = value["friendName"] as! String
             let lat = value["lat"] as! Double
             let lon = value["lon"] as! Double
-            let image = UIImage(named: "deer.jpg")
+            let image = UIImage(named: "default_3")
             
             let id = value["id"] as! Int
             let annotation = SpotAnnotation( atitle: name, lat: lat, lon: lon, imageName: image!,privacyBool: true,Id:1, member_ID: id)

@@ -84,13 +84,9 @@
 		9BA62C5D1F1E6506008CDEC0 /* SpotAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C5C1F1E6506008CDEC0 /* SpotAnnotation.swift */; };
 		9BA62C5F1F1E65A0008CDEC0 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C5E1F1E65A0008CDEC0 /* MapViewController.swift */; };
 		9BA62C611F1E66C8008CDEC0 /* MapDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C601F1E66C8008CDEC0 /* MapDetailViewController.swift */; };
-		9BA62C661F1E6752008CDEC0 /* deer.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9BA62C631F1E6752008CDEC0 /* deer.jpg */; };
-		9BA62C681F1E6752008CDEC0 /* rightBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BA62C651F1E6752008CDEC0 /* rightBtn.png */; };
-		9BA62C6A1F1E6E04008CDEC0 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BA62C691F1E6E04008CDEC0 /* map.png */; };
 		9BA62C6C1F1F6A3D008CDEC0 /* FlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C6B1F1F6A3D008CDEC0 /* FlowLayout.swift */; };
 		9BA62C6F1F1F6F11008CDEC0 /* ManageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C6D1F1F6F11008CDEC0 /* ManageCollectionViewCell.swift */; };
 		9BA62C701F1F6F11008CDEC0 /* ManageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9BA62C6E1F1F6F11008CDEC0 /* ManageCollectionViewCell.xib */; };
-		9BA62C721F1F716F008CDEC0 /* delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BA62C711F1F716F008CDEC0 /* delete.png */; };
 		9BA62C741F1F7299008CDEC0 /* ManageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C731F1F7299008CDEC0 /* ManageViewController.swift */; };
 		9BA62C761F1F7454008CDEC0 /* ScrollPager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C751F1F7454008CDEC0 /* ScrollPager.swift */; };
 		9BA62C791F1F8065008CDEC0 /* ManageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BA62C781F1F8065008CDEC0 /* ManageDetailViewController.swift */; };
@@ -179,13 +175,9 @@
 		9BA62C5C1F1E6506008CDEC0 /* SpotAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpotAnnotation.swift; sourceTree = "<group>"; };
 		9BA62C5E1F1E65A0008CDEC0 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		9BA62C601F1E66C8008CDEC0 /* MapDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDetailViewController.swift; sourceTree = "<group>"; };
-		9BA62C631F1E6752008CDEC0 /* deer.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = deer.jpg; sourceTree = "<group>"; };
-		9BA62C651F1E6752008CDEC0 /* rightBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rightBtn.png; sourceTree = "<group>"; };
-		9BA62C691F1E6E04008CDEC0 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		9BA62C6B1F1F6A3D008CDEC0 /* FlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlowLayout.swift; sourceTree = "<group>"; };
 		9BA62C6D1F1F6F11008CDEC0 /* ManageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageCollectionViewCell.swift; sourceTree = "<group>"; };
 		9BA62C6E1F1F6F11008CDEC0 /* ManageCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ManageCollectionViewCell.xib; sourceTree = "<group>"; };
-		9BA62C711F1F716F008CDEC0 /* delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delete.png; sourceTree = "<group>"; };
 		9BA62C731F1F7299008CDEC0 /* ManageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageViewController.swift; sourceTree = "<group>"; };
 		9BA62C751F1F7454008CDEC0 /* ScrollPager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScrollPager.swift; sourceTree = "<group>"; };
 		9BA62C781F1F8065008CDEC0 /* ManageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManageDetailViewController.swift; sourceTree = "<group>"; };
@@ -321,7 +313,6 @@
 		30D092801F1E34A300CB3F88 /* ZY */ = {
 			isa = PBXGroup;
 			children = (
-				9BA62C621F1E671D008CDEC0 /* Image */,
 				9BA62C771F1F7F3E008CDEC0 /* Map */,
 				9BA62C731F1F7299008CDEC0 /* ManageViewController.swift */,
 				9B273DAE1F38BFB400E726A4 /* ManageAllVC.swift */,
@@ -435,17 +426,6 @@
 			name = PLImage;
 			sourceTree = "<group>";
 		};
-		9BA62C621F1E671D008CDEC0 /* Image */ = {
-			isa = PBXGroup;
-			children = (
-				9BA62C711F1F716F008CDEC0 /* delete.png */,
-				9BA62C631F1E6752008CDEC0 /* deer.jpg */,
-				9BA62C691F1E6E04008CDEC0 /* map.png */,
-				9BA62C651F1E6752008CDEC0 /* rightBtn.png */,
-			);
-			name = Image;
-			sourceTree = "<group>";
-		};
 		9BA62C771F1F7F3E008CDEC0 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -545,16 +525,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				30D092C61F1E950800CB3F88 /* Sky.jpg in Resources */,
-				9BA62C6A1F1E6E04008CDEC0 /* map.png in Resources */,
 				303B08FB1F1CC61600D7F6B1 /* LaunchScreen.storyboard in Resources */,
-				9BA62C661F1E6752008CDEC0 /* deer.jpg in Resources */,
 				30D092A61F1E41A300CB3F88 /* NewPost.storyboard in Resources */,
-				9BA62C721F1F716F008CDEC0 /* delete.png in Resources */,
 				30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */,
 				30D092A41F1E40AE00CB3F88 /* ManagePost.storyboard in Resources */,
 				303B08F81F1CC61600D7F6B1 /* Assets.xcassets in Resources */,
 				9B0CC3DD1F3F4FA100280A55 /* LaunchScreen.storyboard in Resources */,
-				9BA62C681F1E6752008CDEC0 /* rightBtn.png in Resources */,
 				30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */,
 				304CB6831F25970A00AEF632 /* right-arrow.png in Resources */,
 				30D092C51F1E950800CB3F88 /* ooxx.png in Resources */,

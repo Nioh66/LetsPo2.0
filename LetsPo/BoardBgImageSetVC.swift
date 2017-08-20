@@ -71,10 +71,10 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
                                                    width: imageWidth,
                                                    height: imageHight))
         
-        defaultBg01.image = UIImage(named: "Wall2.jpg")
-        defaultBg02.image = UIImage(named: "myNigger.jpg")
-        defaultBg03.image = UIImage(named: "whiteboard-303145_960_720")
-        defaultBg04.image = UIImage(named: "Sky.jpg")
+        defaultBg01.image = UIImage(named: "default_1")
+        defaultBg02.image = UIImage(named: "default_2")
+        defaultBg03.image = UIImage(named: "default_3")
+        defaultBg04.image = UIImage(named: "default_4")
         photosBg.image = UIImage(named: "Album")
         takeAPhoto.image = UIImage(named: "Camera")
         
@@ -139,7 +139,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
     }
     
     func getDefault01Bg(){
-        bgImage = UIImage(named: "Wall2.jpg")
+        bgImage = UIImage(named: "default_1")
         
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         
@@ -155,7 +155,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
         
     }
     func getDefault02Bg(){
-        bgImage = UIImage(named: "myNigger.jpg")
+        bgImage = UIImage(named: "default_2")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         print("get the default bg pic!")
         navigationController?.popViewController(animated: true)
@@ -163,7 +163,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
     }
     
     func getDefault03Bg(){
-        bgImage = UIImage(named: "whiteboard-303145_960_720")
+        bgImage = UIImage(named: "default_3")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         print("get the default bg pic!")
         
@@ -172,7 +172,7 @@ class BoardBgImageSetVC: UIViewController,UIImagePickerControllerDelegate,UINavi
     }
     
     func getDefault04Bg(){
-        bgImage = UIImage(named: "Sky.jpg")
+        bgImage = UIImage(named: "default_4")
         NotificationCenter.default.post(name: sendBgImageNN, object: nil, userInfo: ["myBg":bgImage!])
         print("get the default bg pic!")
         navigationController?.popViewController(animated: true)

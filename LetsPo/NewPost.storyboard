@@ -139,7 +139,7 @@
                             <view alpha="0.94999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oih-ln-eRa">
                                 <rect key="frame" x="56" y="90" width="262.5" height="400"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sky.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="7s9-dS-9DF">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_1" translatesAutoresizingMaskIntoConstraints="NO" id="7s9-dS-9DF">
                                         <rect key="frame" x="26.5" y="30" width="210" height="126"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="7s9-dS-9DF" secondAttribute="height" multiplier="5:3" id="09c-OX-FSQ"/>
@@ -545,9 +545,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Sky.jpg" width="960" height="635"/>
         <image name="back" width="40" height="40"/>
         <image name="backgroundImage" width="375" height="667"/>
+        <image name="default_1" width="375" height="667"/>
         <image name="next" width="40" height="40"/>
         <image name="plus" width="30" height="30"/>
         <image name="success" width="40" height="40"/>
