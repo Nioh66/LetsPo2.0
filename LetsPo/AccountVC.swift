@@ -34,6 +34,13 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             login = true
             loginBtn.isHidden = true
             registBtn.isHidden = true
+            personalName.isHidden = false
+            
+        }else {
+            loginBtn.isHidden = false
+            registBtn.isHidden = false
+            personalName.isHidden = true
+            personalImage.image = UIImage(named: "user")
         }
 
         
@@ -42,12 +49,14 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         for i in 0 ..< count {
             let item = memberDataManager.itemWithIndex(index: i)
             personalName.text = item.member_Name
+            
             let image = item.member_Selfie
+            
             if image != nil {
                 guard let ii = UIImage(data: image! as Data) else {return}
                 personalImage.image = ii
             }else {
-                // 預設頭像？
+                personalImage.image = UIImage(named: "user")
             }
         }
 
@@ -147,6 +156,12 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             login = true
             loginBtn.isHidden = true
             registBtn.isHidden = true
+            personalName.isHidden = false
+            let item = memberDataManager.itemWithIndex(index: 0)
+            personalName.text = item.member_Name
+        }else {
+            personalName.isHidden = true
+            personalImage.image = UIImage(named: "user")
         }
 
         
