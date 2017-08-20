@@ -75,13 +75,12 @@ class LoginVC: UIViewController {
                 else{
                     let errorResult = rsp["errorCode"] as! String
                     self.vertificateAlert(errorCode: errorResult)
+                    self.advanceImageView.advanceStop(view: self.view)
                     print(errorResult)
                 }
             }
             
         }
-        // 上資料庫去驗證
-        
     }
     
     func saveToCoreData(data:[String:Any]) {

@@ -15,6 +15,8 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var login:Bool!
     let resetAccount = Notification.Name("resetAccount")
     
+    @IBOutlet weak var registBtn: UIButton!
+    @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var personalName: UILabel!
     @IBOutlet weak var personalImage: UIImageView!
@@ -30,7 +32,10 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         login = false
         if memberDataManager.count() > 0 {
             login = true
+            loginBtn.isHidden = true
+            registBtn.isHidden = true
         }
+
         
         
         let count = memberDataManager.count()
@@ -45,7 +50,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
                 // 預設頭像？
             }
         }
-//
+
         personalImage.frame = CGRect(x: view.center.x, y: 30, width: UIScreen.main.bounds.size.width/2, height: UIScreen.main.bounds.size.width/2)
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2
@@ -59,8 +64,9 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
                                                name: resetAccount,
                                                object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(theBGimage), name: selfieBgImageNN, object: nil)
-        // Do any additional setup after loading the view.
+
     }
+    
     func reset(notification:Notification) {
         let refreshVC = storyboard?.instantiateViewController(withIdentifier: "AccountVC") as! AccountVC
         
@@ -70,10 +76,27 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     
         
     }
+    
     func theBGimage(notification:Notification) {
         personalImage.image = notification.userInfo!["selfieBg"] as? UIImage//??
         
     }
+    @IBAction func loginButtonPressed(_ sender: UIButton) {
+        if login == false {
+            print("還沒有資料和登錄")
+            let nextPage = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
+            navigationController?.pushViewController(nextPage!, animated: true)
+        }
+    }
+    
+    @IBAction func registButtonPressed(_ sender: UIButton) {
+        if login == false {
+            print("還沒有資料和登錄")
+            let nextPage = storyboard?.instantiateViewController(withIdentifier: "RegistVC") as? RegistVC
+            navigationController?.pushViewController(nextPage!, animated: true)
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -88,7 +111,6 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
-        //        cell?.textLabel?.frame(forAlignmentRect: 10)
         cell?.textLabel?.text = cellTitle[indexPath.row]
         cell?.frame(forAlignmentRect: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
         cell?.selectionStyle = .none
@@ -98,27 +120,22 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("\(indexPath.row)")
         if indexPath.row == 0 {
-            let nextPage = storyboard?.instantiateViewController(withIdentifier: "PersonalDetailVC") as? PersonalDetailVC
-            nextPage?.navigationItem.leftItemsSupplementBackButton = true
-            navigationController?.pushViewController(nextPage!, animated: true)
+            if login == true {
+                let nextPage = storyboard?.instantiateViewController(withIdentifier: "PersonalDetailVC") as? PersonalDetailVC
+                nextPage?.navigationItem.leftItemsSupplementBackButton = true
+                navigationController?.pushViewController(nextPage!, animated: true)
+            }
         }else if indexPath.row == 1{
             let nextPage = storyboard?.instantiateViewController(withIdentifier: "NotiSettingVC") as? NotiSettingVC
                 nextPage?.navigationItem.leftItemsSupplementBackButton = true
                 navigationController?.pushViewController(nextPage!, animated: true)
             
         }else if indexPath.row == 2{
-            if login == false {
-                print("還沒有資料和登錄")
-                let nextPage = storyboard?.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC
-                //                nextPage?.navigationItem.leftItemsSupplementBackButton = true
+            if login == true {
+                let nextPage = storyboard?.instantiateViewController(withIdentifier: "MyNiggerVC") as? MyNiggerVC
+                nextPage?.navigationItem.leftItemsSupplementBackButton = true
                 navigationController?.pushViewController(nextPage!, animated: true)
-            }else {
-            let nextPage = storyboard?.instantiateViewController(withIdentifier: "MyNiggerVC") as? MyNiggerVC
-            nextPage?.navigationItem.leftItemsSupplementBackButton = true
-            navigationController?.pushViewController(nextPage!, animated: true)
             }
-        }else{
-            
         }
     }
     
@@ -128,7 +145,10 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         login = false
         if memberDataManager.count() > 0 {
             login = true
+            loginBtn.isHidden = true
+            registBtn.isHidden = true
         }
+
         
     }
 }

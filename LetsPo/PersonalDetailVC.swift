@@ -30,12 +30,14 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
         var userName = String()
         var email = String()
         
+        if memberDataManager.count() > 0 {
             let item = memberDataManager.itemWithIndex(index: 0)
             userName = item.member_Name!
             email = item.member_Email!
-        if let selfie = item.member_Selfie as Data?{
-            let selfieImage = UIImage(data: selfie)
-            personalImage.image = selfieImage
+            if let selfie = item.member_Selfie as Data?{
+                let selfieImage = UIImage(data: selfie)
+                personalImage.image = selfieImage
+            }
         }
         
         let cellSub = [userID,userName,email]
