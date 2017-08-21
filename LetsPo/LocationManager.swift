@@ -83,8 +83,8 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             
             startRegionMonitoring(region: region)
             
-            // 超過 2300 則停止 Monitoring
-            if distance > 2300 {
+            // 超過 1000 則停止 Monitoring
+            if distance > 1000 {
                 
                 stopRegionMonitoring(region: region)
                 

@@ -15,17 +15,18 @@ typealias doneHandler = (_ erro:Error?,_ result:[String:Any]?) -> ()
 typealias imageHandler = (_ error:Error?,_ images:[UIImage]?) -> ()
 class AlamoMachine {
     
-    
+    let ADD_FRIEND = "addFriend.php"
     let DELETE_BOARD = "deleteBoard.php"
     let DELETE_NOTE = "deleteNote.php"
     let FIND_FRIEND = "findFriend.php"
-    let ADD_FRIEND = "addFriend.php"
     let SAVE_BOARD = "saveBoardData.php"
     let SAVE_NOTE = "saveNoteData.php"
     let UPDATE_BOARDBG = "updataBoardBG.php"
     let UPDATE_BOARDSETTING = "updateBoard.php"
     let UPDATE_BOARDSCREENSHOT = "updateBoardScreenshot.php"
     let DOWNLOAD_ALL = "downloadAll.php"
+    let DOWNLOAD_PUBLIC = "boardForMap.php"
+    let DOWNLOAD_PUBLICNOTES = "publicBoardNotes.php"
     let NEW_MEMBER = "newMember.php"
     let LOGIN = "login.php"
     
@@ -87,13 +88,12 @@ class AlamoMachine {
         Alamofire.request(BASE_URL+urlString, method: .post,parameters:finalParameter,
                           headers: nil).response { (Response) in
                             
-                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
-                            print(str!)
-                            
+//                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
+//                            print(str!)
                             if Response.error == nil{
                                 print(Response.data!)
                                 guard let returnDic = JSON(Response.data!).dictionaryObject else{
-                                    print(JSON(Response.data!).dictionaryObject)
+                            //        print(JSON(Response.data!).dictionaryObject)
 
                                     return
                                 }

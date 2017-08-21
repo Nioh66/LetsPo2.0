@@ -93,6 +93,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         popDetailPostVC?.sourceView = detailNoteAppearPoint
         popDetailPostVC?.sourceRect = detailNoteAppearPoint.bounds
         present(publicPostDetailVC, animated: true, completion: nil)
+        
     }
     
     @IBAction func backBtnPressed(_ sender: UIButton) {

@@ -28,6 +28,11 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     var nearbyDictionary = [[String:Any]]()
     var titleName:String = ""
     var count: Int = 0
+    var allPublicBoards = [[String:Any]]()
+    
+    //for upload
+    var userLat = Double()
+    var userLon = Double()
     
     var privacy_pins = UIImage()
     
@@ -53,8 +58,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         
         places = spot()
         mapView.addAnnotations(places)
-        frinedPlace = friendsSpot()
-        mapView.addAnnotations(friendsSpot())
+        
         
         // 回到當前位置
         let locationButton = UIButton(type: .custom)
@@ -67,6 +71,9 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationButton.setImage(btnImage, for: .normal)
         self.view.addSubview(locationButton)
         
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.downloadPublicBoard()
+        }
     }
     
     
@@ -189,6 +196,14 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             shouldReUpdate = true
             return
         }
+        
+        //For server
+        userLat = coordinate.coordinate.latitude
+        userLon = coordinate.coordinate.longitude
+        
+        print("userLat。\(userLat)")
+        print("userLon。\(userLon)")
+        
         locationManager.startUpdate()
         monitorRegion(userLocation: coordinate)
         locationManager.stopUpdate()
@@ -287,17 +302,25 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
 
         return result
     }
-    func friendsSpot() -> [SpotAnnotation]{
+    func friendsSpot() -> [SpotAnnotation]?{
         var result = [SpotAnnotation]()
-        let dic = getFriendLocation()
-        for value in dic {
-            let name = value["friendName"] as! String
-            let lat = value["lat"] as! Double
-            let lon = value["lon"] as! Double
-            let image = UIImage(named: "default_3")
+        print("fhfhffhfhffh")
+        let dic = allPublicBoards
+        
+        for boardData in dic{
             
-            let id = value["id"] as! Int
-            let annotation = SpotAnnotation( atitle: name, lat: lat, lon: lon, imageName: image!,privacyBool: true,Id:1, member_ID: id)
+            guard let name = boardData["Board_Title"] as? String,
+                let board_ID = boardData["Board_ID"] as? Int64,
+                let lat = boardData["Board_Lat"] as? Double,
+                let lon = boardData["Board_Lon"] as? Double,
+                let friend_ID = boardData["Friend_ID"] as? Int64,
+                let imageData = boardData["Board_ScreenShot"] as? NSData,
+                let image = UIImage(data: imageData as Data) else{
+                    print("Case from friendsSpot boardData failure!!!!!")
+                    return nil
+            }
+            
+            let annotation = SpotAnnotation( atitle: name, lat: lat, lon: lon, imageName: image,privacyBool: true,Id:Int16(board_ID), member_ID: Int(friend_ID))
             result.append(annotation)
         }
         return result
@@ -306,8 +329,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     
     func getLocations() -> [[String:Any]] {
         var locations = [[String:Any]]()
-        
-        
         for i in 0..<dataManagerCount {
             let item = boardDataManager.itemWithIndex(index: i)
             let board_ID = item.board_Id
@@ -326,59 +347,96 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
          return locations
     }
     
-    func getFriendLocation()->[[String:Any]]{
-        var friendLocations = [[String:Any]]()
-        //        var feinenData = [String:Any?]()
-        //        alamoMachine.doPostJobWith(urlString: "", parameter: feinenData) { (error, rsp) in
-        //            if let error = error {
-        //                print(error)
-        //            }
-        //            guard let response = rsp,
-        //                let resultBool = response["result"] as? Bool else {
-        //                    return
-        //            }
-        //            if resultBool {
-        //
-        //            }
-        //
-        //
-        //        }
-        
-        let UrlString = "http://class.softarts.cc/FindMyFriends/queryFriendLocations.php?GroupName=bp102"
-        let myUrl = NSURL(string: UrlString)
-        let optData = try? Data(contentsOf: myUrl! as URL)
-        guard let data = optData else {
-            return friendLocations
+    
+    // MARK: Download public board
+    func downloadPublicBoard() {
+        let alamoMachine = AlamoMachine()
+        let memberID = UserDefaults.standard.integer(forKey: "Member_ID")
+        let memberDic:[String:Any] = ["Member_ID":memberID,
+                         "Member_Lat":userLat,
+                         "Member_Lon":userLon]
+
+        let friendCount = friendDataManager.count()
+        var friendIDDic = [String:Int64]()
+        for i in 0..<friendCount{
+            let friend = friendDataManager.itemWithIndex(index: i)
+            let friendID = friend.friend_FriendID
+
+            friendIDDic.updateValue(friendID, forKey: "Friend\(i)")
         }
-        if let jsonArray = try? JSONSerialization.jsonObject(with: data, options:[])  as? [String:AnyObject] {
-            if let friends = jsonArray?["friends"] as? [[String:Any]] {
-                for value in friends {
-                    let strName = value["friendName"] as! String
-                    
-                    //                        let time = value["lastUpdateDateTime"] as! String
-                    
-                    var lat = Double()
-                    if let latt = Double(value["lat"] as! String) {
-                        lat = latt
-                    }
-                    var lon = Double()
-                    if let lonn = Double(value["lon"] as! String) {
-                        lon = lonn
-                    }
-                    
-                    let id = Int(value["id"] as! String)!
-                    
-                    friendLocations.append(["friendName":strName,"lat":lat,"lon":lon,"id":id])
-                    
+
+        let uploadDic:[String:Any?] = ["Member":memberDic,
+                                       "Friends":friendIDDic]
+        print("=========uploadDic:\(uploadDic)=============")
+
+        alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLIC, parameter: uploadDic) { (error, response) in
+            if error != nil{
+                print(error!)
+                return
+            }
+            guard let result = response?["result"] as? Bool else{
+                return
+            }
+            
+            if result{
+                guard let publicBoards = response?["availableBoards"] as? [[String:Any]] else{
+                    print("Case availableBoards failure!!!!!")
+                    return
                 }
+                
+                self.handlePublicBoards(boards: publicBoards)
+                
+                
             }
             
         }
         
-        return friendLocations
     }
-
     
+    
+    func handlePublicBoards(boards:[[String:Any]]) {
+        
+        print(boards)
+
+        for boardData in boards{
+            
+            guard let boardTitle = boardData["Board_Title"] as? String,
+                let boardIDS = boardData["Board_ID"] as? String,
+                let boardLatS = boardData["Board_Lat"] as? String,
+                let boardLonS = boardData["Board_Lon"] as? String,
+                let friendIDS = boardData["Board_CreateMemberID"] as? String,
+                let boardBgPicS = boardData["Board_BgPic"] as? String,
+                let boardScreenShotS = boardData["Board_ScreenShot"] as? String
+                 else{
+                    print("Case from boardData failure!!!!!")
+                    return
+            }
+
+            guard let friendID = Int64(friendIDS),
+                let boardLat = Double(boardLatS),
+                let boardLon = Double(boardLonS),
+                let boardBgPic = NSData(base64Encoded: boardBgPicS, options: []),
+                let boardID = Int64(boardIDS),
+                let boardScreenShot = NSData(base64Encoded: boardScreenShotS, options: []) else{
+                    print("Case from String failure!!!!!")
+                    return
+            }
+            
+            let publicBoardData:[String:Any] = ["Friend_ID":friendID,
+                                                "Board_ID":boardID,
+                                                "Board_Lat":boardLat,
+                                                "Board_Lon":boardLon,
+                                                "Board_BgPic":boardBgPic,
+                                                "Board_ScreenShot":boardScreenShot,
+                                                "Board_Title":boardTitle]
+            allPublicBoards.append(publicBoardData)
+            
+
+        }
+        if let frinedPlace = friendsSpot(){
+        mapView.addAnnotations(frinedPlace)
+        }
+    }
     
     
     override func didReceiveMemoryWarning() {
@@ -390,10 +448,13 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         tabBarController?.tabBar.isHidden = false
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         locationManager.startUpdate()
+        
+        
         dataManagerCount = boardDataManager.count()
         places = spot()
         mapView.removeAnnotations(places)
         mapView.addAnnotations(places)
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
