@@ -20,9 +20,10 @@ class PublicBoardSettingVC: UIViewController {
     var boardAlert = Bool()
     var boardPrivacy = Bool()
     var dataManagerCount = Int()
-    
+    var memberID = Int()
     let dismissSelf = Notification.Name("dismissSelf")
-    
+    var boardLat = Double()
+    var boardLon = Double()
     
     
     override func viewDidLoad() {
@@ -30,8 +31,9 @@ class PublicBoardSettingVC: UIViewController {
         dataManagerCount = boardDataManager.count()
         
         let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(boardID)") as! [BoardData]
-        
-        
+        let board = oldBoardData.first
+        boardLat = (board?.board_Lat)!
+        boardLon = (board?.board_Lon)!
         for data in oldBoardData{
             if data.board_Id == boardID{
                 if (data.board_Alert) {
@@ -87,6 +89,11 @@ class PublicBoardSettingVC: UIViewController {
         let ok = UIAlertAction(title: "刪除", style: .default) { (action) in
             NotificationCenter.default.post(name: self.dismissSelf, object: nil)
             self.coreDataDeleteAndSaveMethod(board_id: "\(self.boardID)")
+            //for Server
+            self.memberID = UserDefaults.standard.integer(forKey: "Member_ID")
+            if(self.memberID != 0){
+                self.deleteBoardOnServer()
+            }
             self.dismiss(animated: false, completion: nil)
             
         }
@@ -96,6 +103,26 @@ class PublicBoardSettingVC: UIViewController {
         present(alert, animated: true, completion: nil)
         
     }
+    
+    func deleteBoardOnServer() {
+        
+        
+        let alamoMachine = AlamoMachine()
+        let deleteBoardDic:[String:Any] = ["Board_CreateMemberID":memberID,"Board_Lat":boardLat,"Board_Lon":boardLon]
+        alamoMachine.doPostJobWith(urlString: alamoMachine.DELETE_BOARD, parameter: deleteBoardDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            guard let result = response?["result"] as? Bool else{
+                return
+            }
+            if result{
+            print("delete board success!!!!!")
+            }
+        }
+    }
+    
+    
     
     func updateBoardData() {
         

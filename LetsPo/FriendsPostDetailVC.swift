@@ -41,9 +41,21 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
         self.configureCollectionView()
         self.configurePageControl()
         
-        
-        //  selfPost.frame = CGRect(x: 5, y: 5, width: 300, height: 300)
         publicPostT.frame = CGRect(x: 0, y: 3, width: displayNoteV.frame.size.width, height: displayNoteV.frame.size.height*0.77)
+        
+        let noteIDDic:[String:Any] = ["Note_ID":publicPostID]
+        
+        alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLICNOTEDETAIL, parameter: noteIDDic) { (error, response) in
+            
+            if error != nil{
+                print(error!)
+                return
+            }
+            guard let noteData = response?["NoteData"] as? [String:Any] else{
+                return
+            }
+            self.noteDetailMachine(noteData: noteData, note: self.displayNoteV, noteText: self.publicPostT)
+        }
     }
     
     func noteDetailMachine(noteData:[String:Any],note:Note,noteText:NoteText) {
@@ -75,7 +87,7 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
                 return
             }
             
-            alamoMachine.downloadImage(imageDic: noteImage, complete: { (error, rspImages) in
+            alamoMachine.downloadImageImmediately(imageDic: noteImage, complete: { (error, rspImages) in
                 if error != nil{
                     return
                 }else{
@@ -83,31 +95,30 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
                         return
                     }
                     self.imageForCell = theImages
-                    note.posterColor = noteBgColor
-                    note.backgroundColor = UIColor.clear
+                    self.displayNoteV.posterColor = noteBgColor
+//                    note.backgroundColor = UIColor.clear
                     noteText.text = noteContent
                     noteText.textColor = noteFontColor
                     noteText.font = UIFont.boldSystemFont(ofSize: CGFloat(noteFontSize))
                     DispatchQueue.main.async {
                         self.collectionView.reloadData()
-                        self.displayNoteV = note
                         self.publicPostT = noteText
                         self.publicPostT.isEditable = false
                         self.displayNoteV.addSubview(self.publicPostT)
                     }
                 }})
         }else{
-            note.posterColor = noteBgColor
-            note.backgroundColor = UIColor.clear
+            displayNoteV.posterColor = noteBgColor
+//            note.backgroundColor = UIColor.clear
             noteText.text = noteContent
             noteText.textColor = noteFontColor
             noteText.font = UIFont.boldSystemFont(ofSize: CGFloat(noteFontSize))
-        //    DispatchQueue.main.async {
+            DispatchQueue.main.async {
                 self.displayNoteV = note
                 self.publicPostT = noteText
                 self.publicPostT.isEditable = false
                 self.displayNoteV.addSubview(self.publicPostT)
-        //    }
+            }
         }
     }
     
@@ -179,29 +190,7 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
         }
         return nil
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        let noteIDDic:[String:Any] = ["Note_ID":publicPostID]
-        
-        alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLICNOTEDETAIL, parameter: noteIDDic) { (error, response) in
-          
-            if error != nil{
-                print(error!)
-                return
-            }
-            guard let noteData = response?["NoteData"] as? [String:Any] else{
-                return
-            }
-            self.noteDetailMachine(noteData: noteData, note: self.publicPost, noteText: self.publicPostT)
-            
-        }
-        
-
-        //        DispatchQueue.main.async {
-        //            self.publicPostT.isEditable = false
-        //            self.displayNoteV.addSubview(self.publicPostT)
-        //        }
-    }
+   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

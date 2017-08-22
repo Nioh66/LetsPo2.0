@@ -9,13 +9,61 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "LetsPo/FriendsPostDetailVC.swift"
-            timestampString = "525018113.225639"
+            filePath = "LetsPo/LoginVC.swift"
+            timestampString = "525088560.093181"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "50"
-            endingLineNumber = "50"
-            landmarkName = "noteDetailMachine(noteData:note:noteText:)"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "downloadFriendData(memberID:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LetsPo.LoginVC.downloadFriendData (memberID : Swift.Int64) -&gt; ()"
+                  moduleName = "LetsPo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nioh66/LetsPo2.0/LetsPo/LoginVC.swift"
+                  timestampString = "525089148.254948"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "125"
+                  endingLineNumber = "125"
+                  offsetFromSymbolStart = "147">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "LetsPo.LoginVC.(downloadFriendData (memberID : Swift.Int64) -&gt; ()).(closure #1)"
+                  moduleName = "LetsPo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/nioh66/LetsPo2.0/LetsPo/LoginVC.swift"
+                  timestampString = "525089148.257602"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "126"
+                  endingLineNumber = "126"
+                  offsetFromSymbolStart = "29">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "LetsPo/LoginVC.swift"
+            timestampString = "525088560.962948"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "126"
+            endingLineNumber = "126"
+            landmarkName = "downloadFriendData(memberID:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

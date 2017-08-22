@@ -28,6 +28,7 @@ class AlamoMachine {
     let DOWNLOAD_PUBLIC = "boardForMap.php"
     let DOWNLOAD_PUBLICNOTES = "publicBoardNotes.php"
     let DOWNLOAD_PUBLICNOTEDETAIL = "publicNoteDetail.php"
+    let DOWNLOAD_FRIEND = "downloadFriend.php"
     let NEW_MEMBER = "newMember.php"
     let LOGIN = "login.php"
     
@@ -57,7 +58,31 @@ class AlamoMachine {
         }
     }
     
-    
+    func downloadImageImmediately(imageDic:[String:String],complete:@escaping imageHandler) {
+        
+        
+        var requestChain = [DataRequest]()
+        let imageCount = imageDic.count
+        
+        for num in 0..<imageCount{
+            guard let targetURL = imageDic["Image\(num)"] else{
+                print("TargetURL case failure")
+                return
+            }
+            let imageReqest = Alamofire.request(targetURL)
+            requestChain.append(imageReqest)
+            
+        }
+        SessionManager.default.startRequestsImmediately = true
+        let chain = RequestChain(requests: requestChain)
+        chain.start { (downloadImages, error) in
+            
+            
+            complete(nil,downloadImages)
+            
+        }
+    }
+
     
     
     
@@ -89,8 +114,8 @@ class AlamoMachine {
         Alamofire.request(BASE_URL+urlString, method: .post,parameters:finalParameter,
                           headers: nil).response { (Response) in
                             
-//                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
-//                            print(str!)
+                            let str = String(data:Response.data!, encoding: String.Encoding.utf8)
+                            print(str!)
                             if Response.error == nil{
                                 print(Response.data!)
                                 guard let returnDic = JSON(Response.data!).dictionaryObject else{

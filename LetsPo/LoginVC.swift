@@ -111,12 +111,54 @@ class LoginVC: UIViewController {
         memberDataManager.saveContexWithCompletion { (success) in
             if(success){
                 print("Save member data success!!!!!")
-                self.downloadAllData(memberID: memberIDInt64)
+//                self.downloadAllData(memberID: memberIDInt64)
+                self.downloadFriendData(memberID: memberIDInt64)
             }else{
                 print("Save member data failure!!!!!")
             }
         }
     }
+    
+    func downloadFriendData(memberID:Int64) {
+        let memberDic:[String:Any?] = ["Member_ID":memberID]
+
+        alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_FRIEND, parameter: memberDic) { (error, response) in
+            if error != nil{
+                print(error!)
+            }
+            guard let allFriendData = response?["AllFriendData"] as? [String:Any] else{
+                return
+            }
+            for i in 0..<allFriendData.count
+            {
+                
+                guard let friendData = allFriendData["Friend\(i)"] as? [String:Any?] else {
+                    return
+                }
+                guard let friendIDS = friendData["Friend_ID"] as? String,
+                    let friendName = friendData["Friend_Name"] as? String,
+                    let friendID = Int64(friendIDS) else{
+                        print("Case friendData to string failure!!!!")
+                        return
+                }
+                let item = friendDataManager.createItem()
+
+                if let friendSelfieS = friendData["Friend_Selfie"] as? String{
+                    let friendSelfie = NSData(base64Encoded: friendSelfieS, options: [])
+                    item.friend_FriendSelfie = friendSelfie
+
+                }
+                
+                item.friend_FriendID = friendID
+                item.friend_FriendName = friendName
+                friendDataManager.saveContexWithCompletion(completion: { (success) in
+                    print("Save Friend success")
+                })
+                
+            }
+        }
+    }
+    
     
     func downloadAllData(memberID:Int64) {
         
