@@ -40,6 +40,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     var boardLon = Double()
     var boardCreatetime = NSDate()
     var boardTitle = ""
+    var guideView = UIImageView()
     
     //upload
     let uploadMachine = AlamoMachine()
@@ -49,8 +50,15 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let guide = #imageLiteral(resourceName: "guide")
+        guideView = UIImageView(image: guide)
+        guideView.frame = CGRect(x: 50,
+                                 y: 60,
+                                 width: 50,
+                                 height: 50)
         
-        //     self.navigationController?.navigationBar.isHidden = true
+        NoteImageView.addSubview(guideView)
+        
         topImage.image = topBgImages
         topImage.isUserInteractionEnabled = true
         
@@ -87,7 +95,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     @IBAction func saveBtnPressed(_ sender: UIButton) {
         backBtn.isHidden = true
         saveBtn.isHidden = true
-        
+        guideView.removeFromSuperview()
         self.saveBoardData()
         self.saveNoteData()
         member_ID = UserDefaults.standard.integer(forKey: "Member_ID")

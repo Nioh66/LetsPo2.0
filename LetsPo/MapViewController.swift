@@ -101,14 +101,14 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             pin?.annotation = annotation
         }
         let rightBtn = UIButton(type: .detailDisclosure)
-        //        rightBtn.setImage(UIImage(named: "rightBtn.png"), for: .normal)
+        rightBtn.setImage(UIImage(named: "white"), for: .normal)
         pin?.rightCalloutAccessoryView = rightBtn
-        let left = UIView(frame: CGRect(x: 0, y: 0, width: 5, height: 5))
+        let left = UIView(frame: CGRect(x: 0, y: 0, width: 22, height: 22))
         pin?.leftCalloutAccessoryView = left
         
         
         let myAnnotation = annotation as! SpotAnnotation
-        let detailImage = UIImageView.init(image: myAnnotation.image)
+        let detailImage = UIImageView.init(image: myAnnotation.ScreenShot)
         detailImage.layer.cornerRadius = 5.0
         detailImage.layer.masksToBounds = true
         
@@ -169,7 +169,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             if (control as? UIButton)?.buttonType == .detailDisclosure {
                 let id = myAnnotation.board_Id
                 let member_id = myAnnotation.member_Id
-                let image = myAnnotation.image
+                let image = myAnnotation.bgPic
                 
                 let vc = storyboard?.instantiateViewController(withIdentifier: "MapDetailViewController") as! MapDetailViewController
                 vc.selectIndexID = id
@@ -209,14 +209,14 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationManager.stopUpdate()
         
     }
-    func locationManager(userDidExitRegion region: CLRegion) {
-        print("Exit \(region.identifier)")
-        mutableNotificationContent(title: "離開！", body: "點擊查閱", indentifier: "DidExitRegion")
-        if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
-            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
-        }
-        
-    }
+//    func locationManager(userDidExitRegion region: CLRegion) {
+//        print("Exit \(region.identifier)")
+//        mutableNotificationContent(title: "離開！", body: "點擊查閱", indentifier: "DidExitRegion")
+//        if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
+//            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+//        }
+//        
+//    }
     
     func locationManager(userDidEnterRegion region: CLRegion) {
         print("Enter \(region.identifier)")
@@ -256,7 +256,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             let board_ID = value["board_Id"] as! Int16
             let lat = value["lat"] as! Double
             let lon = value["lon"] as! Double
-            let img = value["BgPic"] as! UIImage
+            let img = value["ScreenShotPic"] as! UIImage
             let alert = value["alert"] as! Bool
             
             distance = locationManager.distance(lat: lat, lon: lon, userLocation: userLocation)
@@ -264,11 +264,11 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             // 距離小於 1000 則存回 near
             if distance <  1000 && alert == true {
                 if count == 1 {
-                    nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
+                    nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"ScreenShotPic":img])
                 }else {
                     count = 0
                     nearbyDictionary.removeAll()
-                    nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"BgPic":img])
+                    nearbyDictionary.append(["name":board_ID,"lat":lat, "lon":lon, "distance":distance,"ScreenShotPic":img])
                     count = 1
                 }
                 if nearbyDictionary.count < 20 {
@@ -290,12 +290,13 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             let board_Id = value["board_Id"] as! Int16
             let lat = value["lat"] as! Double
             let lon = value["lon"] as! Double
-            let img = value["BgPic"] as! UIImage
+            let ScreenShotImg = value["ScreenShotPic"] as! UIImage
             let privacy = value["privacy"] as! Bool
             let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
             let title = value["title"] as! String
+            let bgPic = value["bgPic"] as! UIImage
             // 加入大頭針
-            let annotation = SpotAnnotation( atitle: title, lat: lat, lon: lon, imageName: img,privacyBool: privacy,Id:board_Id, member_ID: member_ID)
+            let annotation = SpotAnnotation( atitle: title, lat: lat, lon: lon, ScreenShotPic: ScreenShotImg,privacyBool: privacy,Id:board_Id, member_ID: member_ID, bgImg:bgPic)
             
             result.append(annotation)
         }
@@ -304,7 +305,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     }
     func friendsSpot() -> [SpotAnnotation]?{
         var result = [SpotAnnotation]()
-        print("fhfhffhfhffh")
         let dic = allPublicBoards
         
         for boardData in dic{
@@ -314,13 +314,15 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                 let lat = boardData["Board_Lat"] as? Double,
                 let lon = boardData["Board_Lon"] as? Double,
                 let friend_ID = boardData["Friend_ID"] as? Int64,
-                let imageData = boardData["Board_ScreenShot"] as? NSData,
-                let image = UIImage(data: imageData as Data) else{
+                let bgPic = boardData["Board_BgPic"] as? NSData,
+                let bgImage = UIImage(data: bgPic as Data),
+                let SSImageData = boardData["Board_ScreenShot"] as? NSData,
+                let SSImage = UIImage(data: SSImageData as Data) else{
                     print("Case from friendsSpot boardData failure!!!!!")
                     return nil
             }
             
-            let annotation = SpotAnnotation( atitle: name, lat: lat, lon: lon, imageName: image,privacyBool: true,Id:Int16(board_ID), member_ID: Int(friend_ID))
+            let annotation = SpotAnnotation( atitle: name, lat: lat, lon: lon, ScreenShotPic: SSImage,privacyBool: true,Id:Int16(board_ID), member_ID: Int(friend_ID),bgImg:bgImage)
             result.append(annotation)
         }
         return result
@@ -338,11 +340,13 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             let privacy = item.board_Privacy
             let alert = item.board_Alert
             let title = item.board_Title
-            if let img = item.board_ScreenShot {
-                let imgWithData = UIImage(data: img as Data)
-                locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"BgPic":imgWithData!,"privacy":privacy,"alert":alert,"title":title ?? ""])
+            let bgImage = item.board_BgPic
+            let bgImageWithData = UIImage(data: bgImage! as Data)
+            let img = item.board_ScreenShot
+            let SSimgWithData = UIImage(data: img! as Data)
+                locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"ScreenShotPic":SSimgWithData!,"privacy":privacy,"alert":alert,"title":title ?? "","bgPic":bgImageWithData!])
                 
-            }
+            
         }
          return locations
     }

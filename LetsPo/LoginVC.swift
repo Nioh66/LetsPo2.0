@@ -136,6 +136,8 @@ class LoginVC: UIViewController {
                     //  Search BoardID
                     guard let allData = response["AllData"] as? [String:Any] else{
                         print("Case from download JSON failure!!!!!")
+                        self.advanceImageView.advanceStop(view: self.view)
+                        self.navigationController?.popViewController(animated: true)
                         return
                     }
                     let count = boardDataManager.count()

@@ -240,7 +240,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
             MyButton(frame: CGRect(x: buttonWidth*3, y: buttonHeight, width: buttonWidth, height: buttonHeight),
                      title: "",
                      tag: 119,
-                     bgColor: UIColor.white,imageStr:"fontColorWhite@1x")
+                     bgColor: UIColor.white,imageStr:"colors_2")
         white.addTarget(self, action:#selector(changeFcBtn(button:)), for: .touchUpInside)
         let black =
             MyButton(frame: CGRect(x: buttonWidth*4, y: buttonHeight, width: buttonWidth, height: buttonHeight),

@@ -14,23 +14,25 @@ class SpotAnnotation: NSObject, MKAnnotation {
     var coordinate = CLLocationCoordinate2D()
     var currentTitle:String!
     var places = [SpotAnnotation]()
-    var image = UIImage()
+    var ScreenShot = UIImage()
     var privacy = Bool()
     var board_Id = Int16()
     var member_Id = Int()
+    var bgPic = UIImage()
     override init() {
         super.init()
     }
     
     
-    init(atitle:String, lat:CLLocationDegrees, lon:CLLocationDegrees, imageName:UIImage, privacyBool:Bool,Id:Int16,member_ID:Int) {
+    init(atitle:String, lat:CLLocationDegrees, lon:CLLocationDegrees, ScreenShotPic:UIImage, privacyBool:Bool,Id:Int16,member_ID:Int,bgImg:UIImage) {
         
         coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
         currentTitle = atitle
-        image = imageName
+        ScreenShot = ScreenShotPic
         privacy = privacyBool
         board_Id = Id
         member_Id = member_ID
+        bgPic = bgImg
         
     }
     public var title: String? {

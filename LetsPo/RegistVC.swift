@@ -29,11 +29,16 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
     let resetAccount = Notification.Name("resetAccount")
     let advanceImageView = AdvanceImageView()
     
-    
     let uploadMachine = AlamoMachine()
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
 
         emailTextField.placeholder = "請輸入e-mail"
         nameTextField.placeholder = "請輸入名字"
@@ -61,6 +66,18 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         
     }
 
+    func keyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let keyboardFrame: CGRect = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            let duration: Double = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+            
+            UIView.animate(withDuration: duration, animations: { () -> Void in
+                var frame = self.view.frame
+                frame.origin.y = keyboardFrame.minY - self.view.frame.height
+                self.view.frame = frame
+            })
+        }
+    }
     
     @IBAction func editSelfImage(_ sender: UIButton) {
         let alert = UIAlertController(title: "Edite", message: "Please select source", preferredStyle:.alert)
