@@ -27,6 +27,7 @@ class AlamoMachine {
     let DOWNLOAD_ALL = "downloadAll.php"
     let DOWNLOAD_PUBLIC = "boardForMap.php"
     let DOWNLOAD_PUBLICNOTES = "publicBoardNotes.php"
+    let DOWNLOAD_PUBLICNOTEDETAIL = "publicNoteDetail.php"
     let NEW_MEMBER = "newMember.php"
     let LOGIN = "login.php"
     
