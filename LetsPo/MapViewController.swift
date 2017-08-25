@@ -352,10 +352,12 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
          return locations
     }
     
+    @IBAction func refreshBtnPressed(_ sender: UIButton) {
+        downloadPublicBoard()
+    }
     
     // MARK: Download public board
     func downloadPublicBoard() {
-        advanceImageView.prepareIndicatorView(view: self.view)
         let alamoMachine = AlamoMachine()
         let memberID = UserDefaults.standard.integer(forKey: "Member_ID")
         let memberDic:[String:Any] = ["Member_ID":memberID,
@@ -374,6 +376,8 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         let uploadDic:[String:Any?] = ["Member":memberDic,
                                        "Friends":friendIDDic]
         print("=========uploadDic:\(uploadDic)=============")
+        if friendCount > 0{
+            advanceImageView.prepareIndicatorView(view: self.view)
 
         alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLIC, parameter: uploadDic) { (error, response) in
             if error != nil{
@@ -382,6 +386,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                 return
             }
             guard let result = response?["result"] as? Bool else{
+                
                 return
             }
             
@@ -391,16 +396,12 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                     self.advanceImageView.advanceStop(view: self.view)
                     return
                 }
-                
                 self.handlePublicBoards(boards: publicBoards)
-                
-                
             }
-            
         }
         
+        }
     }
-    
     
     func handlePublicBoards(boards:[[String:Any]]) {
         

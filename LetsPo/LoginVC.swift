@@ -22,7 +22,7 @@ class LoginVC: UIViewController {
     var boardIDs = Int16()
     var boardcount:Int16 = 0
     let advanceImageView = AdvanceImageView()
-
+    var lastBoard:Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,8 +111,8 @@ class LoginVC: UIViewController {
         memberDataManager.saveContexWithCompletion { (success) in
             if(success){
                 print("Save member data success!!!!!")
-                self.downloadAllData(memberID: memberIDInt64)
-//                self.downloadFriendData(memberID: memberIDInt64)
+//                self.downloadAllData(memberID: memberIDInt64)
+                self.downloadFriendData(memberID: memberIDInt64)
             }else{
                 print("Save member data failure!!!!!")
             }
@@ -191,10 +191,10 @@ class LoginVC: UIViewController {
                     }
 
                     
-                    
+                    var boardCount = 0
                     for (_,values) in allData{
                         self.boardcount += 1
-                        
+                        boardCount += 1
                         guard let board = values as? [String:Any],
                             let boardData = board["BoardData"] as? [String:Any?] else{
                                 print("Case from allData failure!!!!!")
@@ -242,6 +242,10 @@ class LoginVC: UIViewController {
                         
                         
                         if let noteData = board["NoteData"] as? [String:Any]{
+                            if allData.count==boardCount{
+                                self.lastBoard = true
+                            }
+                            
                             self.saveDownloadNoteData(boardID: boardItem.board_Id, noteDatas: noteData)
                         }
                         boardDataManager.saveContexWithCompletion(completion: { (success) in
@@ -268,9 +272,9 @@ class LoginVC: UIViewController {
     func saveDownloadNoteData(boardID:Int16,noteDatas:[String:Any]) {
         
         var noteIDCount:Int16 = 0
-        
+        var noteCount = 0
         for i in 0..<noteDatas.count{
-
+            noteCount += 1
             guard let noteData = noteDatas["Note\(i)"] as? [String:Any?] else {
                 return
             }
@@ -330,9 +334,14 @@ class LoginVC: UIViewController {
                     noteItem.note_X = noteX
                     noteItem.note_Y = noteY
                     
-                    
+//                    if noteCount == noteDatas.count && self.lastBoard == true{
+//                        self.navigationController?.popViewController(animated: true)
+//                        
+//                    }
                     noteDataManager.saveContexWithCompletion { (success) in
+                        
                         if success {
+                            
                             print("==================Note save success!!!!!!======================")
                             
                         }else{
@@ -358,6 +367,7 @@ class LoginVC: UIViewController {
             
             
             noteDataManager.saveContexWithCompletion { (success) in
+                
                 if success {
                     print("=================Note save success!!!!!!======================")
                     
@@ -368,8 +378,8 @@ class LoginVC: UIViewController {
 
             }
         }
-        
-        navigationController?.popViewController(animated: true)
+            self.navigationController?.popViewController(animated: true)
+
     }
     
     

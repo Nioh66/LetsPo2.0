@@ -96,7 +96,8 @@ class AlamoMachine {
         let BASE_URL = "https://nioh66.000webhostapp.com/LetsPo/"
         let DATA_KEY = "data"
         
-        
+        SessionManager.default.startRequestsImmediately = true
+
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: parameter, options: .prettyPrinted),
             let jsonString = String.init(data: jsonData, encoding: .utf8)else{
@@ -156,9 +157,11 @@ class RequestChain {
                     completionHandler(nil, ErrorResult(request: request, error: error))
                     return
                 }
-                print("~~~~~~~~~~~~~~~~~~~~~~~ChainData=============\(response.data)")
-                let image = UIImage(data: response.data!)
-                self.album.append(image!)
+                
+                if let imageData = response.data{
+                    let image = UIImage(data: imageData)
+                        self.album.append(image!)
+                }
                 
                 
                 self.requests.removeFirst()

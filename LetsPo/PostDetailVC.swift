@@ -32,7 +32,7 @@ class PostDetailVC: UIViewController {
         
         
         let postText = getPost.getNoteText(boardID: 1, noteID: 1, noteText: postT)
-        let postImage = getPost.getNoteImage(boardID: 1, noteID: 1)
+        _ = getPost.getNoteImage(boardID: 1, noteID: 1)
         
         postT = postText!
         post.posterColor = postBg.posterColor

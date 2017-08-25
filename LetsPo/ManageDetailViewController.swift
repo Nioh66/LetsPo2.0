@@ -277,7 +277,6 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     
     // MARK: Server delete
     func deleteServerNoteData() {
-        print(memberID)
         print(deleteBoardLat)
         print(deleteBoardLon)
         print(deleteNoteX)

@@ -54,7 +54,6 @@ class FindNiggerVC: UIViewController {
         //判斷有無此朋友
         if friendSearch.count < 1{
             friendID = friendID64
-            advanceImageView.prepareIndicatorView(view: self.view)
             searchID(friendID: friendID)
         }else{
             haveFriendAlert()
@@ -68,6 +67,7 @@ class FindNiggerVC: UIViewController {
         if friendID == Int64(member_ID) {
             sameAlert()
         }else{
+            advanceImageView.prepareIndicatorView(view: self.view)
             let findDic = ["Member_ID":friendID]
             alamoMachine.doPostJobWith(urlString: alamoMachine.FIND_FRIEND, parameter: findDic) { (error, response) in
                 if error != nil{
@@ -105,7 +105,7 @@ class FindNiggerVC: UIViewController {
                         self.friendNameForC = friendName
                         
                     }else{
-                        self.advanceImageView.advanceStop(view: self.view)
+                        
                         self.notNumberAlert()
                     }
                 }
@@ -113,7 +113,7 @@ class FindNiggerVC: UIViewController {
         }}
     
     func notNumberAlert() {
-        
+        self.advanceImageView.advanceStop(view: self.view)
         let alert = UIAlertController.init(title: "不存在此ID", message: nil, preferredStyle: .alert)
         present(alert, animated: true, completion: nil)
         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in

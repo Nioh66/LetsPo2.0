@@ -30,13 +30,22 @@
                                     <outlet property="delegate" destination="wen-e7-Bi3" id="eeQ-YV-Abs"/>
                                 </connections>
                             </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtj-XE-zLW">
+                                <rect key="frame" x="24" y="72" width="142" height="133"/>
+                                <state key="normal" title="re" image="Camera"/>
+                                <connections>
+                                    <action selector="refreshBtnPressed:" destination="wen-e7-Bi3" eventType="touchUpInside" id="bWb-SO-Erf"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Qtj-XE-zLW" firstAttribute="top" secondItem="r5N-bx-gYr" secondAttribute="bottom" constant="8" id="67R-0q-K86"/>
                             <constraint firstAttribute="trailing" secondItem="VA6-3Q-7UC" secondAttribute="trailing" id="BbR-pn-6E2"/>
                             <constraint firstItem="VA6-3Q-7UC" firstAttribute="top" secondItem="DZp-XJ-CGd" secondAttribute="top" id="DWl-4D-PHd"/>
                             <constraint firstItem="VA6-3Q-7UC" firstAttribute="leading" secondItem="DZp-XJ-CGd" secondAttribute="leading" id="FaF-lk-C6b"/>
                             <constraint firstItem="VA6-3Q-7UC" firstAttribute="bottom" secondItem="DyH-e9-rIz" secondAttribute="top" id="lQO-i4-qH6"/>
+                            <constraint firstItem="Qtj-XE-zLW" firstAttribute="leading" secondItem="DZp-XJ-CGd" secondAttribute="leadingMargin" constant="8" id="tnw-kR-mbo"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="map@1x" id="0FF-pw-n5D">
@@ -198,6 +207,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Camera" width="125" height="133"/>
         <image name="back" width="40" height="40"/>
         <image name="map@1x" width="30" height="30"/>
     </resources>
