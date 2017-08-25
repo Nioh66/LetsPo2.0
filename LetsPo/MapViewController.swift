@@ -209,14 +209,14 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationManager.stopUpdate()
         
     }
-//    func locationManager(userDidExitRegion region: CLRegion) {
+    func locationManager(userDidExitRegion region: CLRegion) {
 //        print("Exit \(region.identifier)")
 //        mutableNotificationContent(title: "離開！", body: "點擊查閱", indentifier: "DidExitRegion")
 //        if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
 //            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
 //        }
-//        
-//    }
+        
+    }
     
     func locationManager(userDidEnterRegion region: CLRegion) {
         print("Enter \(region.identifier)")

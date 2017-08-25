@@ -174,7 +174,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
             
             // 頁面上的刪除鈕 總控
             deleteBtnControll = manageView(type:.custom)
-            deleteBtnControll.frame = CGRect(x: 3, y:(view.frame.size.height) * 0.9, width: 40, height: 40)
+            deleteBtnControll.frame = CGRect(x: 3, y:(UIScreen.main.bounds.size.height) * 0.9, width: 40, height: 40)
             deleteBtnControll.setImage(UIImage(named: "garbage"), for: .normal)
             deleteBtnControll.addTarget(self, action: #selector(deleteBtnAction(sender:)), for: .touchUpInside)
             deleteBtnControll.postID = allPostsID[index]
@@ -362,11 +362,20 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     }
     
     func uploadBoardBg() {
+        titleLabel.isHidden = true
+        backBtn.isHidden = true
+        deleteBtnControll.alpha = 0.0
+        boardSettingBtn.alpha = 0.0
+        addPostBtn.alpha = 0.0
         guard let newBoardPic = self.view.boardScreenShot(),
             let newBoardBg = UIImageJPEGRepresentation(newBoardPic, 1.0) as NSData? else{
                 return
         }
-        
+        titleLabel.isHidden = false
+        backBtn.isHidden = false
+        deleteBtnControll.alpha = 1.0
+        boardSettingBtn.alpha = 1.0
+        addPostBtn.alpha = 1.0
         
         let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(selectIndexID)") as! [BoardData]
         

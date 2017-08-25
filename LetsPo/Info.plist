@@ -28,7 +28,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string></string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>allow to user your location.</string>
+	<string>取得使用者位置以便於顯示在地圖上。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string></string>
 	<key>UILaunchStoryboardName</key>
