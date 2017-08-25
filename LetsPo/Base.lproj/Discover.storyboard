@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MXx-tE-kUa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="MXx-tE-kUa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -31,8 +31,8 @@
                                 </connections>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qtj-XE-zLW">
-                                <rect key="frame" x="24" y="72" width="142" height="133"/>
-                                <state key="normal" title="re" image="Camera"/>
+                                <rect key="frame" x="24" y="72" width="50" height="50"/>
+                                <state key="normal" image="ResfreshBtn"/>
                                 <connections>
                                     <action selector="refreshBtnPressed:" destination="wen-e7-Bi3" eventType="touchUpInside" id="bWb-SO-Erf"/>
                                 </connections>
@@ -207,7 +207,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Camera" width="125" height="133"/>
+        <image name="ResfreshBtn" width="50" height="50"/>
         <image name="back" width="40" height="40"/>
         <image name="map@1x" width="30" height="30"/>
     </resources>

@@ -23,6 +23,7 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
     let alamoMachine = AlamoMachine()
     var allNotesImageView = [UIImageView]()
     var allNotesID = [Int16]()
+    let advanceImageView = AdvanceImageView()
 
     
     override func viewDidLoad() {
@@ -34,10 +35,13 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
         backdroundImage.isUserInteractionEnabled = true
         let noteDic:[String:Any] = ["Board_ID":selectIndexID]
         
+        advanceImageView.prepareIndicatorView(view: self.view)
+        
         alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLICNOTES, parameter: noteDic) { (error, rsp) in
             
             if error != nil{
                 print(error!)
+                self.advanceImageView.advanceStop(view: self.view)
                 return
             }
             guard let response = rsp?["AllData"] as? [String:Any] else{
@@ -57,6 +61,7 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
                     
                     imageview.addGestureRecognizer(detailBtn)
                     self.backdroundImage.addSubview(imageview)
+                    self.advanceImageView.advanceStop(view: self.view)
 
                 }
                 print(self.allNotesID)

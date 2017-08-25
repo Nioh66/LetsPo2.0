@@ -24,6 +24,7 @@ class DragPublicPostVC: UIViewController {
     var boardID = Int16()
     var noteCount:Int16 = 0
     let newNoteComingNN = Notification.Name("newPublicNoteComing")
+    var guideView = UIImageView()
     //for upload
     let uploadMachine = AlamoMachine()
     var member_ID:Int? = nil
@@ -36,6 +37,16 @@ class DragPublicPostVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let guide = #imageLiteral(resourceName: "guide")
+        guideView = UIImageView(image: guide)
+        guideView.frame = CGRect(x: 50,
+                                 y: 60,
+                                 width: 50,
+                                 height: 50)
+        
+        theDragNote.addSubview(guideView)
+
         
         theDragNote.backgroundColor = UIColor.clear
         
@@ -108,14 +119,14 @@ class DragPublicPostVC: UIViewController {
     
     
     func updateServerBoard() {
-        advanceImageView.prepareIndicatorView(view: self.view)
+        
         guard let screenShotImage = self.view.boardScreenShot(),
             let boardScreenShotData = UIImageJPEGRepresentation(screenShotImage, 0.8)
             else{
                 return
         }
         let boardScreenShot = boardScreenShotData.base64EncodedString()
-        
+        advanceImageView.prepareIndicatorView(view: self.view)
         let registDic:[String:Any] = ["Board_Lat":boardLat,
                                       "Board_Lon":boardLon,
                                       "Board_ScreenShot":boardScreenShot,

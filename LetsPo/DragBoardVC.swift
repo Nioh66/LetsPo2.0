@@ -125,7 +125,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     // MARK: Upload to server
     
     func uploadBoard() {
-        advanceImageView.prepareIndicatorView(view: self.view)
+        
         let boardBg = topImage.image
         
 
@@ -137,6 +137,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         }
         let boardBgPic = boardBgPicData.base64EncodedString()
         let boardScreenShot = boardScreenShotData.base64EncodedString()
+        advanceImageView.prepareIndicatorView(view: self.view)
         
         let registDic:[String:Any] = ["Board_Title":boardTitle,
                                       "Board_Lat":boardLat,

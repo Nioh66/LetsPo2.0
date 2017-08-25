@@ -25,6 +25,7 @@ class DragExistBoardVC: UIViewController {
     var boardID = Int16()
     var noteCount:Int16 = 0
     let resetNote = Notification.Name("resetNote")
+    var guideView = UIImageView()
     
     //for server
     let uploadMachine = AlamoMachine()
@@ -37,6 +38,14 @@ class DragExistBoardVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let guide = #imageLiteral(resourceName: "guide")
+        guideView = UIImageView(image: guide)
+        guideView.frame = CGRect(x: 50,
+                                 y: 60,
+                                 width: 50,
+                                 height: 50)
+        
+        theDragNote.addSubview(guideView)
         
         publicBgImage.image = bgImage
         publicBgImage.isUserInteractionEnabled = true
@@ -196,13 +205,14 @@ class DragExistBoardVC: UIViewController {
     
     
     func updateServerBoard() {
-        advanceImageView.prepareIndicatorView(view: self.view)
+        
         guard let screenShotImage = self.view.boardScreenShot(),
             let boardScreenShotData = UIImageJPEGRepresentation(screenShotImage, 0.8)
             else{
                 return
         }
         let boardScreenShot = boardScreenShotData.base64EncodedString()
+        advanceImageView.prepareIndicatorView(view: self.view)
         
         let registDic:[String:Any] = ["Board_Lat":boardLat,
                                       "Board_Lon":boardLon,

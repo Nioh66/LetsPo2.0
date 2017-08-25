@@ -32,6 +32,7 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
     var imageForCell = [UIImage]()
     let cellSpace:CGFloat = 1
     var boardID = Int16()
+    let advanceImageView = AdvanceImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +45,12 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
         publicPostT.frame = CGRect(x: 0, y: 3, width: displayNoteV.frame.size.width, height: displayNoteV.frame.size.height*0.77)
         
         let noteIDDic:[String:Any] = ["Note_ID":publicPostID]
-        
+        advanceImageView.prepareIndicatorView(view: self.view)
         alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLICNOTEDETAIL, parameter: noteIDDic) { (error, response) in
             
             if error != nil{
                 print(error!)
+                self.advanceImageView.advanceStop(view: self.view)
                 return
             }
             guard let noteData = response?["NoteData"] as? [String:Any] else{
@@ -120,6 +122,7 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
                 self.displayNoteV.addSubview(self.publicPostT)
             }
         }
+        self.advanceImageView.advanceStop(view: self.view)
     }
     
     func configureCollectionView() {

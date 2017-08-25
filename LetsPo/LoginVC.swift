@@ -111,7 +111,7 @@ class LoginVC: UIViewController {
         memberDataManager.saveContexWithCompletion { (success) in
             if(success){
                 print("Save member data success!!!!!")
-//                self.downloadAllData(memberID: memberIDInt64)
+                self.downloadAllData(memberID: memberIDInt64)
                 self.downloadFriendData(memberID: memberIDInt64)
             }else{
                 print("Save member data failure!!!!!")
@@ -124,6 +124,7 @@ class LoginVC: UIViewController {
 
         alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_FRIEND, parameter: memberDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
             guard let allFriendData = response?["AllFriendData"] as? [String:Any] else{
@@ -152,6 +153,7 @@ class LoginVC: UIViewController {
                 item.friend_FriendID = friendID
                 item.friend_FriendName = friendName
                 friendDataManager.saveContexWithCompletion(completion: { (success) in
+                    self.advanceImageView.advanceStop(view: self.view)
                     print("Save Friend success")
                 })
                 
