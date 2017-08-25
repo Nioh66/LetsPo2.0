@@ -21,7 +21,7 @@ class FindNiggerVC: UIViewController {
     //for CoreData
     var friendSelfieDataForC:NSData? = nil
     var friendNameForC:String? = nil
-    
+    let advanceImageView = AdvanceImageView()
     
     
     override func viewDidLoad() {
@@ -54,6 +54,7 @@ class FindNiggerVC: UIViewController {
         //判斷有無此朋友
         if friendSearch.count < 1{
             friendID = friendID64
+            advanceImageView.prepareIndicatorView(view: self.view)
             searchID(friendID: friendID)
         }else{
             haveFriendAlert()
@@ -77,7 +78,7 @@ class FindNiggerVC: UIViewController {
                         return
                     }
                     if result {
-                        
+                        self.advanceImageView.advanceStop(view: self.view)
                         if let friendSelfieString = response?["Member_Selfie"] as? String{
                             let friendSelfieData = NSData(base64Encoded: friendSelfieString, options: [])
                             let friendSelfie = UIImage(data: friendSelfieData! as Data)
@@ -104,6 +105,7 @@ class FindNiggerVC: UIViewController {
                         self.friendNameForC = friendName
                         
                     }else{
+                        self.advanceImageView.advanceStop(view: self.view)
                         self.notNumberAlert()
                     }
                 }
@@ -148,10 +150,11 @@ class FindNiggerVC: UIViewController {
     }
 
     @IBAction func addBtnPressed(_ sender: UIButton) {
-        
+        advanceImageView.prepareIndicatorView(view: self.view)
         let addDic:[String:Any?] = ["SelfMember_ID":member_ID,"Member_ID":friendID]
         alamoMachine.doPostJobWith(urlString: alamoMachine.ADD_FRIEND, parameter: addDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }else{
                 guard let result = response?["result"] as? Bool else{
@@ -188,7 +191,7 @@ class FindNiggerVC: UIViewController {
                     friendDataManager.saveContexWithCompletion(completion: { (success) in
                             print("Add friend success")
                         NotificationCenter.default.post(name: friendComing, object: nil, userInfo: nil)
-
+                        self.advanceImageView.advanceStop(view: self.view)
                         self.addFriendAlert()
                         
                     })

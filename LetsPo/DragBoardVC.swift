@@ -46,6 +46,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     let uploadMachine = AlamoMachine()
     var uploadBoardScreenShot = UIImage()
     var member_ID:Int? = nil
+    let advanceImageView = AdvanceImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +125,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     // MARK: Upload to server
     
     func uploadBoard() {
+        advanceImageView.prepareIndicatorView(view: self.view)
         let boardBg = topImage.image
         
 
@@ -146,6 +148,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                                       "Board_Privacy":boardPrivacy]
         uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_BOARD, parameter: registDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
             print("Upload board complete!")
@@ -205,8 +208,10 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         
         uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_NOTE, parameter: registDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
+            self.advanceImageView.advanceStop(view: self.view)
             print("Upload note complete!")
 
         }

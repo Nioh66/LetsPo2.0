@@ -24,7 +24,7 @@ class PublicBoardSettingVC: UIViewController {
     let dismissSelf = Notification.Name("dismissSelf")
     var boardLat = Double()
     var boardLon = Double()
-    
+    let advanceImageView = AdvanceImageView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,19 +105,21 @@ class PublicBoardSettingVC: UIViewController {
     }
     
     func deleteBoardOnServer() {
-        
+        advanceImageView.prepareIndicatorView(view: self.view)
         
         let alamoMachine = AlamoMachine()
         let deleteBoardDic:[String:Any] = ["Board_CreateMemberID":memberID,"Board_Lat":boardLat,"Board_Lon":boardLon]
         alamoMachine.doPostJobWith(urlString: alamoMachine.DELETE_BOARD, parameter: deleteBoardDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
             guard let result = response?["result"] as? Bool else{
                 return
             }
             if result{
-            print("delete board success!!!!!")
+                self.advanceImageView.advanceStop(view: self.view)
+                print("delete board success!!!!!")
             }
         }
     }

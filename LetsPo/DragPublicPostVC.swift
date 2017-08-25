@@ -31,6 +31,7 @@ class DragPublicPostVC: UIViewController {
     var boardLon = Double()
     var noteX = Double()
     var noteY = Double()
+    let advanceImageView = AdvanceImageView()
     
     
     override func viewDidLoad() {
@@ -107,6 +108,7 @@ class DragPublicPostVC: UIViewController {
     
     
     func updateServerBoard() {
+        advanceImageView.prepareIndicatorView(view: self.view)
         guard let screenShotImage = self.view.boardScreenShot(),
             let boardScreenShotData = UIImageJPEGRepresentation(screenShotImage, 0.8)
             else{
@@ -121,6 +123,7 @@ class DragPublicPostVC: UIViewController {
         
         uploadMachine.doPostJobWith(urlString: uploadMachine.UPDATE_BOARDSCREENSHOT, parameter: registDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
             print("Upload board complete!")
@@ -175,8 +178,10 @@ class DragPublicPostVC: UIViewController {
         
         uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_NOTE, parameter: registDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
+            self.advanceImageView.advanceStop(view: self.view)
             print("Upload note complete!")
             
         }

@@ -29,12 +29,13 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     var titleName:String = ""
     var count: Int = 0
     var allPublicBoards = [[String:Any]]()
+    var privacy_pins = UIImage()
     
     //for upload
     var userLat = Double()
     var userLon = Double()
+    let advanceImageView = AdvanceImageView()
     
-    var privacy_pins = UIImage()
     
     @IBOutlet weak var mapView: MKMapView!
     override func viewDidLoad() {
@@ -354,6 +355,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     
     // MARK: Download public board
     func downloadPublicBoard() {
+        advanceImageView.prepareIndicatorView(view: self.view)
         let alamoMachine = AlamoMachine()
         let memberID = UserDefaults.standard.integer(forKey: "Member_ID")
         let memberDic:[String:Any] = ["Member_ID":memberID,
@@ -375,6 +377,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
 
         alamoMachine.doPostJobWith(urlString: alamoMachine.DOWNLOAD_PUBLIC, parameter: uploadDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
                 return
             }
@@ -385,6 +388,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             if result{
                 guard let publicBoards = response?["availableBoards"] as? [[String:Any]] else{
                     print("Case availableBoards failure!!!!!")
+                    self.advanceImageView.advanceStop(view: self.view)
                     return
                 }
                 
@@ -439,7 +443,9 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         }
         if let frinedPlace = friendsSpot(){
         mapView.addAnnotations(frinedPlace)
+            self.advanceImageView.advanceStop(view: self.view)
         }
+        
     }
     
     

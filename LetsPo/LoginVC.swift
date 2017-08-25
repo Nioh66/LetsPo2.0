@@ -111,8 +111,8 @@ class LoginVC: UIViewController {
         memberDataManager.saveContexWithCompletion { (success) in
             if(success){
                 print("Save member data success!!!!!")
-//                self.downloadAllData(memberID: memberIDInt64)
-                self.downloadFriendData(memberID: memberIDInt64)
+                self.downloadAllData(memberID: memberIDInt64)
+//                self.downloadFriendData(memberID: memberIDInt64)
             }else{
                 print("Save member data failure!!!!!")
             }
@@ -257,6 +257,8 @@ class LoginVC: UIViewController {
                     }
                     
                 }else{
+                    self.advanceImageView.advanceStop(view: self.view)
+                    self.navigationController?.popViewController(animated: true)
                     print("No MemberID")
                 }
             }
