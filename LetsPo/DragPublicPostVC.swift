@@ -76,7 +76,7 @@ class DragPublicPostVC: UIViewController {
     @IBAction func saveBtnPressed(_ sender: UIButton) {
         saveBtn.isHidden = true
         backBtn.isHidden = true
-        
+        guideView.removeFromSuperview()
         self.saveNoteData()
         self.updateBoardBg()
         

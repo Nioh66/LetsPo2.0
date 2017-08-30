@@ -67,14 +67,20 @@ class FindNiggerVC: UIViewController {
         if friendID == Int64(member_ID) {
             sameAlert()
         }else{
+            // 加了五秒計時的自動消失轉轉
+            // self.advanceImageView.timerAdvanceImageView(view: self.view)
+            
+            // 普通手動停止的轉轉
             advanceImageView.prepareIndicatorView(view: self.view)
             let findDic = ["Member_ID":friendID]
             alamoMachine.doPostJobWith(urlString: alamoMachine.FIND_FRIEND, parameter: findDic) { (error, response) in
                 if error != nil{
+                    self.advanceImageView.advanceStop(view: self.view)
                     print(error!)
                 }
                 else{
                     guard let result = response?["result"] as? Bool else{
+                        self.advanceImageView.advanceStop(view: self.view)
                         return
                     }
                     if result {
@@ -95,6 +101,7 @@ class FindNiggerVC: UIViewController {
                         
                         guard let friendName = response?["Member_Name"] as? String
                             else{
+                                self.advanceImageView.advanceStop(view: self.view)
                                 return
                         }
                         
@@ -158,6 +165,7 @@ class FindNiggerVC: UIViewController {
                 print(error!)
             }else{
                 guard let result = response?["result"] as? Bool else{
+                    self.advanceImageView.advanceStop(view: self.view)
                     return
                 }
                 if result{

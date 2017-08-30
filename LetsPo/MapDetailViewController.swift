@@ -15,6 +15,7 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
     @IBOutlet weak var backBtn: UIButton!
     @IBOutlet weak var backdroundImage: UIImageView!
     
+    @IBOutlet weak var friendNameLabel: UILabel!
     var dataManagerCount = Int()
     var selectIndexID = Int16()
     var selectMember_id = Int()
@@ -24,11 +25,21 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
     var allNotesImageView = [UIImageView]()
     var allNotesID = [Int16]()
     let advanceImageView = AdvanceImageView()
+    var friendName = String()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataManagerCount = boardDataManager.count()
+        
+        let friendData = friendDataManager.searchField(field: "friend_FriendID", forKeyword: "\(selectMember_id)") as! [FriendData]
+        
+        for data:FriendData in friendData{
+                friendName = data.friend_FriendName!
+        }
+
+        print("========\(friendName)=========")
+        friendNameLabel.text = "From: \(friendName)"
         
         backdroundImage.image = image
         titleLabel.text = boardTitle

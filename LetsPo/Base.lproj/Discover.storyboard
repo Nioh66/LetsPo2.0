@@ -99,14 +99,25 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ALO-gc-Nai">
+                                <rect key="frame" x="75" y="58" width="225" height="24"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="ALO-gc-Nai" firstAttribute="centerX" secondItem="sdP-HA-Hpz" secondAttribute="centerX" id="1XL-ds-szV"/>
+                            <constraint firstItem="ALO-gc-Nai" firstAttribute="top" secondItem="Tv5-TD-vR1" secondAttribute="bottom" constant="3" id="4ZE-YE-AuM"/>
                             <constraint firstAttribute="trailing" secondItem="EcM-f3-8M5" secondAttribute="trailing" id="BAK-9f-5u8"/>
                             <constraint firstItem="EcM-f3-8M5" firstAttribute="top" secondItem="sdP-HA-Hpz" secondAttribute="top" id="Bq2-tQ-8wg"/>
+                            <constraint firstItem="ALO-gc-Nai" firstAttribute="width" secondItem="Tv5-TD-vR1" secondAttribute="width" id="HIM-hp-peJ"/>
                             <constraint firstItem="EcM-f3-8M5" firstAttribute="leading" secondItem="sdP-HA-Hpz" secondAttribute="leading" id="Rmw-9o-I2Q"/>
                             <constraint firstItem="Tv5-TD-vR1" firstAttribute="centerY" secondItem="1Sr-9n-vrb" secondAttribute="centerY" id="bvH-d7-R0H"/>
                             <constraint firstItem="Tv5-TD-vR1" firstAttribute="centerX" secondItem="sdP-HA-Hpz" secondAttribute="centerX" id="gXk-Iv-aA6"/>
+                            <constraint firstItem="ALO-gc-Nai" firstAttribute="height" secondItem="Tv5-TD-vR1" secondAttribute="height" id="ha3-6m-5vA"/>
                             <constraint firstItem="1Sr-9n-vrb" firstAttribute="top" secondItem="sdP-HA-Hpz" secondAttribute="topMargin" constant="23" id="l2M-OU-o9h"/>
                             <constraint firstItem="Tv5-TD-vR1" firstAttribute="width" secondItem="sdP-HA-Hpz" secondAttribute="width" multiplier="0.6" id="mJp-kx-YFp"/>
                             <constraint firstItem="fOc-U9-BDe" firstAttribute="centerX" secondItem="sdP-HA-Hpz" secondAttribute="centerX" id="mXo-dE-4V9"/>
@@ -119,6 +130,7 @@
                         <outlet property="backBtn" destination="1Sr-9n-vrb" id="JL0-yP-Fqo"/>
                         <outlet property="backdroundImage" destination="EcM-f3-8M5" id="XyM-fZ-bL9"/>
                         <outlet property="detailNoteAppearPoint" destination="fOc-U9-BDe" id="db2-nA-GoF"/>
+                        <outlet property="friendNameLabel" destination="ALO-gc-Nai" id="T5S-ai-uu9"/>
                         <outlet property="titleLabel" destination="Tv5-TD-vR1" id="5Vm-Ke-0yS"/>
                     </connections>
                 </viewController>

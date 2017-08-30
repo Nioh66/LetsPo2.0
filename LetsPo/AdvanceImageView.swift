@@ -47,6 +47,12 @@ class AdvanceImageView: UIImageView {
         advanceContent.removeFromSuperview()
         advanceImageView.removeFromSuperview()
     }
-    
+    func timerAdvanceImageView(view:UIView) {
+        prepareIndicatorView(view: view)
+        
+        Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { (Timer) in
+            self.advanceStop(view:view)
+        }
+    }
 
 }
