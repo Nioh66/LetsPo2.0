@@ -93,7 +93,8 @@ class AlamoMachine {
     
     
     func doPostJobWith(urlString:String,parameter:[String:Any?],complete:@escaping doneHandler) {
-        let BASE_URL = "https://nioh66.000webhostapp.com/LetsPo/"
+     //   let BASE_URL = "https://nioh66.000webhostapp.com/LetsPo/"
+        let BASE_URL = "http://nioh66.com/LetsPo/"
         let DATA_KEY = "data"
         
         SessionManager.default.startRequestsImmediately = true

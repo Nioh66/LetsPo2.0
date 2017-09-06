@@ -17,38 +17,6 @@
             endingLineNumber = "136"
             landmarkName = "saveNewNote()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LetsPo.DragPublicPostVC.saveNewNote () -&gt; ()"
-                  moduleName = "LetsPo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nioh66/LetsPo2.0/LetsPo/DragPublicPostVC.swift"
-                  timestampString = "525352825.29348"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "136"
-                  endingLineNumber = "136"
-                  offsetFromSymbolStart = "34">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "LetsPo.DragPublicPostVC.saveNewNote () -&gt; ()"
-                  moduleName = "LetsPo"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/nioh66/LetsPo2.0/LetsPo/DragPublicPostVC.swift"
-                  timestampString = "525352825.296896"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "136"
-                  endingLineNumber = "136"
-                  offsetFromSymbolStart = "686">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
