@@ -72,9 +72,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationButton.setImage(btnImage, for: .normal)
         self.view.addSubview(locationButton)
         
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
-            self.downloadPublicBoard()
-        }
     }
     
     

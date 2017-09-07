@@ -119,10 +119,8 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
     }
     
     func goToDetail(gestureRecognizer:TapToShowDetail){
-        print("jjjjjjjjjjjjjjjj")
         let detailPostID = gestureRecognizer.postID
         let detailboardID = gestureRecognizer.boardID
-        print("--PostID\(detailPostID)")
         
         
         let publicPostDetailVC =  storyboard?.instantiateViewController(withIdentifier: "FriendsPostDetailVC") as! FriendsPostDetailVC
