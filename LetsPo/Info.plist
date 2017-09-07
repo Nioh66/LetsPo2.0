@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.01</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -26,11 +26,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>取用相機以便於照片使用</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>取得使用者位置以便於顯示在地圖上。</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>取用相簿以便於照片使用</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

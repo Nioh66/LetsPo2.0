@@ -108,7 +108,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         }
         
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
-        tabBarController?.selectedIndex = 0
+        tabBarController?.selectedIndex = 2
         navigationController?.popToRootViewController(animated: true)
     }
     

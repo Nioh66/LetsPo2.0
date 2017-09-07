@@ -43,9 +43,8 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         locationManager.delegate = self
         
         locationManager.startUpdate()
+        
         Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { (timer) in
-            // 防止秒數內再度觸發方法
-//            self.doUnlock()
             self.locationManager.startUpdate()
         }
         
@@ -142,6 +141,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                 privacy_pins = UIImage(named: "pin_1")!
             }
         }else {
+            // 朋友的針
             privacy_pins = #imageLiteral(resourceName: "friendPin")
         }
         pin?.image = privacy_pins
@@ -152,7 +152,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let myAnnotation = view.annotation as! SpotAnnotation
         let member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
-        
+        // 到自己的留言板
         if myAnnotation.member_Id == member_ID {
             titleName = myAnnotation.currentTitle
             if (control as? UIButton)?.buttonType == .detailDisclosure {
@@ -163,6 +163,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
                 navigationController?.pushViewController(vc, animated: false)
             }
         }else {
+            // 到朋友的版
             titleName = myAnnotation.currentTitle
             if (control as? UIButton)?.buttonType == .detailDisclosure {
                 let id = myAnnotation.board_Id
@@ -180,27 +181,24 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
 
     }
     
-    func doUnlock(){
-        reUpdate.unlock()
-        if shouldReUpdate{
-            shouldReUpdate = false
-        }
-        
-    }
+//    func doUnlock(){
+//        reUpdate.unlock()
+//        if shouldReUpdate{
+//            shouldReUpdate = false
+//        }
+//        
+//    }
     
     // mark - Region monitoring method
     func locationManager(updatedUserLocation coordinate: CLLocation) {
-        if reUpdate.try() == false {
-            shouldReUpdate = true
-            return
-        }
+//        if reUpdate.try() == false {
+//            shouldReUpdate = true
+//            return
+//        }
         
         //For server
         userLat = coordinate.coordinate.latitude
         userLon = coordinate.coordinate.longitude
-        
-        print("userLat。\(userLat)")
-        print("userLon。\(userLon)")
         
         locationManager.startUpdate()
         monitorRegion(userLocation: coordinate)
@@ -208,7 +206,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         
     }
     func locationManager(userDidExitRegion region: CLRegion) {
-//        print("Exit \(region.identifier)")
 //        mutableNotificationContent(title: "離開！", body: "點擊查閱", indentifier: "DidExitRegion")
 //        if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
 //            AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
@@ -301,6 +298,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
 
         return result
     }
+    
     func friendsSpot() -> [SpotAnnotation]?{
         var result = [SpotAnnotation]()
         let dic = allPublicBoards
@@ -326,7 +324,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         return result
     }
 
-    
     func getLocations() -> [[String:Any]] {
         var locations = [[String:Any]]()
         for i in 0..<dataManagerCount {
@@ -342,9 +339,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
             let bgImageWithData = UIImage(data: bgImage! as Data)
             let img = item.board_ScreenShot
             let SSimgWithData = UIImage(data: img! as Data)
-                locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"ScreenShotPic":SSimgWithData!,"privacy":privacy,"alert":alert,"title":title ?? "","bgPic":bgImageWithData!])
-                
-            
+            locations.append(["board_Id":board_ID,"lat":lat,"lon":lon,"board_CreateTime":time!,"ScreenShotPic":SSimgWithData!,"privacy":privacy,"alert":alert,"title":title ?? "","bgPic":bgImageWithData!])
         }
          return locations
     }
@@ -372,7 +367,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
 
         let uploadDic:[String:Any?] = ["Member":memberDic,
                                        "Friends":friendIDDic]
-        print("=========uploadDic:\(uploadDic)=============")
+        
         if friendCount > 0{
             advanceImageView.prepareIndicatorView(view: self.view)
 
@@ -401,8 +396,6 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     }
     
     func handlePublicBoards(boards:[[String:Any]]) {
-        
-        print(boards)
 
         for boardData in boards{
             
@@ -457,10 +450,10 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         locationManager.startUpdate()
         
-        
         dataManagerCount = boardDataManager.count()
-        places = spot()
         mapView.removeAnnotations(places)
+        places.removeAll()
+        places = spot()
         mapView.addAnnotations(places)
         
     }

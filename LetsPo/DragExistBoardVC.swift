@@ -84,7 +84,7 @@ class DragExistBoardVC: UIViewController {
     @IBAction func saveBtnPressed(_ sender: UIButton) {
         backBtn.isHidden = true
         saveBtn.isHidden = true
-        
+        guideView.removeFromSuperview()
         
         self.saveNoteData()
         self.uploadBoardBg()
@@ -95,7 +95,7 @@ class DragExistBoardVC: UIViewController {
         }
 
         NotificationCenter.default.post(name: resetNote, object: nil)
-        tabBarController?.selectedIndex = 0
+        tabBarController?.selectedIndex = 2
         navigationController?.popToRootViewController(animated: true)
     }
     

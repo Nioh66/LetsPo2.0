@@ -43,7 +43,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.clear
+//        self.view.backgroundColor = UIColor.clear
         locationManager.delegate = self
         
         // register three collectionView

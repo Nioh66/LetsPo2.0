@@ -24,6 +24,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="fXY-4L-YYE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="u0B-wO-zhG">
                                 <rect key="frame" x="37" y="106.5" width="300" height="454"/>
                             </imageView>
@@ -74,12 +77,16 @@
                             <constraint firstAttribute="trailing" secondItem="wzU-mN-qmq" secondAttribute="trailing" multiplier="3/2" id="EIr-WX-m7Z"/>
                             <constraint firstItem="wzU-mN-qmq" firstAttribute="top" secondItem="bS1-rV-Y1t" secondAttribute="bottom" constant="10" id="Rqd-ll-9Y2"/>
                             <constraint firstItem="u0B-wO-zhG" firstAttribute="centerX" secondItem="war-4I-mSc" secondAttribute="centerX" id="Zof-Q5-f4y"/>
+                            <constraint firstAttribute="trailing" secondItem="fXY-4L-YYE" secondAttribute="trailing" id="aHG-d9-I0W"/>
+                            <constraint firstAttribute="bottom" secondItem="fXY-4L-YYE" secondAttribute="bottom" id="bw2-4b-jXT"/>
                             <constraint firstItem="u0B-wO-zhG" firstAttribute="centerY" secondItem="war-4I-mSc" secondAttribute="centerY" id="dNv-Lx-ElT"/>
                             <constraint firstItem="CLn-4N-iBd" firstAttribute="top" secondItem="wzU-mN-qmq" secondAttribute="bottom" id="duU-TT-4Xc"/>
                             <constraint firstAttribute="trailing" secondItem="CLn-4N-iBd" secondAttribute="trailing" id="dxa-gv-pPa"/>
                             <constraint firstAttribute="trailing" secondItem="ukz-Sy-AlH" secondAttribute="trailing" id="fso-9O-YcP"/>
+                            <constraint firstItem="fXY-4L-YYE" firstAttribute="leading" secondItem="war-4I-mSc" secondAttribute="leading" id="jzT-To-eXq"/>
                             <constraint firstItem="u0B-wO-zhG" firstAttribute="width" secondItem="war-4I-mSc" secondAttribute="width" multiplier="0.8" id="lsI-1B-n16"/>
                             <constraint firstAttribute="bottom" secondItem="CLn-4N-iBd" secondAttribute="bottom" id="pq0-MJ-gvF"/>
+                            <constraint firstItem="fXY-4L-YYE" firstAttribute="top" secondItem="war-4I-mSc" secondAttribute="top" id="psa-pG-LdV"/>
                             <constraint firstItem="u0B-wO-zhG" firstAttribute="height" secondItem="war-4I-mSc" secondAttribute="height" multiplier="0.68" id="uOX-qH-isj"/>
                         </constraints>
                     </view>

@@ -47,7 +47,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     
     public func startRegionMonitoring(region: CLCircularRegion){
-        print("CREATED REGION: \(region.identifier) - \(locationManager.monitoredRegions.count)")
+//        print("CREATED REGION: \(region.identifier) - \(locationManager.monitoredRegions.count)")
         locationManager.requestState(for: region)
         locationManager.startMonitoring(for: region)
     }
