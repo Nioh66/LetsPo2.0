@@ -123,6 +123,13 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         cell?.textLabel?.text = cellTitle[indexPath.row]
         cell?.frame(forAlignmentRect: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
         cell?.selectionStyle = .none
+        if login == false {
+            if indexPath.row == 0 || indexPath.row == 2 {
+                cell?.textLabel?.textColor = UIColor.lightGray
+            }
+        }else {
+            cell?.textLabel?.textColor = UIColor.black
+        }
         return cell!
     }
     
@@ -159,6 +166,18 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
             personalName.isHidden = false
             let item = memberDataManager.itemWithIndex(index: 0)
             personalName.text = item.member_Name
+            
+            let image = item.member_Selfie
+            
+            if image != nil {
+                guard let img = UIImage(data: image! as Data) else {return}
+                personalImage.image = img
+            }else {
+                personalImage.image = #imageLiteral(resourceName: "user")
+            }
+            
+            table.reloadData()
+            
         }else {
             personalName.isHidden = true
             personalImage.image = UIImage(named: "user")

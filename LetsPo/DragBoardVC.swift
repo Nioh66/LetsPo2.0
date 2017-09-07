@@ -102,7 +102,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
         
         if(member_ID != 0){
-        self.uploadBoard()
+            advanceImageView.prepareIndicatorView(view: self.view)
+            self.uploadBoard()
        // self.uploadNote()
         }
         
@@ -129,15 +130,13 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         let boardBg = topImage.image
         
 
-        guard let screenShotImage = self.view.boardScreenShot(),
-            let boardScreenShotData = UIImageJPEGRepresentation(screenShotImage, 0.8),
+        guard let boardScreenShotData = UIImageJPEGRepresentation(uploadBoardScreenShot, 0.8),
             let boardBgPicData = UIImageJPEGRepresentation(boardBg!, 0.8)
             else{
                 return
         }
         let boardBgPic = boardBgPicData.base64EncodedString()
         let boardScreenShot = boardScreenShotData.base64EncodedString()
-        advanceImageView.prepareIndicatorView(view: self.view)
         
         let registDic:[String:Any] = ["Board_Title":boardTitle,
                                       "Board_Lat":boardLat,
@@ -335,6 +334,9 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                 else{
                     return
             }
+            //For board upload
+            uploadBoardScreenShot = screenShotImage
+
             
             boardItem.board_Lat = boardLat
             boardItem.board_Lon = boardLon

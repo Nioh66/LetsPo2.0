@@ -145,15 +145,18 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
     
     
     func saveImage(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            // we got back an error!
-            let saveAlert = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
-            saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(saveAlert, animated: true)
+        if error != nil {
+            let saveAlert = UIAlertController.init(title: "相片儲存失敗", message: nil, preferredStyle: .alert)
+            present(saveAlert, animated: true, completion: nil)
+            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
+                saveAlert.dismiss(animated: false, completion: nil)
+            }
         } else {
-            let saveAlert = UIAlertController(title: "Saved!", message: "Your altered image has been saved to your photos.", preferredStyle: .alert)
-            saveAlert.addAction(UIAlertAction(title: "OK", style: .default))
-            present(saveAlert, animated: true)
+            let saveAlert = UIAlertController.init(title: "相片已儲存", message: nil, preferredStyle: .alert)
+            present(saveAlert, animated: true, completion: nil)
+            Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
+                saveAlert.dismiss(animated: false, completion: nil)
+            }
         }
     }
     
@@ -169,8 +172,7 @@ class PersonalDetailVC: UIViewController ,UITableViewDelegate, UITableViewDataSo
             else {
                 return
         }
-        
-        UIImageWriteToSavedPhotosAlbum(imageX, self, #selector(saveImage(_:didFinishSavingWithError:contextInfo:)), nil)
+
         
         
         NotificationCenter.default.post(name: selfieBgImageNN, object: nil, userInfo: ["selfieBg":imageX])

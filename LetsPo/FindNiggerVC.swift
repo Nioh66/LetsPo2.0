@@ -27,7 +27,8 @@ class FindNiggerVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.addBtn.isHidden = true
-        friendImage.layer.cornerRadius = 10.0
+        friendImage.frame = CGRect(x: view.center.x, y: view.center.y, width: UIScreen.main.bounds.size.width * 0.4, height: UIScreen.main.bounds.size.width * 0.4)
+        friendImage.layer.cornerRadius = (self.friendImage.frame.size.width) / 2
         friendImage.layer.masksToBounds = true
         member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
         self.view.backgroundColor = UIColor.clear
