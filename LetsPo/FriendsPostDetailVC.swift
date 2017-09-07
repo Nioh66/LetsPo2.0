@@ -81,7 +81,8 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
         }
         let noteBgColor = noteDataManager.reverseColorDataToColor(data: noteBgColorNSData)
         
-        
+        self.displayNoteV.shapeLayer.fillColor = noteBgColor.cgColor
+        self.view.setNeedsDisplay()
         if noteImageJSON != ""{
             let noteImageJ = convertToDictionary(text: noteImageJSON)
             
@@ -97,8 +98,8 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
                         return
                     }
                     self.imageForCell = theImages
-                    self.displayNoteV.posterColor = noteBgColor
 //                    note.backgroundColor = UIColor.clear
+
                     noteText.text = noteContent
                     noteText.textColor = noteFontColor
                     noteText.font = UIFont.boldSystemFont(ofSize: CGFloat(noteFontSize))
@@ -106,20 +107,19 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
                         self.collectionView.reloadData()
                         self.publicPostT = noteText
                         self.publicPostT.isEditable = false
-                        self.displayNoteV.addSubview(self.publicPostT)
+                        note.addSubview(self.publicPostT)
                     }
                 }})
         }else{
-            displayNoteV.posterColor = noteBgColor
 //            note.backgroundColor = UIColor.clear
             noteText.text = noteContent
             noteText.textColor = noteFontColor
             noteText.font = UIFont.boldSystemFont(ofSize: CGFloat(noteFontSize))
             DispatchQueue.main.async {
-                self.displayNoteV = note
+                //self.displayNoteV = note
                 self.publicPostT = noteText
                 self.publicPostT.isEditable = false
-                self.displayNoteV.addSubview(self.publicPostT)
+                note.addSubview(self.publicPostT)
             }
         }
         self.advanceImageView.advanceStop(view: self.view)

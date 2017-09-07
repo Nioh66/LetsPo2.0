@@ -46,6 +46,7 @@ class FindNiggerVC: UIViewController {
     
     @IBAction func searchBtnPressed(_ sender: UIButton) {
         friendSelfieDataForC = nil
+
         guard let searchId = inputID.text,
             let friendID64 = Int64(searchId) else {
                 notNumberAlert()
@@ -68,13 +69,10 @@ class FindNiggerVC: UIViewController {
         if friendID == Int64(member_ID) {
             sameAlert()
         }else{
-            // 加了五秒計時的自動消失轉轉
-            // self.advanceImageView.timerAdvanceImageView(view: self.view)
-            
-            // 普通手動停止的轉轉
-            advanceImageView.prepareIndicatorView(view: self.view)
+            self.advanceImageView.prepareIndicatorView(view: self.view)
             let findDic = ["Member_ID":friendID]
             alamoMachine.doPostJobWith(urlString: alamoMachine.FIND_FRIEND, parameter: findDic) { (error, response) in
+
                 if error != nil{
                     self.advanceImageView.advanceStop(view: self.view)
                     print(error!)
@@ -113,7 +111,7 @@ class FindNiggerVC: UIViewController {
                         self.friendNameForC = friendName
                         
                     }else{
-                        
+                        self.advanceImageView.advanceStop(view: self.view)
                         self.notNumberAlert()
                     }
                 }
@@ -121,7 +119,6 @@ class FindNiggerVC: UIViewController {
         }}
     
     func notNumberAlert() {
-        self.advanceImageView.advanceStop(view: self.view)
         let alert = UIAlertController.init(title: "不存在此ID", message: nil, preferredStyle: .alert)
         present(alert, animated: true, completion: nil)
         Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { (Timer) in
