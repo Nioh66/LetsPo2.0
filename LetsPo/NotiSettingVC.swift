@@ -23,12 +23,14 @@ class NotiSettingVC: UIViewController {
         
         if UserDefaults.standard.bool(forKey: "UserNotification") == true {
             allowNotice.isOn = true
-           
+            hideView.isHidden = false
         }else {
             allowNotice.isOn = false
+            hideView.isHidden = true
         }
         if UserDefaults.standard.bool(forKey: "soundNotice") == true {
             allowSoundNotice.isOn = true
+            
             
         }else {
             allowSoundNotice.isOn = false

@@ -219,7 +219,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     func locationManager(userDidEnterRegion region: CLRegion) {
         print("Enter \(region.identifier)")
         
-        mutableNotificationContent(title: "附近有留言板喔!", body: "", indentifier: "DidEnterRegion")
+        mutableNotificationContent(title: "附近有留言板喔!", body: "點擊查閱", indentifier: "DidEnterRegion")
         // 是否震動
         if UserDefaults.standard.bool(forKey: "shakeNotice") == true {
             AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
