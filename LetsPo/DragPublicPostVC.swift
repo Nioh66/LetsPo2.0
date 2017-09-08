@@ -86,9 +86,21 @@ class DragPublicPostVC: UIViewController {
             self.updateServerBoard()
             // self.uploadNote()
         }
-        
+//        NotificationCenter.default.post(name: newNoteComingNN, object: nil)
+//        
+//        for controller in (self.navigationController?.viewControllers)!
+//        {
+//            if controller.isKind(of: ManageDetailViewController.self) == true{
+//                
+//                self.dismiss(animated: false) {
+//                    self.navigationController?.popToViewController(controller, animated: true)
+//                }
+//                break
+//            }
+//        }
+    }
+    func popToDetialViewController (){
         NotificationCenter.default.post(name: newNoteComingNN, object: nil)
-        
         for controller in (self.navigationController?.viewControllers)!
         {
             if controller.isKind(of: ManageDetailViewController.self) == true{
@@ -104,7 +116,6 @@ class DragPublicPostVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.setNavigationBarHidden(true, animated: false)
             tabBarController?.tabBar.isHidden = true
-        
     }
     
     
@@ -136,11 +147,21 @@ class DragPublicPostVC: UIViewController {
             if error != nil{
                 self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
+            }else{
+                guard let rsp = response,
+                    let resultBool = rsp["result"] as? Bool else{
+                        return
+                }
+                if resultBool {
+                    self.saveNewNote()
+                    print("Upload board complete!")
+                }else {
+                    self.advanceImageView.advanceStop(view: self.view)
+                    self.popToDetialViewController()
+                    print("Upload board fail!!")
+                }
             }
-            print("Upload board complete!")
-            self.saveNewNote()
         }
-
     }
     
     func saveNewNote() {
@@ -171,10 +192,6 @@ class DragPublicPostVC: UIViewController {
         let noteBgColor64 = noteBgColor.base64EncodedString()
         let noteFontColor64 = noteFontColor.base64EncodedString()
         
-        
-        
-        
-        
         let registDic:[String:Any?] = ["Note_Content":noteContent,
                                        "Note_FontColor":noteFontColor64,
                                        "Note_FontSize":noteFontSize,
@@ -191,17 +208,23 @@ class DragPublicPostVC: UIViewController {
             if error != nil{
                 self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
+            }else{
+                guard let rsp = response,
+                    let resultBool = rsp["result"] as? Bool else{
+                        return
+                }
+                if resultBool {
+                    self.advanceImageView.advanceStop(view: self.view)
+                    self.popToDetialViewController()
+                    print("Delete Note complete!!")
+                }else {
+                    self.advanceImageView.advanceStop(view: self.view)
+                    self.popToDetialViewController()
+                    print("Delete Note fail!!")
+                }
             }
-            self.advanceImageView.advanceStop(view: self.view)
-            print("Upload note complete!")
-            
         }
-    
-
     }
-    
-    
-    
     
     func updateBoardBg() {
         guard let newBoardPic = self.view.boardScreenShot(),

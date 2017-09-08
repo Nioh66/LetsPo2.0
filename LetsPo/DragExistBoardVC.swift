@@ -180,9 +180,6 @@ class DragExistBoardVC: UIViewController {
         noteX = Double(postX)
         noteY = Double(postY)
         
-
-        
-        
         item.note_BgColor = noteBgColor
         item.note_Content = noteContent
         item.note_FontColor = noteFontColor
@@ -190,7 +187,7 @@ class DragExistBoardVC: UIViewController {
         item.note_X = noteX
         item.note_Y = noteY
         item.note_Selfie = noteSelfie
- //       item.note_Image = imageJson
+ 
         
         print("noteID:-------\(item.note_ID)")
         
@@ -292,16 +289,5 @@ class DragExistBoardVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+ 
 }

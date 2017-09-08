@@ -31,6 +31,7 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
     var allPublicBoards = [[String:Any]]()
     var privacy_pins = UIImage()
     
+    @IBOutlet weak var refreshBtn: UIButton!
     //for upload
     var userLat = Double()
     var userLon = Double()
@@ -55,6 +56,8 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         
         dataManagerCount = boardDataManager.count()
         
+        
+
         
         places = spot()
         mapView.addAnnotations(places)
@@ -448,8 +451,12 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
         navigationController?.setNavigationBarHidden(true, animated: false)
         tabBarController?.tabBar.isHidden = false
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        if friendDataManager.count() > 0 {
+            refreshBtn.isHidden = false
+        }else {
+            refreshBtn.isHidden = true
+        }
         locationManager.startUpdate()
-        
         dataManagerCount = boardDataManager.count()
         mapView.removeAnnotations(places)
         places.removeAll()

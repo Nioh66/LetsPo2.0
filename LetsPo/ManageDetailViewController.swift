@@ -11,14 +11,11 @@ import UIKit
 class ManageDetailViewController: UIViewController ,UIPopoverPresentationControllerDelegate{
     
     @IBOutlet weak var backBtn: UIButton!
-//    let boardSettingNN = Notification.Name("boardSetting")
     let newNoteComingNN = Notification.Name("newPublicNoteComing")
     let dismissSelf = Notification.Name("dismissSelf")
     let theChooseOneNoti = Notification.Name("notificationCenter")
     
-    
     deinit {
-//        NotificationCenter.default.removeObserver(self,name: boardSettingNN,object: nil)
         NotificationCenter.default.removeObserver(self,name: newNoteComingNN,object: nil)
         NotificationCenter.default.removeObserver(self,name: theChooseOneNoti,object: nil)
         NotificationCenter.default.removeObserver(self,name: dismissSelf,object: nil)
@@ -42,6 +39,7 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
     var deleteBoardLon = Double()
     var memberID:Int? = nil
     let uploadMachine = AlamoMachine()
+    let advanceImageView = AdvanceImageView()
     
     
     @IBOutlet weak var titleLabel: UILabel!
@@ -259,28 +257,21 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
                 coreDataDeleteAndSaveMethod(note_ID: "\(tag)",board_id:"\(selectIndexID)")
                 // 暫時隱藏被刪除的note 反正出去回來後就會重刷
                 sender.postImageView?.isHidden = true
-                
             }
             // 刪除後 隱藏所有刪除鈕並拍照刷新
             i["id"]?.isHidden = true
             hidehide = false
-            
         }
         uploadBoardBg()
-        
         memberID = UserDefaults.standard.integer(forKey: "Member_ID")
-        
         if(memberID != 0){
+            advanceImageView.prepareIndicatorView(view: self.view)
             self.deleteServerNoteData()
         }
     }
     
     // MARK: Server delete
     func deleteServerNoteData() {
-        print(deleteBoardLat)
-        print(deleteBoardLon)
-        print(deleteNoteX)
-        print(deleteNoteY)
         let deleteDic:[String:Any?] = ["Board_CreateMemberID":memberID!,
                                        "Board_Lat":deleteBoardLat,
                                        "Board_Lon":deleteBoardLon,
@@ -289,10 +280,19 @@ class ManageDetailViewController: UIViewController ,UIPopoverPresentationControl
         
         uploadMachine.doPostJobWith(urlString: uploadMachine.DELETE_NOTE, parameter: deleteDic) { (error, response) in
             if error != nil{
+                self.advanceImageView.advanceStop(view: self.view)
                 print("Delete Note failure!!")
                 print(error!)
+            }else{
+                guard let rsp = response,
+                    let resultBool = rsp["result"] as? Bool else{
+                        return
+                }
+                if resultBool {
+                    self.advanceImageView.advanceStop(view: self.view)
+                    print("Delete Note complete!!")
+                }
             }
-                print("Delete Note complete!!")
         }
     }
     

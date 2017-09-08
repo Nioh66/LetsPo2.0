@@ -496,7 +496,7 @@
 				TargetAttributes = {
 					303B08EC1F1CC61600D7F6B1 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = SA2EKSMQ96;
+						DevelopmentTeam = G5G94ZY4FA;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -811,7 +811,7 @@
 			baseConfigurationReference = 03DD28E8FFB5F95AF517FD55 /* Pods-LetsPo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = SA2EKSMQ96;
+				DEVELOPMENT_TEAM = G5G94ZY4FA;
 				INFOPLIST_FILE = LetsPo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nioh66.LetsPo;
@@ -825,7 +825,7 @@
 			baseConfigurationReference = E0B64AD38CE529E9A3A53FB5 /* Pods-LetsPo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = SA2EKSMQ96;
+				DEVELOPMENT_TEAM = G5G94ZY4FA;
 				INFOPLIST_FILE = LetsPo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nioh66.LetsPo;

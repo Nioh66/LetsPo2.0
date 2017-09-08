@@ -27,7 +27,7 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var thePost: Note!
-    var fontSizeData:Double = 14.0
+    var fontSizeData:Double = 20.0
     
     var myTextView = NoteText()
     var textContainer = NSTextContainer()
@@ -71,7 +71,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         print(documentPaths)
         
         
-        myTextView.frame = CGRect(x: 0, y: 3, width: thePost.frame.size.width, height: thePost.frame.size.height*0.77)
+//        myTextView.frame = CGRect(x: 0, y: 3, width: thePost.frame.size.width, height: thePost.frame.size.height*0.77)
+        myTextView.frame = CGRect(x: 0, y: 3, width: self.view.frame.size.width * 0.8, height: self.view.frame.size.width * 0.8 * 0.77)
+        
         thePost.clipsToBounds = true
         
         DispatchQueue.main.async {

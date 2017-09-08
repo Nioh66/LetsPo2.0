@@ -87,14 +87,21 @@ class PublicBoardSettingVC: UIViewController {
         let alert = UIAlertController(title: "資料將全部刪除", message: "如果不刪除請按取消按鈕", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "取消", style: .cancel)
         let ok = UIAlertAction(title: "刪除", style: .default) { (action) in
-            NotificationCenter.default.post(name: self.dismissSelf, object: nil)
-            self.coreDataDeleteAndSaveMethod(board_id: "\(self.boardID)")
+            
+            
             //for Server
             self.memberID = UserDefaults.standard.integer(forKey: "Member_ID")
             if(self.memberID != 0){
                 self.deleteBoardOnServer()
+                self.coreDataDeleteAndSaveMethod(board_id: "\(self.boardID)")
+                self.dismiss(animated: false, completion: nil)
+                NotificationCenter.default.post(name: self.dismissSelf, object: nil)
+            }else {
+                self.coreDataDeleteAndSaveMethod(board_id: "\(self.boardID)")
+                self.dismiss(animated: false, completion: nil)
+                NotificationCenter.default.post(name: self.dismissSelf, object: nil)
             }
-            self.dismiss(animated: false, completion: nil)
+            
             
         }
         
@@ -149,6 +156,7 @@ class PublicBoardSettingVC: UIViewController {
     }
     
     func coreDataDeleteAndSaveMethod(board_id:String){
+//        let oldBoardData = boardDataManager.searchField(field: "board_Id", forKeyword: "\(boardID)") as! [BoardData]
         let searchField = "board_Id"
         let keyword = "\(board_id)"
         guard let result = boardDataManager.searchField(field: searchField, forKeyword: keyword) as? [BoardData] else{
@@ -160,6 +168,9 @@ class PublicBoardSettingVC: UIViewController {
             print("boardID \(boardID)")
             boardDataManager.deleteItem(item: boardData)
             boardDataManager.saveContexWithCompletion(completion: { (success) in
+            if(success){
+                print("come come come")
+//                NotificationCenter.default.post(name: self.dismissSelf, object: nil)
                 let searchField = "note_BoardID"
                 guard let result = noteDataManager.searchField(field: searchField, forKeyword: keyword) as? [NoteData] else{
                     print("Result case to [NoteData] failure!!!!")
@@ -182,8 +193,9 @@ class PublicBoardSettingVC: UIViewController {
                         self.removeImageformDocument(items:imageData!)
                     }
                 }
-                self.dataManagerCount = boardDataManager.count()
-                print("delete success")
+                }
+//                self.dataManagerCount = boardDataManager.count()
+//                print("delete success")
             })
         }
     }
