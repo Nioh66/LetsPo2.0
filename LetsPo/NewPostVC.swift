@@ -329,9 +329,9 @@ class NewPostVC: UIViewController,UINavigationControllerDelegate,UIImagePickerCo
         let largeBtn = UIButton.init(frame: CGRect(x: fontWidth*2/3, y: 0, width: fontWidth*1/3, height: fontHeight*0.5))
         
         
-        smallBtn.setImage(#imageLiteral(resourceName: "success"), for: .normal)
-        mediumBtn.setImage(#imageLiteral(resourceName: "success"), for: .normal)
-        largeBtn.setImage(#imageLiteral(resourceName: "success"), for: .normal)
+        smallBtn.setImage(#imageLiteral(resourceName: "small"), for: .normal)
+        mediumBtn.setImage(#imageLiteral(resourceName: "regular"), for: .normal)
+        largeBtn.setImage(#imageLiteral(resourceName: "big"), for: .normal)
         
         smallBtn.addTarget(self, action: #selector(changeFSBtnSPressed), for: .touchUpInside)
         mediumBtn.addTarget(self, action: #selector(changeFSBtnMPressed), for: .touchUpInside)
