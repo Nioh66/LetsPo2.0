@@ -25,7 +25,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
     
     @IBOutlet weak var publicPost: Note!
     
-    var fontSizeData:Double = 14.0
+    var fontSizeData:Double = 20.0
     
     var myTextView = NoteText()
     var textContainer = NSTextContainer()
@@ -283,21 +283,51 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         fontSizeInputview.backgroundColor = UIColor.white
         myTextView.inputView = fontSizeInputview
         
+        let fontWidth = fontSizeInputview.frame.size.width
+        let fontHeight = fontSizeInputview.frame.size.height
+        let smallBtn = UIButton.init(frame: CGRect(x: 0, y: 0, width: fontWidth*1/3, height: fontHeight*0.5))
+        let mediumBtn = UIButton.init(frame: CGRect(x: fontWidth*1/3, y: 0, width: fontWidth*1/3, height: fontHeight*0.5))
+        let largeBtn = UIButton.init(frame: CGRect(x: fontWidth*2/3, y: 0, width: fontWidth*1/3, height: fontHeight*0.5))
+        
+        
+        smallBtn.setImage(#imageLiteral(resourceName: "success"), for: .normal)
+        mediumBtn.setImage(#imageLiteral(resourceName: "success"), for: .normal)
+        largeBtn.setImage(#imageLiteral(resourceName: "success"), for: .normal)
+        
+        smallBtn.addTarget(self, action: #selector(changeFSBtnSPressed), for: .touchUpInside)
+        mediumBtn.addTarget(self, action: #selector(changeFSBtnMPressed), for: .touchUpInside)
+        largeBtn.addTarget(self, action: #selector(changeFSBtnLPressed), for: .touchUpInside)
+        
         let fontSlider = UISlider()
-        fontSlider.frame = CGRect(x: 15, y: ((fontSizeInputview.frame.height)/2)-30, width: fontSizeInputview.frame.size.width - 30, height: 30)
+        fontSlider.frame = CGRect(x: 15, y: fontHeight*0.75, width: (fontWidth)-30, height: 30)
         fontSlider.value = Float(fontSizeData)
         fontSlider.maximumValue = 120
-        fontSlider.minimumValue = 14
+        fontSlider.minimumValue = 15
         fontSlider.tintColor = UIColor.darkGray
         fontSlider.thumbTintColor = UIColor.ownColor
         fontSlider.addTarget(self, action: #selector(changeFSSlider(slider:)), for: .valueChanged)
         fontSizeInputview.addSubview(fontSlider)
+        fontSizeInputview.addSubview(smallBtn)
+        fontSizeInputview.addSubview(mediumBtn)
+        fontSizeInputview.addSubview(largeBtn)
         fontSizeInputview.becomeFirstResponder()
         myTextView.reloadInputViews()
         
         
     }
-    
+    func changeFSBtnSPressed() {
+        myTextView.font = UIFont.boldSystemFont(ofSize: 15)
+        fontSizeData = 15.0
+    }
+    func changeFSBtnMPressed() {
+        myTextView.font = UIFont.boldSystemFont(ofSize: 30)
+        fontSizeData = 30.0
+    }
+    func changeFSBtnLPressed() {
+        myTextView.font = UIFont.boldSystemFont(ofSize: 60)
+        fontSizeData = 60.0
+        
+    }
     func changeFSSlider(slider:UISlider) {
         let sliderValue = CGFloat(slider.value)
         myTextView.font = UIFont.boldSystemFont(ofSize: sliderValue)
