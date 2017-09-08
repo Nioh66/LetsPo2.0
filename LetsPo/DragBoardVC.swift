@@ -102,9 +102,8 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         member_ID = UserDefaults.standard.integer(forKey: "Member_ID")
         
         if(member_ID != 0){
-            advanceImageView.prepareIndicatorView(view: self.view)
             self.uploadBoard()
-       // self.uploadNote()
+       
         }
         
         NotificationCenter.default.post(name: resetNote, object: nil, userInfo: nil)
@@ -116,23 +115,22 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
     
     func panTheNote(sender:UIPanGestureRecognizer) {
-        
         let point = sender.location(in: topImage)
-        
-        
         NoteImageView.center = point
-        
     }
-    // MARK: Upload to server
     
+    // MARK: Upload to server
     func uploadBoard() {
         
+        advanceImageView.prepareIndicatorView(view: self.view)
         let boardBg = topImage.image
         
 
         guard let boardScreenShotData = UIImageJPEGRepresentation(uploadBoardScreenShot, 0.8),
             let boardBgPicData = UIImageJPEGRepresentation(boardBg!, 0.8)
             else{
+                
+                self.advanceImageView.advanceStop(view: self.view)
                 return
         }
         let boardBgPic = boardBgPicData.base64EncodedString()
@@ -160,8 +158,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
     func uploadNote() {
         
-        
-        
         guard let noteContent = allNoteData["noteContent"] as? String?,
             let noteBgColor = allNoteData["noteBgColor"] as? Data,
             let noteFontColor = allNoteData["noteFontColor"] as? Data,
@@ -170,6 +166,7 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
             let noteSelfie = UIImagePNGRepresentation(resizeNote)
             else {
                 print("Case failure!!!!!!!!")
+                self.advanceImageView.advanceStop(view: self.view)
                 return
         }
         var imageArray:[String]?
@@ -191,9 +188,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         let noteFontColor64 = noteFontColor.base64EncodedString()
         
         
-        
-        
-        
         let registDic:[String:Any?] = ["Note_Content":noteContent,
                                        "Note_FontColor":noteFontColor64,
                                        "Note_FontSize":noteFontSize,
@@ -208,9 +202,11 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         
         uploadMachine.doPostJobWith(urlString: uploadMachine.SAVE_NOTE, parameter: registDic) { (error, response) in
             if error != nil{
+                
                 self.advanceImageView.advanceStop(view: self.view)
                 print(error!)
             }
+            
             self.advanceImageView.advanceStop(view: self.view)
             print("Upload note complete!")
 
@@ -219,7 +215,6 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
     
     
     // MARK: Save Data
-    
     func saveNoteData() {
         let noteItem = noteDataManager.createItem()
         
@@ -353,12 +348,9 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
                     print("BoardData save failure!!!")
                 }
             }
-            
         }
-        
-        //  boardItem.board_Creater = nil
-        
     }
+    
     func transformDateTimeZone() -> String {
         let dateFormate = DateFormatter()
         dateFormate.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -368,5 +360,4 @@ class DragBoardVC: UIViewController ,UINavigationControllerDelegate{
         print("stringOfDate \(stringOfDate)")
         return stringOfDate
     }
-    
 }

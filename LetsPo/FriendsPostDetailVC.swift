@@ -111,12 +111,10 @@ class FriendsPostDetailVC: UIViewController,UICollectionViewDelegate ,UICollecti
                     }
                 }})
         }else{
-//            note.backgroundColor = UIColor.clear
             noteText.text = noteContent
             noteText.textColor = noteFontColor
             noteText.font = UIFont.boldSystemFont(ofSize: CGFloat(noteFontSize))
             DispatchQueue.main.async {
-                //self.displayNoteV = note
                 self.publicPostT = noteText
                 self.publicPostT.isEditable = false
                 note.addSubview(self.publicPostT)

@@ -90,9 +90,9 @@ class NoteText: UITextView ,UITextViewDelegate{
     }
     
     func giveMeFreshNewNoteText() {
-        self.textColor = UIColor.black
+        self.textColor = UIColor.lightGray
         self.text = "Enter Post content"
-        self.font = UIFont.boldSystemFont(ofSize: 14)
+        self.font = UIFont.boldSystemFont(ofSize: 20)
         
     }
     

@@ -79,6 +79,7 @@ class ManageViewController: UIViewController, UICollectionViewDelegate,UICollect
         
     }
     func userPressDeleteBtn(){
+        dataManagerCount = boardDataManager.count()
         arrayImageData()
     }
     

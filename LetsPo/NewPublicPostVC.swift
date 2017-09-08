@@ -58,7 +58,7 @@ class NewPublicPostVC: UIViewController, UINavigationControllerDelegate, UIImage
         //let documnetPath = documentPaths[0] as! String
         print(documentPaths)
         
-        myTextView.frame = CGRect(x: 0, y: 3, width: publicPost.frame.size.width, height: publicPost.frame.size.height*0.77)
+        myTextView.frame = CGRect(x: 0, y: 3, width: self.view.frame.size.width * 0.8, height: self.view.frame.size.width * 0.8 * 0.77)
         publicPost.clipsToBounds = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(tapG:)))

@@ -37,8 +37,7 @@ class MapDetailViewController: UIViewController ,UIPopoverPresentationController
         for data:FriendData in friendData{
                 friendName = data.friend_FriendName!
         }
-
-        print("========\(friendName)=========")
+        
         friendNameLabel.text = "From: \(friendName)"
         
         backdroundImage.image = image
