@@ -66,6 +66,7 @@
 		30D092C71F1E950800CB3F88 /* whiteboard-303145_960_720.png in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */; };
 		30D092CA1F1E956200CB3F88 /* myNigger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 30D092C91F1E956200CB3F88 /* myNigger.jpg */; };
 		919DEF6EBC9CA50E3579F6C3 /* Pods_LetsPo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB3F3DFB6B441BA04E8FA7CD /* Pods_LetsPo.framework */; };
+		9B0549301F62C47100EF6678 /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B05492F1F62C47100EF6678 /* GuideViewController.swift */; };
 		9B0CC3D91F3EE51600280A55 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B0CC3D81F3EE51600280A55 /* AudioToolbox.framework */; };
 		9B0CC3DD1F3F4FA100280A55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B0CC3DC1F3F4FA100280A55 /* LaunchScreen.storyboard */; };
 		9B1D167D1F3C6EA60004F032 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B1D167C1F3C6EA60004F032 /* LoginVC.swift */; };
@@ -157,6 +158,7 @@
 		30D092C21F1E950800CB3F88 /* Sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Sky.jpg; sourceTree = "<group>"; };
 		30D092C31F1E950800CB3F88 /* whiteboard-303145_960_720.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "whiteboard-303145_960_720.png"; sourceTree = "<group>"; };
 		30D092C91F1E956200CB3F88 /* myNigger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = myNigger.jpg; sourceTree = "<group>"; };
+		9B05492F1F62C47100EF6678 /* GuideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		9B0CC3D81F3EE51600280A55 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		9B0CC3DC1F3F4FA100280A55 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B1D167C1F3C6EA60004F032 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 		30D092861F1E352800CB3F88 /* Supports */ = {
 			isa = PBXGroup;
 			children = (
+				9B05492F1F62C47100EF6678 /* GuideViewController.swift */,
 				30313C5E1F402755003FD9FD /* AlamoMachine.swift */,
 				3018026D1F249FC600838425 /* CoreDataManager.swift */,
 				303B08F01F1CC61600D7F6B1 /* AppDelegate.swift */,
@@ -638,6 +641,7 @@
 				9B89D4811F31CA33001943C1 /* PublicDetailImageCell.swift in Sources */,
 				30D0928C1F1E35BB00CB3F88 /* Note.swift in Sources */,
 				304CB6791F258FAF00AEF632 /* SelfPostHomeVC.swift in Sources */,
+				9B0549301F62C47100EF6678 /* GuideViewController.swift in Sources */,
 				309EAFB31F2721A300FC3F34 /* TabBarVC.swift in Sources */,
 				30628BC31F28E39A001FED7F /* NoteImageCell.swift in Sources */,
 				9BA62C741F1F7299008CDEC0 /* ManageViewController.swift in Sources */,

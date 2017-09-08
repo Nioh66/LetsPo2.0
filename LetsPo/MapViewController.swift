@@ -184,21 +184,8 @@ class MapViewController:  UIViewController ,LocationManagerDelegate,MKMapViewDel
 
     }
     
-//    func doUnlock(){
-//        reUpdate.unlock()
-//        if shouldReUpdate{
-//            shouldReUpdate = false
-//        }
-//        
-//    }
-    
     // mark - Region monitoring method
     func locationManager(updatedUserLocation coordinate: CLLocation) {
-//        if reUpdate.try() == false {
-//            shouldReUpdate = true
-//            return
-//        }
-        
         //For server
         userLat = coordinate.coordinate.latitude
         userLon = coordinate.coordinate.longitude

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XyX-hV-wJD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="XyX-hV-wJD">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -33,7 +33,7 @@
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" textLabel="E6d-D3-uDy" style="IBUITableViewCellStyleDefault" id="xTT-JP-LRn">
-                                        <rect key="frame" x="0.0" y="55.5" width="263" height="44"/>
+                                        <rect key="frame" x="0.0" y="55" width="263" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xTT-JP-LRn" id="Vsl-Lb-nYh">
                                             <rect key="frame" x="0.0" y="0.0" width="263" height="43.5"/>
@@ -339,7 +339,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Wl9-7T-t9v" id="qey-uB-2Qr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="16J-or-PHY">
@@ -510,6 +510,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="backgroundImage" translatesAutoresizingMaskIntoConstraints="NO" id="aGJ-R6-7b5">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="請輸入好友ID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vtR-tv-uyb">
                                 <rect key="frame" x="60.5" y="152" width="253.5" height="30"/>
                                 <nil key="textColor"/>
@@ -575,13 +578,17 @@
                             <constraint firstItem="MgF-LA-Wh2" firstAttribute="leading" secondItem="vtR-tv-uyb" secondAttribute="trailing" constant="10" id="Ie3-X9-yTO"/>
                             <constraint firstItem="BsT-Za-PHS" firstAttribute="leading" secondItem="v5W-U7-knI" secondAttribute="leading" id="M16-4K-YiN"/>
                             <constraint firstItem="RIt-E6-Y4J" firstAttribute="centerX" secondItem="6c3-XW-V1A" secondAttribute="centerX" id="Q8E-6m-qi7"/>
+                            <constraint firstItem="aGJ-R6-7b5" firstAttribute="leading" secondItem="6c3-XW-V1A" secondAttribute="leading" id="Rlk-mo-Gzh"/>
                             <constraint firstItem="vtR-tv-uyb" firstAttribute="centerX" secondItem="6c3-XW-V1A" secondAttribute="centerX" id="VpT-nn-h2T"/>
                             <constraint firstItem="BsT-Za-PHS" firstAttribute="trailing" secondItem="v5W-U7-knI" secondAttribute="trailing" id="Yoz-RO-aEg"/>
                             <constraint firstItem="RIt-E6-Y4J" firstAttribute="centerY" secondItem="6c3-XW-V1A" secondAttribute="centerY" multiplier="5/3" id="aPf-Zw-Oy2"/>
                             <constraint firstItem="BsT-Za-PHS" firstAttribute="centerY" secondItem="6c3-XW-V1A" secondAttribute="centerY" multiplier="4/3" id="aRV-Sh-ZuW"/>
                             <constraint firstItem="v5W-U7-knI" firstAttribute="centerX" secondItem="6c3-XW-V1A" secondAttribute="centerX" id="aub-EP-Zbs"/>
+                            <constraint firstItem="VfQ-Jy-eST" firstAttribute="top" secondItem="aGJ-R6-7b5" secondAttribute="bottom" id="gDd-mz-xml"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MgF-LA-Wh2" secondAttribute="trailing" constant="10" id="hed-N7-mmh"/>
                             <constraint firstItem="2A0-Tc-JMV" firstAttribute="centerY" secondItem="vtR-tv-uyb" secondAttribute="centerY" id="kvt-Ui-aOr"/>
+                            <constraint firstItem="aGJ-R6-7b5" firstAttribute="top" secondItem="6c3-XW-V1A" secondAttribute="top" id="nZ2-Cu-jhw"/>
+                            <constraint firstAttribute="trailing" secondItem="aGJ-R6-7b5" secondAttribute="trailing" id="tHJ-L3-REN"/>
                             <constraint firstItem="2A0-Tc-JMV" firstAttribute="leading" secondItem="6c3-XW-V1A" secondAttribute="leadingMargin" constant="10" id="w2Z-bs-RDf"/>
                             <constraint firstItem="BsT-Za-PHS" firstAttribute="centerX" secondItem="6c3-XW-V1A" secondAttribute="centerX" id="yPG-sa-sR5"/>
                         </constraints>

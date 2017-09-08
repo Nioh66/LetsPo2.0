@@ -344,13 +344,13 @@ class LoginVC: UIViewController {
                         
                         if success {
                             
-                            print("==================Note save success!!!!!!======================")
+                            print("==============Note save success!!!!!!=================")
                             
                         }else{
                             print("Note save failure!!!!!!")
                         }
                     }
-                    }})
+                }})
                 
             }else{
             let noteItem = noteDataManager.createItem()

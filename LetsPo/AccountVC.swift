@@ -64,8 +64,7 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
         personalImage.backgroundColor = UIColor.black
         personalImage.layer.cornerRadius = (self.personalImage.frame.size.width) / 2
         personalImage.clipsToBounds = true
-        print("width \(personalImage.frame.size.width)")
-        print("height \(personalImage.frame.size.height)")
+        
         print("\(UIScreen.main.bounds.size.width)")
 
 
@@ -77,11 +76,11 @@ class AccountVC: UIViewController,UITableViewDataSource,UITableViewDelegate {
     }
     
     func reset(notification:Notification) {
-        let refreshVC = storyboard?.instantiateViewController(withIdentifier: "AccountVC") as! AccountVC
-        
-        // how to refresh
-        self.dismiss(animated: false, completion: nil)
-        self.present(refreshVC, animated: false, completion: nil)
+//        let refreshVC = storyboard?.instantiateViewController(withIdentifier: "AccountVC") as! AccountVC
+//        
+//        // how to refresh
+//        self.dismiss(animated: false, completion: nil)
+//        self.present(refreshVC, animated: false, completion: nil)
     
         
     }

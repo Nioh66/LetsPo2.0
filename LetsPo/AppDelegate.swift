@@ -31,6 +31,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UNUserNotificationCenterDe
         }
         UNUserNotificationCenter.current().delegate = self
         
+        let infoDictionary = Bundle.main.infoDictionary
+        let currentAppVersion = infoDictionary!["CFBundleShortVersionString"] as! String
+        
+        // 取出之前保存的版本號
+        let userDefaults = UserDefaults.standard
+        let appVersion = userDefaults.string(forKey: "appVersion")
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        // 如果 appVersion 為 nil 說明是第一次啟動；如果 appVersion 不等於 currentAppVersion 表示更新了
+        if appVersion == nil || appVersion != currentAppVersion {
+            // 保存最新的版本號
+            userDefaults.setValue(currentAppVersion, forKey: "appVersion")
+            
+            let guideViewController = storyboard.instantiateViewController(withIdentifier: "GuideViewController") as! GuideViewController
+            self.window?.rootViewController = guideViewController
+        }
+        
+        
         return true
     }
 

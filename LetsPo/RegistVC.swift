@@ -123,7 +123,7 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
         if let selfImage = selfImage{
         let selfImageData = UIImageJPEGRepresentation(selfImage, 0.8)
             let base64String = selfImageData?.base64EncodedString()
-        let strImageData = String.init(data: selfImageData!, encoding: .utf8)
+//        let strImageData = String.init(data: selfImageData!, encoding: .utf8)
             selfieData = base64String
         }
         let registDic:[String:Any?] = ["Member_Name":nameTextField.text,
@@ -149,18 +149,19 @@ class RegistVC: UIViewController,UIImagePickerControllerDelegate,UINavigationCon
                         memberDataManager.saveContexWithCompletion(completion: { (success) in
                             if(success){
                                 print("-success-")
-                                NotificationCenter.default.post(name: self.resetAccount, object: nil, userInfo: nil)
-                                for controller in (self.navigationController?.viewControllers)!
-                                {
-                                    if controller.isKind(of: AccountVC.self) == true{
-                                        
-                                        self.dismiss(animated: false) {
-                                            self.advanceImageView.advanceStop(view: self.view)
-                                            self.navigationController?.popToViewController(controller, animated: false)
-                                        }
-                                        break
-                                    }
-                                }
+//                                NotificationCenter.default.post(name: self.resetAccount, object: nil, userInfo: nil)
+//                                for controller in (self.navigationController?.viewControllers)!
+//                                {
+//                                    if controller.isKind(of: AccountVC.self) == true{
+//                                        
+//                                        self.dismiss(animated: false) {
+//                                            self.advanceImageView.advanceStop(view: self.view)
+//                                            self.navigationController?.popToViewController(controller, animated: false)
+//                                        }
+//                                        break
+//                                    }
+//                                }
+                                self.navigationController?.popViewController(animated: true)
                             }
                         })
                     }

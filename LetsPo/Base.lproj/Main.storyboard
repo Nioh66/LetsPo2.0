@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="G5w-fO-cEV">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="G5w-fO-cEV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -19,6 +19,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="selectedIndex">
+                            <integer key="value" value="1"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="LRm-tQ-EWo" kind="relationship" relationship="viewControllers" id="Rh8-52-CkQ"/>
                         <segue destination="Khb-Jj-vGe" kind="relationship" relationship="viewControllers" id="JXg-tU-KZf"/>
@@ -79,6 +84,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opl-9U-TCH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1882" y="976"/>
+        </scene>
+        <!--Guide View Controller-->
+        <scene sceneID="RzR-mb-Aqd">
+            <objects>
+                <viewController storyboardIdentifier="GuideViewController" id="XL2-Ow-k6Y" customClass="GuideViewController" customModule="LetsPo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hMq-Rb-psL"/>
+                        <viewControllerLayoutGuide type="bottom" id="FOf-Bp-g2P"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="P62-Ts-3Ts">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="5" translatesAutoresizingMaskIntoConstraints="NO" id="hbA-Or-Pnz">
+                                <rect key="frame" x="152" y="610" width="71" height="37"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Ez-Cx-dyo">
+                                <rect key="frame" x="112.5" y="530" width="150" height="50"/>
+                                <color key="backgroundColor" red="0.3492661714553833" green="0.69773828983306885" blue="0.42408967018127441" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="iSu-bK-uWN"/>
+                                    <constraint firstAttribute="width" constant="150" id="sUG-0D-HQc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="28"/>
+                                <state key="normal" title="Let's Go!!">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="startButtonPressed:" destination="XL2-Ow-k6Y" eventType="touchUpInside" id="Kh7-w9-hCF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="4Ez-Cx-dyo" firstAttribute="centerX" secondItem="P62-Ts-3Ts" secondAttribute="centerX" id="8sd-Nl-eL1"/>
+                            <constraint firstItem="FOf-Bp-g2P" firstAttribute="top" secondItem="hbA-Or-Pnz" secondAttribute="bottom" constant="20" id="DbY-I1-AR1"/>
+                            <constraint firstItem="hbA-Or-Pnz" firstAttribute="top" secondItem="4Ez-Cx-dyo" secondAttribute="bottom" constant="30" id="EVq-Bu-QCV"/>
+                            <constraint firstItem="hbA-Or-Pnz" firstAttribute="centerX" secondItem="P62-Ts-3Ts" secondAttribute="centerX" id="uWT-Hn-EcI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageControl" destination="hbA-Or-Pnz" id="dj3-tH-KN3"/>
+                        <outlet property="startButton" destination="4Ez-Cx-dyo" id="cXk-SN-dhi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xL4-rj-7d9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1680.8" y="528.48575712143929"/>
         </scene>
     </scenes>
 </document>
